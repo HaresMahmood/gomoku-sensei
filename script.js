@@ -19,31 +19,29 @@ $(".box").click(function () {
 });
 
 function checkWin(turn, row, column) {
-  let horizontalWin = false;
-  let verticalWin = false;
-  let diagRightWin = false;
-  let diagLeftWin = false;
-  for (let r = 0; r < grid.length; r++) {
-    for (let c = 0; c < grid[r].length; c++) {
-      horizontalWin = checkRow(turn, r, c, 0, 1); // Horizontal.
-      verticalWin = checkRow(turn, r, c, 1, 0); // Vertical.
-      diagRightWin = checkRow(turn, r, c, 1, 1); // Diagonal descending right.
-      diagLeftWin = checkRow(turn, r, c, 1, -1); // Diagonal descending left.
+  let horizontalWin = 0;
+  let verticalWin = 0;
+  let diagRightWin = 0;
+  //let diagLeftWin = false;
+
+  for (let r = (row - 4); r <= (row + 4); r++) {
+    for (let c = (column - 4); c <= (column + 4); c++) {
+      horizontalWin += checkRow(turn, row, c); // Horizontal.
+      verticalWin += checkRow(turn, r, column); // Vertical.
+      diagRightWin = checkRow(turn, r, c); // Diagonal descending right.
+      //diagLeftWin = checkRow(turn, r, c, 1, -1); // Diagonal descending left.
+
+      console.log(r, c);
     }
   }
 
-  console.log(horizontalWin || verticalWin || diagRightWin || diagLeftWin);
+  //console.log(diagRightWin);
 }
 
-function checkRow(turn, row, column, verticalStep, horizontalStep) {
-  for (let i = 0 ; i <= 5 ; i++) {
-      let r = row + i * verticalStep;
-      let c = column + i * horizontalStep;
-
-      if (r < 0 || c < 0 || r >= grid.length || c > grid[r].length || grid[r][c] !== turn) {
-          return false;
-      }
+function checkRow(turn, row, column) {
+  if (row < 0 || column < 0 || row >= grid.length || column > grid[row].length || grid[row][column] !== turn) {
+     return 0;
   }
 
-  return true;
+  return 1;
 }
