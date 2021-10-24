@@ -16,32 +16,63 @@ $(".box").click(function () {
 
     turn = turn == "black" ? "white" : "black";
   }
-});
+})
 
 function checkWin(turn, row, column) {
-  let horizontalWin = 0;
-  let verticalWin = 0;
-  let diagRightWin = 0;
-  //let diagLeftWin = false;
+  const horizontalCounter = checkHorizontal(turn, row, column);
+  const verticalCounter = checkVertical(turn, row, column);
+  const diagonalCounterLeft = checkDiagonalLeft(turn, row, column);
+  const diagonalCounterRight = checkDiagonalRight(turn, row, column);
 
-  for (let r = (row - 4); r <= (row + 4); r++) {
-    for (let c = (column - 4); c <= (column + 4); c++) {
-      horizontalWin += checkRow(turn, row, c); // Horizontal.
-      verticalWin += checkRow(turn, r, column); // Vertical.
-      diagRightWin = checkRow(turn, r, c); // Diagonal descending right.
-      //diagLeftWin = checkRow(turn, r, c, 1, -1); // Diagonal descending left.
+  if (horizontalCounter >= 5
+     || verticalCounter >= 5
+     || diagonalCounterLeft >= 5 
+     || diagonalCounterRight >= 5) {
+    window.alert(`${turn} wins!`);
+  }
+}
 
-      console.log(r, c);
+function checkHorizontal(turn, row, column) {
+  let counter = 0;
+
+  for (let i = column - 4; i < column + 5; i++) {
+    counter = turn === grid[row][i] ? counter + 1 : counter;
+  }
+
+  return counter;
+}
+
+function checkVertical(turn, row, column) {
+  let counter = 0;
+
+  for (let i = row - 4; i < row + 5; i++) {
+    if (grid[i] !== undefined) {
+      counter = turn === grid[i][column] ? counter + 1 : counter;
     }
   }
 
-  //console.log(diagRightWin);
+  return counter;
 }
 
-function checkRow(turn, row, column) {
-  if (row < 0 || column < 0 || row >= grid.length || column > grid[row].length || grid[row][column] !== turn) {
-     return 0;
+function checkDiagonalLeft(turn, row, column) {
+  let counter = 0;
+
+  for (let i = -4; i < 5; i++) {
+    if (grid[row + i] !== undefined) {
+      counter = turn === grid[row + i][column + i] ? counter + 1 : counter;
+    }
+  }
+  return counter;
+}
+
+function checkDiagonalRight(turn, row, column) {
+  let counter = 0;
+
+  for (let i = -4; i < 5; i++) {
+    if (grid[row - i] !== undefined) {
+      counter = turn === grid[row - i][column + i] ? counter + 1 : counter;
+    }
   }
 
-  return 1;
+  return counter;
 }
