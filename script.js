@@ -18,6 +18,7 @@ $(".box").click(function () {
       window.alert(`Player ${game.getWinner()} won!`);
     }
 
+    game.changePlayer();
     turn = turn == "black" ? "white" : "black";
   }
 });

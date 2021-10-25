@@ -56,6 +56,10 @@ export default class Game {
         this.state[row][column] = this.player;
     }
 
+    changePlayer() {
+      this.player = this.player === 1 ? 2 : 1;
+    }
+
     makeMove(row, column) {
       this.state[row][column] = this.player;
       this.player = this.player === 1 ? 2 : 1;
