@@ -14,9 +14,20 @@ function deepClone(arr) {
   }
 
 export default class Game {
-    constructor() {
+    constructor(player, state) {
+      if (player !== undefined) {
+        this.player = player;
+      }
+      else {
         this.player = 1;
-        this.state = Array.from(Array(15), () => new Array(15)); // 15 by 15 board.
+      }
+
+      if (state !== undefined) {
+        this.state = state; 
+      }
+      else {
+        this.state = Array.from(Array(15), () => new Array(15).fill(0)); // 15 by 15 board.
+      }
     }
 
 
@@ -45,6 +56,11 @@ export default class Game {
         this.state[row][column] = this.player;
     }
 
+    makeMove(row, column) {
+      this.state[row][column] = this.player;
+      this.player = this.player === 1 ? 2 : 1;
+    }
+
 
     getSuccessors() {
         let successors = []
@@ -62,11 +78,11 @@ export default class Game {
         return successors;
     }
 
-    isGameOver(player, row, column) {
-        const horizontalCounter = this.checkHorizontal(this.state, player, row, column);
-        const verticalCounter = this.checkVertical(this.state, player, row, column);
-        const diagonalCounterLeft = this.checkDiagonalLeft(this.state, player, row, column);
-        const diagonalCounterRight = this.checkDiagonalRight(this.state, player, row, column);
+    isOver(row, column) {
+        const horizontalCounter = this.checkHorizontal(this.state, this.player, row, column);
+        const verticalCounter = this.checkVertical(this.state, this.player, row, column);
+        const diagonalCounterLeft = this.checkDiagonalLeft(this.state, this.player, row, column);
+        const diagonalCounterRight = this.checkDiagonalRight(this.state, this.player, row, column);
         
         if (horizontalCounter >= 5
             || verticalCounter >= 5
@@ -88,13 +104,12 @@ export default class Game {
     /* Helper function */
 
     getSuccessor(row, column) {
-        // TODO: Risky to use `undefined` for empty element. Initialize grod with somethng else (maybe `0`).
-        if (this.state[row][column] === undefined) {
+        if (this.state[row][column] === 0) {
             let copy = this.copyState();
 
             copy[row][column] = this.player;
 
-            return copy;
+            return new Game(this.player === 1 ? 2 : 1, copy);
         }
 
         return;
