@@ -14,7 +14,7 @@ function deepClone(arr) {
   }
 
 export default class Game {
-    constructor(player, state) {
+    constructor(player, state, lastRow, lastColumn) {
       if (player !== undefined) {
         this.player = player;
       }
@@ -28,6 +28,20 @@ export default class Game {
       else {
         this.state = Array.from(Array(15), () => new Array(15).fill(0)); // 15 by 15 board.
       }
+
+      if (lastRow !== undefined) {
+        this.lastRow = lastRow;
+      }
+      else {
+        this.lastRow = -1;
+      }
+
+      if (lastColumn !== undefined) {
+        this.lastColumn = lastColumn;
+      }
+      else {
+        this.lastColumn = -1;
+      }
     }
 
 
@@ -37,6 +51,10 @@ export default class Game {
 
     changeTurn() {
         this.player = this.player === 1 ? 2 : 1;
+    }
+
+    getLastMove() {
+      return [this.lastRow, this.lastColumn];
     }
 
 
@@ -49,7 +67,7 @@ export default class Game {
     }
 
     copyState() {
-        return deepClone(this.state);
+        return new Game(this.player === 1 ? 2 : 1, deepClone(this.state), this.lastRow, this.lastColumn);
     }
 
     setCoordinates(row, column) {
@@ -60,13 +78,20 @@ export default class Game {
       this.player = this.player === 1 ? 2 : 1;
     }
 
-    makeMove(row, column) {
-      this.state[row][column] = this.player;
+    performMove(move) {
+      this.state[move[0]][move[1]] = this.player;
       this.player = this.player === 1 ? 2 : 1;
+
+      this.lastRow = move[0];
+      this.lastColumn = move[1];
+    }
+
+    getCurrentPlayer() {
+      return this.player;
     }
 
 
-    getSuccessors() {
+    getPossibleMoves() {
         let successors = []
 
         for (let r = 0; r < 15; r++) {
@@ -76,6 +101,10 @@ export default class Game {
                 if (successor !== undefined) {
                     successors.push(successor);
                 }
+
+               //if (this.state[r][c] === 0) {
+               //  successors.push([r, c]);
+               //}
             }
         }
 
@@ -100,20 +129,24 @@ export default class Game {
     }
 
     getWinner() {
-        let winner = this.isDraw() ? -1 : this.player;
+        if (this.isOver(this.lastRow, this.lastColumn)) {
+          let winner = this.isDraw() ? -1 : this.player;
 
-        return winner;
+          return winner;2
+        }
+
+        return;
     }
 
     /* Helper function */
 
     getSuccessor(row, column) {
         if (this.state[row][column] === 0) {
-            let copy = this.copyState();
+            let copy = deepClone(this.state);
 
             copy[row][column] = this.player;
 
-            return new Game(this.player === 1 ? 2 : 1, copy);
+            return new Game(this.player === 1 ? 2 : 1, copy, row, column);
         }
 
         return;
