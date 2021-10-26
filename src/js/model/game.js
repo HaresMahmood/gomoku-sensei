@@ -13,6 +13,8 @@ function deepClone(arr) {
     return newArr;
   }
 
+import Event from "../utility/event.js";
+
 export default class Game {
     constructor(player, state, lastRow, lastColumn) {
       if (player !== undefined) {
@@ -42,6 +44,8 @@ export default class Game {
       else {
         this.lastColumn = -1;
       }
+
+      this.changePlayerEvent = new Event();
     }
 
 
@@ -76,12 +80,12 @@ export default class Game {
 
     changePlayer() {
       this.player = this.player === 1 ? 2 : 1;
+
+      this.changePlayerEvent.trigger(this.player);
     }
 
     performMove(move) {
       this.state[move[0]][move[1]] = this.player;
-      this.player = this.player === 1 ? 2 : 1;
-
       this.lastRow = move[0];
       this.lastColumn = move[1];
     }
@@ -101,21 +105,17 @@ export default class Game {
                 if (successor !== undefined) {
                     successors.push(successor);
                 }
-
-               //if (this.state[r][c] === 0) {
-               //  successors.push([r, c]);
-               //}
             }
         }
 
         return successors;
     }
 
-    isOver(row, column) {
-        const horizontalCounter = this.checkHorizontal(this.state, this.player, row, column);
-        const verticalCounter = this.checkVertical(this.state, this.player, row, column);
-        const diagonalCounterLeft = this.checkDiagonalLeft(this.state, this.player, row, column);
-        const diagonalCounterRight = this.checkDiagonalRight(this.state, this.player, row, column);
+    isOver() {
+        const horizontalCounter = this.checkHorizontal(this.state, this.player, this.lastRow, this.lastColumn);
+        const verticalCounter = this.checkVertical(this.state, this.player, this.lastRow, this.lastColumn);
+        const diagonalCounterLeft = this.checkDiagonalLeft(this.state, this.player, this.lastRow, this.lastColumn);
+        const diagonalCounterRight = this.checkDiagonalRight(this.state, this.player, this.lastRow, this.lastColumn);
         
         if (horizontalCounter >= 5
             || verticalCounter >= 5
@@ -132,7 +132,7 @@ export default class Game {
         if (this.isOver(this.lastRow, this.lastColumn)) {
           let winner = this.isDraw() ? -1 : this.player;
 
-          return winner;2
+          return winner;
         }
 
         return;
