@@ -1,5 +1,6 @@
+/*
 import Game from "./game.js";
-import RandomAI from "./ai/randomAI.js";
+import RandomAI from "./player/ai/randomAI.js";
 //import KillerAI from "./ai/killerAI.js";
 
 let game = new Game();
@@ -47,3 +48,12 @@ function findBox(row, column, turn) {
 
   $(".row").eq(row).children(".box").eq(column).append(piece);
 } 
+*/
+
+import Game from "./model/game.js";
+import View from "./view/view.js";
+import Controller from "./controller/controller.js";
+
+$(document).ready(function() { 
+    let controller = new Controller(new Game(), new View());
+});
