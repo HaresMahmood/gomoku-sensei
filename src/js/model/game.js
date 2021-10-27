@@ -75,6 +75,10 @@ export default class Game {
         this.state = state;
     }
 
+    cloneState() {
+      return deepClone(this.state);
+    }
+
     copyState() {
         return new Game(this.player === 1 ? 2 : 1, deepClone(this.state), this.lastRow, this.lastColumn);
     }
@@ -99,8 +103,25 @@ export default class Game {
       return this.player;
     }
 
+    getNextPlayer() {
+      return this.player === 1 ? 2 : 1;
+    }
 
     getPossibleMoves() {
+      let moves = []
+
+      for (let r = 0; r < 15; r++) {
+          for (let c = 0; c < 15; c++) {
+              if (this.state[r][c] !== 0) {
+                  moves.push([r, c]);
+              }
+          }
+      }
+
+      return successors;
+    }
+
+    getPossibleSuccessors() {
         let successors = []
 
         for (let r = 0; r < 15; r++) {

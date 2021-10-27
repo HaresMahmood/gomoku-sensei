@@ -1,6 +1,6 @@
 import Event from "../../utility/event.js";
 
-export default class RandomAI {
+export default class KillerAI {
     constructor(player) {
         this.player = player;
 
