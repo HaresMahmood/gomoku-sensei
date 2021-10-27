@@ -2,7 +2,7 @@
     "name": "Gomoku",
     "short_name": "Gomoku",
     "start_url": "./html/index.html",
-    "scope": "../",
+    "scope": "./",
     "icons": [
       {
         "src": "../res/icon-small.png",
