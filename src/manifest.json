@@ -1,0 +1,21 @@
+{
+    "name": "Gomoku",
+    "short_name": "Gomoku",
+    "start_url": "./html/index.html",
+    "scope": "../",
+    "icons": [
+      {
+        "src": "../res/icon-small.png",
+        "sizes": "192x192",
+        "type": "image/png"
+      },
+      {
+        "src": "../res/icon-large.png",
+        "sizes": "512x512",
+        "type": "image/png"
+      }
+    ],
+    "theme_color": "#ffffff",
+    "background_color": "#DBDBD9",
+    "display": "standalone"
+  }
