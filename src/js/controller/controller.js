@@ -19,16 +19,18 @@ export default class Controller {
     }
 
     makeMove(row, column) {
-        let color = this.model.getCurrentPlayer() === 1 ? "black" : "white";
+        if (this.model.isCellEmpty(row, column)) {
+            let color = this.model.getCurrentPlayer() === 1 ? "black" : "white";
 
-        this.view.addPiece(row, column, color);
-        this.model.performMove([row, column]);
+            this.view.addPiece(row, column, color);
+            this.model.performMove([row, column]);
 
-        if (this.model.isOver()) {
-            this.view.endGame(color);
-            return;
+            if (this.model.isOver()) {
+                this.view.endGame(color);
+                return;
+            }
+
+            this.model.changePlayer();
         }
-
-        this.model.changePlayer();
     }
 }

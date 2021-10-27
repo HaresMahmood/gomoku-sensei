@@ -57,6 +57,11 @@ export default class Game {
         this.player = this.player === 1 ? 2 : 1;
     }
 
+    isCellEmpty(row, column) {
+      console.log(this.state[row][column] === 0);
+      return this.state[row][column] === 0;
+    }
+
     getLastMove() {
       return [this.lastRow, this.lastColumn];
     }
