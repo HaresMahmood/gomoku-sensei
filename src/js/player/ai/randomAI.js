@@ -8,7 +8,7 @@ export default class RandomAI {
     }  
     
     chooseMove(state) {
-        let moves = state.getPossibleMoves();
+        let moves = state.getPossibleSuccessors();
 
         if (moves.length) {
             let random = moves[Math.floor(Math.random() * moves.length)];

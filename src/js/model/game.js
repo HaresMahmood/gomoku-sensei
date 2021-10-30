@@ -16,38 +16,14 @@ function deepClone(arr) {
 import Event from "../utility/event.js";
 
 export default class Game {
-    constructor(player, state, lastRow, lastColumn) {
-      if (player !== undefined) {
-        this.player = player;
-      }
-      else {
-        this.player = 1;
-      }
-
-      if (state !== undefined) {
-        this.state = state; 
-      }
-      else {
-        this.state = Array.from(Array(15), () => new Array(15).fill(0)); // 15 by 15 board.
-      }
-
-      if (lastRow !== undefined) {
-        this.lastRow = lastRow;
-      }
-      else {
-        this.lastRow = -1;
-      }
-
-      if (lastColumn !== undefined) {
-        this.lastColumn = lastColumn;
-      }
-      else {
-        this.lastColumn = -1;
-      }
+    constructor(player = 1, state = Array.from(Array(15), () => new Array(15).fill(0)), lastRow = -1, lastColumn = -1) {
+      this.player = player;
+      this.state = state; 
+      this.lastRow = lastRow;
+      this.lastColumn = lastColumn;
 
       this.changePlayerEvent = new Event();
     }
-
 
     getTurn() {
         return this.player;
@@ -58,7 +34,6 @@ export default class Game {
     }
 
     isCellEmpty(row, column) {
-      console.log(this.state[row][column] === 0);
       return this.state[row][column] === 0;
     }
 
@@ -80,11 +55,15 @@ export default class Game {
     }
 
     copyState() {
-        return new Game(this.player === 1 ? 2 : 1, deepClone(this.state), this.lastRow, this.lastColumn);
+        return new Game(this.player, deepClone(this.state), this.lastRow, this.lastColumn);
     }
 
     setCoordinates(row, column) {
         this.state[row][column] = this.player;
+    }
+
+    switchPlayer() {
+      this.player = this.player === 1 ? 2 : 1;
     }
 
     changePlayer() {
@@ -97,6 +76,14 @@ export default class Game {
       this.state[move[0]][move[1]] = this.player;
       this.lastRow = move[0];
       this.lastColumn = move[1];
+    }
+
+    performRandomMove() {
+      //var randomnumber = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
+      let moves = this.getPossibleMoves();
+      
+      this.performMove(moves[Math.floor(Math.random() * moves.length)]);
+      this.switchPlayer();
     }
 
     getCurrentPlayer() {
@@ -112,13 +99,13 @@ export default class Game {
 
       for (let r = 0; r < 15; r++) {
           for (let c = 0; c < 15; c++) {
-              if (this.state[r][c] !== 0) {
+              if (this.state[r][c] === 0) {
                   moves.push([r, c]);
               }
           }
       }
 
-      return successors;
+      return moves;
     }
 
     getPossibleSuccessors() {
@@ -138,15 +125,70 @@ export default class Game {
     }
 
     isOver() {
-        const horizontalCounter = this.checkHorizontal(this.state, this.player, this.lastRow, this.lastColumn);
-        const verticalCounter = this.checkVertical(this.state, this.player, this.lastRow, this.lastColumn);
-        const diagonalCounterLeft = this.checkDiagonalLeft(this.state, this.player, this.lastRow, this.lastColumn);
-        const diagonalCounterRight = this.checkDiagonalRight(this.state, this.player, this.lastRow, this.lastColumn);
-        
-        if (horizontalCounter >= 5
-            || verticalCounter >= 5
-            || diagonalCounterLeft >= 5 
-            || diagonalCounterRight >= 5
+      // TODO: Improve algorithm
+      function countConsecutivePieces(player, pieces) {
+        let counter = 0;
+        let last = null;
+
+        for (let i = 0; i < pieces.length; i++) {
+          if (pieces[i] === player) {
+            if (pieces[i] !== last) {
+              counter = 0;
+            }
+            counter++;
+          }
+
+          last = pieces[i]
+        }
+
+        return counter >= 5;
+      }
+
+      function checkHorizontal(board, player, row) {
+        return countConsecutivePieces(player, board[row]);
+      }
+
+      function checkVertical(board, player, column) {
+        return countConsecutivePieces(player, board.map(row => row[column]));
+      }
+
+      function checkPrimaryDiagonal(board, player, row, column) {
+        let pieces = [];
+        //let state = this.cloneState();
+      
+        for (let i = -4; i < 5; i++) {
+          if (board[row - i] !== undefined && board[column - i] !== undefined) {
+            pieces.push(board[row - i][column - i]);
+            //state[row - i][column - i] = this.player === this.state[row - i][column - i] ? `${this.player}` : "X";
+          } 
+        }
+
+        return countConsecutivePieces(player, pieces)
+      }
+
+      function checkSecondaryDiagonal(board, player, row, column) {
+        let pieces = [];
+        //let state = this.cloneState();
+      
+        for (let i = -4; i < 5; i++) {
+          if (board[row - i] !== undefined && board[column + i] !== undefined) {
+            pieces.push(board[row - i][column + i]);
+            //state[row - i][column + i] = this.player === this.state[row - i][column + i] ? `${this.player}` : "X";
+          } 
+        }
+
+        return countConsecutivePieces(player, pieces)
+      }
+
+        const horizontalCounter = checkHorizontal(this.state, this.player, this.lastRow);
+        const verticalCounter = checkVertical(this.state, this.player, this.lastColumn);
+        const diagonalCounterLeft = checkPrimaryDiagonal(this.state, this.player, this.lastRow, this.lastColumn);
+        const diagonalCounterRight = checkSecondaryDiagonal(this.state, this.player, this.lastRow, this.lastColumn);
+
+        if (horizontalCounter
+            || verticalCounter
+            || diagonalCounterLeft
+            || diagonalCounterRight
             || this.isDraw()) {
             return true;
         }
@@ -155,13 +197,9 @@ export default class Game {
     }
 
     getWinner() {
-        if (this.isOver(this.lastRow, this.lastColumn)) {
-          let winner = this.isDraw() ? -1 : this.player;
+      let winner = this.isDraw() ? -1 : this.player;
 
-          return winner;
-        }
-
-        return;
+      return winner;
     }
 
     /* Helper function */
@@ -177,64 +215,18 @@ export default class Game {
 
         return;
     }
-
-
-
-    checkHorizontal(board, player, row, column) {
-        let counter = 0;
       
-        for (let i = column - 4; i < column + 5; i++) {
-          counter = player === board[row][i] ? counter + 1 : counter;
-        }
-      
-        return counter;
-      }
-      
-    checkVertical(board, player, row, column) {
-        let counter = 0;
-      
-        for (let i = row - 4; i < row + 5; i++) {
-          if (board[i] !== undefined) {
-            counter = player === board[i][column] ? counter + 1 : counter;
-          }
-        }
-      
-        return counter;
-      }
-      
-    checkDiagonalLeft(board, player, row, column) {
-        let counter = 0;
-      
-        for (let i = - 4; i < 5; i++) {
-          if (board[row + i] !== undefined) {
-            counter = player === board[row + i][column + i] ? counter + 1 : counter;
-          }
-        }
-        return counter;
-      }
-      
-    checkDiagonalRight(board, player, row, column) {
-        let counter = 0;
-      
-        for (let i = - 4; i < 5; i++) {
-          if (board[row - i] !== undefined) {
-            counter = player === board[row - i][column + i] ? counter + 1 : counter;
-          }
-        }
-      
-        return counter;
-      }
 
 
     isDraw() {
         for (let r = 0; r < 15; r++) {
             for (let c = 0; c < 15; c++){
-                if (this.state[r][c] === undefined) {
-                    return true;
+                if (this.state[r][c] === 0) {
+                    return false;
                 }
             }
         }
 
-        return false;
+        return true;
     }
 }

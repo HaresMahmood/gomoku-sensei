@@ -1,11 +1,11 @@
-import RandomAI from "../player/ai/randomAI.js";
+import KillerAI from "../player/ai/killerAI.js";
 
 export default class Controller {
     constructor(model, view) {
         this.model = model;
         this.view = view;
 
-        this.ai = new RandomAI(2);
+        this.ai = new KillerAI(2);
 
         this.model.changePlayerEvent.addListener(player => this.aiTurn(player));
         this.ai.chooseMoveEvent.addListener(state => this.makeMove(state.getLastMove()[0], state.getLastMove()[1]));
@@ -14,7 +14,7 @@ export default class Controller {
 
     aiTurn(player) {
         if (this.ai.player === player) {
-            this.ai.chooseMove(this.model);
+            this.ai.chooseMove(this.model.copyState());
         }
     }
 
