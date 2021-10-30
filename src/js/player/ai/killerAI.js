@@ -11,15 +11,14 @@ export default class KillerAI {
         let root = new Node(game);
 
         for (let i = 0; i < iterations; i++) {
-            let path = this.select(root);
-            console.log(path);
-            let node = path.at(-1);
+            //let path = this.select(root);
+            let node = this.select(root);
 
             node.expand();
 
             let result = this.simulate(node);
             
-            this.backpropogate(path, result);
+            this.backpropogate(node, result);
         }
 
         let bestNode = root.getMostVisitedChild();
@@ -30,6 +29,7 @@ export default class KillerAI {
         return bestNode;
     }
 
+    /*
     select(node) {
         let path = [];
 
@@ -51,18 +51,17 @@ export default class KillerAI {
             node = uct(node, Math.sqrt(2));
         }
     }
+    */
 
-    /*
     select(node) {
         while (node.isFullyExpanded()) {
-            node = this.findBestChild(node, Math.sqrt(2)); // ~1.41
-            console.log(node);
+            node = this.uct(node, Math.sqrt(2)); // ~1.41
         }
 
         return node.getUnvisistedChildren()[0] || node;
     }
-    */
 
+    /*
     backpropogate(path, reward) {
         path = path.reverse();
         for (let i = 0; i < path.length; i++) {
@@ -74,8 +73,8 @@ export default class KillerAI {
             reward = 1 - reward;
         }
     }
-
-    /*
+    */
+    
     backpropogate(node, result) {
         let tempNode = node;
 
@@ -94,8 +93,8 @@ export default class KillerAI {
             tempNode = tempNode.parent;
         }
     }
-    */
 
+    /*
     simulate(node) {
         let invert_reward = true;
 
@@ -110,8 +109,8 @@ export default class KillerAI {
             invert_reward = !invert_reward;
         }
     }
+    */
 
-    /*
     simulate(node) {
         while (!node.game.isOver()) {
             node.game.performRandomMove();
@@ -119,15 +118,13 @@ export default class KillerAI {
 
         return node.game.getWinner();
     }
-    */
-
     // UCB value
     uct(node, c) {
         function calculateValue(totalVisits, nodeWinScore, nodeVisits) {
             return (nodeWinScore / nodeVisits) + c * Math.sqrt(Math.log(totalVisits / nodeVisits));
         }
 
-        let maxUCB = -Number.MAX_VALUE;
+        let maxUCB = Number.MIN_VALUE;
         let bestNode = null;
         
         for (let i = 0; i < node.children.length; i++) {

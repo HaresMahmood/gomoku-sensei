@@ -1,4 +1,5 @@
 import KillerAI from "../player/ai/killerAI.js";
+import MinimaxAI from "../player/ai/minimaxAI.js";
 
 export default class Controller {
     constructor(model, view) {
