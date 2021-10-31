@@ -1,61 +1,39 @@
-//https://stackoverflow.com/questions/25100714/for-a-deep-copy-of-a-javascript-multidimensional-array-going-one-level-deep-see
-function deepClone(arr) {
-    var len = arr.length;
-    var newArr = new Array(len);
-    for (var i=0; i<len; i++) {
-      if (Array.isArray(arr[i])) {
-        newArr[i] = deepClone(arr[i]);
-      }
-      else {
-        newArr[i] = arr[i];
-      }
-    }
-    return newArr;
-  }
-
 import Event from "../utility/event.js";
 
+const ROWS = 3;
+const COLUMNS = 3;
+
 export default class Game {
-    constructor(player = 1, state = Array.from(Array(15), () => new Array(15).fill(0)), lastRow = -1, lastColumn = -1) {
+    constructor(player = 1, state = Array.from(Array(ROWS), () => new Array(COLUMNS).fill(0)), lastRow = -1, lastColumn = -1) {
       this.player = player;
-      this.state = state; 
+      //this.state = Array.from(Array(ROWS), () => new Array(COLUMNS).fill(0));
+      this.state = state;
       this.lastRow = lastRow;
       this.lastColumn = lastColumn;
 
       this.changePlayerEvent = new Event();
-    }
 
-    getTurn() {
-        return this.player;
+      /*
+      if (state !== null) {
+        for (let r = 0; r < ROWS; r++) {
+          for (let c = 0; c < COLUMNS; c++) {
+            this.state[r][c] = state[r][c];
+          }
+        }
+      }
+      */
     }
 
     changeTurn() {
         this.player = this.player === 1 ? 2 : 1;
     }
 
-    isCellEmpty(row, column) {
-      return this.state[row][column] === 0;
-    }
-
     getLastMove() {
       return [this.lastRow, this.lastColumn];
     }
 
-
-    getState() {
-        return this.state;
-    }
-
-    setState(state) {
-        this.state = state;
-    }
-
-    cloneState() {
-      return deepClone(this.state);
-    }
-
     copyState() {
-        return new Game(this.player, deepClone(this.state), this.lastRow, this.lastColumn);
+        return new Game(this.player, _.cloneDeep(this.state), this.lastRow, this.lastColumn);
     }
 
     setCoordinates(row, column) {
@@ -78,27 +56,15 @@ export default class Game {
       this.lastColumn = move[1];
     }
 
-    performRandomMove() {
-      //var randomnumber = Math.floor(Math.random() * (maximum - minimum + 1)) + minimum;
-      let moves = this.getPossibleMoves();
-      
-      this.performMove(moves[Math.floor(Math.random() * moves.length)]);
-      this.switchPlayer();
-    }
-
-    getCurrentPlayer() {
-      return this.player;
-    }
-
-    getNextPlayer() {
-      return this.player === 1 ? 2 : 1;
+    isCellEmpty(row, column) {
+      return this.state[row][column] === 0;
     }
 
     getPossibleMoves() {
       let moves = []
 
-      for (let r = 0; r < 15; r++) {
-          for (let c = 0; c < 15; c++) {
+      for (let r = 0; r < ROWS; r++) {
+          for (let c = 0; c < COLUMNS; c++) {
               if (this.state[r][c] === 0) {
                   moves.push([r, c]);
               }
@@ -108,24 +74,40 @@ export default class Game {
       return moves;
     }
 
-    getPossibleSuccessors() {
-        let successors = []
+    getPossibleSuccessors(state) {
+      function getSuccessor(board, player, row, column) {
+        //console.log(board, row, column); // TODO: Deep copy fails sometimes.
+        if (board[row][column] === 0) {
+            board[row][column] = player;
 
-        for (let r = 0; r < 15; r++) {
-            for (let c = 0; c < 15; c++) {
-                let successor = this.getSuccessor(r, c);
-
-                if (successor !== undefined) {
-                    successors.push(successor);
-                }
-            }
+            return new Game(player === 1 ? 2 : 1, board, row, column);
         }
 
-        return successors;
-    }
+        return;
+      }
+
+      const copy = _.cloneDeep(state);
+      let successors = [];
+
+      console.log(state);
+      console.log(_.cloneDeep(state));
+      
+      console.log(state);
+
+      for (let r = 0; r < 3; r++) {
+          for (let c = 0; c < 3; c++) {
+              let successor = getSuccessor(copy, this.player, r, c);
+
+              if (successor !== undefined) {
+                  successors.push(successor);
+              }
+          }
+      }
+
+      return successors;
+  }
 
     isOver() {
-      // TODO: Improve algorithm
       function countConsecutivePieces(player, pieces) {
         let counter = 0;
         let last = null;
@@ -141,7 +123,7 @@ export default class Game {
           last = pieces[i]
         }
 
-        return counter >= 5;
+        return counter >= 3;
       }
 
       function checkHorizontal(board, player, row) {
@@ -185,15 +167,11 @@ export default class Game {
         const diagonalCounterLeft = checkPrimaryDiagonal(this.state, this.player, this.lastRow, this.lastColumn);
         const diagonalCounterRight = checkSecondaryDiagonal(this.state, this.player, this.lastRow, this.lastColumn);
 
-        if (horizontalCounter
-            || verticalCounter
-            || diagonalCounterLeft
-            || diagonalCounterRight
-            || this.isDraw()) {
-            return true;
-        }
-
-        return false;
+        return horizontalCounter
+        || verticalCounter
+        || diagonalCounterLeft
+        || diagonalCounterRight
+        || this.isDraw();
     }
 
     getWinner() {
@@ -202,31 +180,7 @@ export default class Game {
       return winner;
     }
 
-    /* Helper function */
-
-    getSuccessor(row, column) {
-        if (this.state[row][column] === 0) {
-            let copy = deepClone(this.state);
-
-            copy[row][column] = this.player;
-
-            return new Game(this.player === 1 ? 2 : 1, copy, row, column);
-        }
-
-        return;
-    }
-      
-
-
     isDraw() {
-        for (let r = 0; r < 15; r++) {
-            for (let c = 0; c < 15; c++){
-                if (this.state[r][c] === 0) {
-                    return false;
-                }
-            }
-        }
-
-        return true;
+        return !this.state.some(row => row.includes(0)) || this.getPossibleMoves().length === 0;
     }
 }

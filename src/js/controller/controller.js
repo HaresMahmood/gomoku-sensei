@@ -8,9 +8,9 @@ export default class Controller {
 
         this.ai = new KillerAI(2);
 
-        this.model.changePlayerEvent.addListener(player => this.aiTurn(player));
-        this.ai.chooseMoveEvent.addListener(state => this.makeMove(state.getLastMove()[0], state.getLastMove()[1]));
-        this.view.setCellClickHandler((row, column) => this.makeMove(row, column));
+        //this.model.changePlayerEvent.addListener(player => this.aiTurn(player));
+        //his.ai.chooseMoveEvent.addListener(state => this.makeMove(index));
+        this.view.setCellClickHandler((index) => this.makeMove(index));
     }
 
     aiTurn(player) {
@@ -19,17 +19,17 @@ export default class Controller {
         }
     }
 
-    makeMove(row, column) {
-        if (this.model.isCellEmpty(row, column)) {
-            let color = this.model.getCurrentPlayer() === 1 ? "black" : "white";
+    makeMove(index) {
+        if (this.model.isCellEmpty(0, 0)) {
+            let color = this.model.player === 1 ? "black" : "white";
 
-            this.view.addPiece(row, column, color);
-            this.model.performMove([row, column], this.model.getCurrentPlayer());
+            this.view.addPiece(index, color);
+            //this.model.performMove([row, column], this.model.player);
 
-            if (this.model.isOver()) {
-                this.view.endGame(color);
-                return;
-            }
+            //if (this.model.isOver()) {
+            //    this.view.endGame(color);
+            //    return;
+            //}
 
             this.model.changePlayer();
         }

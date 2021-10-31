@@ -7,11 +7,6 @@ export default class Node {
         this.children = children;
     }
 
-    clone() {
-        const state = new State(this.state.game.copyState(), this.state.playerNumber, this.state.wins, this.state.visits);
-        return new Node(state, this.parent, this.children.slice());
-    }
-
     getRandomChild() {
         const random = Math.floor(Math.random() * this.children.length);
         //console.log(random, this.children[random]);

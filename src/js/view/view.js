@@ -1,34 +1,26 @@
 export default class View {
     constructor() {
         this.board = $(".board");
-        this.rows = ".row";
-        this.columns = ".box";
+        this.cell = ".cell";
     }
 
-    addPiece(row, column, color) {
-        let line = this.board.find(this.rows).eq(row);
-        let cell = line.find(this.columns).eq(column);
+    addPiece(index, color) {
+        let box = this.board.find(this.cell).eq(index);
 
-        if (cell.find(".piece").length === 0) {
+        if (box.find(".piece").length === 0) {
             let piece = `<div class="piece ${color}-piece"></div>`;
 
-            cell.append(piece);
+            box.append(piece);
         }
     }
 
     getClickedCellCoordinates(cell) {
-        let row = cell.parent().index();
-        let column = cell.index();
-
-        return [row, column];
+        return cell.index();
     }
 
     setCellClickHandler(handler) {
-        $(this.columns).bind("click", function() {
-            let row = $(this).parent().index();
-            let column = $(this).index();
-
-            handler(row, column);
+        $(this.cell).bind("click", function() {
+            handler($(this).index());
         });
     }
 

@@ -1,9 +1,15 @@
+import Game from "../../../model/game.js";
+
 export default class State {
     constructor(game = null, player = 1, wins = 0.0, visits = 0) {
         this.game = game;
         this.playerNumber = player;
         this.wins = wins;
         this.visits = visits;
+    }
+
+    clone() {
+        return new this.constructor(this.game.copyState(), this.playerNumber, this.wins, this.visits);
     }
 
     getOpponentPlayerNumber() {
@@ -17,12 +23,15 @@ export default class State {
 
     getMoves() {
         let possibleMoves = [];
-        let emptyPositions = this.game.getPossibleMoves();
+        let emptyPositions = this.game.getPossibleSuccessors(this.game.state);
+        let opponentPlayerNumber = this.getOpponentPlayerNumber();
+    
+        console.log(emptyPositions);
 
         for (const position of emptyPositions) {
-            const child = new State(this.game.copyState(), this.getOpponentPlayerNumber());
-            
-            child.game.performMove(position, child.playerNumber);
+
+            const child = new State(position, opponentPlayerNumber);
+
             possibleMoves.push(child);
         }
 

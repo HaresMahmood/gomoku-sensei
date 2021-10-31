@@ -34,18 +34,9 @@ body {
   padding: min(3.5vw, 3.5vh);
 }
 
-.row {
-  width: 100%;
-  height: calc(100% / 15);
-  
-  display: flex;
-  
-  background-color: rgba(184, 184, 184, 0.25);
-}
-
-.box {
-	width: calc(100% / 15);
-	height: 100%;
+.cell {
+	width: calc(100% / 3);
+	height: calc(100% / 3);
   
   border: 1.25px solid rgba(42, 46, 57, 0.5);
   

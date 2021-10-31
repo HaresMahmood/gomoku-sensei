@@ -8,23 +8,19 @@ export default class KillerAI {
         this.chooseMoveEvent = new Event();
     }
 
-    chooseMove(game, iterations = 100) {
+    chooseMove(game, iterations = 1) {
         const tree = new Tree();
         let counter = 0;
-
-        let opponentPlayerNumber = this.playerNumber === 1 ? 2 : 1;
         
         tree.root.state.game = game;
-        tree.root.state.playerNumber = opponentPlayerNumber;
+        tree.root.state.playerNumber = game.player;
 
         while (counter < iterations) {
             // Phase 1 - Selection
             const promisingNode = this.selectPromisingNode(tree.root);
 
             // Phase 2 - Expansion
-            if (!promisingNode.state.game.isOver()) {
-                this.expandNode(promisingNode);
-            }
+            this.expandNode(promisingNode);
 
             // Phase 3 - Simulation
             let nodeToExplore = promisingNode;
@@ -34,6 +30,7 @@ export default class KillerAI {
             }
 
             const playoutResult = this.simulateRandomPlayout(nodeToExplore);
+            console.log(playoutResult);
 
             // Phase 4 - Backpropogation
             this.backpropogate(nodeToExplore, playoutResult);
@@ -85,14 +82,22 @@ export default class KillerAI {
     }
 
     simulateRandomPlayout(node) {
-        const tempNode = node.clone();
+        const original = node.state.game.copyState();
 
-        while (!tempNode.state.game.isOver()) {
-            tempNode.state.togglePlayer();
-            tempNode.state.makeRandomMove();
+        console.log(node.state.game.state);
+
+        while (!node.state.game.isOver()) {
+            node.state.togglePlayer();
+            node.state.makeRandomMove();
+
+            //console.log(node.state.game.state);
         }
 
-        return tempNode.state.game.getWinner();
+        const winner = node.state.game.getWinner();;
+
+        node.state.game = original;
+
+        return winner;
     }
     
     findBestNodeWithUCT(node) {
