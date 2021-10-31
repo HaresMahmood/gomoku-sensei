@@ -14,7 +14,7 @@ export default class Controller {
     }
 
     aiTurn(player) {
-        if (this.ai.player === player) {
+        if (this.ai.playerNumber === player) {
             this.ai.chooseMove(this.model.copyState());
         }
     }
@@ -24,7 +24,7 @@ export default class Controller {
             let color = this.model.getCurrentPlayer() === 1 ? "black" : "white";
 
             this.view.addPiece(row, column, color);
-            this.model.performMove([row, column]);
+            this.model.performMove([row, column], this.model.getCurrentPlayer());
 
             if (this.model.isOver()) {
                 this.view.endGame(color);

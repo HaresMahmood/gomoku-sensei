@@ -1,46 +1,28 @@
+import State from "./state.js";
+
 export default class Node {
-    constructor(game = null, parent = null, children = [], visits = 0, wins = 0.0) {
-        this.game = game;
+    constructor(state = new State(), parent = null, children = []) {
+        this.state = state;
         this.parent = parent;
         this.children = children;
-        
-        this.visits = visits;
-        this.wins = wins;
     }
 
-    expand() {
-        let moves = this.game.getPossibleSuccessors();
-        
-        for (let i = 0; i < moves.length; i++) {
-            let child = new Node(moves[i], this);
-            
-            this.children.push(child);
-        }
-    }
-
-    isFullyExpanded() {
-        return this.getUnvisistedChildren().length > 0  && this.children.length;
-    }
-
-    getUnvisistedChildren() {
-        return this.children.filter(child => {
-            return child.visits === 0;
-        });
-    }
-
-    getMostVisitedChild() {
-        let child = this.children.reduce((x, y) => {
-            return x.visits > y.visits ? x : y;
-        });
-
-        return child;
+    clone() {
+        const state = new State(this.state.game.copyState(), this.state.playerNumber, this.state.wins, this.state.visits);
+        return new Node(state, this.parent, this.children.slice());
     }
 
     getRandomChild() {
-        return this.children[Math.floor(Math.random() * this.children.length)];
+        const random = Math.floor(Math.random() * this.children.length);
+        //console.log(random, this.children[random]);
+        return this.children[random]; // || null 
     }
-
-    performRandomMove() {
-        this.game.performRandomMove();
+    
+    getMostVisitedChild() {
+        let child = this.children.reduce((x, y) => {
+            return x.state.visits > y.state.visits ? x : y;
+        });
+    
+        return child;
     }
 }

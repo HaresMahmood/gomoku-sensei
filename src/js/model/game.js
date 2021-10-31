@@ -72,8 +72,8 @@ export default class Game {
       this.changePlayerEvent.trigger(this.player);
     }
 
-    performMove(move) {
-      this.state[move[0]][move[1]] = this.player;
+    performMove(move, player) {
+      this.state[move[0]][move[1]] = player;
       this.lastRow = move[0];
       this.lastColumn = move[1];
     }

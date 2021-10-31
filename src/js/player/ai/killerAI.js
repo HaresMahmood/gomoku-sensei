@@ -1,145 +1,120 @@
 import Event from "../../utility/event.js";
-import Node from "./node.js";
+import Tree from "./tree/tree.js";
+import Node from "./tree/node.js";
 
 export default class KillerAI {
-    constructor(player) {
-        this.player = player;
+    constructor(playerNumber) {
+        this.playerNumber = playerNumber;
         this.chooseMoveEvent = new Event();
-    }  
+    }
 
-    chooseMove(game, iterations = 5000) {
-        let root = new Node(game);
+    chooseMove(game, iterations = 100) {
+        const tree = new Tree();
+        let counter = 0;
 
-        for (let i = 0; i < iterations; i++) {
-            //let path = this.select(root);
-            let node = this.select(root);
+        let opponentPlayerNumber = this.playerNumber === 1 ? 2 : 1;
+        
+        tree.root.state.game = game;
+        tree.root.state.playerNumber = opponentPlayerNumber;
 
-            node.expand();
+        while (counter < iterations) {
+            // Phase 1 - Selection
+            const promisingNode = this.selectPromisingNode(tree.root);
 
-            let result = this.simulate(node);
+            // Phase 2 - Expansion
+            if (!promisingNode.state.game.isOver()) {
+                this.expandNode(promisingNode);
+            }
+
+            // Phase 3 - Simulation
+            let nodeToExplore = promisingNode;
             
-            this.backpropogate(node, result);
-        }
-
-        let bestNode = root.getMostVisitedChild();
-
-        console.log(bestNode);
-
-        this.chooseMoveEvent.trigger(bestNode.game);			
-        return bestNode;
-    }
-
-    /*
-    select(node) {
-        let path = [];
-
-        while (true) {
-            path.push(node);
-
-            if (!node.isFullyExpanded()) {
-                return path;
+            if (promisingNode.children.length > 0) {
+                nodeToExplore = promisingNode.getRandomChild();
             }
 
-            let unexplored = node.getUnvisistedChildren();
+            const playoutResult = this.simulateRandomPlayout(nodeToExplore);
 
-            if (unexplored) {
-                path.push(unexplored.pop());
+            console.log(playoutResult);
 
-                return path;
-            }
+            // Phase 4 - Backpropogation
+            this.backpropogate(nodeToExplore, playoutResult);
 
-            node = uct(node, Math.sqrt(2));
-        }
-    }
-    */
-
-    select(node) {
-        while (node.isFullyExpanded()) {
-            node = this.uct(node, Math.sqrt(2)); // ~1.41
+            counter++;
         }
 
-        return node.getUnvisistedChildren()[0] || node;
+        const winnerNode = tree.root.getMostVisitedChild();
+
+        console.log(winnerNode);
+        tree.root = winnerNode;
+
+        this.chooseMoveEvent.trigger(winnerNode.state.game);
     }
 
-    /*
-    backpropogate(path, reward) {
-        path = path.reverse();
-        for (let i = 0; i < path.length; i++) {
-            let node = path[i];
+    selectPromisingNode(node) {
+        while (node.children.length !== 0) {
+            const tempNode = this.findBestNodeWithUCT(node);
 
-            node.visits++;
-            node.wins += reward;
+            node = tempNode;
+        }
 
-            reward = 1 - reward;
+        return node;
+    }
+
+    expandNode(node) {
+        const moves = node.state.getMoves();
+
+        for (const move of moves) {
+            node.children.push(new Node(move, node));
         }
     }
-    */
-    
-    backpropogate(node, result) {
-        let tempNode = node;
+
+    backpropogate(nodeToExplore, playerNumber) {
+        let tempNode = nodeToExplore || null;
 
         while (tempNode !== null) {
-            tempNode.visits++;
+            tempNode.state.visits++;
 
-            if (result !== -1) {
-                if (tempNode.game.player === result) {
-                    tempNode.wins++;
-                }
-                else {
-                    tempNode.wins--;
-                }
+            if (tempNode.state.playerNumber === playerNumber) {
+                tempNode.state.wins++;
+            }
+            else {
+                tempNode.state.wins--;
             }
 
-            tempNode = tempNode.parent;
+            tempNode = tempNode.parent || null;
         }
     }
 
-    /*
-    simulate(node) {
-        let invert_reward = true;
+    simulateRandomPlayout(node) {
+        const tempNode = node.clone();
 
-        while (true) {
-            if (node.game.isOver()) {
-                let reward = this.utility(node);
+        while (!tempNode.state.game.isOver()) {
+            tempNode.state.togglePlayer();
+            tempNode.state.makeRandomMove();
+        }
 
-                return invert_reward ? 1 - reward : reward;
+        return tempNode.state.game.getWinner();
+    }
+    
+    findBestNodeWithUCT(node) {
+        function uctValue(totalVisit, nodeWinScore, nodeVisit) {
+            if (nodeVisit == 0) {
+                return Number.MAX_VALUE;
             }
-
-            node.game.performRandomMove();
-            invert_reward = !invert_reward;
-        }
-    }
-    */
-
-    simulate(node) {
-        while (!node.game.isOver()) {
-            node.game.performRandomMove();
+            return (nodeWinScore / nodeVisit) + 1.41 * Math.sqrt(Math.log(totalVisit) / nodeVisit);
         }
 
-        return node.game.getWinner();
-    }
-    // UCB value
-    uct(node, c) {
-        function calculateValue(totalVisits, nodeWinScore, nodeVisits) {
-            return (nodeWinScore / nodeVisits) + c * Math.sqrt(Math.log(totalVisits / nodeVisits));
-        }
-
-        let maxUCB = Number.MIN_VALUE;
-        let bestNode = null;
+        var parentVisit = node.state.visits;
+        var childUCT = [];
         
-        for (let i = 0; i < node.children.length; i++) {
-            let ucb = calculateValue(node.visits, node.children[i].wins, node.children[i].visits);
-
-            if (ucb > maxUCB) {
-                maxUCB = ucb;
-                bestNode = node.children[i];
-            }
-        }
-
-        return bestNode;
-    }
-
-    utility(node) {
-        return node.game.player === this.player ? 1 : 0;
+        // Find the UCT of each child of the Array
+        node.children.forEach(function (child) {
+            childUCT.push(uctValue(parentVisit, child.state.wins, child.state.visits));
+        });
+        // Find the highest UCT value and index of value
+        var max = Math.max.apply(Math, childUCT);
+        var idx = childUCT.indexOf(max);
+        return idx < 0 ? null : node.children[idx];
     }
 }
