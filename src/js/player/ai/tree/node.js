@@ -9,8 +9,13 @@ export default class Node {
 
     getRandomChild() {
         const random = Math.floor(Math.random() * this.children.length);
-        //console.log(random, this.children[random]);
         return this.children[random]; // || null 
+    }
+
+    getUnvisitedChildren() {
+        return this.children.filter(child => {
+            return child.state.visits === 0;
+        });
     }
     
     getMostVisitedChild() {

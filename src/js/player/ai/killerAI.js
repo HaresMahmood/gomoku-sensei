@@ -8,7 +8,7 @@ export default class KillerAI {
         this.chooseMoveEvent = new Event();
     }
 
-    chooseMove(game, iterations = 100) {
+    chooseMove(game, iterations = 1000) {
         const tree = new Tree();
         let counter = 0;
         
@@ -30,7 +30,6 @@ export default class KillerAI {
             }
 
             const playoutResult = this.simulateRandomPlayout(nodeToExplore);
-            console.log(playoutResult);
 
             // Phase 4 - Backpropogation
             this.backpropogate(nodeToExplore, playoutResult);
@@ -54,6 +53,22 @@ export default class KillerAI {
         }
 
         return node;
+        
+        /*
+                while (true) {
+            if (!node.children.length) {
+                return node;
+            }
+
+            let unexplored = node.getUnvisitedChildren();
+
+            if (unexplored) {
+                return unexplored.at(-1);
+            }
+
+            node = this.findBestNodeWithUCT(node);
+        }
+        */
     }
 
     expandNode(node) {
@@ -62,14 +77,14 @@ export default class KillerAI {
 
             for (const move of moves) {
                 node.children.push(new Node(move, node));
-            }    
+            }     
         }
     }
 
     backpropogate(nodeToExplore, playerNumber) {
         while (nodeToExplore !== null) {
             nodeToExplore.state.visits++;
-
+             
             if (nodeToExplore.state.playerNumber === playerNumber) {
                 nodeToExplore.state.wins++;
             }
@@ -89,7 +104,7 @@ export default class KillerAI {
             node.state.makeRandomMove();
         }
 
-        const winner = node.state.game.getWinner();;
+        const winner = node.state.game.getWinner();
 
         node.state.game = original;
 
@@ -107,11 +122,10 @@ export default class KillerAI {
         var parentVisit = node.state.visits;
         var childUCT = [];
         
-        // Find the UCT of each child of the Array
         node.children.forEach(function (child) {
             childUCT.push(uctValue(parentVisit, child.state.wins, child.state.visits));
         });
-        // Find the highest UCT value and index of value
+
         var max = Math.max.apply(Math, childUCT);
         var idx = childUCT.indexOf(max);
         return idx < 0 ? null : node.children[idx];
