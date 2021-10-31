@@ -48,7 +48,7 @@ export default class Game {
       return successors;
   }
 
-    isOver() {
+    isOver(player) {
       function countConsecutivePieces(player, pieces) {
         let counter = 0;
         let last = null;
@@ -99,20 +99,16 @@ export default class Game {
         return countConsecutivePieces(player, pieces)
       }
 
-      /*
-        const horizontalCounter = checkHorizontal(this.state, this.player, this.lastRow);
-        const verticalCounter = checkVertical(this.state, this.player, this.lastColumn);
-        const diagonalCounterLeft = checkPrimaryDiagonal(this.state, this.player, this.lastRow, this.lastColumn);
-        const diagonalCounterRight = checkSecondaryDiagonal(this.state, this.player, this.lastRow, this.lastColumn);
+        const horizontalCounter = checkHorizontal(this.toMatrix(), player, Math.floor(this.lastMove / ROWS));
+        const verticalCounter = checkVertical(this.toMatrix(), player, this.lastMove % ROWS);
+        const diagonalCounterLeft = checkPrimaryDiagonal(this.toMatrix(), player, Math.floor(this.lastMove / ROWS), this.lastMove % ROWS);
+        const diagonalCounterRight = checkSecondaryDiagonal(this.toMatrix(), player, Math.floor(this.lastMove / ROWS), this.lastMove % ROWS);
 
         return horizontalCounter
         || verticalCounter
         || diagonalCounterLeft
         || diagonalCounterRight
         || this.isDraw();
-        */
-
-        return this.isDraw();
     }
 
     getWinner() {
@@ -122,12 +118,13 @@ export default class Game {
     }
 
     isDraw() {
-        return !this.state.includes(0) || !this.getEmptyCells().length;
+        return !this.state.includes(0);
     }
 
     toMatrix() {
       const matrix = [];
-      while(this.state.length) matrix.push(this.state.splice(0, ROWS));
+      const copy = _.clone(this.state);
+      while(copy.length) matrix.push(copy.splice(0, ROWS));
 
       return matrix;
     }

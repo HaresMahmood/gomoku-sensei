@@ -8,7 +8,7 @@ export default class KillerAI {
         this.chooseMoveEvent = new Event();
     }
 
-    chooseMove(game, iterations = 1) {
+    chooseMove(game, iterations = 100) {
         const tree = new Tree();
         let counter = 0;
         
@@ -84,13 +84,9 @@ export default class KillerAI {
     simulateRandomPlayout(node) {
         const original = node.state.game.clone();
 
-        console.log(node.state.game.state);
-
-        while (!node.state.game.isOver()) {
+        while (!node.state.game.isOver(node.state.playerNumber)) {
             node.state.togglePlayer();
             node.state.makeRandomMove();
-
-            console.log(node.state.game.state);
         }
 
         const winner = node.state.game.getWinner();;
