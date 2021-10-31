@@ -11,6 +11,7 @@ export default class State {
     }
 
     togglePlayer() {
+        this.game.switchPlayer();
         this.playerNumber = this.getOpponentPlayerNumber();
     }
 

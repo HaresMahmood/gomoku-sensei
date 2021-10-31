@@ -35,8 +35,6 @@ export default class KillerAI {
 
             const playoutResult = this.simulateRandomPlayout(nodeToExplore);
 
-            console.log(playoutResult);
-
             // Phase 4 - Backpropogation
             this.backpropogate(nodeToExplore, playoutResult);
 
@@ -62,27 +60,27 @@ export default class KillerAI {
     }
 
     expandNode(node) {
-        const moves = node.state.getMoves();
+        if (node.children.length === 0) {
+            const moves = node.state.getMoves();
 
-        for (const move of moves) {
-            node.children.push(new Node(move, node));
+            for (const move of moves) {
+                node.children.push(new Node(move, node));
+            }    
         }
     }
 
     backpropogate(nodeToExplore, playerNumber) {
-        let tempNode = nodeToExplore || null;
+        while (nodeToExplore !== null) {
+            nodeToExplore.state.visits++;
 
-        while (tempNode !== null) {
-            tempNode.state.visits++;
-
-            if (tempNode.state.playerNumber === playerNumber) {
-                tempNode.state.wins++;
+            if (nodeToExplore.state.playerNumber === playerNumber) {
+                nodeToExplore.state.wins++;
             }
-            else {
-                tempNode.state.wins--;
+            else if (nodeToExplore.state.playerNumber === nodeToExplore.state.getOpponentPlayerNumber()) {
+                nodeToExplore.state.wins--;
             }
 
-            tempNode = tempNode.parent || null;
+            nodeToExplore = nodeToExplore.parent;
         }
     }
 
