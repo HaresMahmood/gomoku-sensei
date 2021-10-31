@@ -1,5 +1,3 @@
-import Game from "../../../model/game.js";
-
 export default class State {
     constructor(game = null, player = 1, wins = 0.0, visits = 0) {
         this.game = game;
@@ -23,7 +21,7 @@ export default class State {
 
     getMoves() {
         let possibleMoves = [];
-        let emptyPositions = this.game.getPossibleSuccessors(this.game.state);
+        let emptyPositions = this.game.getPossibleSuccessors(2); // this.playerNumber
         let opponentPlayerNumber = this.getOpponentPlayerNumber();
     
         console.log(emptyPositions);
