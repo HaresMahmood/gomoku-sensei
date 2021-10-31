@@ -13,7 +13,7 @@ export default class KillerAI {
         let counter = 0;
         
         tree.root.state.game = game;
-        tree.root.state.playerNumber = game.player;
+        tree.root.state.playerNumber = this.playerNumber;
 
         while (counter < iterations) {
             // Phase 1 - Selection
@@ -43,7 +43,7 @@ export default class KillerAI {
         console.log(winnerNode);
         tree.root = winnerNode;
 
-        this.chooseMoveEvent.trigger(winnerNode.state.game);
+        this.chooseMoveEvent.trigger(winnerNode.state.game.lastMove);
     }
 
     selectPromisingNode(node) {
@@ -82,7 +82,7 @@ export default class KillerAI {
     }
 
     simulateRandomPlayout(node) {
-        const original = node.state.game.copyState();
+        const original = node.state.game.clone();
 
         console.log(node.state.game.state);
 
@@ -90,7 +90,7 @@ export default class KillerAI {
             node.state.togglePlayer();
             node.state.makeRandomMove();
 
-            //console.log(node.state.game.state);
+            console.log(node.state.game.state);
         }
 
         const winner = node.state.game.getWinner();;

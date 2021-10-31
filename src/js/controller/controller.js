@@ -11,7 +11,7 @@ export default class Controller {
         this.ai = new KillerAI(2);
 
         //this.model.changePlayerEvent.addListener(player => this.aiTurn(player));
-        this.ai.chooseMoveEvent.addListener(state => this.makeMove(index));
+        this.ai.chooseMoveEvent.addListener(index => this.makeMove(index));
         this.view.setCellClickHandler((index) => this.makeMove(index));
     }
 
@@ -22,10 +22,10 @@ export default class Controller {
             this.view.addPiece(index, color);
             this.model.performMove(index, this.currentPlayer);
 
-            //if (this.model.isOver()) {
-            //    this.view.endGame(color);
-            //    return;
-            //}
+            if (this.model.isOver()) {
+                this.view.endGame(color);
+                return;
+            }
 
             this.changePlayer();
         }

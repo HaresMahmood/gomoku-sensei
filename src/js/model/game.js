@@ -20,6 +20,18 @@ export default class Game {
       this.lastMove = index;
     }
 
+    getEmptyCells() {
+        const cells = [];
+
+        for (let i = 0; i < (ROWS * COLUMNS); i++) {
+            if (this.state[i] === 0) {
+                cells.push(i);
+            }
+        } 
+
+        return cells;
+    }
+
     getPossibleSuccessors(player) {
       let successors = [];
 
@@ -30,8 +42,6 @@ export default class Game {
               copy[i] = player;
 
               successors.push(new Game(copy, i));
-
-              console.log(copy, i);
           }
       }
 
@@ -112,7 +122,7 @@ export default class Game {
     }
 
     isDraw() {
-        return !this.state.includes(0);
+        return !this.state.includes(0) || !this.getEmptyCells().length;
     }
 
     toMatrix() {

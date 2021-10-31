@@ -1,13 +1,13 @@
 export default class State {
-    constructor(game = null, player = 1, wins = 0.0, visits = 0) {
+    constructor(game = null, playerNumber = 1, wins = 0.0, visits = 0) {
         this.game = game;
-        this.playerNumber = player;
+        this.playerNumber = playerNumber;
         this.wins = wins;
         this.visits = visits;
     }
 
     clone() {
-        return new this.constructor(this.game.copyState(), this.playerNumber, this.wins, this.visits);
+        return new State(this.game.clone(), this.playerNumber, this.wins, this.visits);
     }
 
     getOpponentPlayerNumber() {
@@ -15,19 +15,15 @@ export default class State {
     }
 
     togglePlayer() {
-        this.game.switchPlayer();
         this.playerNumber = this.getOpponentPlayerNumber();
     }
 
     getMoves() {
         let possibleMoves = [];
-        let emptyPositions = this.game.getPossibleSuccessors(2); // this.playerNumber
+        let emptyPositions = this.game.getPossibleSuccessors(this.playerNumber);
         let opponentPlayerNumber = this.getOpponentPlayerNumber();
-    
-        console.log(emptyPositions);
 
         for (const position of emptyPositions) {
-
             const child = new State(position, opponentPlayerNumber);
 
             possibleMoves.push(child);
@@ -37,9 +33,9 @@ export default class State {
     }
 
     makeRandomMove() {
-        const emptyPositions = this.game.getPossibleMoves();
-        const randomPosition = emptyPositions[Math.floor(Math.random() * emptyPositions.length)];
+        const emptyCells = this.game.getEmptyCells();
+        const randomCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
 
-        this.game.performMove(randomPosition, this.playerNumber);
+        this.game.performMove(randomCell, this.playerNumber);
     }
 }
