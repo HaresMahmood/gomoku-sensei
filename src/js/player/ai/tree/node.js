@@ -25,4 +25,26 @@ export default class Node {
     
         return child;
     }
+
+    getUCTValue(player) {
+        let selected = null;
+        let bestValue = Number.MIN_SAFE_INTEGER;
+
+        for (const child of this.children) {
+            const multiplier = this.state.playerNumber !== player ? 1 : -1;
+            const exploitation = (child.state.rewards / child.state.visits) * multiplier;
+            const exploration = Math.sqrt(Math.log(this.state.visits / child.state.visits));
+
+            const uctValue = exploitation + exploration;
+
+            console.log(exploitation, exploration);
+
+            if (uctValue > bestValue) {
+                selected = child;
+                bestValue = uctValue;
+            }
+        }
+        
+        return selected;
+    }
 }
