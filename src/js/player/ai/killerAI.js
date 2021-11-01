@@ -22,17 +22,14 @@ export default class KillerAI {
             this.expandNode(promisingNode);
 
             // Phase 3 - Simulation
-            let nodeToExplore = promisingNode;
-            
             if (promisingNode.children.length > 0) {
-                console.log(true);
-                nodeToExplore = promisingNode.getRandomChild();
+                promisingNode = promisingNode.getRandomChild();
             }
 
-            const playoutResult = this.simulateRandomPlayout(nodeToExplore);
+            const playoutResult = this.simulateRandomPlayout(promisingNode);
 
             // Phase 4 - Backpropogation
-            this.backpropogate(nodeToExplore, playoutResult);
+            this.backpropogate(promisingNode, playoutResult);
 
             counter++;
         }
