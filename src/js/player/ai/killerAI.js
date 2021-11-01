@@ -8,7 +8,7 @@ export default class KillerAI {
         this.chooseMoveEvent = new Event();
     }
 
-    chooseMove(game, iterations = 1000) {
+    chooseMove(game, iterations = 100) {
         const tree = new Tree();
         let counter = 0;
         
@@ -85,10 +85,10 @@ export default class KillerAI {
         while (nodeToExplore !== null) {
             nodeToExplore.state.visits++;
              
-            if (nodeToExplore.state.playerNumber === playerNumber) {
+            if (playerNumber === nodeToExplore.state.playerNumber) {
                 nodeToExplore.state.wins++;
             }
-            else if (nodeToExplore.state.playerNumber === nodeToExplore.state.getOpponentPlayerNumber()) {
+            else if (playerNumber === nodeToExplore.state.getOpponentPlayerNumber()) {
                 nodeToExplore.state.wins--;
             }
 
