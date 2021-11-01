@@ -1,5 +1,4 @@
 import Event from "../../utility/event.js";
-import Tree from "./tree/tree.js";
 import Node from "./tree/node.js";
 
 export default class KillerAI {
@@ -9,15 +8,15 @@ export default class KillerAI {
     }
 
     chooseMove(game, iterations = 100) {
-        const tree = new Tree();
+        const root = new Node();
         let counter = 0;
         
-        tree.root.state.game = game;
-        tree.root.state.playerNumber = this.playerNumber;
+        root.state.game = game;
+        root.state.playerNumber = this.playerNumber;
 
         while (counter < iterations) {
             // Phase 1 - Selection
-            const promisingNode = this.selectPromisingNode(tree.root);
+            const promisingNode = this.selectPromisingNode(root);
 
             // Phase 2 - Expansion
             this.expandNode(promisingNode);
@@ -26,6 +25,7 @@ export default class KillerAI {
             let nodeToExplore = promisingNode;
             
             if (promisingNode.children.length > 0) {
+                console.log(true);
                 nodeToExplore = promisingNode.getRandomChild();
             }
 
@@ -37,10 +37,9 @@ export default class KillerAI {
             counter++;
         }
 
-        const winnerNode = tree.root.getMostVisitedChild();
+        const winnerNode = root.getMostVisitedChild();
 
         console.log(winnerNode);
-        tree.root = winnerNode;
 
         this.chooseMoveEvent.trigger(winnerNode.state.game.lastMove);
     }
