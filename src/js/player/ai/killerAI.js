@@ -7,7 +7,7 @@ export default class KillerAI {
         this.chooseMoveEvent = new Event();
     }
 
-    chooseMove(game, iterations = 1) {
+    chooseMove(game, iterations = 100) {
         const root = new Node();
         let counter = 0;
         

@@ -111,25 +111,11 @@ export default class Game {
         || this.isDraw();
     }
 
-    getRewards(player) {
-      const rewards = new Array(2).fill(0);
+    getUtility(player) {
+      const multiplier = player === this.state[this.lastMove] ? 1 : -1;
+      const utility = this.isDraw() ? 0.5 : 1 * multiplier;
 
-      if (this.isDraw()) {
-        rewards[0] = 0.5;
-        rewards[1] = 0.5;
-      }
-      else {
-        if (this.state[this.lastMove] === 1) {
-          rewards[0] = 1.0;
-          rewards[1] = 0.0;
-        }
-        else {
-          rewards[0] = 0.0;
-          rewards[1] = 1.0;
-        }
-      }
-
-      return rewards;
+      return utility;
     }
 
     getWinner() {

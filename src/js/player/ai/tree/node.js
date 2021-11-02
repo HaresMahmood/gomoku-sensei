@@ -17,24 +17,26 @@ export default class Node {
             visited.push(current);
         }
 
-        let rewards;
+        let utility;
 
         if (current.state.game.isOver()) {
-            rewards = current.state.game.getRewards(current.state.playerNumber);
+            utility = current.state.game.getUtility(current.state.playerNumber);
         }
         else {
             current.expand();
 
             const newNode = current.select();
 
-            rewards = this.simulate(newNode.state);
+            utility = this.simulate(newNode.state);
         }
 
         for (const node of visited) {
-            node.updateStats(rewards);
+            node.updateStats(utility);
         }
 
-        this.updateStats(rewards);
+        console.log(utility);
+
+        this.updateStats(utility);
     }
 
     select() {
@@ -42,11 +44,9 @@ export default class Node {
         let bestValue = Number.MIN_SAFE_INTEGER;
 
         for (const child of this.children) {
-            const exploitation = child.state.rewards[child.state.playerNumber - 1] / child.state.visits;
+            const exploitation = child.state.wins / child.state.visits;
             const exploration = Math.sqrt(2) * Math.sqrt(Math.log(this.state.visits) / child.state.visits);
             const uctValue = exploitation + exploration;
-
-            //console.log(child.state, uctValue);
 
             if (uctValue > bestValue) {
                 selected = child;
@@ -74,18 +74,17 @@ export default class Node {
             state.makeRandomMove();
         }
 
-        const rewards = state.game.getRewards(this.state.playerNumber);
+        const utility = state.game.getUtility(this.state.playerNumber);
         state.game = original;
 
-        return rewards;
+        return utility;
     }
 
     /* Helper methods */
 
-    updateStats(rewards) {
+    updateStats(utility) {
         this.state.visits++;
-        this.state.rewards[0] = rewards[0];
-        this.state.rewards[1] = rewards[1];
+        this.state.wins += utility;
     }
 
     isLeaf() {
