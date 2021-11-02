@@ -1,11 +1,13 @@
 import State from "./state.js";
 
 export default class Node {
-    constructor(state = new State(), parent = null, children = null) {
+    constructor(state = new State(), parent = null, children = new Set()) {
         this.state = state;
         this.parent = parent;
         this.children = children;
     }
+
+    /*
 
     selectAction() {
         const visited = [];
@@ -27,7 +29,7 @@ export default class Node {
 
             const newNode = current.select();
 
-            utility = this.simulate(newNode.state);
+            utility = newNode.rollout();
         }
 
         for (const node of visited) {
@@ -39,6 +41,8 @@ export default class Node {
         this.updateStats(utility);
     }
 
+    */
+
     select() {
         let selected = this.children[0];
         let bestValue = Number.MIN_SAFE_INTEGER;
@@ -47,6 +51,8 @@ export default class Node {
             const exploitation = child.state.wins / child.state.visits;
             const exploration = Math.sqrt(2) * Math.sqrt(Math.log(this.state.visits) / child.state.visits);
             const uctValue = exploitation + exploration;
+
+            //console.log(exploitation, exploration);
 
             if (uctValue > bestValue) {
                 selected = child;
@@ -58,24 +64,22 @@ export default class Node {
     }
 
     expand() {
-        const moves = this.state.getMoves();
-        this.children = [];
+        const child = new Node(this.state.getRandomMove(), this);
+        this.children.add(child)
 
-        for (const move of moves) {        
-            this.children.push(new Node(move, this));
-        }
+        return child;
     }
 
-    simulate(state) {
-        const original = state.game.clone();
+    rollout() {
+        const original = this.state.game.clone();
 
-        while (!state.game.isOver(state.playerNumber)) {
-            state.togglePlayer();
-            state.makeRandomMove();
+        while (!this.state.game.isOver(this.state.playerNumber)) {
+            this.state.togglePlayer();
+            this.state.makeRandomMove();
         }
 
-        const utility = state.game.getUtility(this.state.playerNumber);
-        state.game = original;
+        const utility = this.state.game.getUtility(this.state.playerNumber);
+        this.state.game = original;
 
         return utility;
     }
@@ -88,7 +92,7 @@ export default class Node {
     }
 
     isLeaf() {
-        return this.children === null;
+        return this.children.size === 0;
     }
    
     getRandomChild() {
@@ -103,8 +107,8 @@ export default class Node {
     }
     
     getMostVisitedChild() {
-        let child = this.children.reduce((x, y) => {
-            return x.state.visits > y.state.visits ? x : y;
+        let child = [...this.children].reduce((x, y) => {
+            return (x.state.wins / x.state.visits) > (y.state.wins / y.state.visits) ? x : y;
         });
     
         return child;

@@ -111,13 +111,6 @@ export default class Game {
         || this.isDraw();
     }
 
-    getUtility(player) {
-      const multiplier = player === this.state[this.lastMove] ? 1 : -1;
-      const utility = this.isDraw() ? 0.5 : 1 * multiplier;
-
-      return utility;
-    }
-
     getWinner() {
       let winner = this.isDraw() ? -1 : this.state[this.lastMove];
 

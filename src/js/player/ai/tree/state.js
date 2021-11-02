@@ -32,6 +32,11 @@ export default class State {
         return possibleMoves;
     }
 
+    getRandomMove() {
+        const moves = this.getMoves();
+        return moves[Math.floor(Math.random() * moves.length)];
+    }
+
     makeRandomMove() {
         const emptyCells = this.game.getEmptyCells();
         const randomCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
