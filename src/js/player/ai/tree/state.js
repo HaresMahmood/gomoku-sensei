@@ -1,9 +1,10 @@
 export default class State {
-    constructor(game = null, playerNumber = 1, wins = 0.0, visits = 0) {
+    constructor(game = null, playerNumber = 1, wins = 0.0, visits = 0, untriedMoves = null) {
         this.game = game;
         this.playerNumber = playerNumber;
         this.wins = wins;
         this.visits = visits;
+        this.untriedMoves = untriedMoves;
     }
 
     clone() {
@@ -18,23 +19,14 @@ export default class State {
         this.playerNumber = this.getOpponentPlayerNumber();
     }
 
-    getMoves() {
-        let possibleMoves = [];
-        let emptyPositions = this.game.getPossibleSuccessors(this.playerNumber);
-        let opponentPlayerNumber = this.getOpponentPlayerNumber();
-
-        for (const position of emptyPositions) {
-            const child = new State(position, opponentPlayerNumber);
-
-            possibleMoves.push(child);
-        }
-
-        return possibleMoves;
-    }
-
     getRandomMove() {
-        const moves = this.getMoves();
-        return moves[Math.floor(Math.random() * moves.length)];
+        const untriedMove = this.untriedMoves[Math.floor(Math.random() * this.untriedMoves.length)];
+        const untriedState = this.game.getSuccessorFromMove(untriedMove, this.playerNumber);
+        const move = new State(untriedState, this.getOpponentPlayerNumber);
+
+        this.untriedMoves.splice(this.untriedMoves[untriedMove], 1);
+
+        return move;
     }
 
     makeRandomMove() {
