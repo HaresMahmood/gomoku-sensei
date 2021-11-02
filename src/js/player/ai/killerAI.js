@@ -7,6 +7,27 @@ export default class KillerAI {
         this.chooseMoveEvent = new Event();
     }
 
+    chooseMove(game, iterations = 1) {
+        const root = new Node();
+        let counter = 0;
+        
+        root.state.game = game;
+        root.state.playerNumber = this.playerNumber;
+
+        while (counter < iterations) {
+            root.selectAction();
+
+            counter++;
+        }
+
+        const winnerNode = root.getMostVisitedChild();
+
+        console.log(winnerNode);
+
+        this.chooseMoveEvent.trigger(winnerNode.state.game.lastMove);
+    }
+
+    /*
     chooseMove(game, iterations = 100) {
         const root = new Node();
         let counter = 0;
@@ -51,7 +72,7 @@ export default class KillerAI {
         return node;
         
         /*
-                while (true) {
+            while (true) {
             if (!node.children.length) {
                 return node;
             }
@@ -64,7 +85,6 @@ export default class KillerAI {
 
             node = this.findBestNodeWithUCT(node);
         }
-        */
     }
 
     expandNode(node) {
@@ -126,4 +146,5 @@ export default class KillerAI {
         var idx = childUCT.indexOf(max);
         return idx < 0 ? null : node.children[idx];
     }
+    */
 }

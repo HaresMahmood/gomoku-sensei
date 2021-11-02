@@ -1,8 +1,8 @@
 export default class State {
-    constructor(game = null, playerNumber = 1, wins = 0.0, visits = 0) {
+    constructor(game = null, playerNumber = 1, wins = 0, visits = 0) {
         this.game = game;
         this.playerNumber = playerNumber;
-        this.wins = wins;
+        this.rewards = rewards;
         this.visits = visits;
     }
 
