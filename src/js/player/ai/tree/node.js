@@ -1,7 +1,7 @@
 import State from "./state.js";
 
 export default class Node {
-    constructor(state = new State(), parent = null, children = []) {
+    constructor(state = new State(), parent = null, children = new Set()) {
         this.state = state;
         this.parent = parent;
         this.children = children;
@@ -65,7 +65,7 @@ export default class Node {
 
     expand() {
         const child = new Node(this.state.getRandomMove(), this);
-        this.children.push(child);
+        this.children.add(child)
 
         return child;
     }
@@ -78,10 +78,10 @@ export default class Node {
             this.state.makeRandomMove();
         }
 
-        const winner = this.state.game.getWinner();
+        const utility = this.state.game.getUtility(this.state.playerNumber);
         this.state.game = original;
 
-        return winner;
+        return utility;
     }
 
     /* Helper methods */
@@ -89,6 +89,10 @@ export default class Node {
     updateStats(utility) {
         this.state.visits++;
         this.state.wins += utility;
+    }
+
+    isLeaf() {
+        return this.children.size === 0;
     }
    
     getRandomChild() {
@@ -103,7 +107,7 @@ export default class Node {
     }
     
     getMostVisitedChild() {
-        let child = this.children.reduce((x, y) => {
+        let child = [...this.children].reduce((x, y) => {
             return (x.state.wins / x.state.visits) > (y.state.wins / y.state.visits) ? x : y;
         });
     

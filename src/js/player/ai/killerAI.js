@@ -7,25 +7,23 @@ export default class KillerAI {
         this.chooseMoveEvent = new Event();
     }
 
-    chooseMove(game, iterations = 2) {
+    chooseMove(game, iterations = 10) {
         const root = new Node();
         let counter = 0;
         
         root.state.game = game;
         root.state.playerNumber = this.playerNumber;
-        root.state.untriedMoves = root.state.game.getEmptyCells();
 
         while (counter < iterations) {
             let node = this.select(root); // Selection.
 
-            if (node.state.untriedMoves != [] 
-                && !node.state.game.isOver()) {
+            if (!node.state.game.isOver()) {
                 node = node.expand(); // Expansion.
             }
 
-            let winner = node.rollout(); // Simulation.
+            let utility = node.rollout(); // Simulation.
 
-            this.backpropogate(node, winner); // Backpropogation.
+            this.backpropogate(node, utility); // Backpropogation.
 
             counter++;
         }
@@ -38,27 +36,16 @@ export default class KillerAI {
     }
 
     select(node) {
-        while (node.state.untriedMoves === []
-               && node.chilren != []
-               && !node.state.game.isOver()) {
-            console.log(node);
+        while (!node.isLeaf() && !node.state.game.isOver()) {
             node = node.select(); // UCT.
         }
 
         return node;
     }
 
-    backpropogate(node, winner) {
-        let result = -1;
+    backpropogate(node, utility) {
         while (node !== null) {
-            if (winner === node.state.playerNumber) {
-                result = 1;
-            }
-            else if (winner === -1) {
-                result = 0;
-            }
-
-            node.updateStats(result);
+            node.updateStats(utility);
             node = node.parent;
         }
     }

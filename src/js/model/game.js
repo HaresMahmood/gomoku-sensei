@@ -32,14 +32,6 @@ export default class Game {
         return cells;
     }
 
-    getSuccessorFromMove(move, player) {
-      const copy = _.clone(this.state);
-
-      copy[move] = player;
-      
-      return new Game(copy, move);
-    }
-
     getPossibleSuccessors(player) {
       let successors = [];
 
