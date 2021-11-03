@@ -1,7 +1,7 @@
 import State from "./state.js";
 
 export default class Node {
-    constructor(state = new State(), parent = null, children = new Set()) {
+    constructor(state = new State(), parent = null, children = []) {
         this.state = state;
         this.parent = parent;
         this.children = children;
@@ -43,16 +43,20 @@ export default class Node {
 
     */
 
-    select() {
+    select(playerNumber) {
         let selected = this.children[0];
         let bestValue = Number.MIN_SAFE_INTEGER;
 
         for (const child of this.children) {
-            const exploitation = child.state.wins / child.state.visits;
-            const exploration = Math.sqrt(2) * Math.sqrt(Math.log(this.state.visits) / child.state.visits);
-            const uctValue = exploitation + exploration;
+            const multiplier = this.state.playerNumber === playerNumber ? 1 : -1;
+            const exploitation = ((child.state.wins / child.state.visits) * multiplier) || 0; // Change `NaN` to 0 (0 wins / 0 visits).
+            const exploration = (2 * Math.sqrt(Math.log(this.state.visits) / child.state.visits)); // Change `undefined` to `Infinity` (log(0 parent visits))
+            const uctValue = exploitation + exploration || Infinity;
 
-            //console.log(exploitation, exploration);
+            //console.log(child.state.wins, child.state.visits);
+            //console.log(this.state.visits, 2 * Math.sqrt(Math.log(this.state.visits) / child.state.visits));
+            //console.log(uctValue);
+            //console.log(" ");
 
             if (uctValue > bestValue) {
                 selected = child;
@@ -64,10 +68,13 @@ export default class Node {
     }
 
     expand() {
-        const child = new Node(this.state.getRandomMove(), this);
-        this.children.add(child)
+        const moves = this.state.getMoves();
 
-        return child;
+        for (const move of moves) {
+            this.children.push(new Node(move, this));
+        }
+
+        return this.children[0]; // || this;
     }
 
     rollout() {
@@ -78,10 +85,10 @@ export default class Node {
             this.state.makeRandomMove();
         }
 
-        const utility = this.state.game.getUtility(this.state.playerNumber);
+        const result = this.state.game.getWinner();
         this.state.game = original;
 
-        return utility;
+        return result;
     }
 
     /* Helper methods */
@@ -92,18 +99,7 @@ export default class Node {
     }
 
     isLeaf() {
-        return this.children.size === 0;
-    }
-   
-    getRandomChild() {
-        const random = Math.floor(Math.random() * this.children.length);
-        return this.children[random]; // || null 
-    }
-
-    getUnvisitedChildren() {
-        return this.children.filter(child => {
-            return child.state.visits === 0;
-        });
+        return this.children.length === 0;
     }
     
     getMostVisitedChild() {

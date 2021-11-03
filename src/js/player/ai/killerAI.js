@@ -7,45 +7,60 @@ export default class KillerAI {
         this.chooseMoveEvent = new Event();
     }
 
-    chooseMove(game, iterations = 10) {
+    chooseMove(game, iterations = 100) {
         const root = new Node();
         let counter = 0;
         
         root.state.game = game;
         root.state.playerNumber = this.playerNumber;
+        root.expand();
 
         while (counter < iterations) {
-            let node = this.select(root); // Selection.
+            let current = this.select(root); // Selection.
+            let result;
 
-            if (!node.state.game.isOver()) {
-                node = node.expand(); // Expansion.
+            if (current.state.game.isOver()) {
+                result = current.state.game.getWinner();
+            }
+            else {
+                if (current.state.visits > 0) {
+                    current = current.expand(); // Expansion.
+                }
+
+                result = current.rollout(); // Simulation.
             }
 
-            let utility = node.rollout(); // Simulation.
-
-            this.backpropogate(node, utility); // Backpropogation.
+            this.backpropogate(current, result); // Backpropogation.
 
             counter++;
         }
 
         const winnerNode = root.getMostVisitedChild();
 
-        console.log(winnerNode);
+        //console.log(winnerNode);
 
         this.chooseMoveEvent.trigger(winnerNode.state.game.lastMove);
     }
 
     select(node) {
-        while (!node.isLeaf() && !node.state.game.isOver()) {
-            node = node.select(); // UCT.
+        while (!node.isLeaf()) { // && !node.state.game.isOver()
+            node = node.select(this.playerNumber); // UCT.
         }
 
         return node;
     }
 
-    backpropogate(node, utility) {
+    backpropogate(node, result) {
         while (node !== null) {
-            node.updateStats(utility);
+            let utility = -1;
+            if (result === node.state.playerNumber) {
+                utility = 1;
+            }
+            else if (result === -1) {
+                utility = 0;
+            }
+
+            node.updateStats(result);
             node = node.parent;
         }
     }
