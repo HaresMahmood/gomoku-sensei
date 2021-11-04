@@ -7,7 +7,7 @@ export default class KillerAI {
         this.chooseMoveEvent = new Event();
     }
 
-    chooseMove(game, iterations = 500) {
+    chooseMove(game, iterations = 100) {
         const root = new Node();
         let counter = 0;
         
@@ -37,7 +37,7 @@ export default class KillerAI {
 
         const winnerNode = root.getMostVisitedChild();
 
-        //console.log(winnerNode);
+        console.log(root);
 
         this.chooseMoveEvent.trigger(winnerNode.state.game.lastMove);
     }

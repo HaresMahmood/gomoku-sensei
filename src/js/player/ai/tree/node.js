@@ -45,22 +45,22 @@ export default class Node {
 
     select(playerNumber) {
         let selected = this.children[0];
-        const currentPlayerNumber = selected.state.playerNumber;
-        const defaultValue = currentPlayerNumber === playerNumber ? Infinity : -Infinity;
-        let bestValue = currentPlayerNumber === playerNumber ? -Infinity : Infinity;
+        const isAIPlayer = selected.state.playerNumber === playerNumber;
+        let bestValue = isAIPlayer ? -Infinity : Infinity;
 
         for (const child of this.children) {
             const exploitation = (child.state.wins / child.state.visits) || 0; // Change `NaN` to 0 (0 wins / 0 visits).
-            let exploration = 2 * Math.sqrt(Math.log(this.state.visits) / child.state.visits); // Change `undefined` to `Infinity` (log(0 parent visits))
-            exploration = isNaN(exploration) || exploration === Infinity ? defaultValue : exploration;
+            let exploration = 2 * Math.sqrt(Math.log(this.state.visits) / child.state.visits); 
+            exploration = isNaN(exploration) ? Infinity : exploration; // Change `NaN` to `Infinity` (log(0 parent visits)).
             
-            const uctValue = exploitation + exploration 
+            const uctValue = isAIPlayer ? exploitation + exploration 
+                                          : exploitation - exploration;
 
             //console.log(child, uctValue, bestValue);
             //console.log(exploitation, exploration);
 
-            if ((currentPlayerNumber === playerNumber && uctValue > bestValue)
-              || currentPlayerNumber !== playerNumber && uctValue < bestValue) {
+            if ((isAIPlayer && uctValue > bestValue)
+             || (!isAIPlayer && uctValue < bestValue)) {
                 selected = child;
                 bestValue = uctValue;
             }
@@ -111,7 +111,7 @@ export default class Node {
     
     getMostVisitedChild() {
         let child = this.children.reduce((x, y) => {
-            return (x.state.wins / x.state.visits) > (y.state.wins / y.state.visits) ? x : y;
+            return (x.state.wins / x.state.visits || 0) > (y.state.wins / y.state.visits || 0) ? x : y;
         });
     
         return child;
