@@ -44,12 +44,11 @@ export default class Node {
     */
 
     select(playerNumber) {
-        let selected = this.children[0];
-        let bestValue = Number.MIN_SAFE_INTEGER;
+        const values = [];
 
         for (const child of this.children) {
-            const multiplier = this.state.playerNumber === playerNumber ? 1 : -1;
-            const exploitation = ((child.state.wins / child.state.visits) * multiplier) || 0; // Change `NaN` to 0 (0 wins / 0 visits).
+            //const multiplier = this.state.playerNumber === playerNumber ? 1 : -1;
+            const exploitation = (child.state.wins / child.state.visits) || 0; // Change `NaN` to 0 (0 wins / 0 visits).
             const exploration = (2 * Math.sqrt(Math.log(this.state.visits) / child.state.visits)); // Change `undefined` to `Infinity` (log(0 parent visits))
             const uctValue = exploitation + exploration || Infinity;
 
@@ -57,13 +56,14 @@ export default class Node {
             //console.log(this.state.visits, 2 * Math.sqrt(Math.log(this.state.visits) / child.state.visits));
             //console.log(uctValue);
             //console.log(" ");
-
-            if (uctValue > bestValue) {
-                selected = child;
-                bestValue = uctValue;
-            }
+            values.push(uctValue);
         }
-        
+
+        const bestValue = this.children[0].state.playerNumber === playerNumber ? Math.max(...values) : Math.min(...values);
+        const selected = this.children[values.indexOf(bestValue)]; // Returns first child by default.
+
+        console.log(this.children[0].state.playerNumber, values.indexOf(bestValue));
+
         return selected;
     }
 
