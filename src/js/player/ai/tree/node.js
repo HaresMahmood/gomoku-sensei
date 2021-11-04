@@ -54,7 +54,7 @@ export default class Node {
             exploration = isNaN(exploration) ? Infinity : exploration; // Change `NaN` to `Infinity` (log(0 parent visits)).
             
             const uctValue = isAIPlayer ? exploitation + exploration 
-                                          : exploitation - exploration;
+                                        : exploitation - exploration;
 
             //console.log(child, uctValue, bestValue);
             //console.log(exploitation, exploration);
