@@ -7,12 +7,12 @@ export default class KillerAI {
         this.chooseMoveEvent = new Event();
     }
 
-    chooseMove(game, iterations = 3) {
+    chooseMove(game, iterations = 500) {
         const root = new Node();
         let counter = 0;
         
         root.state.game = game;
-        root.state.playerNumber = this.playerNumber === 1 ? 2 : 1;
+        root.state.playerNumber = this.playerNumber;
         root.expand();
 
         while (counter < iterations) {
@@ -60,7 +60,7 @@ export default class KillerAI {
                 utility = 0;
             }
 
-            node.updateStats(result);
+            node.updateStats(utility);
             node = node.parent;
         }
     }
