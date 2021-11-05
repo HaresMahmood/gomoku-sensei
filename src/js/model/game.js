@@ -48,7 +48,11 @@ export default class Game {
       return successors;
   }
 
-    isOver(player) {
+  isOver(player) {
+    return this.hasWon(player) || this.isDraw();
+  }
+
+    hasWon(player) {
       function countConsecutivePieces(player, pieces) {
         let counter = 0;
         let last = null;
@@ -107,12 +111,12 @@ export default class Game {
         return horizontalCounter
         || verticalCounter
         || diagonalCounterLeft
-        || diagonalCounterRight
-        || this.isDraw();
+        || diagonalCounterRight;
     }
 
     getWinner() {
-      let winner = this.isDraw() ? -1 : this.state[this.lastMove];
+      const player = this.state[this.lastMove]; // TODO: Fix this - `player` should be passed in as a parameter.
+      let winner = this.hasWon(player) ? player : -1;
 
       return winner;
     }
