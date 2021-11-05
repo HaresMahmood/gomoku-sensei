@@ -8,7 +8,7 @@ export default class Controller {
 
         this.currentPlayer = 1;
 
-        this.ai = new SimulationAI(2);
+        this.ai = new KillerAI(2);
 
         //this.model.changePlayerEvent.addListener(player => this.aiTurn(player));
         this.ai.chooseMoveEvent.addListener(index => this.makeMove(index));

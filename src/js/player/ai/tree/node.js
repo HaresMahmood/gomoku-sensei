@@ -45,7 +45,7 @@ export default class Node {
 
     select(playerNumber) {
         let selected = this.children[0];
-        const isAIPlayer = selected.state.playerNumber === playerNumber;
+        const isAIPlayer = selected.state.playerNumber !== playerNumber;
         let bestValue = isAIPlayer ? -Infinity : Infinity;
 
         for (const child of this.children) {

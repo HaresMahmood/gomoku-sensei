@@ -7,7 +7,7 @@ export default class KillerAI {
         this.chooseMoveEvent = new Event();
     }
 
-    chooseMove(game, iterations = 100) {
+    chooseMove(game, iterations = 500) {
         const root = new Node();
         let counter = 0;
         
@@ -51,15 +51,16 @@ export default class KillerAI {
     }
 
     backpropogate(node, result) {
-        while (node !== null) {
-            let utility = -1;
-            if (result === node.state.playerNumber) {
-                utility = 1;
-            }
-            else if (result === -1) {
-                utility = 0;
-            }
+        let utility = -1;
 
+        if (result === this.playerNumber) {
+            utility = 1;
+        }
+        else if (result === -1) {
+            utility = 0;
+        }
+
+        while (node !== null) {
             node.updateStats(utility);
             node = node.parent;
         }
