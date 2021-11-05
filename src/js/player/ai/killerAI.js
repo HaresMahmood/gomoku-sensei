@@ -38,6 +38,7 @@ export default class KillerAI {
         const winnerNode = root.getMostVisitedChild();
 
         console.log(root);
+        console.log(winnerNode);
 
         this.chooseMoveEvent.trigger(winnerNode.state.game.lastMove);
     }
