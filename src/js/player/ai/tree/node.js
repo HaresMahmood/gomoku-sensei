@@ -83,20 +83,55 @@ export default class Node {
     }
 
     rollout() {
+        const clone = this.state.clone();
+        
+        //console.log(clone.game.toMatrix());
+
+        if (clone.game.isOver()) {
+            const result = clone.game.getWinner();
+
+            console.log(true);
+            //console.log(clone.game.toMatrix(), result);
+    
+            return result;
+        }
+
+        while (true) {
+            clone.makeRandomMove();
+
+            //console.log(clone.game.toMatrix());
+
+            if (clone.game.isOver()) {
+                const result = clone.game.getWinner();
+
+                //console.log(clone.game.toMatrix(), result);
+        
+                return result;
+            }
+
+            clone.togglePlayer();
+        }
+    }
+
+    /*
         const original = this.state.game.clone();
         const originalPlayer = this.state.playerNumber;
 
         while (!this.state.game.isOver(this.state.playerNumber)) {
-            this.state.togglePlayer();
+            console.log(this.state.game.toMatrix());
             this.state.makeRandomMove();
+            this.state.togglePlayer();
         }
 
         const result = this.state.game.getWinner();
+
+        //console.log(this.state.game.toMatrix(), result);
+
         this.state.game = original;
         this.state.playerNumber = originalPlayer;
 
         return result;
-    }
+    */
 
     /* Helper methods */
 

@@ -48,7 +48,9 @@ export default class Game {
       return successors;
   }
 
-  isOver(player) {
+  isOver() {
+    const player = this.state[this.lastMove]; // TODO: Think of better way of doing this.
+    
     return this.hasWon(player) || this.isDraw();
   }
 

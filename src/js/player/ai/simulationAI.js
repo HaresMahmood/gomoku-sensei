@@ -20,7 +20,7 @@ export default class SimulationAI {
                 const result = child.rollout();
                 let utility = -1;
 
-                if (result === child.state.playerNumber) {
+                if (result === this.playerNumber) {
                     utility = 1;
                 }
                 else if (result === -1) {
