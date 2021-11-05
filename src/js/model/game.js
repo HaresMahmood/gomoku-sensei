@@ -1,5 +1,6 @@
-const ROWS = 3;
-const COLUMNS = 3;
+const ROWS = 15;
+const COLUMNS = ROWS;
+const N = 5;
 
 export default class Game {
     constructor(state = new Array(ROWS * COLUMNS).fill(0), lastMove = -1) {
@@ -70,7 +71,7 @@ export default class Game {
           last = pieces[i]
         }
 
-        return counter >= 3;
+        return counter >= N;
       }
 
       function checkHorizontal(board, player, row) {
