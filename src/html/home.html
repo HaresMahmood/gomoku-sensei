@@ -1,39 +1,42 @@
 <!DOCTYPE html>
 <html lang="en" >
-<head>
-  <meta charset="UTF-8">
-  <title>Home</title>
+    <head>
+        <title>Home</title>
 
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons+Outlined'>
-  <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Spartan:wght@500;600;800&amp;display=swap'>
-  <link rel="stylesheet" href="../css/home.css">
-</head>
-<body>
-<!-- partial:index.partial.html -->
-<nav>
-  <span class="material-icons-outlined">
-    menu
-  </span>
-    <h3> Home </h3>
-</nav>
+        <link rel='stylesheet' href='https://fonts.googleapis.com/icon?family=Material+Icons+Round'>
+        <link rel='stylesheet' href='https://fonts.googleapis.com/css2?family=Spartan:wght@500;600;800&amp;display=swap'>
+        <link rel="stylesheet" href="../css/home.css">
+    </head>
+    <body>
+        <nav>
+            <span class="material-icons-round"> menu </span>
+            <h3> Home </h3>
+        </nav>
 
-<main>
-  <section class="watermark__container left-align__container">
-    <h1 class="watermark__text"> Gomoku </h1>
-  </section>
-  
-  <section class"center__container"> 
-    Form
-  </section>
-  
-  <section class="watermark__container right-align__container">
-    <h1 class="watermark__text"> 五目並べ </h1>
-  </section>
-</main>
-<!-- partial -->
-  
-</body>
+        <main>
+            <section class="watermark__container left-align__container">
+                <h1 class="watermark__text"> Gomoku </h1>
+            </section>
+            
+            <section class="center__container"> 
+                <div class="input__container">
+                    <label for="player-1"> Player 1 </label>
+                    <select name="player-1" id="player-1">
+                        <option value="human"> Human </option>
+                        <option value="easy-ai"> Easy AI </option>
+                        <option value="killer-ai"> Killer AI </option>
+                        <option value="dynamic-ai"> Dynamic AI </option>
+                    </select>
+                </div>
+            </section>
+            
+            <section class="watermark__container right-align__container">
+                <h1 class="watermark__text"> 五目並べ </h1>
+            </section>
+        </main>
+    </body>
 </html>
 
