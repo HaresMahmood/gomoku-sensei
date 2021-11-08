@@ -1,12 +1,16 @@
 @import "https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css";
 @import "https://res.cloudinary.com/finnhvman/raw/upload/matter/matter-0.2.2.css";
 
+@import "https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css";
+
 @import "https://fonts.googleapis.com/icon?family=Material+Icons+Round";
 @import "https://fonts.googleapis.com/css2?family=Spartan:wght@500;600;800&amp;display=swap";
 
 :root {
     --background: #DBDBD9;
+    --faded-background: #6e6e6e40;
     --black: #2A2E39;
+    --red: #DD2436;
   }
   
   * {
@@ -16,6 +20,24 @@
     
     font-family: "Spartan";
   }
+
+  /*
+
+
+  select {
+    width: 100%;
+    padding: 15px;
+
+    border: none;
+    background: var(--faded-background);
+
+    font-size: 1.75vmax;
+    overflow: visible !important;
+
+    position: relative;
+}
+*/
+
   
   h1 {
     margin: 0;
@@ -106,3 +128,7 @@
     align-items: center;
   }
 
+  main .center__container {
+    display: flex;
+    flex-direction: row;
+  }
