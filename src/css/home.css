@@ -1,4 +1,5 @@
-@import 'https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css';
+@import "https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css";
+@import "https://res.cloudinary.com/finnhvman/raw/upload/matter/matter-0.2.2.css"
 
 :root {
     --background: #DBDBD9;
@@ -102,4 +103,3 @@
     align-items: center;
   }
 
-  
