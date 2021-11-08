@@ -1,3 +1,5 @@
+@import 'https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css';
+
 :root {
     --background: #DBDBD9;
     --black: #2A2E39;
@@ -12,10 +14,12 @@
   }
   
   h1 {
-    line-height: 280px;
     margin: 0;
+    padding: 0;
+
+    max-width: 90vw;
     
-    font-size: 180px;
+    font-size: min(17.5vh, 17.5vw);
     font-weight: 800;
     color: var(--black);
   }
@@ -26,7 +30,7 @@
   }
   
   .watermark__text {
-    opacity: 0.055;
+    opacity: 0.06;
   }
   
   
@@ -87,6 +91,8 @@
   }
   
   main {
+    padding-top: max(1vh, 1vw);
+    
     height: 100%;
     
     flex: 1 1 auto;
