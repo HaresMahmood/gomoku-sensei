@@ -131,16 +131,14 @@
     width: 100%;
 
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    flex-flow: row wrap;
+    justify-content: center;
   }
 
-  main .top__container {
-    width: 100%;
-
+  main .button__container {
+    flex-basis: 100%;
     display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: center;
   }
 
   main .input__container {
@@ -150,5 +148,5 @@
   }
 
   .input__container .mdl-textfield {
-    width: -webkit-fill-available;
+    /* width: 100%; */
   }
