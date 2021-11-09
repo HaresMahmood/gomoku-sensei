@@ -6658,6 +6658,8 @@
      font-size: 12px
  }
  
+/*
+
  .mdl-textfield__label:after {
      background-color: rgb(63, 81, 181);
      bottom: 20px;
@@ -6680,6 +6682,8 @@
  .mdl-textfield.is-invalid .mdl-textfield__label:after {
      background-color: #d50000
  }
+
+ */
  
  .mdl-textfield__error {
      color: #d50000;

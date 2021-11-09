@@ -1,0 +1,54 @@
+@import url(".//home.css");
+
+main {
+    justify-content: center;
+}
+
+
+
+header > *:first-child {
+    justify-self: left;
+}
+
+header > *:last-child {
+    justify-self: right;
+}
+
+.board {
+	display: flex;
+	flex-wrap: wrap;
+	border: 2px solid rgba(42, 46, 57, 1);
+  border-radius: 1vh;
+  
+	max-width: 600px;
+	max-height: 600px;
+	width: 90vw;
+	height: 90vw;
+  
+  padding: min(3.5vw, 3.5vh);
+}
+
+.cell {
+	width: calc(100% / 15);
+	height: calc(100% / 15);
+  
+  border: 1.25px solid rgba(42, 46, 57, 0.5);
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.piece {
+  width: 80%;
+	height: 80%;
+  border-radius: 100%;
+}
+
+.black-piece {
+  background-color: rgba(42, 46, 57, 1);
+}
+
+.white-piece {
+  background-color: rgba(254, 253, 248, 1);
+}
