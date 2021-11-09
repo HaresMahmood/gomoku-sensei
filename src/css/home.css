@@ -1,10 +1,9 @@
-@import "https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css";
-@import "https://res.cloudinary.com/finnhvman/raw/upload/matter/matter-0.2.2.css";
+@import url("https://fonts.googleapis.com/icon?family=Material+Icons+Round");
+@import url("https://fonts.googleapis.com/css2?family=Spartan:wght@500;600;800&amp;display=swap");
 
-@import "https://unpkg.com/material-components-web@latest/dist/material-components-web.min.css";
+@import url("./material.min.css");
 
-@import "https://fonts.googleapis.com/icon?family=Material+Icons+Round";
-@import "https://fonts.googleapis.com/css2?family=Spartan:wght@500;600;800&amp;display=swap";
+@import url("https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css");
 
 :root {
     --background: #DBDBD9;
@@ -16,9 +15,7 @@
   * {
     -moz-box-sizing: border-box; 
     -webkit-box-sizing: border-box; 
-    box-sizing: border-box; 
-    
-    font-family: "Spartan";
+    box-sizing: border-box;
   }
 
   /*
@@ -40,17 +37,19 @@
 
   
   h1 {
-    margin: 0;
+    /* margin: 0; */
     padding: 0;
 
     max-width: 90vw;
     
+    font-family: "Spartan";
     font-size: min(17.5vh, 17.5vw);
     font-weight: 800;
     color: var(--black);
   }
   
   h3 {
+    font-family: "Spartan";
     font-weight: 600;
     color: var(--black);
   }
@@ -98,7 +97,7 @@
     width: 100vw;
   }
   
-  nav {
+  header {
     flex: 0 1 auto;
     display: grid;
     align-items: center;
@@ -106,13 +105,13 @@
     border-bottom: 2px solid var(--black);
   }
   
-  nav > * {
+  header > * {
     grid-column-start: 1;
     grid-row-start: 1;
     justify-self: center;
   }
   
-  nav > *:first-child {
+  header > *:first-child {
     justify-self: left;
   }
   
@@ -129,6 +128,27 @@
   }
 
   main .center__container {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  main .top__container {
+    width: 100%;
+
     display: flex;
     flex-direction: row;
+    justify-content: space-evenly;
+  }
+
+  main .input__container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .input__container .mdl-textfield {
+    width: -webkit-fill-available;
   }
