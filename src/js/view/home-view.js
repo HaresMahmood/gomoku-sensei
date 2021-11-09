@@ -1,8 +1,14 @@
-const MDCSelect = mdc.select.MDCSelect;
-const select = new MDCSelect(document.querySelector('.mdc-select'));
+$(document).ready(function($) {
+    $("dialog").dialog({
+        autoOpen: false,
+        modal: true,
+        height: 600,
+        open: function(ev, ui){
+                 $('#myIframe').attr('src','http://www.jQuery.com');
+        }
+    });
 
-/*
-select.listen('MDCSelect:change', () => {
-    alert(`Selected option at index ${select.selectedIndex} with value "${select.value}"`);
+    $('#settings').click(function(){
+        $('dialog').dialog('open');
+    });
 });
-*/

@@ -6561,7 +6561,7 @@
  
  .mdl-textfield__input {
      border: none;
-     border-bottom: 1px solid rgba(0, 0, 0, .12);
+     /* border-bottom: 1px solid rgba(0, 0, 0, .12); */
      display: block;
      font-size: 16px;
      font-family: "Helvetica", "Arial", sans-serif;

@@ -5,14 +5,12 @@
 
 @import url("https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css");
 
-:root {
-    --background: #DBDBD9;
-    --faded-background: #6e6e6e40;
-    --black: #2A2E39;
-    --red: #DD2436;
-  }
+@import url("./select-component.css");
+@import url("./colors.css");
   
   * {
+    font-family: "Spartan";
+
     -moz-box-sizing: border-box; 
     -webkit-box-sizing: border-box; 
     box-sizing: border-box;
@@ -42,16 +40,18 @@
 
     max-width: 90vw;
     
-    font-family: "Spartan";
     font-size: min(17.5vh, 17.5vw);
     font-weight: 800;
     color: var(--black);
   }
   
   h3 {
-    font-family: "Spartan";
     font-weight: 600;
     color: var(--black);
+  }
+
+  p {
+    font-weight: 500;
   }
   
   .watermark__text {
@@ -74,6 +74,12 @@
   .watermark__container.right-align__container {
     justify-content: flex-end;
     align-items: flex-end;
+  }
+
+
+
+  .mdl-textfield {
+    background-color: var(--faded-background);
   }
   
   
@@ -99,7 +105,7 @@
   
   header {
     flex: 0 1 auto;
-    display: grid;
+    display: grid !important;
     align-items: center;
     
     border-bottom: 2px solid var(--black);
@@ -111,11 +117,9 @@
     justify-self: center;
   }
   
-  /*
   header > *:first-child {
     justify-self: left;
   }
-  */
   
   main {
     padding-top: max(1vh, 1vw);

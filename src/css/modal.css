@@ -1,0 +1,32 @@
+@import url("./home.css");
+
+body {
+    height: fit-content;
+}
+
+main {
+    width: 100vw;
+
+    justify-content: center;
+}
+
+header > *:first-child {
+    justify-self: left;
+}
+
+.setting__container {
+    width: 100%;
+
+    justify-content: space-between;
+}
+
+.setting__container, 
+.setting__container > div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.mdl-switch {
+    width: 35px;
+}

@@ -1,14 +1,10 @@
-@import url(".//home.css");
+@import url("./home.css");
 
 main {
     justify-content: center;
 }
 
 
-
-header > *:first-child {
-    justify-self: left;
-}
 
 header > *:last-child {
     justify-self: right;

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" >
+    <head>
+        <title> Game </title>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="../css/modal.css">
+    </head>
+    <body >
+        <header>
+            <button class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect show-modal">
+                <span class="material-icons-round"> arrow_back </span>
+            </button>
+
+            <h3> Settings </h3>
+          </header>
+
+          <main>
+            <section class="setting__container">
+              <div>
+                <span class="material-icons-round"> location_on </span>
+
+                <p> Show coordinates </p>
+              </div>
+
+              <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-1">
+                <input type="checkbox" id="switch-1" class="mdl-switch__input">
+                <span class="mdl-switch__label"></span>
+              </label>
+            </section>
+
+            <section class="setting__container">
+              <div>
+                <span class="material-icons-round"> tag </span>
+
+                <p> Show move numbers on each piece </p>
+              </div>
+
+              <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-1">
+                <input type="checkbox" id="switch-2" class="mdl-switch__input" checked>
+                <span class="mdl-switch__label"></span>
+              </label>
+            </section>
+
+            <section class="setting__container">
+              <div>
+                <span class="material-icons-round"> highlight </span>
+
+                <p> Highlight last move </p>
+              </div>
+
+              <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-1">
+                <input type="checkbox" id="switch-3" class="mdl-switch__input">
+                <span class="mdl-switch__label"></span>
+              </label>
+            </section>
+
+            <section class="setting__container">
+              <div>
+                <span class="material-icons-round"> volume_up </span>
+
+                <p> Sound-effects volume </p>
+              </div>
+
+              <input class="mdl-slider mdl-js-slider" type="range" min="0" max="100" value="100" tabindex="0">
+            </section>
+          </main>
+
+        <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    </body>
+</html>
+
