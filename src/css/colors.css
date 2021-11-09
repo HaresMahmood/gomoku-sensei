@@ -1,6 +1,9 @@
 :root {
     --background: #DBDBD9;
-    --faded-background: #6e6e6e40;
+    --dark-background: #6E6E6E;
+    --red-background: #DD243540;
+    --faded-background: #6e6e6e40; /* TODO: Use `dark-background` as base. */
+    --white: #FEFDF8;
     --black: #2A2E39;
     --red: #DD2436;
   }

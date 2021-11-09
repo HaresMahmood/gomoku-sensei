@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en" >
     <head>
-        <title>Home</title>
+        <title> Home </title>
+
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="../css/home.css">
@@ -13,9 +14,7 @@
                   <span class="material-icons-round"> menu </span>
                 </button>
                 -->
-            <button class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect show-modal">
             <span class="material-icons-round"> menu </span>
-            </button>
             <h3> Home </h3>
         </header>
         <main>
@@ -24,45 +23,44 @@
             </section>
             <!-- http://creativeit.github.io/getmdl-select/ -->
             <section class="center__container">
-                <div class="input__container">
-                    <span class="material-icons-round"> circle </span>
-                    <div class="select">
-                        <select class="select-text" required>
-                            <option value="human" selected> Human </option>
-                            <option value="easy"> Easy AI </option>
-                            <option value="killer"> Killer AI </option>
-                            <option value="dynamic"> Dynamic AI </option>
-                        </select>
-                        <label class="select-label">Player 1</label>
-                    </div>
+                <div class="top__container">
+                  <div class="input__container">
+                      <span class="material-icons-round piece__icon"> circle </span>
+                      <div class="select">
+                          <select class="select-text" required>
+                              <option value="human" selected> Human </option>
+                              <option value="easy"> Easy AI </option>
+                              <option value="killer"> Killer AI </option>
+                              <option value="dynamic"> Dynamic AI </option>
+                          </select>
+                          <label class="select-label"> Player 1 </label>
+                      </div>
+                  </div>
+                  <div class="input__container">
+                      <span class="material-icons-round piece__icon"> circle </span>
+                      <div class="select">
+                          <select class="select-text" required>
+                              <option disabled selected></option>
+                              <option value="human"> Human </option>
+                              <option value="easy"> Easy AI </option>
+                              <option value="killer"> Killer AI </option>
+                              <option value="dynamic"> Dynamic AI </option>
+                          </select>
+                          <label class="select-label"> Player 2 </label>
+                      </div>
+                  </div>
                 </div>
-                <div class="input__container">
-                    <span class="material-icons-round"> circle </span>
-                    <div class="select">
-                        <select class="select-text" required>
-                            <option disabled selected></option>
-                            <option value="human"> Human </option>
-                            <option value="easy"> Easy AI </option>
-                            <option value="killer"> Killer AI </option>
-                            <option value="dynamic"> Dynamic AI </option>
-                        </select>
-                        <label class="select-label">Player 2</label>
-                    </div>
-                </div>
-                <div class="button__container">
-                    <button id="settings" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
-                    Button
-                    </button>
+                <div class="bottom__container">
+                  <button class="red__button"> 
+                    <span class="material-icons-round"> gamepad </span>
+                    <span> Start game </span>
+                  </button>
                 </div>
             </section>
             <section class="watermark__container right-align__container">
                 <h1 class="watermark__text"> 五目並べ </h1>
             </section>
         </main>
-        <dialog>
-            <iframe id="myIframe" src=""></iframe>
-        </dialog>
-        <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-        <script src="../js/view/home-view.js"></script>
+        
     </body>
 </html>

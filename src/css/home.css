@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons+Round");
 @import url("https://fonts.googleapis.com/css2?family=Spartan:wght@500;600;800&amp;display=swap");
 
-@import url("./material.min.css");
+@import url("https://res.cloudinary.com/finnhvman/raw/upload/matter/matter-0.2.2.css");
 
 @import url("https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css");
 
@@ -77,6 +77,34 @@
   }
 
 
+  button {
+    padding: 0.65rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border: none;
+    outline: none;
+    cursor: pointer;
+
+    border-radius: 10px;
+  }
+
+  button > *:first-child {
+    padding-right: 0.65rem;
+  }
+
+  .default__button {
+    color: var(--white);
+    background-color: var(--dark-background);
+  }
+
+  .red__button {
+    color: var(--red);
+    background-color: var(--red-background);
+  }
+
+
 
   .mdl-textfield {
     background-color: var(--faded-background);
@@ -141,20 +169,43 @@
     justify-content: center;
   }
 
-  main .button__container {
-    flex-basis: 100%;
+  main .center__container > * {
+    margin: max(1.5vh, 1.5vw);
+  }
+
+  main .top__container {
+    width: 100%;
+
     display: flex;
+    flex-flow: row wrap;
     justify-content: center;
   }
 
   main .input__container {
+    margin: max(1.5vh, 1.5vw) max(2vh, 2vw);
+
+    flex: 9999 250px;
     display: flex;
     flex-direction: row;
     align-items: center;
   }
 
-  .input__container .mdl-textfield {
-    padding: 20px 0 0 0;
+  main .input__container .select {
+    width: 100%;
+  }
 
-    width: 225px;
+  main .piece__icon {
+    margin-right: 1rem;
+
+    color: var(--black);
+  }
+
+  main .piece__icon:last-child {
+    color: var(--white);
+  }
+
+  main .bottom__container {
+    flex-basis: 100%;
+    display: flex;
+    justify-content: center;
   }
