@@ -6,13 +6,11 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <link rel="stylesheet" href="../css/modal.css">
+        <link rel="stylesheet" href="../css/settings.css">
     </head>
     <body >
         <header>
-            <button class="mdl-button mdl-js-button mdl-button--icon mdl-js-ripple-effect show-modal">
-                <span class="material-icons-round"> arrow_back </span>
-            </button>
+          <span class="material-icons-round"> arrow_back </span>
 
             <h3> Settings </h3>
           </header>
@@ -25,9 +23,9 @@
                 <p> Show coordinates </p>
               </div>
 
-              <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-1">
-                <input type="checkbox" id="switch-1" class="mdl-switch__input">
-                <span class="mdl-switch__label"></span>
+              <label class="pure-material-switch">
+                <input type="checkbox">
+                <span></span>
               </label>
             </section>
 
@@ -38,9 +36,9 @@
                 <p> Show move numbers on each piece </p>
               </div>
 
-              <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-1">
-                <input type="checkbox" id="switch-2" class="mdl-switch__input" checked>
-                <span class="mdl-switch__label"></span>
+              <label class="pure-material-switch">
+                <input type="checkbox">
+                <span></span>
               </label>
             </section>
 
@@ -51,9 +49,9 @@
                 <p> Highlight last move </p>
               </div>
 
-              <label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" for="switch-1">
-                <input type="checkbox" id="switch-3" class="mdl-switch__input">
-                <span class="mdl-switch__label"></span>
+              <label class="pure-material-switch">
+                <input type="checkbox">
+                <span></span>
               </label>
             </section>
 
@@ -64,7 +62,10 @@
                 <p> Sound-effects volume </p>
               </div>
 
-              <input class="mdl-slider mdl-js-slider" type="range" min="0" max="100" value="100" tabindex="0">
+              <label class="pure-material-slider">
+                <input type="range" min="0" max="100">
+                <span></span>
+            </label>
             </section>
           </main>
 

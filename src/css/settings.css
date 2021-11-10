@@ -1,4 +1,7 @@
 @import url("./home.css");
+@import url("./switch-component.css");
+@import url("./slider-component.css");
+
 
 body {
     height: fit-content;
