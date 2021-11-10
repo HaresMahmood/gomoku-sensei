@@ -1,0 +1,43 @@
+@import url("./home.css");
+
+body {
+    height: fit-content;
+}
+
+main {
+    padding: max(2vh, 2vw) max(3vh, 3vw);
+
+    width: 100vw;
+
+    justify-content: center;
+}
+
+
+
+.setting__container {
+    width: 100%;
+
+    justify-content: space-between;
+}
+
+.setting__container, 
+.setting__container > div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.setting__container > div {
+    width: 100%;
+
+    justify-content: flex-start;
+}
+
+.setting__container span {
+    margin-right: max(5vh, 5vw);
+}
+
+.setting__container > div:not(:first-child) {
+    flex-direction: column;
+    align-items: flex-start;
+}

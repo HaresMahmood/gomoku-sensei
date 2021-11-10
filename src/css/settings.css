@@ -1,33 +1,3 @@
-@import url("./home.css");
+@import url("./modal.css");
 @import url("./switch-component.css");
 @import url("./slider-component.css");
-
-
-body {
-    height: fit-content;
-}
-
-main {
-    padding: max(2vh, 2vw) max(3vh, 3vw);
-
-    width: 100vw;
-
-    justify-content: center;
-}
-
-.setting__container {
-    width: 100%;
-
-    justify-content: space-between;
-}
-
-.setting__container, 
-.setting__container > div {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
-.setting__container > div > *:first-child {
-    margin-right: max(5vh, 5vw);
-}
