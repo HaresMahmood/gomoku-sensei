@@ -53,12 +53,30 @@
   p {
     font-weight: 500;
   }
+
+  .icon,
+  .material-icons-round {
+    font-size: 1rem;
+  }
+
+  .piece__icon {
+    font-size: 1.45rem;
+  }
+
+  .black__icon {
+    color: var(--black);
+  }
+
+  .white__icon {
+    color: var(--white);
+  }
   
+
+
   .watermark__text {
     opacity: 0.06;
   }
-  
-  
+
   
   .watermark__container {
     width: 100%;
@@ -94,6 +112,12 @@
     padding-right: 0.65rem;
   }
 
+  button:disabled,
+  button[disabled] {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
   .default__button {
     color: var(--white);
     background-color: var(--dark-background);
@@ -104,10 +128,38 @@
     background-color: var(--red-background);
   }
 
+  .icon__button > *:first-child{
+    padding: 0;
+  }
+
+
+  /* TODO: Change name of component */
+  button-label {
+    padding: 0.45rem;
+    display: flex;
+    justify-content: center;
+
+    border-radius: 10px;
+  }
+
+  button-label span {
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+
+  button-label > *:first-child {
+    padding-right: 0.45rem;
+  }
 
 
   .mdl-textfield {
     background-color: var(--faded-background);
+  }
+
+
+  .row__container {
+    display: flex;
+    align-items: center;
   }
   
   
@@ -134,6 +186,7 @@
   header {
     flex: 0 1 auto;
     display: grid !important;
+    grid-template-rows: 7.5vh;
     align-items: center;
     
     border-bottom: 2px solid var(--black);
@@ -147,6 +200,8 @@
   
   header > *:first-child {
     justify-self: left;
+
+    font-size: 1.45rem;
   }
   
   main {
@@ -194,20 +249,14 @@
     align-items: center;
   }
 
+  main .input__container > .piece__icon {
+    margin-right: 1rem;
+  }
+
   main .input__container .select {
     width: 100%;
   }
-
-  main .piece__icon {
-    margin-right: 1rem;
-
-    color: var(--black);
-  }
-
-  main .piece__icon:last-child {
-    color: var(--white);
-  }
-
+  
   main .bottom__container {
     flex: 100%;
     display: flex;

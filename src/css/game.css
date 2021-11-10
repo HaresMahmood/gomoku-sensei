@@ -1,5 +1,16 @@
 @import url("./home.css");
 
+
+.square {
+  height: 5px;
+  width: 5px;
+
+  border-radius: 1px;
+
+  background-color: var(--dark-background);
+}
+
+
 main {
     justify-content: center;
 }
@@ -8,6 +19,29 @@ main {
 
 header > *:last-child {
     justify-self: right;
+}
+
+#players-container {
+  display: flex;
+  align-items: center;
+  flex-flow: row wrap;
+  justify-content: center;
+}
+
+#players-container > * {
+  margin-right: max(2.5vw, 2.5vh);
+}
+
+#players-container .row__container > * {
+  margin-right: max(0.9vw, 0.9vh);
+}
+
+header .button-group__container {
+    display: flex;
+}
+
+header .button-group__container > *:first-child {
+  margin-right: max(0.75vw, 0.75vh);
 }
 
 .board {
