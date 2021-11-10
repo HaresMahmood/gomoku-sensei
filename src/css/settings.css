@@ -8,13 +8,11 @@ body {
 }
 
 main {
+    padding: max(2vh, 2vw) max(3vh, 3vw);
+
     width: 100vw;
 
     justify-content: center;
-}
-
-header > *:first-child {
-    justify-self: left;
 }
 
 .setting__container {
@@ -30,6 +28,6 @@ header > *:first-child {
     align-items: center;
 }
 
-.mdl-switch {
-    width: 35px;
+.setting__container > div > *:first-child {
+    margin-right: max(5vh, 5vw);
 }
