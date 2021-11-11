@@ -1,4 +1,4 @@
-const ROWS = 3;
+const ROWS = 5; 
 const COLUMNS = ROWS;
 const N = 3;
 
