@@ -35,8 +35,8 @@ body {
 }
 
 .cell {
-	width: calc(100% / 15);
-	height: calc(100% / 15);
+	width: calc(100% / 3);
+	height: calc(100% / 3);
   
   border: 1.25px solid rgba(42, 46, 57, 0.5);
   
