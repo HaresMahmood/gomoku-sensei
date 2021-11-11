@@ -25,7 +25,7 @@ export default class Controller {
             this.model.performMove(index, this.currentPlayer);
 
             if (this.model.isOver()) {
-                this.view.endGame(color);
+                this.view.endGame(color, this.model.isDraw());
                 return;
             }
 

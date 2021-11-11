@@ -24,8 +24,10 @@ export default class View {
         });
     }
 
-    endGame(color) {
-        window.alert(`${color} wins!`);
+    endGame(color, isDraw) {
+        const winText = isDraw ? `Draw!` : `${color} wins!`;
+
+        window.alert(winText);
         location.reload();
     }
 }
