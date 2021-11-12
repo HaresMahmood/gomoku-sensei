@@ -1,14 +1,11 @@
 @import url("./home.css");
 
 
-.square {
-  height: 5px;
-  width: 5px;
 
-  border-radius: 1px;
-
-  background-color: var(--dark-background);
+:root {
+	--columns: 9;
 }
+
 
 
 main {
@@ -44,29 +41,42 @@ header .button-group__container > *:first-child {
   margin-right: max(0.75vw, 0.75vh);
 }
 
+
+
+.square {
+  height: 5px;
+  width: 5px;
+
+  border-radius: 1px;
+
+  background-color: var(--dark-background);
+}
+
 .board {
 	display: flex;
+	flex-flow: row;
 	flex-wrap: wrap;
 	border: 2px solid rgba(42, 46, 57, 1);
-  border-radius: 1vh;
+  	border-radius: 1vh;
   
 	max-width: 600px;
 	max-height: 600px;
 	width: 90vw;
 	height: 90vw;
   
-  padding: min(3.5vw, 3.5vh);
+  	padding: min(3.5vw, 3.5vh);
 }
 
 .cell {
-	width: calc(100% / 15);
-	height: calc(100% / 15);
+	height: auto;
+	width: auto;
+	
+	flex: 1 0 calc(100% / var(--columns));
+  	display: flex;
+  	justify-content: center;
+  	align-items: center;
   
-  border: 1.25px solid rgba(42, 46, 57, 0.5);
-  
-  display: flex;
-  justify-content: center;
-  align-items: center;
+ 	border: 1.25px solid rgba(42, 46, 57, 0.5);
 }
 
 .piece {

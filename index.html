@@ -1,19 +1,55 @@
 <!DOCTYPE html>
 <html lang="en" >
-<head>
-  <meta charset="UTF-8">
-  <title>Gomoku</title>
-  <link rel="stylesheet" href="./src/css/style.css">
-  <link rel="manifest" href="./src/manifest.json">
-</head>
-<body>
-<!-- partial:index.partial.html -->
-<div class="board">
-</div>
-<!-- partial -->
-  <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
-  <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
-  <script type="module" src="./src/js/script.js"></script>
-  <script src="./src/js/utility/service-worker-registerer.js"></script>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <title> You vs. Dynamic AI </title>
+        
+        <link rel="stylesheet" href="../css/game.css">
+        <!-- <link rel="manifest" href="./src/manifest.json"> -->
+    </head>
+    <body>
+      <header>
+        <span id="menu-button" class="material-icons-round"> menu </span>
+
+         <div id="players-container" class="center__container">
+           <div class="row__container">
+              <span class="material-icons-round piece__icon black__icon"> circle </span>
+              <p id="player-1"> You </p>
+              <button-label class="red__button"> 
+                <span class="material-icons-round"> person </span> 
+                <span> P1 </span>
+              </button-label>
+           </div>
+           <div class="row__container">
+            <span class="material-icons-round piece__icon white__icon"> circle </span>
+            <p id="player-2"> Dynamic AI </p>
+            <button-label class="default__button"> 
+              <span class="material-icons-round"> dynamic_form </span> 
+              <span> P2 </span>
+            </button-label>
+         </div>
+         </div>
+          
+          <div class="button-group__container">
+              <button class="default__button icon__button">
+                  <span class="material-icons-round"> undo </span>
+              </button>
+              <button disabled class="default__button icon__button">
+                  <span class="material-icons-round"> redo </span>
+              </button>
+          </div>
+      </header>
+
+      <main>
+          <section class="center__container">
+              <div class="board">
+              </div>
+          </section>
+      </main>
+
+        <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
+        <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
+
+        <script type="module" src="../js/script.js"></script>
+    </body>
 </html>

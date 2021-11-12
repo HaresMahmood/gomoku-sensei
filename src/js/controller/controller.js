@@ -12,7 +12,11 @@ export default class Controller {
 
         //this.model.changePlayerEvent.addListener(player => this.aiTurn(player));
         this.ai.chooseMoveEvent.addListener(index => this.makeMove(index));
-        this.view.setCellClickHandler((index) => this.makeMove(index));
+
+        this.view.setDocumentReadyHandler();
+        this.view.setWindowResizeHandler();
+
+        this.view.setCellClickHandler(index => this.makeMove(index));
 
         //this.aiTurn(this.currentPlayer);
     }

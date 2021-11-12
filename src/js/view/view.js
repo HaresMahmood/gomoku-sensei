@@ -1,3 +1,5 @@
+const BREAKPOINT = 650;
+
 export default class View {
     constructor(rows, columns) {
         this.board = $(".board");
@@ -28,6 +30,14 @@ export default class View {
         return cell.index();
     }
 
+    setDocumentReadyHandler() {
+        $(document).ready(this.movePlayerElement);
+    }
+
+    setWindowResizeHandler() {
+        $(window).bind("resize", this.movePlayerElement);
+    }
+
     setCellClickHandler(handler) {
         $(this.cell).bind("click", function() {
             handler($(this).index());
@@ -39,5 +49,22 @@ export default class View {
 
         window.alert(winText);
         location.reload();
+    }
+
+    movePlayerElement() {
+        console.log(true);
+
+        if (parseInt($(window).width()) <= BREAKPOINT) {
+            $("#players-container").detach().prependTo($("main"));
+          
+            if($("#page-title").length === 0) {
+                $("#menu-button").after((`<h3 id="page-title"> Game </h3>`));
+            }
+        }
+        
+        if (parseInt($(window).width()) > BREAKPOINT) {
+            $("#players-container").detach().insertAfter($("#menu-button"));
+            $("#page-title").remove();
+        }
     }
 }
