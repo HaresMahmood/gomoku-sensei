@@ -22,6 +22,10 @@ export default class View {
         $(`button-label:eq(${currentPlayer - 1})`).addClass("red__button");
     }
 
+    toggleProgressBar() {
+        $("header").toggleClass("loading");
+    }
+
     addPiece(index, color) {
         let box = this.board.find(this.cell).eq(index);
 

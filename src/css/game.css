@@ -1,4 +1,5 @@
 @import url("./home.css");
+@import url("./progress-components.css");
 
 
 
@@ -7,12 +8,9 @@
 }
 
 
-
-main {
-    justify-content: center;
+header {
+	position: relative;
 }
-
-
 
 header > *:last-child {
     justify-self: right;
@@ -39,6 +37,29 @@ header .button-group__container {
 
 header .button-group__container > *:first-child {
   margin-right: max(0.75vw, 0.75vh);
+}
+
+header progress {
+	margin: 0 max(1vh, 1vw);
+	width: 110% !important;
+
+	position: absolute;
+	bottom: -3px;
+
+	display: none;
+}
+
+header.loading {
+	border: none;
+}
+
+header.loading progress {
+	display: block;
+}
+
+
+main {
+    justify-content: center;
 }
 
 

@@ -33,6 +33,8 @@ export default class Controller {
                 return;
             }
 
+            this.view.toggleProgressBar();
+
             this.changePlayer();
         }
     }
