@@ -77,6 +77,8 @@ header .button-group__container > *:first-child {
   	align-items: center;
   
  	border: 1.25px solid rgba(42, 46, 57, 0.5);
+
+	 cursor: pointer;
 }
 
 .piece {
@@ -91,4 +93,13 @@ header .button-group__container > *:first-child {
 
 .white-piece {
   background-color: rgba(254, 253, 248, 1);
+}
+
+
+/* === Animations === */
+
+.cell:hover {
+	background-color: var(--faded-background);
+
+	transition: 0.15s;
 }

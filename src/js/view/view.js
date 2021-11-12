@@ -52,8 +52,6 @@ export default class View {
     }
 
     movePlayerElement() {
-        console.log(true);
-
         if (parseInt($(window).width()) <= BREAKPOINT) {
             $("#players-container").detach().prependTo($("main"));
           
