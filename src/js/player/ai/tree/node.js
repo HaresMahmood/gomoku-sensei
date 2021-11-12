@@ -85,12 +85,13 @@ export default class Node {
     rollout() {
         const clone = this.state.clone();
         
+        //console.log("");
         //console.log(clone.game.toMatrix());
 
         if (clone.game.isOver()) {
             const result = clone.game.getWinner();
 
-            console.log(true);
+            //console.log(true);
             //console.log(clone.game.toMatrix(), result);
     
             return result;

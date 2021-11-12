@@ -1,6 +1,6 @@
 const ROWS = 5; 
 const COLUMNS = ROWS;
-const N = 3;
+const N = 4;
 
 export default class Game {
     constructor(state = new Array(ROWS * COLUMNS).fill(0), lastMove = -1) {

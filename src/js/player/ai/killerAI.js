@@ -7,15 +7,23 @@ export default class KillerAI {
         this.chooseMoveEvent = new Event();
     }
 
-    chooseMove(game, iterations = 1000) {
+    chooseMove(game, interval = 3000) {
         const root = new Node();
+        const startTime = Date.now();
         let counter = 0;
         
         root.state.game = game;
         root.state.playerNumber = this.playerNumber;
         root.expand();
 
-        while (counter < iterations) {
+        /*
+        // Timer.
+        setTimeout(function() { 
+            flag = false 
+        }, 3000);
+        */
+
+        while((Date.now() - startTime) < interval) {
             let current = this.select(root); // Selection.
             let result;
 
@@ -37,6 +45,7 @@ export default class KillerAI {
 
         const winnerNode = root.getMostVisitedChild();
 
+        console.log(counter);
         console.log(root);
         console.log(winnerNode);
 
