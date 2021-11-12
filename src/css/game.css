@@ -43,15 +43,6 @@ header .button-group__container > *:first-child {
 
 
 
-.square {
-  height: 5px;
-  width: 5px;
-
-  border-radius: 1px;
-
-  background-color: var(--dark-background);
-}
-
 .board {
 	display: flex;
 	flex-flow: row;
@@ -96,10 +87,10 @@ header .button-group__container > *:first-child {
 }
 
 
-/* === Animations === */
+/*--- Animations ---*/
 
 .cell:hover {
 	background-color: var(--faded-background);
 
-	transition: 0.15s;
+	transition: var(--animation-speed);
 }

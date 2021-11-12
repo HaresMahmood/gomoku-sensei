@@ -16,6 +16,10 @@
     box-sizing: border-box;
   }
 
+  :root {
+    --animation-speed: 0.15s;
+  }
+
   /*
 
 
@@ -106,6 +110,9 @@
     cursor: pointer;
 
     border-radius: 10px;
+
+    color: var(--white);
+    background-color: var(--dark-background);
   }
 
   button > *:first-child {
@@ -118,14 +125,11 @@
     cursor: not-allowed;
   }
 
-  .default__button {
-    color: var(--white);
-    background-color: var(--dark-background);
-  }
-
   .red__button {
     color: var(--red);
     background-color: var(--red-background);
+
+    transition: all var(--animation-speed);
   }
 
   .icon__button > *:first-child{
@@ -140,6 +144,9 @@
     justify-content: center;
 
     border-radius: 10px;
+
+    color: var(--white);
+    background-color: var(--dark-background);
   }
 
   button-label span {

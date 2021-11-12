@@ -38,8 +38,11 @@ export default class Controller {
     }
 
     changePlayer() {
-        this.currentPlayer = this.currentPlayer === 1 ? 2 : 1;
-        this.aiTurn(this.currentPlayer);
+        const nextPlayer = this.currentPlayer === 1 ? 2 : 1;
+
+        this.view.changePlayer(this.currentPlayer, nextPlayer);
+        this.currentPlayer = nextPlayer;
+        //this.aiTurn(nextPlayer);
     }
 
     aiTurn(player) {

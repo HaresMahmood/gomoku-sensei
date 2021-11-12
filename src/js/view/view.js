@@ -16,6 +16,12 @@ export default class View {
         }
     }
 
+    changePlayer(previousPlayer, currentPlayer) {
+        console.log( $(`button-label:eq(${previousPlayer - 1})`));
+        $(`button-label:eq(${previousPlayer - 1})`).removeClass("red__button");
+        $(`button-label:eq(${currentPlayer - 1})`).addClass("red__button");
+    }
+
     addPiece(index, color) {
         let box = this.board.find(this.cell).eq(index);
 
@@ -25,6 +31,16 @@ export default class View {
             box.append(piece);
         }
     }
+
+    endGame(color, isDraw) {
+        const winText = isDraw ? `Draw!` : `${color} wins!`;
+
+        window.alert(winText);
+        location.reload();
+    }
+
+
+    /*-- Events */
 
     getClickedCellCoordinates(cell) {
         return cell.index();
@@ -44,12 +60,7 @@ export default class View {
         });
     }
 
-    endGame(color, isDraw) {
-        const winText = isDraw ? `Draw!` : `${color} wins!`;
-
-        window.alert(winText);
-        location.reload();
-    }
+    /*-- Miscellaneous --*/
 
     movePlayerElement() {
         if (parseInt($(window).width()) <= BREAKPOINT) {
