@@ -1,5 +1,5 @@
 :root {
-	--grid-size: 6;
+	--columns: 9;
 }
 
 * {
@@ -45,7 +45,7 @@ body {
 	height: auto;
 	width: auto;
 	
-	flex: 1 0 calc(100% / var(--grid-size));
+	flex: 1 0 calc(100% / var(--columns));
   	display: flex;
   	justify-content: center;
   	align-items: center;

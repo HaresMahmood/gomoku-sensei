@@ -1,11 +1,19 @@
-const ROWS = 6; 
+const ROWS = 9; 
 const COLUMNS = ROWS;
-const N = 4;
+const N = 5;
 
 export default class Game {
     constructor(state = new Array(ROWS * COLUMNS).fill(0), lastMove = -1) {
       this.state = state;
       this.lastMove = lastMove;
+    }
+
+    getRows() {
+      return ROWS;
+    }
+
+    getColumns() {
+      return COLUMNS;
     }
 
     clone() {

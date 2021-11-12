@@ -1,7 +1,17 @@
 export default class View {
-    constructor() {
+    constructor(rows, columns) {
         this.board = $(".board");
         this.cell = ".cell";
+
+        this.populateBoard(rows, columns)
+    }
+
+    populateBoard(rows, columns) {
+        document.documentElement.style.setProperty("--columns", columns);
+
+        for (let i = 0; i < (rows * columns); i++) {
+            this.board.append(`<div class="${this.cell.split('.').join("")}"></div>`);
+        }
     }
 
     addPiece(index, color) {
