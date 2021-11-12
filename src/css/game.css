@@ -69,13 +69,15 @@ header .button-group__container > *:first-child {
   
  	border: 1.25px solid rgba(42, 46, 57, 0.5);
 
-	 cursor: pointer;
+	cursor: pointer;
 }
 
 .piece {
-  width: 80%;
+    width: 80%;
 	height: 80%;
-  border-radius: 100%;
+    border-radius: 100%;
+
+	cursor: not-allowed;
 }
 
 .black-piece {
@@ -89,7 +91,7 @@ header .button-group__container > *:first-child {
 
 /*--- Animations ---*/
 
-.cell:hover {
+.cell:empty:hover {
 	background-color: var(--faded-background);
 
 	transition: var(--animation-speed);

@@ -129,7 +129,7 @@
     color: var(--red);
     background-color: var(--red-background);
 
-    transition: all var(--animation-speed);
+    transition: color var(--animation-speed), background-color var(--animation-speed);
   }
 
   .icon__button > *:first-child{
