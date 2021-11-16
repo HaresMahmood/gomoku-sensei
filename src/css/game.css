@@ -7,6 +7,10 @@
 	--columns: 9;
 }
 
+body.loading {
+	cursor: wait !important;
+}
+
 
 header {
 	position: relative;

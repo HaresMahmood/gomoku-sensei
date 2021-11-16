@@ -21,8 +21,16 @@ export default class View {
         $(`button-label:eq(${currentPlayer - 1})`).addClass("red__button");
     }
 
+    updateProgressBar(percentage) {
+        $(".pure-material-progress-linear").progressbar({
+            value: percentage
+        }); 
+    }
+
     toggleProgressBar() {
-        $("header").toggleClass("loading");
+        //updateProgressBar(0);
+
+        $("header, body").toggleClass("loading");
     }
 
     addPiece(index, color) {
