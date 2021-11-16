@@ -23,38 +23,34 @@ export default class Controller {
 
     async performMove(index) {
         if (this.model.isCellEmpty(index)) {
-            console.log("calling");
-            const result = await this.addPiece(index);
-            console.log(result);
+            const nextPlayer = this.addPiece(index);
+            const that = this;
 
-            this.changePlayer();
+            window.setTimeout(function() {
+                that.aiTurn(nextPlayer);
+            }, 150);
         }
     }
 
     addPiece(index) {
-        return new Promise(resolve => {
-            let color = this.currentPlayer === 1 ? "black" : "white";
+        let color = this.currentPlayer === 1 ? "black" : "white";
 
-            this.view.addPiece(index, color);
-            this.model.performMove(index, this.currentPlayer);
-    
-            if (this.model.isOver()) {
-                this.view.endGame(color, this.model.isDraw());
-                //return; //TODO: Return `reject`.
-            }
+        this.view.addPiece(index, color);
+        this.model.performMove(index, this.currentPlayer);
 
-            this.view.toggleProgressBar();
+        if (this.model.isOver()) {
+            this.view.endGame(color, this.model.isDraw());
+            //return;
+        }
 
-            resolve(`Performed move for ${color}`);
-        });
-    }
+        this.view.toggleProgressBar();
 
-    changePlayer() {
         const nextPlayer = this.currentPlayer === 1 ? 2 : 1;
 
         this.view.changePlayer(this.currentPlayer, nextPlayer);
         this.currentPlayer = nextPlayer;
-        this.aiTurn(nextPlayer);
+
+        return nextPlayer;
     }
 
     aiTurn(player) {
