@@ -11,32 +11,42 @@ export default class Controller {
         this.ai = new KillerAI(2);
 
         //this.model.changePlayerEvent.addListener(player => this.aiTurn(player));
-        this.ai.chooseMoveEvent.addListener(index => this.makeMove(index));
+        this.ai.chooseMoveEvent.addListener(index => this.performMove(index));
 
         this.view.setDocumentReadyHandler();
         this.view.setWindowResizeHandler();
 
-        this.view.setCellClickHandler(index => this.makeMove(index));
+        this.view.setCellClickHandler(index => this.performMove(index));
 
         //this.aiTurn(this.currentPlayer);
     }
 
-    makeMove(index) {
+    async performMove(index) {
         if (this.model.isCellEmpty(index)) {
+            console.log("calling");
+            const result = await this.addPiece(index);
+            console.log(result);
+
+            this.changePlayer();
+        }
+    }
+
+    addPiece(index) {
+        return new Promise(resolve => {
             let color = this.currentPlayer === 1 ? "black" : "white";
 
             this.view.addPiece(index, color);
             this.model.performMove(index, this.currentPlayer);
-
+    
             if (this.model.isOver()) {
                 this.view.endGame(color, this.model.isDraw());
-                return;
+                //return; //TODO: Return `reject`.
             }
 
             this.view.toggleProgressBar();
 
-            this.changePlayer();
-        }
+            resolve(`Performed move for ${color}`);
+        });
     }
 
     changePlayer() {
@@ -44,7 +54,7 @@ export default class Controller {
 
         this.view.changePlayer(this.currentPlayer, nextPlayer);
         this.currentPlayer = nextPlayer;
-        //this.aiTurn(nextPlayer);
+        this.aiTurn(nextPlayer);
     }
 
     aiTurn(player) {

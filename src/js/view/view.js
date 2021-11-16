@@ -17,7 +17,6 @@ export default class View {
     }
 
     changePlayer(previousPlayer, currentPlayer) {
-        console.log( $(`button-label:eq(${previousPlayer - 1})`));
         $(`button-label:eq(${previousPlayer - 1})`).removeClass("red__button");
         $(`button-label:eq(${currentPlayer - 1})`).addClass("red__button");
     }
