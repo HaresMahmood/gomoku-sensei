@@ -44,11 +44,25 @@
     
     font-size: min(17.5vh, 17.5vw);
     font-weight: 800;
+
     color: var(--black);
   }
   
   h3 {
     font-weight: 600;
+
+    color: var(--black);
+  }
+
+  h6 {
+    padding: 0;
+    margin: 0;
+
+    font-size: 0.65rem;
+    font-weight: 500;
+    letter-spacing: 0.075rem;
+    text-transform: uppercase;
+
     color: var(--black);
   }
 
@@ -115,6 +129,8 @@
 
     border-radius: 10px;
 
+    font-size: 0.75rem;
+
     color: var(--white);
     background-color: var(--dark-background);
   }
@@ -138,6 +154,17 @@
 
   .icon__button > *:first-child{
     padding: 0;
+  }
+
+  .menu__button {
+    width: 100%;
+
+    justify-content: flex-start;
+  }
+
+  .menu__button:not(.red__button) {
+    background: none;
+    color: var(--black);
   }
 
 
@@ -238,25 +265,65 @@
   }
 
   nav {
-    width: 35vw;
+    padding: 0;
+
+    width: 350px; /* TODO: Set responsive width? */
     height: 100vh;
 
     position: fixed;
     left: 0;
-    transform: translate3d(-100vw, 0, 0);
+    transform: translate(-100vw, 0);
 
-    background-color: bisque;
+    background-color: var(--background);
 
     -webkit-transition: all .5s;
     transition: all .5s;
   }
 
   nav.visible {
-    transform: translate3d(0vw, 0, 0) !important;
+    transform: translate(0vw, 0) !important;
 
     -webkit-transition: all .5s;
     transition: all .5s;
-  } 
+  }
+
+  nav > section {
+    padding: max(2.5vh, 2.5vw); /* TODO: Make height exactly same as header. */
+  }
+
+  nav h3 {
+    margin: 0;
+    padding: 0;
+  }
+
+  nav h6 {
+    padding-left: 0.65rem;
+  }
+
+  nav section:first-child {
+    width: 100%;
+
+    border-bottom: 2px solid var(--black);
+  }
+
+  nav section > div:first-child {
+    margin-bottom: max(2.5vh, 2.5vw);
+  }
+
+  nav section > div > *:not(:first-child):not(:last-child) {
+    margin: 0.35rem 0;
+  }
+
+  nav .row__container {
+    display: flex;
+  }
+
+  nav .row__container > .menu__button {
+    margin: 0 calc(0.35rem / 2);
+
+    color: var(--white);
+    background-color: var(--dark-background);
+  }
 
   modal {
     width: 95vw;
@@ -265,7 +332,7 @@
     position: fixed;
     left: 0;
     bottom: 0;
-    transform: translate3d(0, 100vh, 0);
+    transform: translate(0, 100vh);
 
     display: flex;
     justify-content: center;
@@ -277,7 +344,7 @@
   modal.visible {
     left: 50%;
     top: 50%;
-    transform: translate3d(-50%, -50%, 0) !important;
+    transform: translate(-50%, -50%) !important;
 
     -webkit-transition: all .25s;
     transition: all .25s;

@@ -106,7 +106,7 @@ export default class View {
                 $(window).on('popstate', function() {
                     // Do opposite of above.
                     $("nav").removeClass("visible");
-                    $("body").children().not("nav, modal").removeClass("overlay");
+                    $("body").children().not("nav, #settings-page").removeClass("overlay");
                     $("body").removeClass("overlay");
                 });
             }
@@ -131,9 +131,14 @@ $(document).click(function(e) {
 
 });
 
-$("nav > button").click(function() {
+$("#settings-button").click(function() {
     $("nav").removeClass("visible");
-    $("modal").addClass("visible");
+    $("#settings-page").addClass("visible");
+});
+
+$("#rules-button").click(function() {
+    $("nav").removeClass("visible");
+    $("#rules-page").addClass("visible");
 });
 
 $("modal > iframe").contents().find("#back-button").click(function() {

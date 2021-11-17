@@ -50,8 +50,61 @@
       </main>
 
       <nav>
-        <button> Open modal </button>
+        <section>
+          <h3> Game </h3>
+        </section>
+        <section>
+          <div>
+            <h6> Menu </h6>
+            <button class="menu__button"> 
+              <span class="material-icons-round"> home </span>
+              <span> Home </span>
+            </button>
+            <button class="menu__button red__button"> 
+              <span class="material-icons-round"> gamepad </span>
+              <span> Game </span> 
+            </button>
+            <button id="rules-button" class="menu__button"> 
+              <span class="material-icons-round"> gavel </span>
+              <span> Rules </span> 
+            </button>
+            <button id="settings-button" class="menu__button"> 
+              <span class="material-icons-round"> settings </span>
+              <span> Settings </span> 
+            </button>
+          </div>
+
+          <div>
+            <h6> actions </h6>
+            <div class="row__container">
+              <button class="menu__button"> 
+                <span class="material-icons-round"> bolt </span>
+                <span> New game </span>
+              </button>
+              <button class="menu__button"> 
+                <span class="material-icons-round"> lightbulb </span>
+                <span> Hint </span> 
+              </button>
+            </div>
+            <div class="row__container">
+              <button class="menu__button"> 
+                <span class="material-icons-round"> undo </span>
+                <span> Undo </span>
+              </button>
+              <button disabled class="menu__button"> 
+                <span class="material-icons-round"> redo </span>
+                <span> Redo </span> 
+              </button>
+            </div>
+          </div>
+        </section>
       </nav>
+
+      <modal id="rules-page">
+        <iframe src="./rules.html" frameborder="0" scrolling="no" 
+        onload="this.style.height=(this.contentWindow.document.body.scrollHeight)+'px';">
+        </iframe>
+      </modal>
 
       <modal id="settings-page">
         <iframe src="./settings.html" frameborder="0" scrolling="no" 
