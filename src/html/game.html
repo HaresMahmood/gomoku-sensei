@@ -9,7 +9,7 @@
     </head>
     <body>
       <header>
-        <span id="menu-button" class="material-icons-round"> menu </span>
+        <span id="menu-button" class="material-icons-round" unselectable="on"> menu </span>
 
          <div id="players-container" class="center__container">
            <div class="row__container">
@@ -48,6 +48,16 @@
               </div>
           </section>
       </main>
+
+      <nav>
+        <button> Open modal </button>
+      </nav>
+
+      <modal id="settings-page">
+        <iframe src="./settings.html" frameborder="0" scrolling="no" 
+        onload="this.style.height=(this.contentWindow.document.body.scrollHeight)+'px';">
+        </iframe>
+      </modal>
 
         <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
         <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>

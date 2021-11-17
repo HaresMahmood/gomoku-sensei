@@ -1,5 +1,7 @@
 const BREAKPOINT = 650;
 
+import HomeView from "./home-view.js";
+
 export default class View {
     constructor(rows, columns) {
         this.board = $(".board");
@@ -87,4 +89,55 @@ export default class View {
             $("#page-title").remove();
         }
     }
+
+
+
+
+    setNavigationOpenHandler() {
+        $("#menu-button").bind("click", function() {
+            $("nav").addClass("visible"); // Make menu visible.
+            $("body").children().not("nav, modal").addClass("overlay"); // Add blur to background.
+            $("body").addClass("overlay");
+
+            // Slide back menu on `back` key press.
+            if (window.history && window.history.pushState) {
+                //window.history.pushState('forward', null, './#forward'); // Ensure browser doesn't go back in history.
+      
+                $(window).on('popstate', function() {
+                    // Do opposite of above.
+                    $("nav").removeClass("visible");
+                    $("body").children().not("nav, modal").removeClass("overlay");
+                    $("body").removeClass("overlay");
+                });
+            }
+        });
+    }
+
+    setNavigationCloseHandler() {
+
+      
+    }
 }
+
+$(document).click(function(e) {
+    if ($("nav").hasClass("visible")) {
+        if (!$("#menu-button").is(e.target) && $("#menu-button").has(e.target).length === 0 
+        && !$("nav").is(e.target) && $("nav").has(e.target).length === 0) {
+            $("nav").removeClass("visible");
+            $("body").children().not("nav, modal").removeClass("overlay");
+            $("body").removeClass("overlay");
+        }
+    }
+
+});
+
+$("nav > button").click(function() {
+    $("nav").removeClass("visible");
+    $("modal").addClass("visible");
+});
+
+$("modal > iframe").contents().find("#back-button").click(function() {
+    $("modal").removeClass("visible");
+    $("body").children().not("nav, modal").removeClass("overlay");
+    $("body").removeClass("overlay");
+});

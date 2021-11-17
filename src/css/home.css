@@ -56,9 +56,16 @@
     font-weight: 500;
   }
 
+
+
   .icon,
   .material-icons-round {
     font-size: 1rem;
+
+    -webkit-user-select: none;      
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
   }
 
   .piece__icon {
@@ -72,7 +79,6 @@
   .white__icon {
     color: var(--white);
   }
-  
 
 
   .watermark__text {
@@ -157,9 +163,22 @@
   }
 
 
-  .mdl-textfield {
-    background-color: var(--faded-background);
+  /* Blur */
+
+  *.overlay:not(body) {
+    pointer-events: none;
+
+    -webkit-filter: blur(5px);
+    -moz-filter: blur(5px);
+    -o-filter: blur(5px);
+    -ms-filter: blur(5px);
+    filter: blur(5px);
+
+    -webkit-transition: filter .5s;
+    transition: filter .5s;
   }
+
+  
 
 
   .row__container {
@@ -181,6 +200,13 @@
     
     background-color: var(--background);
   }
+
+  body.overlay {
+    background: linear-gradient(
+      rgba(0, 0, 0, 0.5), 
+      rgba(0, 0, 0, 0.5)
+    );
+  }
   
   body > * {
     padding: 0 max(1vh, 1vw);
@@ -191,7 +217,7 @@
   header {
     flex: 0 1 auto;
     display: grid !important;
-    grid-template-rows: 7.5vh;
+    grid-template-rows: 60px; /* TODO: Maybe don't make this an absolute height?. */
     align-items: center;
     
     border-bottom: 2px solid var(--black);
@@ -207,7 +233,64 @@
     justify-self: left;
 
     font-size: 1.45rem;
+
+    cursor: pointer;
   }
+
+  nav {
+    width: 35vw;
+    height: 100vh;
+
+    position: fixed;
+    left: 0;
+    transform: translate3d(-100vw, 0, 0);
+
+    background-color: bisque;
+
+    -webkit-transition: all .5s;
+    transition: all .5s;
+  }
+
+  nav.visible {
+    transform: translate3d(0vw, 0, 0) !important;
+
+    -webkit-transition: all .5s;
+    transition: all .5s;
+  } 
+
+  modal {
+    width: 95vw;
+    height: fit-content;
+
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    transform: translate3d(0, 100vh, 0);
+
+    display: flex;
+    justify-content: center;
+
+    -webkit-transition: all .25s;
+    transition: all .25s;
+  }
+
+  modal.visible {
+    left: 50%;
+    top: 50%;
+    transform: translate3d(-50%, -50%, 0) !important;
+
+    -webkit-transition: all .25s;
+    transition: all .25s;
+  } 
+
+  modal iframe {
+    height: fit-content;
+    width: 100%;
+    max-width: 750px;
+
+    border-radius: 20px;
+  }
+
   
   main {
     padding-top: max(1vh, 1vw);
@@ -267,3 +350,23 @@
     display: flex;
     justify-content: center;
   }
+
+
+
+
+  /*= Breakpoints =*/
+
+  /*
+  @media only screen and (max-width: 550px) {
+    modal {
+      width: 100vw;
+      height: 100vh;
+    }
+
+    modal iframe {
+      height: 100%;
+
+      border-radius: 0;
+    }
+  }
+  */

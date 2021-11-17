@@ -15,6 +15,8 @@ export default class Controller {
 
         this.view.setDocumentReadyHandler();
         this.view.setWindowResizeHandler();
+        this.view.setNavigationOpenHandler();
+        this.view.setNavigationCloseHandler();
 
         this.view.setCellClickHandler(index => this.performMove(index));
 
