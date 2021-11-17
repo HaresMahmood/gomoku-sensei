@@ -214,12 +214,13 @@
   }
   
   body > * {
-    padding: 0 max(1vh, 1vw);
+    padding: 0 var(--spacing);
     
     width: 100vw;
   }
   
-  header {
+  header,
+  .header__container {
     flex: 0 1 auto;
     display: grid !important;
     grid-template-rows: 60px; /* TODO: Maybe don't make this an absolute height?. */
@@ -228,13 +229,15 @@
     border-bottom: 2px solid var(--black);
   }
   
-  header > * {
+  header > *,
+  .header__container > * {
     grid-column-start: 1;
     grid-row-start: 1;
     justify-self: center;
   }
   
-  header > *:first-child {
+  header > *:first-child,
+  .header__container > *:first-child {
     justify-self: left;
 
     font-size: 1.45rem;
@@ -254,19 +257,15 @@
 
     background-color: var(--background);
 
-    -webkit-transition: all .5s;
-    transition: all .5s;
+    -webkit-transition: transform .35s var(--fade-out);
+    transition: transform .35s var(--fade-out);
   }
 
   nav.visible {
     transform: translate(0vw, 0) !important;
 
-    -webkit-transition: all .5s;
-    transition: all .5s;
-  }
-
-  nav > section {
-    padding: max(2.5vh, 2.5vw); /* TODO: Make height exactly same as header. */
+    -webkit-transition: transform .75s var(--fade-in);
+    transition: transform .75s var(--fade-in);
   }
 
   nav h3 {
@@ -278,22 +277,20 @@
     padding-left: 0.65rem;
   }
 
-  nav section:first-child {
-    width: 100%;
-
-    border-bottom: 2px solid var(--black);
+  nav > section:last-child {
+    padding: var(--spacing);
   }
 
   nav section > div:first-child {
-    margin-bottom: max(2.5vh, 2.5vw);
+    margin-bottom: var(--spacing);
   }
 
   nav section > div > *:not(:first-child):not(:last-child) {
     margin: 0.35rem 0;
   }
 
-  nav .row__container {
-    display: flex;
+  nav .header__container {
+    padding: 0 var(--spacing);
   }
 
   nav .row__container > .menu__button {
