@@ -8,10 +8,9 @@ export default class DefaultView {
         
         this.setRulesModalOpenHandler(this.openModal);
         this.setSettingsModalOpenHandler(this.openModal);
-        this.setBackButtonClickHandler(this.closeModal);
+        this.setModalLoadHandler(this.resizeModal, this.closeModal);
 
         this.setDocumentResizeHandler(this.resizeModal);
-
     }
 
     /*--- Miscellaneous ---*/
@@ -85,19 +84,25 @@ export default class DefaultView {
         });
     }
 
-    setBackButtonClickHandler(handler) {
+    setModalLoadHandler(loadHandler, buttonHandler) {
         $("modal > iframe").on("load", function() {
-            const modal = $(this).parent();
+            const modal = $(this).parent().attr('id');
+
+            loadHandler(`#${modal}`);
 
             $(this).contents().find("body").on("click", "#back-button", function() {
-                handler(`#${$(modal).attr('id')}`);
+                buttonHandler(`#${modal}`);
             });
         })
     }
 
     setDocumentResizeHandler(handler) {
         $(window).on("resize", function() {
-            handler("modal");
+            const modal = $("body").find("modal.visible").attr('id'); // TODO: Looking for modal every time window is resized - not good!
+            
+            if (modal !== undefined) {
+                handler(`#${modal}`);
+            }
         });
     }
 }
