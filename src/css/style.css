@@ -216,7 +216,7 @@
     transition: background .5s;
   }
   
-  body > *:not(modal) {
+  body > *:not(modal):not(nav) {
     padding: 0 var(--spacing);
     
     width: 100vw;
@@ -252,9 +252,9 @@
   }
 
   nav {
-    padding: 0 !important;
+    padding: 0;
 
-    width: 350px !important; /* TODO: Set responsive width? */
+    width: 350px; /* TODO: Set responsive width? */
     height: 100vh;
 
     position: fixed;
@@ -263,15 +263,15 @@
 
     background-color: var(--background);
 
-    -webkit-transition: transform .35s var(--fade-out);
-    transition: transform .35s var(--fade-out);
+    -webkit-transition: transform .65s var(--fade-out);
+    transition: transform .65s var(--fade-out);
   }
 
   nav.visible {
-    transform: translate(0vw, 0) !important;
+    transform: translate(0vw, 0);
 
-    -webkit-transition: transform .75s var(--fade-in);
-    transition: transform .75s var(--fade-in);
+    -webkit-transition: transform .65s var(--fade-in);
+    transition: transform .65s var(--fade-in);
   }
 
   nav h3 {
