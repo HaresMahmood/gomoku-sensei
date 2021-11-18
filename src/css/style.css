@@ -213,7 +213,7 @@
     );
   }
   
-  body > * {
+  body > *:not(modal) {
     padding: 0 var(--spacing);
     
     width: 100vw;
@@ -246,9 +246,9 @@
   }
 
   nav {
-    padding: 0;
+    padding: 0 !important;
 
-    width: 350px; /* TODO: Set responsive width? */
+    width: 350px !important; /* TODO: Set responsive width? */
     height: 100vh;
 
     position: fixed;
@@ -354,7 +354,6 @@
 
   /*= Breakpoints =*/
 
-  /*
   @media only screen and (max-width: 550px) {
     modal {
       width: 100vw;
@@ -367,4 +366,3 @@
       border-radius: 0;
     }
   }
-  */
