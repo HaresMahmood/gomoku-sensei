@@ -5,10 +5,13 @@ export default class DefaultView {
         this.drawRulesModal();
 
         this.setNavigationToggleHandler(this.toggleNavigation); // Setting event-handler here, so that only the minimum amount of information is shown to Controller.
-        this.setRulesModalOpenHandler(this.resizeModal);
-        this.setSettingsModalOpenHandler(this.resizeModal);
+        
+        this.setRulesModalOpenHandler(this.openModal);
+        this.setSettingsModalOpenHandler(this.openModal);
+        this.setBackButtonClickHandler(this.closeModal);
 
         this.setDocumentResizeHandler(this.resizeModal);
+
     }
 
     /*--- Miscellaneous ---*/
@@ -48,6 +51,19 @@ export default class DefaultView {
         $(iframe).height(height);
     }
 
+    openModal(modal) {
+        //this.resizeModal(modal);
+
+        $("nav").removeClass("visible");
+        $(modal).addClass("visible");
+    }
+
+    closeModal(modal) {
+        $(modal).removeClass("visible");
+        $("body").children().not("nav, modal").toggleClass("overlay");
+        $("body").toggleClass("overlay");
+    }
+
 
 
     /*--- Events ---*/
@@ -60,19 +76,23 @@ export default class DefaultView {
     setRulesModalOpenHandler(handler) {
         $("#rules-button").bind("click", function() {
             handler("#rules-page");
-
-            $("nav").removeClass("visible");
-            $("#rules-page").addClass("visible");
         });
     }
 
     setSettingsModalOpenHandler(handler) {
         $("#settings-button").bind("click", function() {
             handler("#settings-page");
-
-            $("nav").removeClass("visible");
-            $("#settings-page").addClass("visible");
         });
+    }
+
+    setBackButtonClickHandler(handler) {
+        $("modal > iframe").on("load", function() {
+            const modal = $(this).parent();
+
+            $(this).contents().find("body").on("click", "#back-button", function() {
+                handler(`#${$(modal).attr('id')}`);
+            });
+        })
     }
 
     setDocumentResizeHandler(handler) {

@@ -211,12 +211,18 @@
       rgba(0, 0, 0, 0.5), 
       rgba(0, 0, 0, 0.5)
     );
+
+    -webkit-transition: background .5s;
+    transition: background .5s;
   }
   
   body > *:not(modal) {
     padding: 0 var(--spacing);
     
     width: 100vw;
+
+    -webkit-transition: background .5s;
+    transition: background .5s;
   }
   
   header,
@@ -303,28 +309,34 @@
 
 
   modal {
+    z-index: -1;
+
     width: 95vw;
     height: fit-content;
 
     position: fixed;
-    left: 0;
-    bottom: 0;
-    transform: translate(0, 100vh);
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -25%);
 
     display: flex;
     justify-content: center;
 
-    -webkit-transition: all .25s;
-    transition: all .25s;
+    opacity: 0;
+
+    -webkit-transition: transform .2s var(--fade-out), opacity .2s var(--fade-out), z-index .2s var(--fade-out);
+    transition: transform .2s var(--fade-out), opacity .2s var(--fade-out), z-index .2s var(--fade-out);
   }
 
   modal.visible {
-    left: 50%;
-    top: 50%;
+    z-index: 2;
+
     transform: translate(-50%, -50%) !important;
 
-    -webkit-transition: all .25s;
-    transition: all .25s;
+    opacity: 1;
+
+    -webkit-transition: transform .75s var(--fade-in), opacity .75s var(--fade-in), z-index .75s var(--fade-in);
+    transition: transform .75s var(--fade-in), opacity .75s var(--fade-in), z-index .75s var(--fade-in);
   } 
 
   modal iframe {
