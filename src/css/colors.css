@@ -12,7 +12,7 @@
 
 
     --fade-in: cubic-bezier(0, 1, 0.35, 1);
-    --fade-out: cubic-bezier(0.4, 0, 1, 1);
+    --fade-out: cubic-bezier(0.75, 0, 0.25, 1);
 
 
 

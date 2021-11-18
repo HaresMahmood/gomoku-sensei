@@ -69,7 +69,7 @@ export default class DefaultView {
 
     // TODO: #close-menu-button
     setNavigationToggleHandler(handler) {
-        $("#menu-button, #menu-close-button").bind("click", handler);
+        $("#menu-button, #menu-close-button").on("click", handler);
     }
 
     setRulesModalOpenHandler(handler) {
