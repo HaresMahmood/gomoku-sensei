@@ -17,22 +17,6 @@
     --animation-speed: 0.15s;
   }
 
-  /*
-
-
-  select {
-    width: 100%;
-    padding: 15px;
-
-    border: none;
-    background: var(--faded-background);
-
-    font-size: 1.75vmax;
-    overflow: visible !important;
-
-    position: relative;
-}
-*/
 
   
   h1 {
@@ -105,7 +89,7 @@
     outline: none;
     cursor: pointer;
 
-    border-radius: 10px;
+    border-radius: 20px;
 
     font-size: 0.75rem;
 
@@ -113,7 +97,7 @@
     background-color: var(--dark-background);
   }
 
-  button > *:first-child {
+  button:not(.menu__button) > *:first-child {
     padding-right: 0.65rem;
   }
 
@@ -135,14 +119,34 @@
   }
 
   .menu__button {
-    width: 100%;
+    width: 3.15rem;
+    height: 3.15rem;
 
-    justify-content: flex-start;
-  }
+    padding: 0;
 
-  .menu__button:not(.red__button) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
     background: none;
     color: var(--black);
+  }
+
+  .menu__button > span {
+    width: 3.15rem; /* TODO: Dial in width. */
+
+    margin-bottom: 0.25rem;
+
+    padding: 0.2rem;
+
+    border-radius: 100px;
+
+    transition: background-color 0.25s ease-out;
+  }
+
+  .menu__button.red__button > span {
+    color: var(--red);
+    background-color: var(--red-background);
   }
 
 
@@ -190,121 +194,7 @@
     display: flex;
     align-items: center;
   }
-  
-  
-  
-  body {
-    margin: 0;
-    padding: 0;
-    
-    height: 100vh;
-    width: 100vw;
-    
-    display: flex;
-    flex-direction: column;
-    
-    background-color: var(--background);
-  }
 
-  body.overlay {
-    background: linear-gradient(
-      rgba(0, 0, 0, 0.5), 
-      rgba(0, 0, 0, 0.5)
-    );
-
-    -webkit-transition: background .5s;
-    transition: background .5s;
-  }
-  
-  body > *:not(modal):not(nav) {
-    padding: 0 var(--spacing);
-    
-    width: 100vw;
-
-    -webkit-transition: background .5s;
-    transition: background .5s;
-  }
-  
-  header,
-  .header__container {
-    flex: 0 1 auto;
-    display: grid !important;
-    grid-template-rows: 60px; /* TODO: Maybe don't make this an absolute height?. */
-    align-items: center;
-    
-    border-bottom: 2px solid var(--black);
-  }
-  
-  header > *,
-  .header__container > * {
-    grid-column-start: 1;
-    grid-row-start: 1;
-    justify-self: center;
-  }
-  
-  header > *:first-child,
-  .header__container > *:first-child {
-    justify-self: left;
-
-    font-size: 1.45rem;
-
-    cursor: pointer;
-  }
-
-  nav {
-    padding: 0;
-
-    width: 350px; /* TODO: Set responsive width? */
-    height: 100vh;
-
-    position: fixed;
-    left: 0;
-    transform: translate(-100vw, 0);
-
-    background-color: var(--background);
-
-    -webkit-transition: transform .65s var(--fade-out);
-    transition: transform .65s var(--fade-out);
-  }
-
-  nav.visible {
-    transform: translate(0vw, 0);
-
-    -webkit-transition: transform .65s var(--fade-in);
-    transition: transform .65s var(--fade-in);
-  }
-
-  nav h3 {
-    margin: 0;
-    padding: 0;
-  }
-
-  nav h6 {
-    padding-left: 0.65rem;
-  }
-
-  nav > section:last-child {
-    padding: var(--spacing);
-  }
-
-  nav section > div:first-child {
-    margin-bottom: var(--spacing);
-  }
-
-  nav section > div > *:not(:first-child):not(:last-child) {
-    margin: 0.35rem 0;
-  }
-
-  nav .header__container {
-    padding: 0 var(--spacing);
-  }
-
-  nav .row__container > .menu__button {
-    margin: 0 calc(0.35rem / 2);
-
-    color: var(--white);
-    background-color: var(--dark-background);
-  }
 
 
 
@@ -350,8 +240,6 @@
 
   
   main {
-    padding-top: max(1vh, 1vw);
-
     height: 100%;
     
     flex: 1 1 auto;
@@ -359,22 +247,16 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+
+    border: 2px solid var(--light-black);
+    border-radius: 17.5px;
+    
   }
 
 
+  /*=== Animations ===*/
+  .menu__button:hover {
+    background-color: var(--faded-background);
 
-
-  /*= Breakpoints =*/
-
-  @media only screen and (max-width: 550px) {
-    modal {
-      width: 100vw;
-      height: 100vh;
-    }
-
-    modal iframe {
-      height: 100%;
-
-      border-radius: 0;
-    }
+    transition: background-color 0.25s ease-out;
   }

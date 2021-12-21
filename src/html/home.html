@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title> Home </title>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="../css/home.css">
+    </head>
+
+    <body>
+        <section class="watermark__container left-align__container">
+            <h1 class="watermark__text"> Gomoku </h1>
+        </section>
+        
+        <section class="center__container">
+            <div class="top__container">
+              <div class="input__container">
+                  <span class="material-icons-round piece__icon black__icon"> circle </span>
+                  <div class="select">
+                      <select class="select-text" required>
+                          <option value="human" selected> Human </option>
+                          <option value="easy"> Easy AI </option>
+                          <option value="killer"> Killer AI </option>
+                          <option value="dynamic"> Dynamic AI </option>
+                      </select>
+                      <label class="select-label"> Player 1 </label>
+                  </div>
+              </div>
+              <div class="input__container">
+                  <span class="material-icons-round piece__icon white__icon"> circle </span>
+                  <div class="select">
+                      <select class="select-text" required>
+                          <option disabled selected></option>
+                          <option value="human"> Human </option>
+                          <option value="easy"> Easy AI </option>
+                          <option value="killer"> Killer AI </option>
+                          <option value="dynamic"> Dynamic AI </option>
+                      </select>
+                      <label class="select-label"> Player 2 </label>
+                  </div>
+              </div>
+            </div>
+            <div class="bottom__container">
+              <button onclick="location.href = './src/html/game.html';" class="red__button"> 
+                <span class="material-icons-round"> gamepad </span>
+                <span> Start game </span>
+              </button>
+            </div>
+        </section>
+        <section class="watermark__container right-align__container">
+            <h1 class="watermark__text"> 五目並べ </h1>
+        </section>
+    </body>
+</html>

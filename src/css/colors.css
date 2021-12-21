@@ -7,8 +7,10 @@
     --black: #2A2E39;
     --red: #DD2436;
 
+    --light-black: #2A2E3940;
 
-    --spacing: max(2.5vh, 2.5vw);
+
+    --spacing: min(0.5vh, 0.5vw);
 
 
     --fade-in: cubic-bezier(0, 1, 0.35, 1);

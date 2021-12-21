@@ -5,58 +5,40 @@
 
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="./src/css/home.css">
+        <link rel="stylesheet" href="./src/css/main.css">
     </head>
     <body>
         <header>
-            <span id="menu-button" class="material-icons-round"> menu </span>
             <h3> Home </h3>
         </header>
 
-        <main>
-            <section class="watermark__container left-align__container">
-                <h1 class="watermark__text"> Gomoku </h1>
-            </section>
-            
-            <section class="center__container">
-                <div class="top__container">
-                  <div class="input__container">
-                      <span class="material-icons-round piece__icon black__icon"> circle </span>
-                      <div class="select">
-                          <select class="select-text" required>
-                              <option value="human" selected> Human </option>
-                              <option value="easy"> Easy AI </option>
-                              <option value="killer"> Killer AI </option>
-                              <option value="dynamic"> Dynamic AI </option>
-                          </select>
-                          <label class="select-label"> Player 1 </label>
-                      </div>
-                  </div>
-                  <div class="input__container">
-                      <span class="material-icons-round piece__icon white__icon"> circle </span>
-                      <div class="select">
-                          <select class="select-text" required>
-                              <option disabled selected></option>
-                              <option value="human"> Human </option>
-                              <option value="easy"> Easy AI </option>
-                              <option value="killer"> Killer AI </option>
-                              <option value="dynamic"> Dynamic AI </option>
-                          </select>
-                          <label class="select-label"> Player 2 </label>
-                      </div>
-                  </div>
-                </div>
-                <div class="bottom__container">
-                  <button onclick="location.href = './src/html/game.html';" class="red__button"> 
+        <bottom>
+            <nav>
+                <button class="menu__button red__button">
+                    <span class="material-icons-round"> home </span>
+                    Home
+                </button> 
+
+                <button class="menu__button">
                     <span class="material-icons-round"> gamepad </span>
-                    <span> Start game </span>
-                  </button>
-                </div>
-            </section>
-            <section class="watermark__container right-align__container">
-                <h1 class="watermark__text"> 五目並べ </h1>
-            </section>
-        </main>
+                    Game
+                </button> 
+
+                <button class="menu__button">
+                    <span class="material-icons-round"> gavel </span>
+                    Rules
+                </button> 
+
+                <button class="menu__button">
+                    <span class="material-icons-round"> settings </span>
+                    Settings
+                </button> 
+            </nav>
+
+            <main>
+                <iframe src="./src/html/home.html" frameborder="0" scrolling="no"> </iframe>
+            </main>
+        </bottom>
     </body>
 
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>

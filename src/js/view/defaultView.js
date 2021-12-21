@@ -1,6 +1,6 @@
 export default class DefaultView {
     constructor(page) {
-        this.drawNavigation(page);
+        //this.drawNavigation(page);
         this.drawSettingsModal();
         this.drawRulesModal();
 

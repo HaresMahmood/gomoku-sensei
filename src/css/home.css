@@ -2,20 +2,33 @@
 @import url("./components/select-component.css");
 
 
+html {
+    height: 100%;
+}
 
-main .center__container {
+body {
+    height: 100% !important;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+
+
+.center__container {
     width: 100%;
 
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
-  }
+}
 
-  main .center__container > * {
+.center__container > * {
     margin: max(1.5vh, 1.5vw);
-  }
+}
 
-  main .top__container {
+.top__container {
     width: 100%;
     max-width: 750px;
 
@@ -23,9 +36,9 @@ main .center__container {
     display: flex;
     flex-flow: row wrap;
     justify-content: center;
-  }
+}
 
-  main .input__container {
+.input__container {
     margin: max(1.75vh, 1.75vw) max(2vh, 2vw);
 
     min-width: 250px;
@@ -34,21 +47,21 @@ main .center__container {
     display: flex;
     flex-direction: row;
     align-items: center;
-  }
+}
 
-  main .input__container > .piece__icon {
+.input__container > .piece__icon {
     margin-right: 1rem;
-  }
+}
 
-  main .input__container .select {
+.input__container .select {
     width: 100%;
-  }
+}
   
-  main .bottom__container {
+.bottom__container {
     flex: 100%;
     display: flex;
     justify-content: center;
-  }
+}
 
 
 
