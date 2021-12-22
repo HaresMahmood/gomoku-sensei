@@ -9,63 +9,47 @@
 
         <section>
             <div>
-                <div>
+                <div class="row__container">
                     <div class="row__container">
+                        <span class="material-icons-round piece__icon black__icon"> circle </span>
+                        <p id="player-1"> You </p>
+                        <button-label class="red__button"> 
+                            <span class="material-icons-round"> person </span> 
+                            <span> P1 </span>
+                        </button-label>
+                    </div>
+                    <div class="row__container">
+                        <span class="material-icons-round piece__icon white__icon"> circle </span>
+                        <p id="player-2"> Dynamic AI </p>
+                        <button-label> 
+                        <span class="material-icons-round"> dynamic_form </span> 
+                        <span> P2 </span>
+                        </button-label>
+                    </div>
+                </div>
+                
+                <hr>
+
+                <div class="row__container">
+                    <div class="time_container row__container">
                         <span class="material-icons-round"> access_time_filled </span>
-                        <p> Elapsed time </p>
+                        <h2> 1:23 </h2>
                     </div>
-                    <hr>
-                    <h2> 1:23 </h2>
-                </div>
-
-                <div>
-                    <div class="row__container">
-                        <span class="material-icons-round"> record_voice_over </span>
-                        <p> Current player </p>
-                    </div>
-                    <hr>
-                    <div class="row__container">
-                        <div class="row__container">
-                            <span class="material-icons-round piece__icon black__icon"> circle </span>
-                            <p id="player-1"> You </p>
-                            <button-label class="red__button"> 
-                                <span class="material-icons-round"> person </span> 
-                                <span> P1 </span>
-                            </button-label>
-                        </div>
-                        <div class="row__container">
-                            <span class="material-icons-round piece__icon white__icon"> circle </span>
-                            <p id="player-2"> Dynamic AI </p>
-                            <button-label> 
-                            <span class="material-icons-round"> dynamic_form </span> 
-                            <span> P2 </span>
-                            </button-label>
-                        </div>
-                    </div>
-                </div>
-
-                <div>
-                    <div class="row__container">
+                    
+                    <div class="row__container full-width__container">
                         <span class="material-icons-round"> auto_awesome </span>
-                        <p> Actions </p>
-                    </div>
-                    <hr>
-                    <div class="grid__container">
-                        <button class="long__button">
+                        
+                        <button class="full-width__container">
+                            <span class="material-icons-round"> lightbulb </span>
+                            Hint
+                        </button>
+                        <button>
                             <span class="material-icons-round"> undo </span>
                             Undo
                         </button> 
-                        <button disabled class="long__button">
+                        <button disabled>
                             <span class="material-icons-round"> redo </span>
                              Redo
-                        </button> 
-                        <button class="long__button">
-                            <span class="material-icons-round"> lightbulb </span>
-                            Hint
-                        </button> 
-                        <button class="long__button">
-                            <span class="material-icons-round"> lightbulb </span>
-                            Hint
                         </button> 
                     </div>
                 </div>
