@@ -4,14 +4,20 @@
 
 body {
     margin: 0;
-    padding: 0;
+    padding: 1rem;
     
     height: 100vh;
     width: 100vw;
     
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display: grid;
+    grid-template-areas:
+    'whitespace header'
+    'nav main';
+
+    grid-template-columns: min-content 1fr;
+    grid-template-rows: min-content 1fr;
+
+    gap: 1rem;
     
     background-color: var(--background);
   }
@@ -26,35 +32,26 @@ body.overlay {
     transition: background .5s;
 }
 
-
+whitespace {
+    grid-area: whitespace;
+}
 
 header {
     width: 100%;
+
+    grid-area: header;
 }
 
-header > h3 {
-    margin-left: calc(3.15rem + calc(var(--spacing) * 10));
-}
-
-
-
-bottom {
-    width: 100vw;
-    height: 100%;
-
-    margin-bottom: calc(var(--spacing) * 2);
-    padding: 0 var(--spacing) var(--spacing) var(--spacing);
-
-    display: flex;
-    flex-direction: row;
-}
-
-bottom > * {
-    margin: 0 calc(var(--spacing) * 2);
+nav {
+    grid-area: nav;
 }
 
 nav > * {
     margin: calc(var(--spacing) / 2) 0;
+}
+
+main {
+    grid-area: main;
 }
 
 
@@ -69,13 +66,16 @@ iframe {
 /*=== Breakpoints ===*/
 
 @media only screen and (max-width: 550px) {
-    header > h3 {
-        margin-left: calc(var(--spacing) * 5);
+    body {
+        grid-template-areas:
+        'header'
+        'main'
+        'nav';
+        grid-template-columns: 1fr;
     }
 
-
-    bottom {
-        flex-direction: column-reverse;
+    whitespace {
+        display: none;
     }
 
     nav {
