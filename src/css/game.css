@@ -61,6 +61,7 @@ body {
 .board {
 	aspect-ratio: 1 / 1;
 	height: 100%;
+	max-height: 100%;
 
 	padding: min(3.5vw, 3.5vh);
 
@@ -123,10 +124,11 @@ body {
 		'info'
 		'board'
 		'actions';
-		grid-template-columns: max-content;
-		grid-template-rows: 1fr max-content 1fr;
+		grid-template-columns: 100%;
+		grid-template-rows: min-content max-content min-content;
 		align-content: space-between;
 		justify-content: center;
+		justify-items: stretch;
 		overflow: hidden;
     }
 
