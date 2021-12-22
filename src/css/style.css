@@ -231,6 +231,12 @@
     align-items: center;
   }
 
+  .grid__container {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 0.35rem;
+  }
+
 
 
 

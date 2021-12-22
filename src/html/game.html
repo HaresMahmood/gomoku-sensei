@@ -5,6 +5,8 @@
     </head>
 
     <body>
+        <div class="board"></div>
+
         <section>
             <div>
                 <div>
@@ -48,17 +50,19 @@
                         <p> Actions </p>
                     </div>
                     <hr>
-                    <div>
-                        <div class="row__container"> 
-                            <button class="long__button">
-                                <span class="material-icons-round"> undo </span>
-                                Undo
-                            </button> 
-                            <button disabled class="long__button">
-                                <span class="material-icons-round"> redo </span>
-                                Redo
-                            </button> 
-                        </div>
+                    <div class="grid__container">
+                        <button class="long__button">
+                            <span class="material-icons-round"> undo </span>
+                            Undo
+                        </button> 
+                        <button disabled class="long__button">
+                            <span class="material-icons-round"> redo </span>
+                             Redo
+                        </button> 
+                        <button class="long__button">
+                            <span class="material-icons-round"> lightbulb </span>
+                            Hint
+                        </button> 
                         <button class="long__button">
                             <span class="material-icons-round"> lightbulb </span>
                             Hint
@@ -68,13 +72,10 @@
             </div>
             
             <button class="fab__button red__button"> 
-                <span class="material-icons-round"> bolt </span>
+                <span class="material-icons-round"> gamepad </span>
                 New game
             </button>
         </section>
-        
-        <div class="board"></div>
-
 
         
         <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
