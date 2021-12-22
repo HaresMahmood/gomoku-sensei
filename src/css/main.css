@@ -43,7 +43,7 @@ bottom {
     height: 100%;
 
     margin-bottom: calc(var(--spacing) * 2);
-    padding: var(--spacing);
+    padding: 0 var(--spacing) var(--spacing) var(--spacing);
 
     display: flex;
     flex-direction: row;

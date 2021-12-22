@@ -1,5 +1,5 @@
-@import url("./home.css");
-@import url("./progress-components.css");
+@import url("./subpage.css");
+@import url("./components/progress-components.css");
 
 
 
@@ -7,80 +7,51 @@
 	--columns: 9;
 }
 
-body.loading {
-	cursor: wait !important;
+
+
+body {
+	display: flex;
+
+	
 }
 
-
-header {
-	position: relative;
+body > *:first-child {
+	margin-right: max(5vw, 5vh);
 }
 
-header > *:last-child {
-    justify-self: right;
+body > *:last-child {
+	margin-left: max(5vw, 5vh);
 }
 
-#players-container {
-  display: flex;
-  align-items: center;
-  flex-flow: row wrap;
-  justify-content: center;
+section {
+	width: -webkit-fill-available;
+
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	align-items: flex-start;
 }
 
-#players-container > * {
-  margin-right: max(2.5vw, 2.5vh);
-}
-
-#players-container .row__container > * {
-  margin-right: max(0.9vw, 0.9vh);
-}
-
-header .button-group__container {
-    display: flex;
-}
-
-header .button-group__container > *:first-child {
-  margin-right: max(0.75vw, 0.75vh);
-}
-
-header progress {
-	margin: 0 max(1vh, 1vw);
-	width: 110% !important;
-
-	position: absolute;
-	bottom: -3px;
-
-	display: none;
-}
-
-header.loading {
-	border: none;
-}
-
-header.loading progress {
-	display: block;
-}
-
-
-main {
-    justify-content: center;
+section > div {
+	width: 100%;
+	max-width: 400px;
 }
 
 
 
 .board {
+	aspect-ratio: 1 / 1;
+	height: 100%;
+	max-width: 100%;
+
+	padding: min(3.5vw, 3.5vh);
+
 	display: flex;
 	flex-flow: row;
 	flex-wrap: wrap;
+
 	border: 2px solid rgba(42, 46, 57, 1);
   	border-radius: 1vh;
-  
-	max-width: 600px;
-	max-height: 600px;
-	width: 90vw;
-	height: 90vw;
-  
-  	padding: min(3.5vw, 3.5vh);
 }
 
 .cell {
@@ -114,7 +85,7 @@ main {
 }
 
 
-/*--- Animations ---*/
+/*=== Animations ===*/
 
 .cell:empty:hover {
 	background-color: var(--faded-background);

@@ -1,16 +1,16 @@
 export default class DefaultView {
     constructor(page) {
         //this.drawNavigation(page);
-        this.drawSettingsModal();
-        this.drawRulesModal();
+        //this.drawSettingsModal();
+        //this.drawRulesModal();
 
-        this.setNavigationToggleHandler(this.toggleNavigation); // Setting event-handler here, so that only the minimum amount of information is shown to Controller.
+        //this.setNavigationToggleHandler(this.toggleNavigation); // Setting event-handler here, so that only the minimum amount of information is shown to Controller.
         
-        this.setRulesModalOpenHandler(this.openModal);
-        this.setSettingsModalOpenHandler(this.openModal);
-        this.setModalLoadHandler(this.resizeModal, this.closeModal);
+        //this.setRulesModalOpenHandler(this.openModal);
+        //this.setSettingsModalOpenHandler(this.openModal);
+        //this.setModalLoadHandler(this.resizeModal, this.closeModal);
 
-        this.setDocumentResizeHandler(this.resizeModal);
+        //this.setDocumentResizeHandler(this.resizeModal);
     }
 
     /*--- Miscellaneous ---*/

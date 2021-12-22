@@ -1,7 +1,5 @@
 const BREAKPOINT = 650;
 
-import HomeView from "./home-view.js";
-
 export default class View {
     constructor(rows, columns) {
         this.board = $(".board");

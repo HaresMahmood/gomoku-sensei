@@ -1,0 +1,11 @@
+@import url("./style.css");
+
+html {
+    height: 100%;
+}
+
+body {
+    height: 100% !important;
+
+    padding: 1.5rem;
+}

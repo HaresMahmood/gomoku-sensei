@@ -30,6 +30,14 @@
 
     color: var(--black);
   }
+
+  h2 {
+    margin: 0;
+
+    font-weight: 600;
+
+    color: var(--black);
+  }
   
   h3 {
     font-weight: 600;
@@ -50,7 +58,19 @@
   }
 
   p {
+    margin: 0;
+
     font-weight: 500;
+  }
+
+
+
+  hr {
+    height: 2px;
+
+    background-color: var(--light-black);
+    border: 0;
+    border-radius: 1px;
   }
 
 
@@ -81,6 +101,7 @@
 
   button {
     padding: 0.65rem;
+
     display: flex;
     justify-content: center;
     align-items: center;
@@ -89,7 +110,7 @@
     outline: none;
     cursor: pointer;
 
-    border-radius: 20px;
+    border-radius: 18.5px;
 
     font-size: 0.75rem;
 
@@ -105,6 +126,12 @@
   button[disabled] {
     opacity: 0.3;
     cursor: not-allowed;
+  }
+
+  .long__button {
+    width: 100%;
+
+    justify-content: flex-start;
   }
 
   .red__button {
@@ -130,6 +157,8 @@
 
     background: none;
     color: var(--black);
+
+    transition: background-color 0.25s ease-out;
   }
 
   .menu__button > span {
@@ -140,13 +169,20 @@
     padding: 0.2rem;
 
     border-radius: 100px;
-
-    transition: background-color 0.25s ease-out;
   }
 
   .menu__button.red__button > span {
     color: var(--red);
     background-color: var(--red-background);
+  }
+
+  .fab__button {
+    width: fit-content;
+    padding: 1.25rem;
+  }
+
+  .fab__button.icon__button {
+    border-radius: 10px;
   }
 
 

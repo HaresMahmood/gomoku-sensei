@@ -1,119 +1,73 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html>
     <head>
-        <title> You vs. Dynamic AI </title>
-
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
         <link rel="stylesheet" href="../css/game.css">
     </head>
+
     <body>
-      <header>
-        <span id="menu-button" class="material-icons-round" unselectable="on"> menu </span>
-
-         <div id="players-container" class="center__container">
-           <div class="row__container">
-              <span class="material-icons-round piece__icon black__icon"> circle </span>
-              <p id="player-1"> You </p>
-              <button-label class="red__button"> 
-                <span class="material-icons-round"> person </span> 
-                <span> P1 </span>
-              </button-label>
-           </div>
-           <div class="row__container">
-            <span class="material-icons-round piece__icon white__icon"> circle </span>
-            <p id="player-2"> Dynamic AI </p>
-            <button-label> 
-              <span class="material-icons-round"> dynamic_form </span> 
-              <span> P2 </span>
-            </button-label>
-         </div>
-         </div>
-
-         <progress class="pure-material-progress-linear" value="0" max="100"></progress>
-          
-          <div class="button-group__container">
-              <button class="icon__button">
-                  <span class="material-icons-round"> undo </span>
-              </button>
-              <button disabled class="icon__button">
-                  <span class="material-icons-round"> redo </span>
-              </button>
-          </div>
-      </header>
-
-      <main>
-          <section class="center__container">
-              <div class="board">
-              </div>
-          </section>
-      </main>
-
-      <nav>
-        <section class="header__container">
-          <span id="menu-close-button" class="material-icons-round"> menu_open </span>
-          <h3> Game </h3>
-        </section>
         <section>
-          <div>
-            <h6> Menu </h6>
-            <button class="menu__button"> 
-              <span class="material-icons-round"> home </span>
-              <span> Home </span>
-            </button>
-            <button class="menu__button red__button"> 
-              <span class="material-icons-round"> gamepad </span>
-              <span> Game </span> 
-            </button>
-            <button id="rules-button" class="menu__button"> 
-              <span class="material-icons-round"> gavel </span>
-              <span> Rules </span> 
-            </button>
-            <button id="settings-button" class="menu__button"> 
-              <span class="material-icons-round"> settings </span>
-              <span> Settings </span> 
-            </button>
-          </div>
+            <div>
+                <div>
+                    <div class="row__container">
+                        <span class="material-icons-round"> record_voice_over </span>
+                        <p> Current player </p>
+                    </div>
+                    <hr>
+                    <div class="row__container">
+                        <div class="row__container">
+                            <span class="material-icons-round piece__icon black__icon"> circle </span>
+                            <p id="player-1"> You </p>
+                            <button-label class="red__button"> 
+                                <span class="material-icons-round"> person </span> 
+                                <span> P1 </span>
+                            </button-label>
+                        </div>
+                        <div class="row__container">
+                            <span class="material-icons-round piece__icon white__icon"> circle </span>
+                            <p id="player-2"> Dynamic AI </p>
+                            <button-label> 
+                            <span class="material-icons-round"> dynamic_form </span> 
+                            <span> P2 </span>
+                            </button-label>
+                        </div>
+                    </div>
+                </div>
 
-          <div>
-            <h6> actions </h6>
-            <div class="row__container">
-              <button class="menu__button"> 
+                <div>
+                    <div class="row__container">
+                        <span class="material-icons-round"> auto_awesome </span>
+                        <p> Actions </p>
+                    </div>
+                    <hr>
+                    <div>
+                        <div class="row__container"> 
+                            <button class="long__button">
+                                <span class="material-icons-round"> undo </span>
+                                Undo
+                            </button> 
+                            <button disabled class="long__button">
+                                <span class="material-icons-round"> redo </span>
+                                Redo
+                            </button> 
+                        </div>
+                        <button class="long__button">
+                            <span class="material-icons-round"> lightbulb </span>
+                            Hint
+                        </button> 
+                    </div>
+                </div>
+            </div>
+            
+            <button class="fab__button red__button"> 
                 <span class="material-icons-round"> bolt </span>
-                <span> New game </span>
-              </button>
-              <button class="menu__button"> 
-                <span class="material-icons-round"> lightbulb </span>
-                <span> Hint </span> 
-              </button>
-            </div>
-            <div class="row__container">
-              <button class="menu__button"> 
-                <span class="material-icons-round"> undo </span>
-                <span> Undo </span>
-              </button>
-              <button disabled class="menu__button"> 
-                <span class="material-icons-round"> redo </span>
-                <span> Redo </span> 
-              </button>
-            </div>
-          </div>
+                New game
+            </button>
         </section>
-      </nav>
+        
+        <div class="board"></div>
 
-      <modal id="rules-page">
-        <iframe src="./rules.html" frameborder="0" scrolling="no" 
-        onload="this.style.height=(this.contentWindow.document.body.scrollHeight)+'px';">
-        </iframe>
-      </modal>
 
-      <modal id="settings-page">
-        <iframe src="./settings.html" frameborder="0" scrolling="no" 
-        onload="this.style.height=(this.contentWindow.document.body.scrollHeight)+'px';">
-        </iframe>
-      </modal>
-
+        
         <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
         <script src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js"></script>
 
