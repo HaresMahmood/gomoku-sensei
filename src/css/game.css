@@ -61,7 +61,6 @@ body {
 .board {
 	aspect-ratio: 1 / 1;
 	height: 100%;
-	max-height: 100%;
 
 	padding: min(3.5vw, 3.5vh);
 
@@ -120,19 +119,19 @@ body {
 
 @media only screen and (max-width: 900px) {
     body {
-		grid-template-areas:
-		'info'
-		'board'
-		'actions';
-		grid-template-columns: 100%;
-		grid-template-rows: min-content max-content min-content;
-		align-content: space-between;
-		justify-content: center;
-		justify-items: stretch;
-		overflow: hidden;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
     }
 
+	.information__container {
+		width: 100%;
+	}
+
+
 	.action__container {
+		height: fit-content;
+
 		justify-content: center;
 	}
 }
