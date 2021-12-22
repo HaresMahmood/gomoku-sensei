@@ -67,16 +67,6 @@
 
 
 
-  hr {
-    height: 2px;
-
-    background-color: var(--light-black);
-    border: 0;
-    border-radius: 1px;
-  }
-
-
-
   .full-width__container {
     width: 100%;
   }
@@ -108,6 +98,8 @@
 
 
   button {
+    height: fit-content;
+
     padding: 0.65rem;
 
     display: flex;
@@ -126,7 +118,7 @@
     background-color: var(--dark-background);
   }
 
-  button:not(.menu__button) > *:first-child {
+  button:not(.menu__button, .icon__button) > *:first-child {
     padding-right: 0.65rem;
   }
 
@@ -145,10 +137,6 @@
     background-color: var(--red-background);
 
     transition: color var(--animation-speed), background-color var(--animation-speed);
-  }
-
-  .icon__button > *:first-child{
-    padding: 0;
   }
 
   .menu__button {
@@ -185,10 +173,6 @@
   .fab__button {
     width: fit-content;
     padding: 1.25rem;
-  }
-
-  .fab__button.icon__button {
-    border-radius: 10px;
   }
 
 
@@ -304,8 +288,14 @@
 
 
   /*=== Animations ===*/
+
   .menu__button:hover {
     background-color: var(--faded-background);
 
     transition: background-color 0.25s ease-out;
   }
+
+
+
+/*=== Breakpoints ===*/
+

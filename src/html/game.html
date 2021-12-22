@@ -1,64 +1,64 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="../css/game.css">
     </head>
 
     <body>
         <div class="board"></div>
 
-        <section>
-            <div>
-                <div class="row__container">
-                    <div class="row__container">
-                        <span class="material-icons-round piece__icon black__icon"> circle </span>
-                        <p id="player-1"> You </p>
-                        <button-label class="red__button"> 
-                            <span class="material-icons-round"> person </span> 
-                            <span> P1 </span>
-                        </button-label>
-                    </div>
-                    <div class="row__container">
-                        <span class="material-icons-round piece__icon white__icon"> circle </span>
-                        <p id="player-2"> Dynamic AI </p>
-                        <button-label> 
-                        <span class="material-icons-round"> dynamic_form </span> 
-                        <span> P2 </span>
-                        </button-label>
-                    </div>
+        <section class="information__container">
+            <div class="row__container">
+                <div class="time_container row__container">
+                    <span class="material-icons-round"> access_time_filled </span>
+                    <h2> 1:23 </h2>
                 </div>
                 
-                <hr>
-
-                <div class="row__container">
-                    <div class="time_container row__container">
-                        <span class="material-icons-round"> access_time_filled </span>
-                        <h2> 1:23 </h2>
-                    </div>
+                <div class="button_container row__container">
+                    <span class="material-icons-round"> auto_awesome </span>
                     
-                    <div class="row__container full-width__container">
-                        <span class="material-icons-round"> auto_awesome </span>
-                        
-                        <button class="full-width__container">
-                            <span class="material-icons-round"> lightbulb </span>
-                            Hint
-                        </button>
-                        <button>
-                            <span class="material-icons-round"> undo </span>
-                            Undo
-                        </button> 
-                        <button disabled>
-                            <span class="material-icons-round"> redo </span>
-                             Redo
-                        </button> 
-                    </div>
+                    <button id="hint-button" class="full-width__container">
+                        <span class="material-icons-round"> lightbulb </span>
+                        Hint
+                    </button>
                 </div>
             </div>
-            
-            <button class="fab__button red__button"> 
-                <span class="material-icons-round"> gamepad </span>
-                New game
-            </button>
+
+            <div class="row__container">
+                <div class="row__container">
+                    <span class="material-icons-round piece__icon black__icon"> circle </span>
+                    <p id="player-1"> You </p>
+                    <button-label class="red__button"> 
+                        <span class="material-icons-round"> person </span> 
+                        <span> P1 </span>
+                    </button-label>
+                </div>
+                <div class="row__container">
+                    <span class="material-icons-round piece__icon white__icon"> circle </span>
+                    <p id="player-2"> Dynamic AI </p>
+                    <button-label> 
+                    <span class="material-icons-round"> dynamic_form </span> 
+                    <span> P2 </span>
+                    </button-label>
+                </div>
+            </div>
+        </section>
+
+        <section class="action__container">
+            <div class="row__container">
+                <button class="icon__button">
+                    <span class="material-icons-round"> undo </span>
+                </button> 
+                <button class="fab__button red__button"> 
+                    <span class="material-icons-round"> bolt </span>
+                    New game
+                </button>    
+                <button disabled class="icon__button">
+                    <span class="material-icons-round"> redo </span>
+                </button> 
+            </div>
         </section>
 
         

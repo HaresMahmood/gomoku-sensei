@@ -10,53 +10,61 @@
 
 
 body {
-	display: flex;
+	display: grid;
+    grid-template-areas:
+    'board info'
+    'board actions';
+	grid-template-columns: max-content 1fr;
+	align-items: start;
+	gap: max(3.5vw, 3.5vh);
 }
 
-body > *:first-child {
-	margin-right: max(5vw, 5vh);
-}
 
-body > *:last-child {
-	margin-left: max(5vw, 5vh);
-}
 
-section {
-	width: -webkit-fill-available;
+.information__container {
+	padding-bottom: max(2.5vw, 2.5vh);
 
 	display: flex;
 	flex-direction: column;
+	grid-area: info;
+	gap: max(2.5vw, 2.5vh);
+
+	border-bottom: 2px solid var(--light-black);
+}
+
+.information__container > div {
 	justify-content: space-between;
-	align-items: flex-end;
-}
-
-section > div {
-	width: 100%;
-}
-
-section hr {
-    margin: 1rem 0;
-}
-
-section > div > div {
-	width: 100%;
-}
-
-section > div > div:first-child {
-	justify-content: space-between;
+	flex-wrap: wrap;
 }
 
 .time_container {
-	width: calc(100% / 3);
+	flex: 0 0 calc(100% / 3);
+}
+
+.button_container {
+	flex: 1 0 auto;
+}
+
+
+.action__container {
+	height: -webkit-fill-available;
+
+	display: flex;
+	justify-content: flex-end;
+	align-items: flex-end;
+	flex-wrap: wrap;
+
+	grid-area: actions;
 }
 
 
 .board {
 	aspect-ratio: 1 / 1;
 	height: 100%;
-	max-width: 100%;
 
 	padding: min(3.5vw, 3.5vh);
+
+	grid-area: board;
 
 	display: flex;
 	flex-flow: row;
@@ -103,4 +111,26 @@ section > div > div:first-child {
 	background-color: var(--faded-background);
 
 	transition: var(--animation-speed);
+}
+
+
+
+/*=== Breakpoints ===*/
+
+@media only screen and (max-width: 900px) {
+    body {
+		grid-template-areas:
+		'info'
+		'board'
+		'actions';
+		grid-template-columns: max-content;
+		grid-template-rows: 1fr max-content 1fr;
+		align-content: space-between;
+		justify-content: center;
+		overflow: hidden;
+    }
+
+	.action__container {
+		justify-content: center;
+	}
 }
