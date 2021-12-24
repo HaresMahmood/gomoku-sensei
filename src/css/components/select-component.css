@@ -1,9 +1,27 @@
+@import url("../variables.css");
+
 .select {
     position: relative;
     width: 250px;
-    background-color: #6e6e6e40;
-    border-radius: 10px;
-    padding: 2px;
+    background: none;
+    padding: 0.2rem 0.5rem;
+
+    transition: border-radius ease-out var(--animation-speed);
+}
+
+.select__background {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+
+    margin: auto;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+
+    background-color: var(--faded-background);
+    border-radius: calc(0.75rem + 0.75rem);
+
+    transition: border-radius ease-out var(--animation-speed);
 }
   
 .select-text {
@@ -15,6 +33,7 @@
     font-size: 0.85rem;
     border: none;
     left: 7.5px;
+    z-index: 10;
 }
   
 /* Remove focus */
@@ -48,25 +67,27 @@
 /* LABEL ======================================= */
 .select-label {
     color: rgba(0,0,0, 0.26);
-    font-size: 0.65rem;
+    font-size: 0.75rem;
     font-weight: normal;
     position: absolute;
     pointer-events: none;
-    left: 10px;
-    top: 15.5px;
-    transition: 0.2s ease all;
+
+    -webkit-transform: translate(0, -50%);
+    transform: translate(0, -50%);
+
+    left: 1rem;
+    top: 50%;
+
+    transition: all ease var(--animation-speed);
 }
   
 /* active state */
 .select-text:focus ~ .select-label, .select-text:valid ~ .select-label {
     color: var(--red);
-    left: 1px;
-    top: -15px;
-    transition: 0.2s ease all;
+    top: calc(-1 * (0.2rem + 5px));
     font-size: 0.55rem;
 }
-  
-/* active state */
-.select-text:focus ~ .select-bar:before, .select-text:focus ~ .select-bar:after {
-    width: 50%;
+
+.select-text:focus ~ .select__background { /* , .select-text:valid ~ .select__background */
+    border-radius: 8px;
 }
