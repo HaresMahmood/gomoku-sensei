@@ -1,5 +1,5 @@
-import AI from "./ai";
-import Node from "./tree/node";
+import AI from "./ai.js";
+import Node from "./tree/node.js";
 export default class KillerAI extends AI {
     chooseMove(game, interval = 3000) {
         const root = new Node();

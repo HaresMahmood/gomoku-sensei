@@ -1,12 +1,10 @@
 export default class State {
-    constructor(game = null, playerNumber = 1, wins = 0, visits = 0) {
-        this._game = game;
-        this._playerNumber = playerNumber;
-        this._wins = wins;
-        this._visits = visits;
-    }
+    _game;
+    _playerNumber;
+    _wins;
+    _visits;
     get game() {
-        return this.game;
+        return this._game;
     }
     get playerNumber() {
         return this._playerNumber;
@@ -15,7 +13,7 @@ export default class State {
         return this._wins;
     }
     get visits() {
-        return this.visits;
+        return this._visits;
     }
     set game(value) {
         this._game = value;
@@ -28,6 +26,12 @@ export default class State {
     }
     set visits(value) {
         this._visits = value;
+    }
+    constructor(game = null, playerNumber = 1, wins = 0, visits = 0) {
+        this._game = game;
+        this._playerNumber = playerNumber;
+        this._wins = wins;
+        this._visits = visits;
     }
     clone() {
         return new State(this._game.clone(), this._playerNumber, this._wins, this._visits);

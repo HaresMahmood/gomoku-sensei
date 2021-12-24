@@ -1,4 +1,4 @@
-import KillerAI from "../player/ai/killerAI";
+import KillerAI from "../player/ai/killerAI.js";
 import SimulationAI from "../player/ai/simulationAI.js";
 
 export default class Controller {

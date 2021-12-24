@@ -1,4 +1,4 @@
-import State from "./state";
+import State from "./state.js";
 
 export default class Node {
     private _state: State;

@@ -1,5 +1,5 @@
-import Game from "../../model/game";
-import Event from "../../utility/event";
+import Game from "../../model/game.js";
+import Event from "../../utility/event.js";
 
 interface iAI {
     chooseMove(game: Game, iterations: number): void;

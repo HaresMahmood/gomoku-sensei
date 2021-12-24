@@ -1,4 +1,4 @@
-import Game from "../../../model/game";
+import Game from "../../../model/game.js";
 
 export default class State {
     private _game: Game;
@@ -8,7 +8,7 @@ export default class State {
 
 
     public get game() {
-        return this.game;
+        return this._game;
     }
 
     public get playerNumber() {
@@ -20,7 +20,7 @@ export default class State {
     }
 
     public get visits() {
-        return this.visits;
+        return this._visits;
     }
 
 

@@ -1,6 +1,6 @@
-import Game from "../../model/game";
-import AI from "./ai";
-import Node from "./tree/node";
+import Game from "../../model/game.js";
+import AI from "./ai.js";
+import Node from "./tree/node.js";
 
 export default class KillerAI extends AI {
     public chooseMove(game: Game, interval: number = 3000) {

@@ -1,15 +1,18 @@
-import State from "./state";
+import State from "./state.js";
 export default class Node {
-    constructor(state = new State(), parent = null, children = []) {
-        this._state = state;
-        this._parent = parent;
-        this.children = children;
-    }
+    _state;
+    _parent;
+    children;
     get state() {
         return this._state;
     }
     get parent() {
         return this._parent;
+    }
+    constructor(state = new State(), parent = null, children = []) {
+        this._state = state;
+        this._parent = parent;
+        this.children = children;
     }
     select(playerNumber) {
         let selected = this.children[0];
