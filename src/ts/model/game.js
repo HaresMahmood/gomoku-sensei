@@ -1,13 +1,8 @@
-import * as _ from "lodash";
-
 const ROWS = 9; 
 const COLUMNS = ROWS;
 const N = 5;
 
-class Game {
-    private state: number[];
-    private lastMove: number;
-
+export default class Game {
     constructor(state = new Array(ROWS * COLUMNS).fill(0), lastMove = -1) {
       this.state = state;
       this.lastMove = lastMove;
