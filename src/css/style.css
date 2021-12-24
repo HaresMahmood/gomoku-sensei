@@ -13,10 +13,6 @@
     box-sizing: border-box;
   }
 
-  :root {
-    --animation-speed: 0.15s;
-  }
-
 
   
   h1 {
@@ -110,12 +106,14 @@
     outline: none;
     cursor: pointer;
 
-    border-radius: 18.5px;
+    border-radius: calc(0.75rem + 0.65rem);
 
     font-size: 0.75rem;
 
     color: var(--white);
     background-color: var(--dark-background);
+
+    transition: border-radius ease-out var(--animation-speed);
   }
 
   button:not(.menu__button, .icon__button) > *:first-child {
@@ -132,6 +130,11 @@
     justify-content: flex-start;
   }
 
+  .menu__button,
+  .fab__button {
+    border-radius: 15px;
+  }
+
   .red__button {
     color: var(--red);
     background-color: var(--red-background);
@@ -140,10 +143,8 @@
   }
 
   .menu__button {
-    width: 3.15rem;
-    height: 3.15rem;
-
-    padding: 0;
+    width: 3.5rem;
+    height: 3.5rem;
 
     display: flex;
     flex-direction: column;
@@ -152,15 +153,18 @@
     background: none;
     color: var(--black);
 
-    transition: background-color 0.25s ease-out;
+    font-size: 0.7rem;
+
+    transition: background-color var(--animation-speed), border-radius ease-out var(--animation-speed);
   }
 
   .menu__button > span {
-    width: 3.15rem; /* TODO: Dial in width. */
+    width: 3rem; /* TODO: Dial in width. */
 
     margin-bottom: 0.25rem;
-
     padding: 0.2rem;
+
+    font-size: 1.15rem;
 
     border-radius: 100px;
   }
@@ -173,6 +177,8 @@
   .fab__button {
     width: fit-content;
     padding: 1.25rem;
+
+    transition: border-radius ease-out var(--animation-speed);
   }
 
 
@@ -289,10 +295,12 @@
 
   /*=== Animations ===*/
 
+  button:active {
+      border-radius: 8px;
+  }
+
   .menu__button:hover {
     background-color: var(--faded-background);
-
-    transition: background-color 0.25s ease-out;
   }
 
 
