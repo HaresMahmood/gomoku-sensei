@@ -9,8 +9,6 @@ export default class DefaultView {
 
         this.currentState = this.homePage;
 
-        console.log(this.currentState);
-
         this.setNavigationButtonHandler("home", this.homePage);
         this.setNavigationButtonHandler("game", this.gamePage);
 
@@ -26,7 +24,15 @@ export default class DefaultView {
 
     navigateTo(page, pageName) {
         if (this.currentState !== page) {
-            $("#page-frame").attr("src", `../src/html/${pageName}.html`);
+            $("#page-frame").removeClass("loaded");
+
+            setTimeout(function() {
+                $("#page-frame").attr("src", `../src/html/${pageName}.html`)
+                setTimeout(function() {
+                    $("#page-frame").addClass("loaded");
+                }, 50);
+            }, 400);
+
             $("#header-text").html(pageName);
             this.currentState = page;
         }

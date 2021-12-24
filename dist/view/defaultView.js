@@ -6,7 +6,6 @@ export default class DefaultView {
         this.homePage = new HomePage(this, true);
         this.gamePage = new GamePage(this);
         this.currentState = this.homePage;
-        console.log(this.currentState);
         this.setNavigationButtonHandler("home", this.homePage);
         this.setNavigationButtonHandler("game", this.gamePage);
         this.setRulesModalOpenHandler(this.openModal);
@@ -17,7 +16,13 @@ export default class DefaultView {
     /*=== Miscellaneous ===*/
     navigateTo(page, pageName) {
         if (this.currentState !== page) {
-            $("#page-frame").attr("src", `../src/html/${pageName}.html`);
+            $("#page-frame").removeClass("loaded");
+            setTimeout(function () {
+                $("#page-frame").attr("src", `../src/html/${pageName}.html`);
+                setTimeout(function () {
+                    $("#page-frame").addClass("loaded");
+                }, 50);
+            }, 400);
             $("#header-text").html(pageName);
             this.currentState = page;
         }

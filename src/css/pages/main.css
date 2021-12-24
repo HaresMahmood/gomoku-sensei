@@ -58,6 +58,24 @@ main {
     grid-area: main;
 }
 
+main > iframe {
+    scale: 0.95;
+    -moz-transform: scale(0.95);
+
+    opacity: 0;
+
+    transition: opacity 0.35s, scale 0.35s ease;
+}
+
+main > iframe.loaded {
+    scale: 1;
+    -moz-transform: scale(1);
+
+    opacity: 1;
+
+    transition: opacity 0.35s, scale 0.35s ease;
+}
+
 
 
 iframe {
