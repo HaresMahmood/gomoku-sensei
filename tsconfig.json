@@ -7,7 +7,7 @@
         "module": "ESNext",
         "target": "ESNext",
     },
-        "include": [
+    "include": [
         "./src/ts/"
     ]
 }

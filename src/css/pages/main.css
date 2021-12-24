@@ -42,6 +42,10 @@ header {
     grid-area: header;
 }
 
+header > h3 {
+    text-transform: capitalize;
+}
+
 nav {
     grid-area: nav;
 }

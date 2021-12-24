@@ -1,16 +1,32 @@
+import GamePage from "../pages/gamePage.js";
+import HomePage from "../pages/homePage.js";
+import "../pages/page.js";
 export default class DefaultView {
     constructor(page) {
+        this.homePage = new HomePage(this, true);
+        this.gamePage = new GamePage(this);
+        this.currentState = this.homePage;
+        console.log(this.currentState);
+        this.setNavigationButtonHandler("home", this.homePage);
+        this.setNavigationButtonHandler("game", this.gamePage);
         this.setRulesModalOpenHandler(this.openModal);
         this.setSettingsModalOpenHandler(this.openModal);
         this.setModalLoadHandler(this.resizeModal, this.closeModal);
         this.setDocumentResizeHandler(this.resizeModal);
     }
     /*=== Miscellaneous ===*/
+    navigateTo(page, pageName) {
+        if (this.currentState !== page) {
+            $("#page-frame").attr("src", `../src/html/${pageName}.html`);
+            $("#header-text").html(pageName);
+            this.currentState = page;
+        }
+    }
     resizeModal(modal) {
         const windowWidth = $(window).innerWidth();
         const iframe = $(modal).find("iframe");
         // TODO: Get `550` value from media breakpoint.
-        const height = windowWidth > 550 ? $(iframe).contents().find("body").height() : $(window).innerHeight();
+        const height = windowWidth > 600 ? $(iframe).contents().find("body").height() : $(window).innerHeight();
         $(iframe).height(height);
     }
     openModal(modal) {
@@ -24,6 +40,11 @@ export default class DefaultView {
         $("body").toggleClass("overlay");
     }
     /*=== Events ===*/
+    setNavigationButtonHandler(button, handler) {
+        $(`#${button}-button`).bind("mouseup", function () {
+            handler.navigateTo();
+        });
+    }
     setRulesModalOpenHandler(handler) {
         $("#rules-button").bind("click", function () {
             handler("#rules-page");
