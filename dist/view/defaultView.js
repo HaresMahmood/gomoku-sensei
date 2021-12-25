@@ -6,8 +6,8 @@ export default class DefaultView {
         this.homePage = new HomePage(this, true);
         this.gamePage = new GamePage(this);
         this.currentState = this.homePage;
-        this.setNavigationButtonHandler("home", this.homePage);
-        this.setNavigationButtonHandler("game", this.gamePage);
+        this.setNavigationButtonHandler("home", this.homePage, this.changeNavigationButtons);
+        this.setNavigationButtonHandler("game", this.gamePage, this.changeNavigationButtons);
         this.setRulesModalOpenHandler(this.openModal);
         this.setSettingsModalOpenHandler(this.openModal);
         this.setModalLoadHandler(this.resizeModal, this.closeModal);
@@ -27,6 +27,10 @@ export default class DefaultView {
             this.currentState = page;
         }
     }
+    changeNavigationButtons(button) {
+        $(".menu__button.red__button").removeClass("red__button");
+        $(button).addClass("red__button");
+    }
     resizeModal(modal) {
         const windowWidth = $(window).innerWidth();
         const iframe = $(modal).find("iframe");
@@ -45,9 +49,10 @@ export default class DefaultView {
         $("body").toggleClass("overlay");
     }
     /*=== Events ===*/
-    setNavigationButtonHandler(button, handler) {
+    setNavigationButtonHandler(button, state, handler) {
         $(`#${button}-button`).bind("mouseup", function () {
-            handler.navigateTo();
+            state.navigateTo();
+            handler(this);
         });
     }
     setRulesModalOpenHandler(handler) {

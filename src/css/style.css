@@ -159,19 +159,27 @@
   }
 
   .menu__button > span {
-    width: 3rem; /* TODO: Dial in width. */
+    width: 2.5rem;
 
     margin-bottom: 0.25rem;
     padding: 0.2rem;
 
     font-size: 1.15rem;
 
+    background-color: none;
+    
     border-radius: 100px;
+
+    transition: width 0.35s ease-out, background-color 0.35s;
   }
 
   .menu__button.red__button > span {
+    width: 3rem;
+    
     color: var(--red);
     background-color: var(--red-background);
+
+    transition: width 0.35s ease-out, background-color 0.35s;
   }
 
   .fab__button {
