@@ -89,10 +89,10 @@ export default class Game {
         const verticalCounter = checkVertical(this.toMatrix(), player, this.lastMove % ROWS);
         const diagonalCounterLeft = checkPrimaryDiagonal(this.toMatrix(), player, Math.floor(this.lastMove / ROWS), this.lastMove % ROWS);
         const diagonalCounterRight = checkSecondaryDiagonal(this.toMatrix(), player, Math.floor(this.lastMove / ROWS), this.lastMove % ROWS);
-        return horizontalCounter
-            || verticalCounter
-            || diagonalCounterLeft
-            || diagonalCounterRight;
+        return horizontalCounter ||
+            verticalCounter ||
+            diagonalCounterLeft ||
+            diagonalCounterRight;
     }
     getWinner() {
         const player = this.state[this.lastMove]; // TODO: Fix this - `player` should be passed in as a parameter.

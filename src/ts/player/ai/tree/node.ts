@@ -1,10 +1,14 @@
 import State from "./state.js";
 
 export default class Node {
-    private _state: State;
     private _parent: Node;
     private children: Node[];
+    private _state: State;
+    private _playerNumber: number;
+    private _wins: number;
+    private _visits: number;
 
+    
     public get state() {
         return this._state;
     }
@@ -12,6 +16,19 @@ export default class Node {
     public get parent() {
         return this._parent;
     }
+
+    public get playerNumber() {
+        return this._playerNumber;
+    }
+
+    public get wins() {
+        return this._wins;
+    }
+
+    public get visits() {
+        return this._visits;
+    }
+
 
 
 

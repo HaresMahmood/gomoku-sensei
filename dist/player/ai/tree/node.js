@@ -1,13 +1,25 @@
 import State from "./state.js";
 export default class Node {
-    _state;
     _parent;
     children;
+    _state;
+    _playerNumber;
+    _wins;
+    _visits;
     get state() {
         return this._state;
     }
     get parent() {
         return this._parent;
+    }
+    get playerNumber() {
+        return this._playerNumber;
+    }
+    get wins() {
+        return this._wins;
+    }
+    get visits() {
+        return this._visits;
     }
     constructor(state = new State(), parent = null, children = []) {
         this._state = state;
