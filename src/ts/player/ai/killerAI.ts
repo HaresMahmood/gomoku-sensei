@@ -1,30 +1,28 @@
-import Game from "../../model/game.js";
+import GameModel from "../../model/gameModel.js";
 import AI from "./ai.js";
 import Node from "./tree/node.js";
 
 export default class KillerAI extends AI {
-    public chooseMove(game: Game, interval: number = 3000) {
-        const root: Node = new Node();
+    public chooseMove(game: GameModel, interval: number = 3000) {
+        const root: Node = new Node(null, this.playerNumber, null);
         const startTime = Date.now();
         let counter: number = 0;
         
-        root.state.game = game;
-        root.state.playerNumber = this.playerNumber;
-        root.expand();
+        root.expand(game);
 
         while((Date.now() - startTime) < interval) {
             let current = this.select(root); // Selection.
             let result;
 
-            if (current.state.game.isOver()) {
-                result = current.state.game.getWinner();
+            if (game.isOver(this.playerNumber)) {
+                result = game.getWinner(this.playerNumber);
             }
             else {
-                if (current.state.visits > 0) {
-                    current = current.expand(); // Expansion.
+                if (current.visits > 0) {
+                    current = current.expand(game); // Expansion.
                 }
 
-                result = current.rollout(); // Simulation.
+                result = current.rollout(game); // Simulation.
             }
 
             this.backpropogate(current, result); // Backpropogation.
@@ -38,7 +36,7 @@ export default class KillerAI extends AI {
         console.log(root);
         console.log(winnerNode);
 
-        this.executeMove(winnerNode.state.game.lastMove);
+        this.executeMove(winnerNode.move.index);
     }
 
     private select(node: Node) {

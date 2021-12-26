@@ -1,8 +1,8 @@
-import Game from "../../model/game.js";
+import GameModel from "../../model/gameModel.js";
 import Event from "../../utility/event.js";
 
 interface iAI {
-    chooseMove(game: Game, iterations: number): void;
+    chooseMove(game: GameModel, iterations: number): void;
 }
 
 export default abstract class AI implements iAI {
@@ -14,7 +14,7 @@ export default abstract class AI implements iAI {
         this.chooseMoveEvent = new Event();
     }
 
-    abstract chooseMove(game: Game, iterations: number): void;
+    abstract chooseMove(game: GameModel, iterations: number): void;
 
     public executeMove(move: number):void {
         this.chooseMoveEvent.trigger(move);
