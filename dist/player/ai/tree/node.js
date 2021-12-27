@@ -1,12 +1,12 @@
 export default class Node {
-    _move;
+    _game;
     _player;
     _parent;
     children;
     _wins;
     _visits;
-    constructor(move, player, parent, children = [], wins = 0, visits = 0) {
-        this._move = move;
+    constructor(game, player, parent, children = [], wins = 0, visits = 0) {
+        this._game = game;
         this._player = player;
         this._parent = parent;
         this.children = children;
@@ -14,13 +14,13 @@ export default class Node {
         this._visits = visits;
     }
     /*=== Accessors ===*/
-    get move() {
-        return this._move;
+    get game() {
+        return this._game;
     }
     get parent() {
         return this._parent;
     }
-    get playerNumber() {
+    get player() {
         return this._player;
     }
     get wins() {
@@ -32,7 +32,7 @@ export default class Node {
     /*=== Miscellaneous ===*/
     select(playerNumber) {
         let selected = this.children[0];
-        const isAIPlayer = selected.playerNumber !== playerNumber;
+        const isAIPlayer = selected.player !== playerNumber;
         let bestValue = isAIPlayer ? -Infinity : Infinity;
         for (const child of this.children) {
             const exploitation = (child.wins / child.visits) || 0; // Change `NaN` to 0 (0 wins / 0 visits).
@@ -52,48 +52,58 @@ export default class Node {
         //console.log(" ");
         return selected;
     }
-    expand(game) {
-        const moves = game.getSuccessors(this._player);
-        const nextPlayer = game.togglePlayer(this._player);
-        for (const move of moves) {
-            this.children.push(new Node(move, nextPlayer, this));
+    expand() {
+        const successors = this._game.getSuccessors(this._player);
+        const nextPlayer = this.togglePlayer();
+        for (const successor of successors) {
+            this.children.push(new Node(successor, nextPlayer, this));
         }
         return this.children[0]; // || this;
     }
-    rollout(game) {
-        let counter = 0;
-        game.performMove(this._move);
+    rollout() {
+        /*
+        let counter: number = 0;
+        const originalPlayer: number = this._player;
+
+        console.log(game);
+
+        /*
+            TODO: Current problem: node performs move on the game-state fed into
+            the ai at the start, even if the node is a few levels deep.
+        
+
         while (!game.isOver(this._player)) {
             game.performRandomMove(this._player);
             this._player = game.togglePlayer(this._player);
+
             counter++;
         }
-        const utility = 1; //game.getWinner();
-        for (let i = 0; i < counter; i++) {
+
+        const utility: number = 1; //game.getWinner();
+
+        for (let i: number = 0; i < counter; i++) {
             game.undo();
         }
+
+        this._player = originalPlayer;
+
         return utility;
-        /*
-        const clone = this._move.clone();
-        
-        if (clone.game.isOver()) {
-            const result = clone.game.getWinner();
-    
+        */
+        const clone = this._game.clone();
+        const originalPlayer = this._player;
+        if (this._game.isOver(this._player)) {
+            const result = clone.getWinner(this._player);
             return result;
         }
-
         while (true) {
-            clone.makeRandomMove();
-
-            if (clone.game.isOver()) {
-                const result = clone.game.getWinner();
-        
+            clone.performRandomMove(this._player);
+            if (clone.isOver(this._player)) {
+                const result = clone.getWinner(this._player);
+                this._player = originalPlayer;
                 return result;
             }
-
-            clone.togglePlayer();
+            this._player = this.togglePlayer();
         }
-        */
     }
     /*=== Utility ===*/
     updateStats(utility) {
@@ -103,10 +113,19 @@ export default class Node {
     isLeaf() {
         return this.children.length === 0;
     }
+    isTerminal() {
+        return this._game.isOver(this._player);
+    }
+    getUtility() {
+        return this._game.getWinner(this._player);
+    }
     getMostVisitedChild() {
         let child = this.children.reduce((x, y) => {
             return (x.wins / x.visits || 0) > (y.wins / y.visits || 0) ? x : y;
         });
         return child;
+    }
+    togglePlayer() {
+        return this._player === 1 ? 2 : 1;
     }
 }

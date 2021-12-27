@@ -1,14 +1,10 @@
 export default class Move {
     private _index: number;
     private _player: number;
-    private _turn: number;
-    private _previousMove: Move;
 
-    constructor(index: number, player: number, lastMove: Move) {
+    constructor(index: number, player: number) {
         this._index = index;
         this._player = player;
-        this._turn = lastMove.turn + 1;
-        this._previousMove = lastMove;
     }
 
     /*=== Accessors ===*/
@@ -21,13 +17,9 @@ export default class Move {
         return this._player;
     }
 
-    public get turn() {
-        return this._turn;
-    }
+    /*=== Miscellaneous ===*/
 
-    public get previousMove() {
-        return this._previousMove;
-    }
+
 
     /*=== Utility ===*/
 

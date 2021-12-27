@@ -1,10 +1,13 @@
-import Move from "./move";
-const ROWS = 9;
+const ROWS = 3;
 const COLUMNS = ROWS;
-const N = 5;
+const N = 3;
 export default class GameModel {
     _board;
-    _lastMove;
+    _history;
+    constructor(board = new Array(ROWS * COLUMNS).fill(0), history = []) {
+        this._board = board;
+        this._history = history;
+    }
     /*=== Accessors ===*/
     get rows() {
         return ROWS;
@@ -12,33 +15,28 @@ export default class GameModel {
     get columns() {
         return COLUMNS;
     }
-    constructor() {
+    get lastMove() {
+        return this._history[this._history.length - 1];
+        ;
     }
     /*=== Miscellaneous ===*/
-    /*
-    public performMove(index: number, player: number): void {
-        let move: Move = new Move(index, player, this._lastMove);
-
-        this._board[index] = move;
-        this._lastMove = move;
-    }
-    */
-    performMove(move) {
-        this._board[move.index] = move;
-        this._lastMove = move;
+    performMove(index, player, notifyObservers = false) {
+        this._board[index] = player;
+        this._history.push(index);
+        if (notifyObservers) {
+        }
     }
     /* TODO: Not sure if this works. */
     undo(notifyObservers = false) {
-        let index = this._board.indexOf(this._lastMove);
-        this._lastMove = this._lastMove.previousMove;
-        this._board[index] = new Move(index, 0, this._lastMove);
+        let index = this._board.indexOf(this._history.pop());
+        this._board[index] = 0;
         if (notifyObservers) {
         }
     }
     getEmptyCells() {
         const cells = [];
         for (let i = 0; i < (ROWS * COLUMNS); i++) {
-            if (this._board[i].isEmpty()) {
+            if (this._board[i] === 0) {
                 cells.push(i);
             }
         }
@@ -50,17 +48,18 @@ export default class GameModel {
     getSuccessors(player) {
         let successors = [];
         for (let i = 0; i < (ROWS * COLUMNS); i++) {
-            if (this._board[i].isEmpty()) {
-                successors.push(new Move(i, player, this._lastMove));
+            if (this._board[i] === 0) {
+                const clone = this.clone();
+                clone.performMove(i, player);
+                successors.push(clone);
             }
         }
         return successors;
     }
     performRandomMove(player) {
-        const successors = this.getEmptyCells();
-        const randomCell = successors[Math.floor(Math.random() * successors.length)];
-        const move = new Move(randomCell, player, this._lastMove);
-        this.performMove(move);
+        const emptyCells = this.getEmptyCells();
+        const randomCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+        this.performMove(randomCell, player);
     }
     isOver(player) {
         return this.hasWon(player) || this.isDraw();
@@ -69,18 +68,21 @@ export default class GameModel {
         return this.hasWon(player) ? player : -1;
     }
     isDraw() {
-        return !this._board.some(m => m.isEmpty());
+        return !this._board.includes(0);
     }
     /*=== Utility ===*/
-    togglePlayer(player) {
-        return player === 1 ? 2 : 1;
+    clone() {
+        return new GameModel(this._board.slice(), this._history.slice());
+    }
+    isCellEmpty(index) {
+        return this._board[index] === 0;
     }
     hasWon(player) {
         function countConsecutivePieces(pieces) {
             let counter = 0;
             let last = null;
             for (let i = 0; i < pieces.length; i++) {
-                if (pieces[i].index === player) {
+                if (pieces[i] === player) {
                     if (pieces[i] !== last) {
                         counter = 0;
                     }
@@ -114,11 +116,15 @@ export default class GameModel {
             }
             return countConsecutivePieces(pieces);
         }
+        // If the player has not placed enough pieces to win the game, ...
+        if (this._board.filter((p) => (p === player)).length < N) {
+            return false; // ... Return `false` by default.
+        }
         const matrix = this.toMatrix(this._board, ROWS);
-        const horizontalCounter = checkHorizontal(matrix, Math.floor(this._lastMove.index / ROWS));
-        const verticalCounter = checkVertical(matrix, this._lastMove.index % ROWS);
-        const diagonalCounterLeft = checkPrimaryDiagonal(matrix, Math.floor(this._lastMove.index / ROWS), this._lastMove.index % ROWS);
-        const diagonalCounterRight = checkSecondaryDiagonal(matrix, Math.floor(this._lastMove.index / ROWS), this._lastMove.index % ROWS);
+        const horizontalCounter = checkHorizontal(matrix, Math.floor(this.lastMove / ROWS));
+        const verticalCounter = checkVertical(matrix, this.lastMove % ROWS);
+        const diagonalCounterLeft = checkPrimaryDiagonal(matrix, Math.floor(this.lastMove / ROWS), this.lastMove % ROWS);
+        const diagonalCounterRight = checkSecondaryDiagonal(matrix, Math.floor(this.lastMove / ROWS), this.lastMove % ROWS);
         return horizontalCounter ||
             verticalCounter ||
             diagonalCounterLeft ||

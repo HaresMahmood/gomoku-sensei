@@ -31,7 +31,7 @@ export default class Controller {
         let color = this.currentPlayer === 1 ? "black" : "white";
         this.view.addPiece(index, color);
         this.model.performMove(index, this.currentPlayer);
-        if (this.model.isOver()) {
+        if (this.model.isOver(this.currentPlayer)) {
             this.view.endGame(color, this.model.isDraw());
             //return;
         }

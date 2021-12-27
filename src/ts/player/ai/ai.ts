@@ -6,11 +6,11 @@ interface iAI {
 }
 
 export default abstract class AI implements iAI {
-    protected playerNumber: number;
+    protected player: number;
     private chooseMoveEvent: Event;
 
     public constructor(playerNumber: number) {
-        this.playerNumber = playerNumber;
+        this.player = playerNumber;
         this.chooseMoveEvent = new Event();
     }
 

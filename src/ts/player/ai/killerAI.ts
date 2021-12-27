@@ -3,26 +3,27 @@ import AI from "./ai.js";
 import Node from "./tree/node.js";
 
 export default class KillerAI extends AI {
-    public chooseMove(game: GameModel, interval: number = 3000) {
-        const root: Node = new Node(null, this.playerNumber, null);
-        const startTime = Date.now();
+    public chooseMove(game: GameModel, interval: number = 1000) {
+        const root: Node = new Node(game, this.player, null);
         let counter: number = 0;
         
-        root.expand(game);
+        root.expand();
 
-        while((Date.now() - startTime) < interval) {
+        while (counter < interval) {
             let current = this.select(root); // Selection.
             let result;
 
-            if (game.isOver(this.playerNumber)) {
-                result = game.getWinner(this.playerNumber);
+            //console.log(game);
+
+            if (current.isTerminal()) {
+                result = current.getUtility();
             }
             else {
                 if (current.visits > 0) {
-                    current = current.expand(game); // Expansion.
+                    current = current.expand(); // Expansion.
                 }
 
-                result = current.rollout(game); // Simulation.
+                result = current.rollout(); // Simulation.
             }
 
             this.backpropogate(current, result); // Backpropogation.
@@ -32,25 +33,24 @@ export default class KillerAI extends AI {
 
         const winnerNode = root.getMostVisitedChild();
 
-        console.log(counter);
         console.log(root);
         console.log(winnerNode);
 
-        this.executeMove(winnerNode.move.index);
+        this.executeMove(winnerNode.game.lastMove);
     }
 
     private select(node: Node) {
         while (!node.isLeaf()) { // && !node.state.game.isOver()
-            node = node.select(this.playerNumber); // UCT.
+            node = node.select(this.player); // UCT.
         }
 
         return node;
     }
 
-    private backpropogate(node: Node, result) {
+    private backpropogate(node: Node, result: number) {
         let utility = -1;
 
-        if (result === this.playerNumber) {
+        if (result === this.player) {
             utility = 1;
         }
         else if (result === -1) {
@@ -59,6 +59,7 @@ export default class KillerAI extends AI {
 
         while (node !== null) {
             node.updateStats(utility);
+
             node = node.parent;
         }
     }

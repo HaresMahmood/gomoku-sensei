@@ -1,9 +1,9 @@
 import Event from "../../utility/event.js";
 export default class AI {
-    playerNumber;
+    player;
     chooseMoveEvent;
     constructor(playerNumber) {
-        this.playerNumber = playerNumber;
+        this.player = playerNumber;
         this.chooseMoveEvent = new Event();
     }
     executeMove(move) {
