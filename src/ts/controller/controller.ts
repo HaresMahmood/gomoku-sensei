@@ -1,9 +1,9 @@
-import GameModel from "../model/gameModel.js";
+import Game from "../model/game.js";
 import KillerAI from "../player/ai/killerAI.js";
 import SimulationAI from "../player/ai/simulationAI.js";
 
 export default class Controller {
-    private model: GameModel;
+    private model: Game;
     private view;
     
     private currentPlayer;
@@ -16,7 +16,7 @@ export default class Controller {
 
         this.currentPlayer = 1;
 
-        this.ai = new SimulationAI(2);
+        this.ai = new KillerAI(2);
 
         //this.model.changePlayerEvent.addListener(player => this.aiTurn(player));
         this.ai.chooseMoveEvent.addListener(index => this.performMove(index));
@@ -48,7 +48,7 @@ export default class Controller {
         this.view.addPiece(index, color);
         this.model.performMove(index, this.currentPlayer);
 
-        if (this.model.isOver(this.currentPlayer)) {
+        if (this.model.isOver()) {
             this.view.endGame(color, this.model.isDraw());
             //return;
         }

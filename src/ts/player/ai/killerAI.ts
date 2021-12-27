@@ -1,25 +1,26 @@
-import GameModel from "../../model/gameModel.js";
+import Game from "../../model/game.js";
 import AI from "./ai.js";
 import Node from "./tree/node.js";
 
 export default class KillerAI extends AI {
-    public chooseMove(game: GameModel, interval: number = 1) {
-        const root: Node = new Node(game, this.player, null);
+    public chooseMove(game: Game, interval: number = 3000) {
+        const root: Node = new Node();
+        const startTime = Date.now();
         let counter: number = 0;
         
+        root.state.game = game;
+        root.state.playerNumber = this.player;
         root.expand();
 
-        while (counter < interval) {
+        while((Date.now() - startTime) < interval) {
             let current = this.select(root); // Selection.
             let result;
 
-            //console.log(game);
-
-            if (current.isTerminal()) {
-                result = current.getUtility();
+            if (current.state.game.isOver()) {
+                result = current.state.game.getWinner();
             }
             else {
-                if (current.visits > 0) {
+                if (current.state.visits > 0) {
                     current = current.expand(); // Expansion.
                 }
 
@@ -33,10 +34,11 @@ export default class KillerAI extends AI {
 
         const winnerNode = root.getMostVisitedChild();
 
-        //console.log(root);
-        //console.log(winnerNode);
+        console.log(counter);
+        console.log(root);
+        console.log(winnerNode);
 
-        this.executeMove(winnerNode.game.lastMove);
+        this.executeMove(winnerNode.state.game.lastMove);
     }
 
     private select(node: Node) {
@@ -47,7 +49,7 @@ export default class KillerAI extends AI {
         return node;
     }
 
-    private backpropogate(node: Node, result: number) {
+    private backpropogate(node: Node, result) {
         let utility = -1;
 
         if (result === this.player) {
@@ -59,7 +61,6 @@ export default class KillerAI extends AI {
 
         while (node !== null) {
             node.updateStats(utility);
-
             node = node.parent;
         }
     }

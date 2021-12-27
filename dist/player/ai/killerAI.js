@@ -1,19 +1,21 @@
 import AI from "./ai.js";
 import Node from "./tree/node.js";
 export default class KillerAI extends AI {
-    chooseMove(game, interval = 1) {
-        const root = new Node(game, this.player, null);
+    chooseMove(game, interval = 3000) {
+        const root = new Node();
+        const startTime = Date.now();
         let counter = 0;
+        root.state.game = game;
+        root.state.playerNumber = this.player;
         root.expand();
-        while (counter < interval) {
+        while ((Date.now() - startTime) < interval) {
             let current = this.select(root); // Selection.
             let result;
-            //console.log(game);
-            if (current.isTerminal()) {
-                result = current.getUtility();
+            if (current.state.game.isOver()) {
+                result = current.state.game.getWinner();
             }
             else {
-                if (current.visits > 0) {
+                if (current.state.visits > 0) {
                     current = current.expand(); // Expansion.
                 }
                 result = current.rollout(); // Simulation.
@@ -22,9 +24,10 @@ export default class KillerAI extends AI {
             counter++;
         }
         const winnerNode = root.getMostVisitedChild();
-        //console.log(root);
-        //console.log(winnerNode);
-        this.executeMove(winnerNode.game.lastMove);
+        console.log(counter);
+        console.log(root);
+        console.log(winnerNode);
+        this.executeMove(winnerNode.state.game.lastMove);
     }
     select(node) {
         while (!node.isLeaf()) { // && !node.state.game.isOver()

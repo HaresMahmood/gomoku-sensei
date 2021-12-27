@@ -1,61 +1,57 @@
-import GameModel from "../../../model/gameModel.js";
+import State from "./state.js";
 
 export default class Node {
-    private _game: GameModel;
-    private _player: number;
+    private _state: State;
     private _parent: Node;
+    private children: Node[];
 
-    private _children: Node[];
-    private _wins: number;
-    private _visits: number;
-
-    constructor(game: GameModel, player: number, parent: Node, 
-        children: Node[] = [], wins: number = 0, visits: number = 0) {
-        this._game = game;
-        this._player = player;
+    constructor(state = new State(), parent = null, children = []) {
+        this._state = state;
         this._parent = parent;
-
-        this._children = children;
-        this._wins = wins;
-        this._visits = visits;
+        this.children = children;
     }
 
-    /*=== Accessors ===*/
-    
-    public get game() {
-        return this._game;
+    public get state() {
+        return this._state;
     }
 
     public get parent() {
         return this._parent;
     }
 
-    public get player() {
-        return this._player;
+    /*
+    selectAction() {
+        const visited = [];
+        let current = this;
+        while (!current.isLeaf() && !current.state.game.isOver()) {
+            current = current.select();
+            visited.push(current);
+        }
+        let utility;
+        if (current.state.game.isOver()) {
+            utility = current.state.game.getUtility(current.state.playerNumber);
+        }
+        else {
+            current.expand();
+            const newNode = current.select();
+            utility = newNode.rollout();
+        }
+        for (const node of visited) {
+            node.updateStats(utility);
+        }
+        console.log(utility);
+        this.updateStats(utility);
     }
+    */
 
-    public get children() {
-        return this._children;
-    }
-
-    public get wins() {
-        return this._wins;
-    }
-
-    public get visits() {
-        return this._visits;
-    }
-
-    /*=== Miscellaneous ===*/
-
-    public select(playerNumber: number): Node {
-        let selected = this._children[0];
-        const isAIPlayer = selected.player !== playerNumber;
+    select(playerNumber) {
+        let selected = this.children[0];
+        const isAIPlayer = selected._state.playerNumber !== playerNumber;
         let bestValue = isAIPlayer ? -Infinity : Infinity;
 
-        for (const child of this._children) {
-            const exploitation = (child.wins / child.visits) || 0; // Change `NaN` to 0 (0 wins / 0 visits).
-            let exploration = 2 * Math.sqrt(Math.log(this._visits) / child.visits); 
+        for (const child of this.children) {
+            const exploitation = (child._state.wins / child._state.visits) || 0; // Change `NaN` to 0 (0 wins / 0 visits).
+            let exploration = 2 * Math.sqrt(Math.log(this._state.visits) / child._state.visits); 
             exploration = isNaN(exploration) ? Infinity : exploration; // Change `NaN` to `Infinity` (log(0 parent visits)).
             
             const uctValue = isAIPlayer ? exploitation + exploration 
@@ -77,86 +73,79 @@ export default class Node {
         return selected;
     }
 
-    public expand(): Node {
-        const successors: GameModel[] = this._game.getSuccessors(this._player);
-        const nextPlayer = this.togglePlayer();
+    expand() {
+        const moves = this._state.getMoves();
 
-        for (const successor of successors) {
-            this._children.push(new Node(successor, nextPlayer, this));
+        for (const move of moves) {
+            this.children.push(new Node(move, this));
         }
 
-        return this._children[0]; // || this;
+        return this.children[0]; // || this;
     }
 
-    /*
-        getMoves() {
-        let possibleMoves = [];
-        let emptyPositions = this.game.getPossibleSuccessors(this.playerNumber);
-        let opponentPlayerNumber = this.getOpponentPlayerNumber();
+    rollout() {
+        const clone = this._state.clone();
+        
+        //console.log("");
+        //console.log(clone.game.toMatrix());
 
-        for (const position of emptyPositions) {
-            const child = new State(position, opponentPlayerNumber);
+        if (clone.game.isOver()) {
+            const result = clone.game.getWinner();
 
-            possibleMoves.push(child);
+            //console.log(true);
+            //console.log(clone.game.toMatrix(), result);
+    
+            return result;
         }
-
-        return possibleMoves;
-    }
-    */
-
-    public rollout(): number {
-        if (this.isTerminal()) {
-            return this.getUtility();
-        }
-
-        const clone = this._game.clone();
-        const originalPlayer = this._player;
 
         while (true) {
-            clone.performRandomMove(this._player);
+            clone.makeRandomMove();
 
-            if (clone.isOver(this._player)) {
-                const result = clone.getWinner(this._player);
+            //console.log(clone.game.toMatrix());
 
-                //console.log(clone.toString(), result);
+            if (clone.game.isOver()) {
+                const result = clone.game.getWinner();
 
-                this._player = originalPlayer;
+                //console.log(clone.game.toMatrix(), result);
         
                 return result;
             }
 
-            this._player = this.togglePlayer();
+            clone.togglePlayer();
         }
     }
 
-    /*=== Utility ===*/
+    /*
+        const original = this.state.game.clone();
+        const originalPlayer = this.state.playerNumber;
+        while (!this.state.game.isOver(this.state.playerNumber)) {
+            console.log(this.state.game.toMatrix());
+            this.state.makeRandomMove();
+            this.state.togglePlayer();
+        }
+        const result = this.state.game.getWinner();
+        //console.log(this.state.game.toMatrix(), result);
+        this.state.game = original;
+        this.state.playerNumber = originalPlayer;
+        return result;
+    */
 
-    public updateStats(utility: number): void {
-        this._visits++;
-        this._wins += utility;
+    /* Helper methods */
+
+    updateStats(utility) {
+        this._state.visits++;
+        this._state.wins += utility;
     }
 
-    public isLeaf(): boolean {
-        return this._children.length === 0;
-    }
-
-    public isTerminal(): boolean {
-        return this._game.isOver(this._player);
-    }
-
-    public getUtility(): number {
-        return this._game.getWinner(this._player);
+    isLeaf() {
+        return this.children.length === 0;
     }
     
-    public getMostVisitedChild(): Node {
-        let child = this._children.reduce((x, y) => {
-            return (x.wins / x.visits || 0) > (y.wins / y.visits || 0) ? x : y;
+    getMostVisitedChild() {
+        let child = this.children.reduce((x, y) => {
+            return (x._state.wins / x._state.visits || 0) > (y._state.wins / y._state.visits || 0) ? x : y;
         });
     
         return child;
-    }
-
-    private togglePlayer(): number {
-        return this._player === 1 ? 2 : 1;
     }
 }

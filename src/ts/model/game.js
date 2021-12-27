@@ -114,10 +114,11 @@ export default class Game {
             return countConsecutivePieces(player, pieces)
         }
 
-        const horizontalCounter = checkHorizontal(this.toMatrix(), player, Math.floor(this.lastMove / ROWS));
-        const verticalCounter = checkVertical(this.toMatrix(), player, this.lastMove % ROWS);
-        const diagonalCounterLeft = checkPrimaryDiagonal(this.toMatrix(), player, Math.floor(this.lastMove / ROWS), this.lastMove % ROWS);
-        const diagonalCounterRight = checkSecondaryDiagonal(this.toMatrix(), player, Math.floor(this.lastMove / ROWS), this.lastMove % ROWS);
+        const matrix = this.toMatrix();
+        const horizontalCounter = checkHorizontal(matrix, player, Math.floor(this.lastMove / ROWS));
+        const verticalCounter = checkVertical(matrix, player, this.lastMove % ROWS);
+        const diagonalCounterLeft = checkPrimaryDiagonal(matrix, player, Math.floor(this.lastMove / ROWS), this.lastMove % ROWS);
+        const diagonalCounterRight = checkSecondaryDiagonal(matrix, player, Math.floor(this.lastMove / ROWS), this.lastMove % ROWS);
 
         return horizontalCounter ||
             verticalCounter ||
