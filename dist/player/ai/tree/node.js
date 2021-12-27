@@ -2,14 +2,14 @@ export default class Node {
     _game;
     _player;
     _parent;
-    children;
+    _children;
     _wins;
     _visits;
     constructor(game, player, parent, children = [], wins = 0, visits = 0) {
         this._game = game;
         this._player = player;
         this._parent = parent;
-        this.children = children;
+        this._children = children;
         this._wins = wins;
         this._visits = visits;
     }
@@ -23,6 +23,9 @@ export default class Node {
     get player() {
         return this._player;
     }
+    get children() {
+        return this._children;
+    }
     get wins() {
         return this._wins;
     }
@@ -31,10 +34,10 @@ export default class Node {
     }
     /*=== Miscellaneous ===*/
     select(playerNumber) {
-        let selected = this.children[0];
+        let selected = this._children[0];
         const isAIPlayer = selected.player !== playerNumber;
         let bestValue = isAIPlayer ? -Infinity : Infinity;
-        for (const child of this.children) {
+        for (const child of this._children) {
             const exploitation = (child.wins / child.visits) || 0; // Change `NaN` to 0 (0 wins / 0 visits).
             let exploration = 2 * Math.sqrt(Math.log(this._visits) / child.visits);
             exploration = isNaN(exploration) ? Infinity : exploration; // Change `NaN` to `Infinity` (log(0 parent visits)).
@@ -56,49 +59,36 @@ export default class Node {
         const successors = this._game.getSuccessors(this._player);
         const nextPlayer = this.togglePlayer();
         for (const successor of successors) {
-            this.children.push(new Node(successor, nextPlayer, this));
+            this._children.push(new Node(successor, nextPlayer, this));
         }
-        return this.children[0]; // || this;
+        return this._children[0]; // || this;
     }
+    /*
+        getMoves() {
+        let possibleMoves = [];
+        let emptyPositions = this.game.getPossibleSuccessors(this.playerNumber);
+        let opponentPlayerNumber = this.getOpponentPlayerNumber();
+
+        for (const position of emptyPositions) {
+            const child = new State(position, opponentPlayerNumber);
+
+            possibleMoves.push(child);
+        }
+
+        return possibleMoves;
+    }
+    */
     rollout() {
-        /*
-        let counter: number = 0;
-        const originalPlayer: number = this._player;
-
-        console.log(game);
-
-        /*
-            TODO: Current problem: node performs move on the game-state fed into
-            the ai at the start, even if the node is a few levels deep.
-        
-
-        while (!game.isOver(this._player)) {
-            game.performRandomMove(this._player);
-            this._player = game.togglePlayer(this._player);
-
-            counter++;
+        if (this.isTerminal()) {
+            return this.getUtility();
         }
-
-        const utility: number = 1; //game.getWinner();
-
-        for (let i: number = 0; i < counter; i++) {
-            game.undo();
-        }
-
-        this._player = originalPlayer;
-
-        return utility;
-        */
         const clone = this._game.clone();
         const originalPlayer = this._player;
-        if (this._game.isOver(this._player)) {
-            const result = clone.getWinner(this._player);
-            return result;
-        }
         while (true) {
             clone.performRandomMove(this._player);
             if (clone.isOver(this._player)) {
                 const result = clone.getWinner(this._player);
+                //console.log(clone.toString(), result);
                 this._player = originalPlayer;
                 return result;
             }
@@ -111,7 +101,7 @@ export default class Node {
         this._wins += utility;
     }
     isLeaf() {
-        return this.children.length === 0;
+        return this._children.length === 0;
     }
     isTerminal() {
         return this._game.isOver(this._player);
@@ -120,7 +110,7 @@ export default class Node {
         return this._game.getWinner(this._player);
     }
     getMostVisitedChild() {
-        let child = this.children.reduce((x, y) => {
+        let child = this._children.reduce((x, y) => {
             return (x.wins / x.visits || 0) > (y.wins / y.visits || 0) ? x : y;
         });
         return child;

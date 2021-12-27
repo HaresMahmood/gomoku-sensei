@@ -185,4 +185,8 @@ export default class GameModel {
 
         return matrix;
     }
+
+    public toString() {
+        return this.toMatrix(this._board, ROWS);
+    }
 }

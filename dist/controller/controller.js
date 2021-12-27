@@ -1,4 +1,4 @@
-import KillerAI from "../player/ai/killerAI.js";
+import SimulationAI from "../player/ai/simulationAI.js";
 export default class Controller {
     model;
     view;
@@ -8,7 +8,7 @@ export default class Controller {
         this.model = model;
         this.view = view;
         this.currentPlayer = 1;
-        this.ai = new KillerAI(2);
+        this.ai = new SimulationAI(2);
         //this.model.changePlayerEvent.addListener(player => this.aiTurn(player));
         this.ai.chooseMoveEvent.addListener(index => this.performMove(index));
         this.view.setDocumentReadyHandler();
@@ -42,7 +42,7 @@ export default class Controller {
         return nextPlayer;
     }
     aiTurn(player) {
-        if (this.ai.playerNumber === player) {
+        if (this.ai.player === player) {
             this.ai.chooseMove(this.model.clone());
         }
     }

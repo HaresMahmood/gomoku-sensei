@@ -1,6 +1,6 @@
 import GameModel from "../model/gameModel.js";
-import Move from "../model/move.js";
 import KillerAI from "../player/ai/killerAI.js";
+import SimulationAI from "../player/ai/simulationAI.js";
 
 export default class Controller {
     private model: GameModel;
@@ -16,7 +16,7 @@ export default class Controller {
 
         this.currentPlayer = 1;
 
-        this.ai = new KillerAI(2);
+        this.ai = new SimulationAI(2);
 
         //this.model.changePlayerEvent.addListener(player => this.aiTurn(player));
         this.ai.chooseMoveEvent.addListener(index => this.performMove(index));
@@ -64,7 +64,7 @@ export default class Controller {
     }
 
     aiTurn(player) {
-        if (this.ai.playerNumber === player) {
+        if (this.ai.player === player) {
             this.ai.chooseMove(this.model.clone());
         }
     }

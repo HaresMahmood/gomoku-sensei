@@ -3,7 +3,7 @@ import AI from "./ai.js";
 import Node from "./tree/node.js";
 
 export default class KillerAI extends AI {
-    public chooseMove(game: GameModel, interval: number = 1000) {
+    public chooseMove(game: GameModel, interval: number = 1) {
         const root: Node = new Node(game, this.player, null);
         let counter: number = 0;
         
@@ -33,8 +33,8 @@ export default class KillerAI extends AI {
 
         const winnerNode = root.getMostVisitedChild();
 
-        console.log(root);
-        console.log(winnerNode);
+        //console.log(root);
+        //console.log(winnerNode);
 
         this.executeMove(winnerNode.game.lastMove);
     }

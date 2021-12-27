@@ -1,7 +1,7 @@
 import AI from "./ai.js";
 import Node from "./tree/node.js";
 export default class KillerAI extends AI {
-    chooseMove(game, interval = 1000) {
+    chooseMove(game, interval = 1) {
         const root = new Node(game, this.player, null);
         let counter = 0;
         root.expand();
@@ -22,8 +22,8 @@ export default class KillerAI extends AI {
             counter++;
         }
         const winnerNode = root.getMostVisitedChild();
-        console.log(root);
-        console.log(winnerNode);
+        //console.log(root);
+        //console.log(winnerNode);
         this.executeMove(winnerNode.game.lastMove);
     }
     select(node) {
