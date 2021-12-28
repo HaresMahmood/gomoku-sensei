@@ -71,8 +71,8 @@ export default class Node {
         const clone = this._state.clone();
         //console.log("");
         //console.log(clone.game.toMatrix());
-        if (clone.game.isOver()) {
-            const result = clone.game.getWinner();
+        if (clone.game.isOver(this._state.playerNumber)) {
+            const result = clone.game.getWinner(this._state.playerNumber);
             //console.log(true);
             //console.log(clone.game.toMatrix(), result);
             return result;
@@ -80,8 +80,8 @@ export default class Node {
         while (true) {
             clone.makeRandomMove();
             //console.log(clone.game.toMatrix());
-            if (clone.game.isOver()) {
-                const result = clone.game.getWinner();
+            if (clone.game.isOver(this._state.playerNumber)) {
+                const result = clone.game.getWinner(this._state.playerNumber);
                 //console.log(clone.game.toMatrix(), result);
                 return result;
             }

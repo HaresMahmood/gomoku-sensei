@@ -16,8 +16,8 @@ export default class KillerAI extends AI {
             let current = this.select(root); // Selection.
             let result;
 
-            if (current.state.game.isOver()) {
-                result = current.state.game.getWinner();
+            if (current.state.game.isOver(current.state.playerNumber)) {
+                result = current.state.game.getWinner(current.state.playerNumber);
             }
             else {
                 if (current.state.visits > 0) {

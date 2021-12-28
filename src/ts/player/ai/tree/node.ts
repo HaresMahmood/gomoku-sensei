@@ -89,8 +89,8 @@ export default class Node {
         //console.log("");
         //console.log(clone.game.toMatrix());
 
-        if (clone.game.isOver()) {
-            const result = clone.game.getWinner();
+        if (clone.game.isOver(this._state.playerNumber)) {
+            const result = clone.game.getWinner(this._state.playerNumber);
 
             //console.log(true);
             //console.log(clone.game.toMatrix(), result);
@@ -103,8 +103,8 @@ export default class Node {
 
             //console.log(clone.game.toMatrix());
 
-            if (clone.game.isOver()) {
-                const result = clone.game.getWinner();
+            if (clone.game.isOver(this._state.playerNumber)) {
+                const result = clone.game.getWinner(this._state.playerNumber);
 
                 //console.log(clone.game.toMatrix(), result);
         

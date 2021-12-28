@@ -1,4 +1,4 @@
-import GameModel from "../../model/gameModel.js";
+import GameModel from "../../model/oldGameModel.js";
 import Event from "../../utility/event.js";
 
 interface iAI {

@@ -8,6 +8,6 @@
         "target": "ESNext",
     },
     "include": [
-        "./src/ts/"
+        "./src/"
     ]
 }
