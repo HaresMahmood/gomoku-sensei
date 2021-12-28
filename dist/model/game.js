@@ -2,101 +2,60 @@ const ROWS = 3;
 const COLUMNS = ROWS;
 const N = 3;
 export default class Game {
-    // #region Initialization
-    board;
-    history;
-    constructor(board = new Array(ROWS * COLUMNS).fill(0), history = []) {
-        this.board = board;
-        this.history = history;
-    }
-    // #endregion
-    // #region Accessors
+    state;
+    lastMove;
     get rows() {
         return ROWS;
     }
     get columns() {
         return COLUMNS;
     }
-    get lastMove() {
-        return this.history[this.history.length - 1];
-        ;
+    constructor(state = new Array(ROWS * COLUMNS).fill(0), lastMove = -1) {
+        this.state = state;
+        this.lastMove = lastMove;
     }
-    // #endregion
-    // #region Miscellaneous
-    performMove(index, player, notifyObservers = false) {
-        this.board[index] = player;
-        this.history.push(index);
-        if (notifyObservers) {
-        }
+    getRows() {
+        return ROWS;
     }
-    /* TODO: Not sure if this works. */
-    undoMove(notifyObservers = false) {
-        let index = this.board.indexOf(this.history.pop());
-        this.board[index] = 0;
-        if (notifyObservers) {
-        }
+    getColumns() {
+        return COLUMNS;
     }
-    /*
-    public getEmptyCells(player = undefined): any[] {
-        const cells = [];
-
-        for (let i = 0; i < (ROWS * COLUMNS); i++) {
-            if (this.board[i] === 0) {
-                const cell: any = player === undefined ? i : this.clone();
-
-                if (player !== undefined) {
-                    cell.performMove(i, player);
-                }
-
-                cells.push(cell);
-            }
-        }
-
-        return cells;
+    clone() {
+        return new Game(this.state.slice(), this.lastMove);
     }
-    */
+    isCellEmpty(index) {
+        return this.state[index] === 0;
+    }
+    performMove(index, player) {
+        this.state[index] = player;
+        this.lastMove = index;
+    }
     getEmptyCells() {
         const cells = [];
         for (let i = 0; i < (ROWS * COLUMNS); i++) {
-            if (this.board[i] === 0) {
+            if (this.state[i] === 0) {
                 cells.push(i);
             }
         }
         return cells;
     }
-    /*
-        TODO: merge this and above methods.
-    */
-    getSuccessors(player) {
+    getPossibleSuccessors(player) {
         let successors = [];
         for (let i = 0; i < (ROWS * COLUMNS); i++) {
-            if (this.board[i] === 0) {
-                const clone = this.clone();
-                clone.performMove(i, player);
-                successors.push(clone);
+            let copy = this.state.slice();
+            if (copy[i] === 0) {
+                copy[i] = player;
+                successors.push(new Game(copy, i));
             }
         }
         return successors;
     }
-    isOver(player) {
+    isOver() {
+        const player = this.state[this.lastMove]; // TODO: Think of better way of doing this.
         return this.hasWon(player) || this.isDraw();
     }
-    getWinner(player) {
-        return this.hasWon(player) ? player : -1;
-    }
-    // #endregion
-    // #region Utility
-    clone() {
-        return new Game(this.board.slice(), this.history.slice());
-    }
-    isCellEmpty(index) {
-        return this.board[index] === 0;
-    }
-    isDraw() {
-        return !this.board.includes(0);
-    }
     hasWon(player) {
-        function countConsecutivePieces(pieces) {
+        function countConsecutivePieces(player, pieces) {
             let counter = 0;
             let last = null;
             for (let i = 0; i < pieces.length; i++) {
@@ -110,57 +69,53 @@ export default class Game {
             }
             return counter >= N;
         }
-        function checkHorizontal(board, row) {
-            return countConsecutivePieces(board[row]);
+        function checkHorizontal(board, player, row) {
+            return countConsecutivePieces(player, board[row]);
         }
-        function checkVertical(board, column) {
-            return countConsecutivePieces(board.map(row => row[column]));
+        function checkVertical(board, player, column) {
+            return countConsecutivePieces(player, board.map(row => row[column]));
         }
-        function checkPrimaryDiagonal(board, row, column) {
+        function checkPrimaryDiagonal(board, player, row, column) {
             let pieces = [];
-            for (let i = -(N - 1); i < N; i++) {
+            for (let i = -4; i < 5; i++) {
                 if (board[row - i] !== undefined && board[column - i] !== undefined) {
                     pieces.push(board[row - i][column - i]);
                 }
             }
-            return countConsecutivePieces(pieces);
+            return countConsecutivePieces(player, pieces);
         }
-        function checkSecondaryDiagonal(board, row, column) {
+        function checkSecondaryDiagonal(board, player, row, column) {
             let pieces = [];
-            for (let i = -(N - 1); i < N; i++) {
+            for (let i = -4; i < 5; i++) {
                 if (board[row - i] !== undefined && board[column + i] !== undefined) {
                     pieces.push(board[row - i][column + i]);
                 }
             }
-            return countConsecutivePieces(pieces);
+            return countConsecutivePieces(player, pieces);
         }
-        // If the player has not placed enough pieces to win the game, ...
-        if (this.board.filter((p) => (p === player)).length < N) {
-            return false; // ... Return `false` by default.
-        }
-        if (this.board.filter(p => p === player).length < N) {
-            return false;
-        }
-        const matrix = this.toMatrix(this.board, ROWS);
-        if (checkHorizontal(matrix, Math.floor(this.lastMove / ROWS))) {
-            return true;
-        }
-        else if (checkVertical(matrix, this.lastMove % ROWS)) {
-            return true;
-        }
-        else if (checkPrimaryDiagonal(matrix, Math.floor(this.lastMove / ROWS), this.lastMove % ROWS)) {
-            return true;
-        }
-        else if (checkSecondaryDiagonal(matrix, Math.floor(this.lastMove / ROWS), this.lastMove % ROWS)) {
-            return true;
-        }
-        return false;
+        const matrix = this.toMatrix();
+        const horizontalCounter = checkHorizontal(matrix, player, Math.floor(this.lastMove / ROWS));
+        const verticalCounter = checkVertical(matrix, player, this.lastMove % ROWS);
+        const diagonalCounterLeft = checkPrimaryDiagonal(matrix, player, Math.floor(this.lastMove / ROWS), this.lastMove % ROWS);
+        const diagonalCounterRight = checkSecondaryDiagonal(matrix, player, Math.floor(this.lastMove / ROWS), this.lastMove % ROWS);
+        return horizontalCounter ||
+            verticalCounter ||
+            diagonalCounterLeft ||
+            diagonalCounterRight;
     }
-    toMatrix(array, length) {
+    getWinner() {
+        const player = this.state[this.lastMove]; // TODO: Fix this - `player` should be passed in as a parameter.
+        let winner = this.hasWon(player) ? player : -1;
+        return winner;
+    }
+    isDraw() {
+        return !this.state.includes(0);
+    }
+    toMatrix() {
         const matrix = [];
-        for (let i = 0; i < array.length; i += length) {
-            matrix.push(array.slice(i, i + length));
-        }
+        const copy = this.state.slice();
+        while (copy.length)
+            matrix.push(copy.splice(0, ROWS));
         return matrix;
     }
 }
