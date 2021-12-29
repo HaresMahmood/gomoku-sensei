@@ -3,8 +3,19 @@ const COLUMNS = ROWS;
 const N = 3;
 
 export default class Game {
-    private state: number[];
+    // #region Initialization
+
+    private board: number[];
     public lastMove: number;
+
+    constructor(state = new Array(ROWS * COLUMNS).fill(0), lastMove: number = -1) {
+        this.board = state;
+        this.lastMove = lastMove;
+    }
+
+    // #endregion
+
+    // #region Accessors
 
     public get rows() {
         return ROWS;
@@ -14,37 +25,32 @@ export default class Game {
         return COLUMNS;
     }
 
-    constructor(state = new Array(ROWS * COLUMNS).fill(0), lastMove = -1) {
-        this.state = state;
-        this.lastMove = lastMove;
-    }
+    // #endregion
 
-    getRows() {
-        return ROWS;
-    }
-
-    getColumns() {
-        return COLUMNS;
-    }
+    // #region Miscellaneous
 
     clone() {
-        return new Game(this.state.slice(), this.lastMove);
+        return new Game(this.board.slice(), this.lastMove);
     }
 
     isCellEmpty(index) {
-        return this.state[index] === 0;
+        return this.board[index] === 0;
     }
 
-    performMove(index, player) {
-        this.state[index] = player;
+    public performMove(index: number, player: number, notifyObservers: boolean = false): void {
+        this.board[index] = player;
         this.lastMove = index;
+
+        if (notifyObservers) {
+            
+        }
     }
 
     getEmptyCells() {
         const cells = [];
 
         for (let i = 0; i < (ROWS * COLUMNS); i++) {
-            if (this.state[i] === 0) {
+            if (this.board[i] === 0) {
                 cells.push(i);
             }
         }
@@ -56,7 +62,7 @@ export default class Game {
         let successors = [];
 
         for (let i = 0; i < (ROWS * COLUMNS); i++) {
-            let copy = this.state.slice();
+            let copy = this.board.slice();
 
             if (copy[i] === 0) {
                 copy[i] = player;
@@ -69,11 +75,15 @@ export default class Game {
     }
 
     isOver() {
-        const player = this.state[this.lastMove]; // TODO: Think of better way of doing this.
+        const player = this.board[this.lastMove]; // TODO: Think of better way of doing this.
 
         return this.hasWon(player) || this.isDraw();
     }
 
+    // #endregion
+
+    // #region Utilituy
+    
     hasWon(player) {
         function countConsecutivePieces(player, pieces) {
             let counter = 0;
@@ -138,21 +148,23 @@ export default class Game {
     }
 
     getWinner() {
-        const player = this.state[this.lastMove]; // TODO: Fix this - `player` should be passed in as a parameter.
+        const player = this.board[this.lastMove]; // TODO: Fix this - `player` should be passed in as a parameter.
         let winner = this.hasWon(player) ? player : -1;
 
         return winner;
     }
 
     isDraw() {
-        return !this.state.includes(0);
+        return !this.board.includes(0);
     }
 
     toMatrix() {
         const matrix = [];
-        const copy = this.state.slice();
+        const copy = this.board.slice();
         while (copy.length) matrix.push(copy.splice(0, ROWS));
 
         return matrix;
     }
+
+    // #endregion
 }

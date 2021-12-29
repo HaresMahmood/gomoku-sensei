@@ -86,6 +86,8 @@ body {
  	border: 1.25px solid rgba(42, 46, 57, 0.5);
 
 	cursor: pointer;
+
+	transition: var(--animation-speed);
 }
 
 .piece {
@@ -109,8 +111,6 @@ body {
 
 .cell:empty:hover {
 	background-color: var(--faded-background);
-
-	transition: var(--animation-speed);
 }
 
 
