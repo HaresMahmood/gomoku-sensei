@@ -10,23 +10,23 @@
 
 
 body {
-	display: grid;
-    grid-template-areas:
-    'board info'
-    'board actions';
-	grid-template-columns: max-content 1fr;
-	align-items: start;
+	display: flex;
+	flex-direction: row-reverse;
+	justify-content: space-between;
+
 	gap: max(3.5vw, 3.5vh);
 }
 
 
 
 .information__container {
+	height: fit-content;
+	width: -webkit-fill-available;
+
 	padding-bottom: max(2.5vw, 2.5vh);
 
 	display: flex;
 	flex-direction: column;
-	grid-area: info;
 	gap: max(2.5vw, 2.5vh);
 
 	border-bottom: 2px solid var(--light-black);
@@ -45,17 +45,6 @@ body {
 	flex: 1 0 auto;
 }
 
-
-.action__container {
-	height: -webkit-fill-available;
-
-	display: flex;
-	justify-content: flex-end;
-	align-items: flex-end;
-	flex-wrap: wrap;
-
-	grid-area: actions;
-}
 
 
 .board {
