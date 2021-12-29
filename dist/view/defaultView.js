@@ -1,13 +1,18 @@
-import GamePage from "../pages/gamePage.js";
-import HomePage from "../pages/homePage.js";
-import "../pages/page.js";
+import GamePage from "./pages/gamePage.js";
+import HomePage from "./pages/homePage.js";
+import RulesPage from "./pages/rulesPage.js";
+import SettingsPage from "./pages/settingsPage.js";
 export default class DefaultView {
     constructor(page) {
         this.homePage = new HomePage(this, true);
         this.gamePage = new GamePage(this);
+        this.rulesPage = new RulesPage(this);
+        this.settingsPage = new SettingsPage(this);
         this.currentState = this.homePage;
         this.setNavigationButtonHandler("home", this.homePage, this.changeNavigationButtons);
         this.setNavigationButtonHandler("game", this.gamePage, this.changeNavigationButtons);
+        this.setNavigationButtonHandler("rules", this.rulesPage, this.changeNavigationButtons);
+        this.setNavigationButtonHandler("settings", this.settingsPage, this.changeNavigationButtons);
         this.setRulesModalOpenHandler(this.openModal);
         this.setSettingsModalOpenHandler(this.openModal);
         this.setModalLoadHandler(this.resizeModal, this.closeModal);

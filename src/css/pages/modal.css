@@ -1,43 +1,49 @@
-@import url("./home.css");
+@import url("subpage.css");
 
-body {
-    height: fit-content;
+body,
+.center__container {
+    /* height: fit-content; */
+
+    display: flex;
+    flex-direction: column;
 }
 
-main {
-    padding: max(2vh, 2vw) max(3vh, 3vw);
+body,
+.information__container.center__container {
+    gap: 1.5em;
+}
 
-    width: 100vw;
 
-    justify-content: center;
+.center__container {
+    gap: 1rem;
+}
+
+.row__container {
+    gap: max(5vh, 5vw);
 }
 
 
 
-.setting__container {
+.information__container {
     width: 100%;
 
     justify-content: space-between;
 }
 
-.setting__container, 
-.setting__container > div {
+.information__container {
     display: flex;
     flex-direction: row;
     align-items: center;
 }
 
-.setting__container > div {
+.information__container > div {
     width: 100%;
 
     justify-content: flex-start;
 }
 
-.setting__container span {
-    margin-right: max(5vh, 5vw);
-}
 
-.setting__container > div:not(:first-child) {
+.information__container > div:not(:first-child) {
     flex-direction: column;
     align-items: flex-start;
 }

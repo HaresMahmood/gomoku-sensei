@@ -1,75 +1,63 @@
 <!DOCTYPE html>
 <html lang="en" >
     <head>
-        <title> Settings </title>
-
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <link rel="stylesheet" href="../css/pages/sub-pages/settings.css">
     </head>
-    <body >
-        <header>
-          <span id="back-button" class="material-icons-round" unselectable="on"> arrow_back </span>
+    <body>
+      <section class="information__container">
+        <div class="row__container">
+          <span class="material-icons-round"> location_on </span>
 
-            <h3> Settings </h3>
-          </header>
+          <p> Show coordinates </p>
+        </div>
 
-          <main>
-            <section class="setting__container">
-              <div>
-                <span class="material-icons-round"> location_on </span>
+        <label class="pure-material-switch">
+          <input type="checkbox">
+          <span></span>
+        </label>
+      </section>
 
-                <p> Show coordinates </p>
-              </div>
+      <section class="information__container">
+        <div class="row__container">
+          <span class="material-icons-round"> tag </span>
 
-              <label class="pure-material-switch">
-                <input type="checkbox">
-                <span></span>
-              </label>
-            </section>
+          <p> Show move numbers on each piece </p>
+        </div>
 
-            <section class="setting__container">
-              <div>
-                <span class="material-icons-round"> tag </span>
+        <label class="pure-material-switch">
+          <input type="checkbox">
+          <span></span>
+        </label>
+      </section>
 
-                <p> Show move numbers on each piece </p>
-              </div>
+      <section class="information__container">
+        <div class="row__container">
+          <span class="material-icons-round"> highlight </span>
 
-              <label class="pure-material-switch">
-                <input type="checkbox">
-                <span></span>
-              </label>
-            </section>
+          <p> Highlight last move </p>
+        </div>
 
-            <section class="setting__container">
-              <div>
-                <span class="material-icons-round"> highlight </span>
+        <label class="pure-material-switch">
+          <input type="checkbox">
+          <span></span>
+        </label>
+      </section>
 
-                <p> Highlight last move </p>
-              </div>
+      <section class="information__container">
+        <div class="row__container">
+          <span class="material-icons-round"> volume_up </span>
 
-              <label class="pure-material-switch">
-                <input type="checkbox">
-                <span></span>
-              </label>
-            </section>
+          <p> Sound-effects </p>
+        </div>
 
-            <section class="setting__container">
-              <div>
-                <span class="material-icons-round"> volume_up </span>
-
-                <p> Sound-effects </p>
-              </div>
-
-              <label class="pure-material-switch">
-                <input type="checkbox">
-                <span></span>
-              </label>
-            </section>
-          </main>
-
-        <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+        <label class="pure-material-switch">
+          <input type="checkbox">
+          <span></span>
+        </label>
+      </section>
     </body>
 </html>
 

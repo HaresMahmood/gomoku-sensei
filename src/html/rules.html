@@ -1,72 +1,51 @@
 <!DOCTYPE html>
 <html lang="en" >
     <head>
-        <title> Rules </title>
-
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
         <link rel="stylesheet" href="../css/pages/sub-pages/rules.css">
     </head>
-    <body >
-        <header>
-            <span id="back-button" class="material-icons-round" unselectable="on"> arrow_back </span>
+    <body>
+        <div class="row__container">
+            <span class="material-icons-round"> autorenew </span>
+            <p> Players alternate turns placing a stone of their color on an empty intersection on the board. </p>
+        </div>
 
-            <h3> Rules </h3>
-          </header>
+        <div class="row__container">
+            <span class="material-icons-round"> circle </span>
+            <p> Black plays first. </p>
+        </div>
 
-          <main>
-            <section class="setting__container">
-                <div>
-                <span class="material-icons-round"> autorenew </span>
-
-                <p> Players alternate turns placing a stone of their color on an empty intersection on the board. </p>
-                </div>
-            </section>
-            <section class="setting__container">
-                <div>
-                <span class="material-icons-round"> circle </span>
-
-                <p> Black plays first. </p>
-            </div>
-            </section>
-
-            <section class="setting__container">
-                <div>
+        <div class="information__container center__container">
+            <div class="row__container">
                 <span class="material-icons-round"> emoji_events </span>
-
                 <p> The goal is to form an unbroken chain of 5 pieces, either: </p>
+            </div>
+
+            <div class="center__container">
+                <div class="row__container"> 
+                    <span class="material-icons-round"> east </span>
+
+                    <p> Horizontally. </p>
                 </div>
+                <div class="row__container"> 
+                    <span class="material-icons-round"> south </span>
 
-                <div>
-                    <div> 
-                        <span class="material-icons-round"> east </span>
-
-                        <p> Horizontally. </p>
-                    </div>
-                    <div> 
-                        <span class="material-icons-round"> south </span>
-
-                        <p> Vertically. </p>
-                    </div>
-                    <div> 
-                        <span class="material-icons-round"> north_east </span>
-
-                        <p> Diagonally. </p>
-                    </div>
+                    <p> Vertically. </p>
                 </div>
-            </section>
+                <div class="row__container"> 
+                    <span class="material-icons-round"> north_east </span>
 
-            <section class="setting__container">
-                <div>
-                <span class="material-icons-round"> flag </span>
-
-                <p> If the whole grid fills up before anyone can form a chain, the game will be a draw. </p>
+                    <p> Diagonally. </p>
                 </div>
-            </section>
-          </main>
+            </div>
+        </div>
 
-        <script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+        <div class="row__container">
+            <span class="material-icons-round"> flag </span>
+            <p> If the whole grid fills up before anyone can form a chain, the game will be a draw. </p>
+        </div>
     </body>
 </html>
 

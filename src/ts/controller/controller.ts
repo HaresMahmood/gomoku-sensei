@@ -11,13 +11,13 @@ export default class Controller {
     private player: number = 1 | 2;
     private ai: AI;
 
-    constructor(model: Game, view: View, aiPlayer: number) {
+    constructor(model: Game, view: View, ai: AI) {
         this.model = model;
         this.view = view;
 
         this.player = 1;
 
-        this.ai = new KillerAI(aiPlayer);
+        this.ai = ai;
 
         //this.model.changePlayerEvent.addListener(player => this.aiTurn(player));
         this.ai.chooseMouseEvent.addListener((index: number) => this.performMove(index));

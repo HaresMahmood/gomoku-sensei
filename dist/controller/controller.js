@@ -1,14 +1,13 @@
-import KillerAI from "../player/ai/killerAI.js";
 export default class Controller {
     model;
     view;
     player = 1 | 2;
     ai;
-    constructor(model, view, aiPlayer) {
+    constructor(model, view, ai) {
         this.model = model;
         this.view = view;
         this.player = 1;
-        this.ai = new KillerAI(aiPlayer);
+        this.ai = ai;
         //this.model.changePlayerEvent.addListener(player => this.aiTurn(player));
         this.ai.chooseMouseEvent.addListener((index) => this.performMove(index));
         // this.view.setDocumentReadyHandler();

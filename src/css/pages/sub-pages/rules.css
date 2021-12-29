@@ -2,18 +2,14 @@
 
 
 
-.setting__container {
+.information__container {
     flex-direction: column;
 }
 
-.setting__container > div > div {
+.information__container > div > div {
     margin-left: calc(1rem + max(5vh, 5vw));
 
     display: flex;
     flex-direction: row;
     align-items: center;
-}
-
-.setting__container > div > div > p {
-    margin: 0.5em;
 }
