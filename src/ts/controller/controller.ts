@@ -1,6 +1,6 @@
 import Game from "../model/game.js";
 import KillerAI from "../player/ai/killerAI.js";
-import SimulationAI from "../player/ai/simulationAI.js";
+import SimulationAI from "../player/ai/debug/simulationAI.js";
 
 export default class Controller {
     private model: Game;

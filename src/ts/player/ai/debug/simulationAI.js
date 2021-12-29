@@ -1,5 +1,5 @@
-import Event from "../../utility/event.js";
-import Node from "./tree/node.js";
+import Event from "../../../utility/event.js";
+import Node from "../tree/node.js";
 
 export default class SimulationAI {
     constructor(playerNumber) {
