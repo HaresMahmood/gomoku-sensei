@@ -1,4 +1,4 @@
-import Event from "../utility/event";
+import Event from "../utility/event.js";
 
 export default class HomeView {
     constructor() {
@@ -11,7 +11,12 @@ export default class HomeView {
     setButtonHandler(event) {
         $("#game-button").bind("mouseup", function() {
             if ($("select:valid").length === 2) {
-                event.trigger($("#player-1 :selected").text(), $("#player-2 :selected").text())
+                const data = {
+                    'player1': $("#player-1 :selected").text(),
+                    'player2': $("#player-2 :selected").text()
+                };
+
+                window.top.postMessage(JSON.stringify(data), "*")
             }
             else {
                 $("select:invalid").addClass("error");

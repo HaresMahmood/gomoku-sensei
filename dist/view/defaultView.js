@@ -88,3 +88,12 @@ export default class DefaultView {
         });
     }
 }
+// https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage
+window.onmessage = function (e) {
+    console.log(e.data);
+};
+// window.addEventListener("message", (event) => {
+//     if (event.origin !== "http://example.org:8080")
+//       return;
+//     // ...
+//   }, false);
