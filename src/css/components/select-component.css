@@ -20,8 +20,9 @@
 
     background-color: var(--faded-background);
     border-radius: calc(0.75rem + 0.75rem);
+    border: 2px solid transparent;
 
-    transition: border-radius ease-out var(--animation-speed);
+    transition: border-radius ease-out var(--animation-speed), border var(--animation-speed);
 }
   
 .select-text {
@@ -34,6 +35,10 @@
     border: none;
     left: 7.5px;
     z-index: 10;
+}
+
+.select-text.error ~ .select__background {
+    border-color: var(--red);
 }
   
 /* Remove focus */
