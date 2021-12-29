@@ -1,6 +1,6 @@
 const BREAKPOINT = 650;
 
-export default class View {
+export default class GameView {
     constructor(rows, columns) {
         this.board = $(".board");
         this.cell = ".cell";

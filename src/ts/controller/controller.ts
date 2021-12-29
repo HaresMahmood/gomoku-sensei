@@ -1,17 +1,17 @@
 import Game from "../model/game.js";
-import View from "../view/view.js";
+import GameView from "../view/gameView.js";
 import AI from "../player/ai/ai.js";
 import RandomAI from "../player/ai/randomAI.js";
 import KillerAI from "../player/ai/killerAI.js";
 
 export default class Controller {
     private model: Game;
-    private view: View;
+    private view: GameView;
     
     private player: number = 1 | 2;
     private ai: AI;
 
-    constructor(model: Game, view: View, ai: AI) {
+    constructor(model: Game, view: GameView, ai: AI) {
         this.model = model;
         this.view = view;
 

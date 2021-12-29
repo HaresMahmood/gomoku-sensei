@@ -123,4 +123,9 @@ body {
 
 		justify-content: center;
 	}
+
+	.board {
+		width: 100%;
+		height: auto;
+	}
 }
