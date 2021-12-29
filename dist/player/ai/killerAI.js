@@ -1,12 +1,13 @@
-import AI from "./ai.js";
+import AbstractAI from "./ai.js";
 import Node from "./tree/node.js";
-export default class KillerAI extends AI {
-    chooseMove(game, interval = 3000) {
+export default class KillerAI extends AbstractAI {
+    chooseMove(game) {
+        const interval = 3000;
         const root = new Node();
         const startTime = Date.now();
         let counter = 0;
         root.state.game = game;
-        root.state.playerNumber = this.player;
+        root.state.playerNumber = this._player;
         root.expand();
         while ((Date.now() - startTime) < interval) {
             let current = this.select(root); // Selection.
@@ -31,13 +32,13 @@ export default class KillerAI extends AI {
     }
     select(node) {
         while (!node.isLeaf()) { // && !node.state.game.isOver()
-            node = node.select(this.player); // UCT.
+            node = node.select(this._player); // UCT.
         }
         return node;
     }
     backpropogate(node, result) {
         let utility = -1;
-        if (result === this.player) {
+        if (result === this._player) {
             utility = 1;
         }
         else if (result === -1) {

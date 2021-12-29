@@ -2,20 +2,20 @@ import KillerAI from "../player/ai/killerAI.js";
 export default class Controller {
     model;
     view;
-    currentPlayer;
+    player = 1 | 2;
     ai;
-    constructor(model, view) {
+    constructor(model, view, aiPlayer) {
         this.model = model;
         this.view = view;
-        this.currentPlayer = 1;
-        this.ai = new KillerAI(2);
+        this.player = 1;
+        this.ai = new KillerAI(aiPlayer);
         //this.model.changePlayerEvent.addListener(player => this.aiTurn(player));
-        this.ai.chooseMoveEvent.addListener(index => this.performMove(index));
-        this.view.setDocumentReadyHandler();
-        this.view.setWindowResizeHandler();
-        this.view.setNavigationOpenHandler();
-        this.view.setNavigationCloseHandler();
-        this.view.setCellClickHandler(index => this.performMove(index));
+        this.ai.chooseMouseEvent.addListener((index) => this.performMove(index));
+        // this.view.setDocumentReadyHandler();
+        // this.view.setWindowResizeHandler();
+        // this.view.setNavigationOpenHandler();
+        // this.view.setNavigationCloseHandler();
+        this.view.setCellClickHandler((index) => this.performMove(index));
         //this.aiTurn(this.currentPlayer);
     }
     async performMove(index) {
@@ -28,17 +28,17 @@ export default class Controller {
         }
     }
     addPiece(index) {
-        let color = this.currentPlayer === 1 ? "black" : "white";
+        let color = this.player === 1 ? "black" : "white";
         this.view.addPiece(index, color);
-        this.model.performMove(index, this.currentPlayer);
+        this.model.performMove(index, this.player);
         if (this.model.isOver()) {
             this.view.endGame(color, this.model.isDraw());
             //return;
         }
         this.view.toggleProgressBar();
-        const nextPlayer = this.currentPlayer === 1 ? 2 : 1;
-        this.view.changePlayer(this.currentPlayer, nextPlayer);
-        this.currentPlayer = nextPlayer;
+        const nextPlayer = this.player === 1 ? 2 : 1;
+        this.view.changePlayer(this.player, nextPlayer);
+        this.player = nextPlayer;
         return nextPlayer;
     }
     aiTurn(player) {

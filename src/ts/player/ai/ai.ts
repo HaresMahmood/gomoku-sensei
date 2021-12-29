@@ -1,22 +1,29 @@
-import GameModel from "../../model/oldGameModel.js";
 import Event from "../../utility/event.js";
 
-interface iAI {
-    chooseMove(game, iterations: number): void;
+export interface AI {
+    chooseMove(game): void;
 }
 
-export default abstract class AI implements iAI {
-    protected player: number;
-    private chooseMoveEvent: Event;
+export default abstract class AbstractAI implements AI {
+    protected _player: number;
+    private _chooseMoveEvent: Event;
 
     public constructor(playerNumber: number) {
-        this.player = playerNumber;
-        this.chooseMoveEvent = new Event();
+        this._player = playerNumber;
+        this._chooseMoveEvent = new Event();
     }
 
-    abstract chooseMove(game, iterations: number): void;
+    public get player() {
+        return this._player;
+    }
+
+    public get chooseMouseEvent() {
+        return this._chooseMoveEvent;
+    }
+
+    abstract chooseMove(game): void;
 
     public executeMove(move: number):void {
-        this.chooseMoveEvent.trigger(move);
+        this._chooseMoveEvent.trigger(move);
     }
 }
