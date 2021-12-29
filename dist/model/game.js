@@ -1,13 +1,13 @@
-const ROWS = 3;
+const ROWS = 9;
 const COLUMNS = ROWS;
-const N = 3;
+const N = 5;
 export default class Game {
     // #region Initialization
     board;
-    lastMove;
-    constructor(state = new Array(ROWS * COLUMNS).fill(0), lastMove = -1) {
+    history;
+    constructor(state = new Array(ROWS * COLUMNS).fill(0), history = []) {
         this.board = state;
-        this.lastMove = lastMove;
+        this.history = history;
     }
     // #endregion
     // #region Accessors
@@ -17,17 +17,20 @@ export default class Game {
     get columns() {
         return COLUMNS;
     }
+    get lastMove() {
+        return this.history[this.history.length - 1];
+    }
     // #endregion
     // #region Miscellaneous
     clone() {
-        return new Game(this.board.slice(), this.lastMove);
+        return new Game(this.board.slice(), this.history.slice());
     }
     isCellEmpty(index) {
         return this.board[index] === 0;
     }
     performMove(index, player, notifyObservers = false) {
         this.board[index] = player;
-        this.lastMove = index;
+        this.history.push(index);
         if (notifyObservers) {
         }
     }
@@ -40,13 +43,16 @@ export default class Game {
         }
         return cells;
     }
-    getPossibleSuccessors(player) {
+    /*
+        TODO: merge this and above methods.
+    */
+    getSuccessors(player) {
         let successors = [];
         for (let i = 0; i < (ROWS * COLUMNS); i++) {
-            let copy = this.board.slice();
-            if (copy[i] === 0) {
-                copy[i] = player;
-                successors.push(new Game(copy, i));
+            if (this.board[i] === 0) {
+                const clone = this.clone();
+                clone.performMove(i, player);
+                successors.push(clone);
             }
         }
         return successors;

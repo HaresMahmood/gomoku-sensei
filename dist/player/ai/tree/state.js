@@ -44,7 +44,7 @@ export default class State {
     }
     getMoves() {
         let possibleMoves = [];
-        let emptyPositions = this._game.getPossibleSuccessors(this._playerNumber);
+        let emptyPositions = this._game.getSuccessors(this._playerNumber);
         let opponentPlayerNumber = this.getOpponentPlayerNumber();
         for (const position of emptyPositions) {
             const child = new State(position, opponentPlayerNumber);
