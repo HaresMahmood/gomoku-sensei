@@ -123,10 +123,14 @@ export default class DefaultView {
     }
 
     setWindowMessageHandler(event, state, handler) {
-        $(window).on("message", function(e) {
+        $(window).on("message", function (e) {
             state.navigateTo(); // Navigate to `Game`-page.
             handler($("#game-button")); // Change to navigation-button.
-            event.trigger(e.originalEvent.data); // Pass player information to `defaultScript`.
+
+            // (TODO: is this bad?) When page is done loading, ...
+            setTimeout(function () {
+                event.trigger(e.originalEvent.data); // Pass player information to `defaultScript`.
+            }, 1000);
         });
     }
 }

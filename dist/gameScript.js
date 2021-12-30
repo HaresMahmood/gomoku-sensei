@@ -1,6 +1,6 @@
 import Game from "./model/game.js";
 import GameView from "./view/gameView.js";
-import Controller from "./controller/controller.js";
+import Controller from "./controller/gameController";
 import AIFactory from "../factories/aiFactory.js";
 
 var data;

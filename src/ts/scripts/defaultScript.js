@@ -6,6 +6,8 @@ $(document).ready(function() {
     view.messageEvent.addListener(data => test(data));
 });
 
+
+
 function test(data) {
     const pageFrame = document.getElementById("page-frame");
 

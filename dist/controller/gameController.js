@@ -3,11 +3,11 @@ export default class GameController {
     view;
     player = 1 | 2;
     ai;
-    constructor(model, view, ai) {
+    constructor(model, view, player) {
         this.model = model;
         this.view = view;
         this.player = 1;
-        this.ai = ai;
+        this.ai = player;
         //this.model.changePlayerEvent.addListener(player => this.aiTurn(player));
         this.ai.chooseMouseEvent.addListener((index) => this.performMove(index));
         // this.view.setDocumentReadyHandler();
