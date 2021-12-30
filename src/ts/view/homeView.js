@@ -12,8 +12,8 @@ export default class HomeView {
         $("#game-button").bind("mouseup", function() {
             if ($("select:valid").length === 2) {
                 const data = {
-                    1: $("#player-1 :selected").text(),
-                    2: $("#player-2 :selected").text()
+                    "player1": $("#player-1 :selected").text(),
+                    "player2": $("#player-2 :selected").text()
                 };
 
                 window.top.postMessage(JSON.stringify(data), "*")

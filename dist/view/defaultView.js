@@ -19,7 +19,7 @@ export default class DefaultView {
         this.setSettingsModalOpenHandler(this.openModal);
         this.setModalLoadHandler(this.resizeModal, this.closeModal);
         this.setDocumentResizeHandler(this.resizeModal);
-        this.setWindowMessageHandler(this.messageEvent);
+        this.setWindowMessageHandler(this.messageEvent, this.gamePage, this.changeNavigationButtons);
     }
     /*=== Miscellaneous ===*/
     navigateTo(page, pageName) {
@@ -90,9 +90,11 @@ export default class DefaultView {
             }
         });
     }
-    setWindowMessageHandler(event) {
+    setWindowMessageHandler(event, state, handler) {
         $(window).on("message", function (e) {
-            event.trigger(e.originalEvent.data);
+            state.navigateTo(); // Navigate to `Game`-page.
+            handler($("#game-button")); // Change to navigation-button.
+            event.trigger(e.originalEvent.data); // Pass player information to `defaultScript`.
         });
     }
 }
