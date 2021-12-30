@@ -1,10 +1,13 @@
+import Event from "../utility/event.js";
 import GamePage from "./pages/gamePage.js";
 import HomePage from "./pages/homePage.js";
 import RulesPage from "./pages/rulesPage.js";
 import SettingsPage from "./pages/settingsPage.js";
 
 export default class DefaultView {
-    constructor(page) {
+    constructor() {
+        this.messageEvent = new Event(); // TODO: More descriptive name `homeMessageEvent`?
+
         this.homePage = new HomePage(this, true);
         this.gamePage = new GamePage(this);
         this.rulesPage = new RulesPage(this);
@@ -22,6 +25,7 @@ export default class DefaultView {
         this.setModalLoadHandler(this.resizeModal, this.closeModal);
 
         this.setDocumentResizeHandler(this.resizeModal);
+        this.setWindowMessageHandler(this.messageEvent);
     }
 
     /*=== Miscellaneous ===*/
@@ -117,16 +121,10 @@ export default class DefaultView {
             }
         });
     }
+
+    setWindowMessageHandler(event) {
+        $(window).on("message", function(e) {
+            event.trigger(e.originalEvent.data);
+        });
+    }
 }
-
-// https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage
-window.onmessage = function(e) {
-    console.log(e.data);
-};
-
-// window.addEventListener("message", (event) => {
-//     if (event.origin !== "http://example.org:8080")
-//       return;
-  
-//     // ...
-//   }, false);
