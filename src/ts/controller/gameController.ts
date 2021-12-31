@@ -20,13 +20,9 @@ export default class GameController {
 
         //this.model.changePlayerEvent.addListener(player => this.aiTurn(player));
         this.ai.chooseMouseEvent.addListener((index: number) => this.performMove(index));
-
-        // this.view.setDocumentReadyHandler();
-        // this.view.setWindowResizeHandler();
-        // this.view.setNavigationOpenHandler();
-        // this.view.setNavigationCloseHandler();
-
         this.view.setCellClickHandler((index: number) => this.performMove(index));
+
+        this.view.setPlayer(this.ai, 2);
 
         //this.aiTurn(this.currentPlayer);
     }

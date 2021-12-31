@@ -16,6 +16,32 @@ export default class GameView {
         }
     }
 
+    setPlayer(player, number) {
+        // TODO: Add properties to `Player`-class to retrieve `name`, `icons`, etc...
+        const name = player.constructor.name;
+        let icon;
+
+        switch (name) {
+            case ("Human"):
+                icon = "person";
+                break;
+            case ("RandomAI"): // TODO: "EasyAI"
+                icon = "child_friendly";
+                break;
+            case ("KillerAI"):
+                icon = "smart_toy";
+                break; 
+            case ("DynamicAI"):
+                icon = "school";
+                break;   
+        }
+
+        console.log(icon);
+
+        $(".player_container p").eq(number - 1).text(name);
+        $(".player_container button-label").eq(number - 1).find("span").first().text(icon); // FIXME Ugly.
+    }
+
     changePlayer(previousPlayer, currentPlayer) {
         $(`button-label:eq(${previousPlayer - 1})`).removeClass("red__button");
         $(`button-label:eq(${currentPlayer - 1})`).addClass("red__button");

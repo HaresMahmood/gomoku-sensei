@@ -7,7 +7,6 @@ import KillerAI from "../player/ai/killerAI.js";
 export default class AIFactory implements Factory {
     // TODO: Change this method to return a `Player`-class instead.
     createItem(input: String, player: number): Player {
-        console.log(input);
         //return input.replace(" ", "");
 
         if (input === "Human") {
