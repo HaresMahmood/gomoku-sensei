@@ -122,8 +122,9 @@
 
   button:disabled,
   button[disabled] {
-    opacity: 0.5;
-    cursor: not-allowed;
+    opacity: 0.65;
+    /* cursor: not-allowed; TODO: Make sure cursor is set to `not-allowed`. */
+    pointer-events: none;
   }
 
   button.full-width__container {
