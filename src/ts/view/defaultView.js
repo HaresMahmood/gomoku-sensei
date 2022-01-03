@@ -35,7 +35,7 @@ export default class DefaultView {
             $("#page-frame").removeClass("loaded");
 
             setTimeout(function() {
-                $("#page-frame").attr("src", `../src/html/${pageName}.html`)
+                $("#page-frame").attr("src", `./src/html/${pageName}.html`)
                 setTimeout(function() {
                     $("#page-frame").addClass("loaded");
                 }, 50);
