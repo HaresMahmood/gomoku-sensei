@@ -26,7 +26,7 @@ export default class DefaultView {
         if (this.currentState !== page) {
             $("#page-frame").removeClass("loaded");
             setTimeout(function () {
-                $("#page-frame").attr("src", `../src/html/${pageName}.html`);
+                $("#page-frame").attr("src", `./src/html/${pageName}.html`);
                 setTimeout(function () {
                     $("#page-frame").addClass("loaded");
                 }, 50);
