@@ -1,4 +1,4 @@
-# Gomoku Sensei ==AI==
+# Gomoku Sensei AI
 #### Designing a dynamic game-playing AI.
 
 [![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/HaresMahmood/gomoku-sensei)
@@ -10,9 +10,9 @@
 This project was developed as a fourth-year dissertation project for the University of Strathclyde.
 
 ## Aims & objectives
-The main objective os this project ==is== to adapt an existing game-playing search algorithm (MCTS, Minimax, etc...), in order to develop an AI opponent that is both fun and engaging, yet challenging to play against. The AI will dynamically scale its difficulty according to its opponent's skill level.
+The main objective os this project was to adapt an existing game-playing search algorithm (MCTS, Minimax, etc...), in order to develop an AI opponent that is both fun and engaging, yet challenging to play against. The AI will dynamically scale its difficulty according to its opponent's skill level.
 
-Another major component of the project ==is== is the design and implementaiton of a fluid, easy-to-use user interface (UI). The UI is the medium through which users will interact with the game during the evalutation-phase, which means it is vital for the game's UI to be simple and easy, yet at the same time fun to use.
+Another major component of the project was is the design and implementaiton of a fluid, easy-to-use user interface (UI). The UI is the medium through which users will interact with the game during the evalutation-phase, which means it is vital for the game's UI to be simple and easy, yet at the same time fun to use.
 
 To achieve this goal, a number of task must be completed:
 
