@@ -3,11 +3,13 @@
 
 
 body {
-    margin: 0;
-    padding: 1rem;
-    
     height: 100vh;
     width: 100vw;
+
+    margin: 0;
+    padding: 1rem;
+
+    position: 100%;
     
     display: grid;
     grid-template-areas:
@@ -22,7 +24,7 @@ body {
     background-color: var(--background);
   }
 
-body.overlay {
+/* body.overlay {
     background: linear-gradient(
       rgba(0, 0, 0, 0.5), 
       rgba(0, 0, 0, 0.5)
@@ -31,6 +33,13 @@ body.overlay {
     -webkit-transition: background .5s;
     transition: background .5s;
 }
+
+*.overlay:not(body) {
+    pointer-events: none;
+
+    -webkit-transition: filter .5s;
+    transition: filter .5s;
+  } */
 
 whitespace {
     grid-area: whitespace;

@@ -215,23 +215,6 @@
   button-label.red__button {
     transition: color var(--animation-speed), background-color var(--animation-speed);
   }
-
-
-  /* Blur */
-
-  *.overlay:not(body) {
-    pointer-events: none;
-
-    -webkit-filter: blur(5px);
-    -moz-filter: blur(5px);
-    -o-filter: blur(5px);
-    -ms-filter: blur(5px);
-    filter: blur(5px);
-
-    -webkit-transition: filter .5s;
-    transition: filter .5s;
-  }
-
   
 
 
@@ -270,6 +253,25 @@
     transition: transform .2s var(--fade-out), opacity .2s var(--fade-out), z-index .2s var(--fade-out);
   }
 
+  modal ~ .overlay__container {
+    width: 100%;
+    height: 100%;
+
+    margin: auto;
+
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+
+    display: none;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    -webkit-transition: background .5s;
+    transition: background .5s;
+  }
+
   modal.visible {
     z-index: 2;
 
@@ -281,10 +283,24 @@
     transition: transform .75s var(--fade-in), opacity .75s var(--fade-in), z-index .75s var(--fade-in);
   } 
 
+  modal.visible ~ .overlay__container {
+    display: block;
+
+    background: linear-gradient(
+      rgba(0, 0, 0, 0.5), 
+      rgba(0, 0, 0, 0.5)
+    );
+
+    -webkit-transition: background .5s;
+    transition: background .5s;
+  }
+
   modal iframe {
     height: fit-content;
     width: 100%;
     max-width: 750px;
+
+    background-color: var(--background);
 
     border-radius: 20px;
   }

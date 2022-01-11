@@ -13,11 +13,12 @@ export default class DefaultView {
         this.currentState = this.homePage;
         this.setNavigationButtonHandler("home", this.homePage, this.changeNavigationButtons);
         this.setNavigationButtonHandler("game", this.gamePage, this.changeNavigationButtons);
-        this.setNavigationButtonHandler("rules", this.rulesPage, this.changeNavigationButtons);
-        this.setNavigationButtonHandler("settings", this.settingsPage, this.changeNavigationButtons);
+        // this.setNavigationButtonHandler("rules", this.rulesPage, this.changeNavigationButtons);
+        // this.setNavigationButtonHandler("settings", this.settingsPage, this.changeNavigationButtons);
         this.setRulesModalOpenHandler(this.openModal);
         this.setSettingsModalOpenHandler(this.openModal);
         this.setModalLoadHandler(this.resizeModal, this.closeModal);
+        this.setOverlayClickHandler();
         this.setDocumentResizeHandler(this.resizeModal);
         this.setWindowMessageHandler(this.messageEvent, this.gamePage, this.changeNavigationButtons);
     }
@@ -48,13 +49,7 @@ export default class DefaultView {
     }
     openModal(modal) {
         //this.resizeModal(modal);
-        $("nav").removeClass("visible");
         $(modal).addClass("visible");
-    }
-    closeModal(modal) {
-        $(modal).removeClass("visible");
-        $("body").children().not("nav, modal").toggleClass("overlay");
-        $("body").toggleClass("overlay");
     }
     /*=== Events ===*/
     setNavigationButtonHandler(button, state, handler) {
@@ -71,6 +66,11 @@ export default class DefaultView {
     setSettingsModalOpenHandler(handler) {
         $("#settings-button").bind("click", function () {
             handler("#settings-page");
+        });
+    }
+    setOverlayClickHandler() {
+        $(`#overlay`).bind("mouseup", function () {
+            $("modal").removeClass("visible");
         });
     }
     setModalLoadHandler(loadHandler, buttonHandler) {
