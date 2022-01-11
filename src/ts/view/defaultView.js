@@ -25,7 +25,7 @@ export default class DefaultView {
         this.setModalLoadHandler(this.resizeModal, this.closeModal);
         this.setOverlayClickHandler();
 
-        this.setDocumentResizeHandler(this.resizeModal);
+        // this.setDocumentResizeHandler(this.resizeModal);
         this.setWindowMessageHandler(this.messageEvent, this.gamePage, this.changeNavigationButtons);
     }
 

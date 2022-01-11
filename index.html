@@ -4,12 +4,19 @@
         <title> Home </title>
 
         <meta charset="UTF-8">
-        <meta meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
         <meta name="apple-mobile-web-app-capable" content="yes">
         <meta name="mobile-web-app-capable" content="yes">
 
         
         <link rel="stylesheet" href="./src/css/pages/main.css">
+
+        <!-- TODO: Hack -->
+        <script>
+            function resizeIframe(obj) {
+              obj.style.height = obj.contentWindow.document.documentElement.scrollHeight + 'px';
+            }
+        </script>
     </head>
     
     <body>
@@ -45,8 +52,8 @@
             <iframe id="page-frame" class="loaded" src="./src/html/home.html" frameborder="0" scrolling="no"> </iframe>
         </main>
 
-        <modal id="rules-page"> <iframe src="./src/html/rules.html" frameborder="0" scrolling="no"> </iframe> </modal>
-        <modal id="settings-page"> <iframe src="./src/html/settings.html" frameborder="0" scrolling="no"> </iframe> </modal>
+        <modal id="rules-page"> <iframe src="./src/html/rules.html" frameborder="0" scrolling="no" onload="resizeIframe(this)"> </iframe> </modal>
+        <modal id="settings-page"> <iframe src="./src/html/settings.html" frameborder="0" scrolling="no" onload="resizeIframe(this)"> </iframe> </modal>
         
         <div id="overlay" class="overlay__container"></div>
 

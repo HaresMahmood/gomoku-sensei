@@ -22,9 +22,64 @@ body {
     gap: 1rem;
     
     background-color: var(--background);
-  }
+}
 
-/* body.overlay {
+
+  
+modal {
+    z-index: -1;
+
+    width: 95vw;
+    height: fit-content;
+
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -35%);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    opacity: 0;
+
+    -webkit-transition: transform .2s var(--fade-out), opacity .2s var(--fade-out), z-index .2s var(--fade-out);
+    transition: transform .2s var(--fade-out), opacity .2s var(--fade-out), z-index .2s var(--fade-out);
+}
+
+modal ~ .overlay__container {
+    width: 100%;
+    height: 100%;
+
+    margin: auto;
+
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+
+    display: none;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    -webkit-transition: background .5s;
+    transition: background .5s;
+}
+
+modal.visible {
+    z-index: 2;
+
+    transform: translate(-50%, -50%) !important;
+
+    opacity: 1;
+
+    -webkit-transition: transform .75s var(--fade-in), opacity .75s var(--fade-in), z-index .75s var(--fade-in);
+    transition: transform .75s var(--fade-in), opacity .75s var(--fade-in), z-index .75s var(--fade-in);
+} 
+
+modal.visible ~ .overlay__container {
+    display: block;
+
     background: linear-gradient(
       rgba(0, 0, 0, 0.5), 
       rgba(0, 0, 0, 0.5)
@@ -34,12 +89,18 @@ body {
     transition: background .5s;
 }
 
-*.overlay:not(body) {
-    pointer-events: none;
+modal iframe {
+    height: fit-content;
+    width: 100%;
+    max-width: 750px;
 
-    -webkit-transition: filter .5s;
-    transition: filter .5s;
-  } */
+    background-color: var(--background);
+
+    border-radius: 20px;
+}
+
+
+
 
 whitespace {
     grid-area: whitespace;
@@ -93,7 +154,6 @@ iframe {
 }
 
 
-
 /*=== Breakpoints ===*/
 
 @media only screen and (max-width: 600px) {
@@ -127,3 +187,13 @@ iframe {
         border-radius: 0;
     }
 }
+
+
+/*=== Animations ===*/
+
+/* .overlay__container:hover {
+    background: linear-gradient(
+        rgba(0, 0, 0, 0.75), 
+        rgba(0, 0, 0, 0.75)
+      );;
+} */
