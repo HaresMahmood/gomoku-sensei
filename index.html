@@ -44,7 +44,14 @@
             <iframe id="page-frame" class="loaded" src="./src/html/home.html" frameborder="0" scrolling="no"> </iframe>
         </main>
 
-        <modal> <iframe id="modal-frame" src="./src/html/rules.html" frameborder="0" scrolling="no"> </iframe> </modal>
+        <modal> 
+            <header>
+                <h3 id="modal-text"> Rules </h3>
+                <span id="close-button" class="material-icons-round"> close </span>
+            </header>
+
+            <iframe id="modal-frame" src="./src/html/rules.html" frameborder="0" scrolling="no"> </iframe> 
+        </modal>
         
         <div id="overlay" class="overlay__container"></div>
 

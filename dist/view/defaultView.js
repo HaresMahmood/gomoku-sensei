@@ -15,9 +15,8 @@ export default class DefaultView {
         this.setNavigationButtonHandler("game", this.gamePage, this.changeNavigationButtons);
         this.setModalButtonHandler("rules", this.openModal);
         this.setModalButtonHandler("settings", this.openModal);
-        this.setModalLoadHandler();
+        this.setModalCloseHandler();
         this.setOverlayClickHandler();
-        this.setFrameDynamicHeightHandler(this.resizeModal);
         this.setWindowMessageHandler(this.messageEvent, this.gamePage, this.changeNavigationButtons);
     }
     /*=== Miscellaneous ===*/
@@ -40,16 +39,8 @@ export default class DefaultView {
     }
     openModal(page) {
         $("#modal-frame").attr("src", `./src/html/${page}.html`);
+        $("#modal-text").html(page); // TODO: Rename to `modal-header`.
         $("modal").addClass("visible");
-    }
-    resizeModal(iframe) {
-        console.log(true);
-        if (!window.matchMedia("(max-width: 600px)").matches) {
-            $(iframe).css("height", $(iframe).contents().height());
-        }
-        else {
-            $(iframe).css("height", "");
-        }
     }
     /*=== Events ===*/
     setNavigationButtonHandler(button, state, handler) {
@@ -63,21 +54,14 @@ export default class DefaultView {
             handler(button);
         });
     }
-    setOverlayClickHandler() {
-        $(`#overlay`).bind("mouseup", function () {
+    setModalCloseHandler() {
+        $(`#close-button`).bind("mouseup", function () {
             $("modal").removeClass("visible");
         });
     }
-    setModalLoadHandler() {
-        $("#modal-frame").on("load", function () {
-            $(this).contents().find("body").on("mouseup", ".close-button", function () {
-                $("modal").removeClass("visible");
-            });
-        });
-    }
-    setFrameDynamicHeightHandler(handler) {
-        $(document).ready(function () {
-            //handler($("#page-frame"));
+    setOverlayClickHandler() {
+        $(`#overlay`).bind("mouseup", function () {
+            $("modal").removeClass("visible");
         });
     }
     setWindowMessageHandler(event, state, handler) {
