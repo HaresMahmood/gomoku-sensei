@@ -4,6 +4,9 @@
 
 
 
-.information__container {
-    /* max-width: 650px; */
+footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 0.5rem;
 }

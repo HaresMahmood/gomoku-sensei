@@ -13,13 +13,10 @@ export default class DefaultView {
         this.currentState = this.homePage;
         this.setNavigationButtonHandler("home", this.homePage, this.changeNavigationButtons);
         this.setNavigationButtonHandler("game", this.gamePage, this.changeNavigationButtons);
-        // this.setNavigationButtonHandler("rules", this.rulesPage, this.changeNavigationButtons);
-        // this.setNavigationButtonHandler("settings", this.settingsPage, this.changeNavigationButtons);
-        this.setRulesModalOpenHandler(this.openModal);
-        this.setSettingsModalOpenHandler(this.openModal);
-        this.setModalLoadHandler(this.resizeModal, this.closeModal);
+        this.setModalButtonHandler("rules", this.openModal);
+        this.setModalButtonHandler("settings", this.openModal);
+        this.setModalLoadHandler();
         this.setOverlayClickHandler();
-        // this.setDocumentResizeHandler(this.resizeModal);
         this.setWindowMessageHandler(this.messageEvent, this.gamePage, this.changeNavigationButtons);
     }
     /*=== Miscellaneous ===*/
@@ -40,16 +37,9 @@ export default class DefaultView {
         $(".menu__button.red__button").removeClass("red__button");
         $(button).addClass("red__button");
     }
-    resizeModal(modal) {
-        const windowWidth = $(window).innerWidth();
-        const iframe = $(modal).find("iframe");
-        // TODO: Get `550` value from media breakpoint.
-        const height = windowWidth > 600 ? $(iframe).contents().find("body").height() : $(window).innerHeight();
-        $(iframe).height(height);
-    }
-    openModal(modal) {
-        //this.resizeModal(modal);
-        $(modal).addClass("visible");
+    openModal(page) {
+        $("#modal-frame").attr("src", `./src/html/${page}.html`);
+        $("modal").addClass("visible");
     }
     /*=== Events ===*/
     setNavigationButtonHandler(button, state, handler) {
@@ -58,14 +48,9 @@ export default class DefaultView {
             handler(this);
         });
     }
-    setRulesModalOpenHandler(handler) {
-        $("#rules-button").bind("click", function () {
-            handler("#rules-page");
-        });
-    }
-    setSettingsModalOpenHandler(handler) {
-        $("#settings-button").bind("click", function () {
-            handler("#settings-page");
+    setModalButtonHandler(button, handler) {
+        $(`#${button}-button`).bind("mouseup", function () {
+            handler(button);
         });
     }
     setOverlayClickHandler() {
@@ -73,12 +58,11 @@ export default class DefaultView {
             $("modal").removeClass("visible");
         });
     }
-    setModalLoadHandler(loadHandler, buttonHandler) {
+    setModalLoadHandler() {
         $("modal > iframe").on("load", function () {
-            const modal = $(this).parent().attr('id');
-            loadHandler(`#${modal}`);
-            $(this).contents().find("body").on("click", "#back-button", function () {
-                buttonHandler(`#${modal}`);
+            this.style.height = this.contentWindow.document.body.scrollHeight + "px";
+            $(this).contents().find("body").on("click", "#close-button", function () {
+                $("modal").removeClass("visible");
             });
         });
     }

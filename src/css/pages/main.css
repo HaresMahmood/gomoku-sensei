@@ -73,6 +73,7 @@ modal.visible {
 
     opacity: 1;
 
+    animation-delay: 0.02s;
     -webkit-transition: transform .75s var(--fade-in), opacity .75s var(--fade-in), z-index .75s var(--fade-in);
     transition: transform .75s var(--fade-in), opacity .75s var(--fade-in), z-index .75s var(--fade-in);
 } 
@@ -107,13 +108,7 @@ whitespace {
 }
 
 header {
-    width: 100%;
-
     grid-area: header;
-}
-
-header > h3 {
-    text-transform: capitalize;
 }
 
 nav {

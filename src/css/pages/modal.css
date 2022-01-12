@@ -1,14 +1,30 @@
 @import url("subpage.css");
 
-body,
-.center__container {
-    /* height: fit-content; */
+body {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
 
+
+header {
+    display: flex;
+    justify-content: space-between;
+}
+
+
+main {
+    padding: 1.5rem;
+}
+
+
+main,
+.center__container {
     display: flex;
     flex-direction: column;
 }
 
-body,
+main,
 .information__container.center__container {
     gap: 1.5em;
 }

@@ -231,6 +231,20 @@
   }
 
 
+  header {
+    width: 100%;
+}
+
+  header > h3 {
+      text-transform: capitalize;
+  }
+
+  header > span {
+    font-size: 1.5rem !important;
+
+    cursor: pointer;
+  }
+
   
   main {
     height: 100%;
