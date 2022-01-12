@@ -23,6 +23,7 @@ export default class DefaultView {
 
         this.setModalLoadHandler();
         this.setOverlayClickHandler();
+        this.setFrameDynamicHeightHandler(this.resizeModal);
 
         this.setWindowMessageHandler(this.messageEvent, this.gamePage, this.changeNavigationButtons);
     }
@@ -58,6 +59,17 @@ export default class DefaultView {
         $("modal").addClass("visible");
     }
 
+    resizeModal(iframe) {
+        console.log(true);
+        if (!window.matchMedia("(max-width: 600px)").matches) {
+            $(iframe).css("height", $(iframe).contents().height());
+
+        }
+        else {
+            $(iframe).css("height", "");
+        }
+    }
+
     /*=== Events ===*/
 
     setNavigationButtonHandler(button, state, handler) {
@@ -82,24 +94,19 @@ export default class DefaultView {
     }
 
     setModalLoadHandler() {
-        $("modal > iframe").on("load", function() {
-            this.style.height = this.contentWindow.document.body.scrollHeight  + "px";
-
-            $(this).contents().find("body").on("click", "#close-button", function() {
+        $("#modal-frame").on("load", function() {
+            $(this).contents().find("body").on("mouseup", ".close-button", function() {
                 $("modal").removeClass("visible");
             });
         })
     }
 
-    setDocumentResizeHandler(handler) {
-        $(window).on("resize", function() {
-            const modal = $("body").find("modal.visible").attr('id'); // TODO: Looking for modal every time window is resized - not good!
-            
-            if (modal !== undefined) {
-                handler(`#${modal}`);
-            }
+    setFrameDynamicHeightHandler(handler) {
+        $(document).ready(function() {
+            //handler($("#page-frame"));
         });
     }
+
 
     setWindowMessageHandler(event, state, handler) {
         $(window).on("message", function (e) {

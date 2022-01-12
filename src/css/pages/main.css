@@ -8,8 +8,6 @@ body {
 
     margin: 0;
     padding: 1rem;
-
-    position: 100%;
     
     display: grid;
     grid-template-areas:
@@ -29,8 +27,12 @@ body {
 modal {
     z-index: -1;
 
-    width: 95vw;
-    height: fit-content;
+    width: 95%;
+    max-width: 750px;
+
+    height: 70%;
+
+    padding: 1.5rem;
 
     position: fixed;
     left: 50%;
@@ -42,6 +44,9 @@ modal {
     align-items: center;
 
     opacity: 0;
+    background-color: var(--background);
+
+    border-radius: 20px;
 
     -webkit-transition: transform .2s var(--fade-out), opacity .2s var(--fade-out), z-index .2s var(--fade-out);
     transition: transform .2s var(--fade-out), opacity .2s var(--fade-out), z-index .2s var(--fade-out);
@@ -73,7 +78,6 @@ modal.visible {
 
     opacity: 1;
 
-    animation-delay: 0.02s;
     -webkit-transition: transform .75s var(--fade-in), opacity .75s var(--fade-in), z-index .75s var(--fade-in);
     transition: transform .75s var(--fade-in), opacity .75s var(--fade-in), z-index .75s var(--fade-in);
 } 
@@ -91,13 +95,7 @@ modal.visible ~ .overlay__container {
 }
 
 modal iframe {
-    height: fit-content;
-    width: 100%;
-    max-width: 750px;
-
-    background-color: var(--background);
-
-    border-radius: 20px;
+    height: 100%;
 }
 
 
@@ -174,12 +172,12 @@ iframe {
     modal {
         width: 100vw;
         height: 100vh;
+
+        border-radius: 0;
     }
 
     modal iframe {
         height: 100%;
-
-        border-radius: 0;
     }
 }
 

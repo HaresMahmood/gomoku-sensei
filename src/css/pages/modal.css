@@ -1,6 +1,8 @@
 @import url("subpage.css");
 
 body {
+    padding: 0;
+
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -15,6 +17,15 @@ header {
 
 main {
     padding: 1.5rem;
+
+    justify-content: flex-start;
+}
+
+footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    gap: 0.5rem;
 }
 
 
@@ -35,6 +46,8 @@ main,
 }
 
 .row__container {
+    width: 100%;
+
     gap: max(5vh, 5vw);
 }
 
