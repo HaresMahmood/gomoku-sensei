@@ -1,0 +1,24 @@
+@import url("../modal.css");
+@import url("../../components/switch-component.css");
+
+
+
+button {
+    width: fit-content;
+}
+
+
+
+body {
+    align-items: flex-end;
+}
+
+main {
+    width: 100%;
+    height: fit-content;
+
+    justify-content: flex-start;
+    gap: 1.5rem;
+    
+    border: none;
+}

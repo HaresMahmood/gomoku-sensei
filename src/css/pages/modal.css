@@ -2,14 +2,11 @@
 
 body {
     padding: 0;
+
+    justify-content: space-around;
 }
 
 
-main {
-    padding: 1.5rem;
-
-    justify-content: flex-start;
-}
 
 body,
 .center__container {
@@ -57,4 +54,14 @@ body,
 .information__container > div:not(:first-child) {
     flex-direction: column;
     align-items: flex-start;
+}
+
+
+
+/*=== Breakpoints ===*/
+
+@media only screen and (max-width: 500px) {
+    body {
+        justify-content: flex-start;
+    }
 }
