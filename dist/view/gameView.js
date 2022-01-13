@@ -31,11 +31,11 @@ export default class GameView {
         }
         console.log(icon);
         $(".player_container p").eq(number - 1).text(name);
-        $(".player_container button-label").eq(number - 1).find("span").first().text(icon); // FIXME Ugly.
+        $(".player_container .player-icon").eq(number - 1).text(icon);
     }
-    changePlayer(previousPlayer, currentPlayer) {
-        $(`button-label:eq(${previousPlayer - 1})`).removeClass("red__button");
-        $(`button-label:eq(${currentPlayer - 1})`).addClass("red__button");
+    changePlayer(currentPlayer) {
+        $(".active").removeClass("active");
+        $(`.player__container:eq(${currentPlayer - 1})`).addClass("active");
     }
     updateProgressBar(percentage) {
         $(".pure-material-progress-linear").progressbar({
@@ -106,26 +106,3 @@ export default class GameView {
     setNavigationCloseHandler() {
     }
 }
-$(document).click(function (e) {
-    if ($("nav").hasClass("visible")) {
-        if (!$("#menu-button").is(e.target) && $("#menu-button").has(e.target).length === 0
-            && !$("nav").is(e.target) && $("nav").has(e.target).length === 0) {
-            $("nav").removeClass("visible");
-            $("body").children().not("nav, modal").removeClass("overlay");
-            $("body").removeClass("overlay");
-        }
-    }
-});
-$("#settings-button").click(function () {
-    $("nav").removeClass("visible");
-    $("#settings-page").addClass("visible");
-});
-$("#rules-button").click(function () {
-    $("nav").removeClass("visible");
-    $("#rules-page").addClass("visible");
-});
-$("modal > iframe").contents().find("#back-button").click(function () {
-    $("modal").removeClass("visible");
-    $("body").children().not("nav, modal").removeClass("overlay");
-    $("body").removeClass("overlay");
-});

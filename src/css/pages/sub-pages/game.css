@@ -11,38 +11,65 @@
 
 body {
 	display: flex;
-	flex-direction: row-reverse;
+	/* flex-direction: row-reverse; */
 	justify-content: space-between;
 
 	gap: max(3.5vw, 3.5vh);
 }
 
 
+.current-player__container {
+	width: fit-content;
 
-.information__container {
-	height: fit-content;
-	width: -webkit-fill-available;
-
-	padding-bottom: max(2.5vw, 2.5vh);
-
-	display: flex;
-	flex-direction: column;
-	gap: max(2.5vw, 2.5vh);
-
-	border-bottom: 2px solid var(--light-black);
+	align-self: flex-start;
+	gap: 2rem;
 }
 
-.information__container > div {
-	justify-content: space-between;
-	flex-wrap: wrap;
+.player__container {
+	width: 100%;
+
+	padding: 0.65rem 1.5rem;
+
+	/* position: relative; */
+
+	gap: 0.5rem;
+
+	border-radius: 15px;
+
+	color: var(--white);
+	background-color: var(--dark-background);
+
+	transition: color var(--animation-speed), background-color var(--animation-speed), border-radius ease-out var(--animation-speed);
 }
 
-.time_container {
-	flex: 0 0 calc(100% / 3);
+.player__container > span {
+	font-size: 2rem;
 }
 
-.button_container {
-	flex: 1 0 auto;
+.player__container > p {
+	font-size: 0.85rem;
+}
+
+/* .player__container > button-label {
+	position: absolute;
+	top: calc(-1 * (0.45rem + 0.85rem) / 2); left: 50%;
+} */
+
+.player__container.active {
+	border-radius: 30px; /* calc(0.65rem + 2rem) */
+    transition: color var(--animation-speed), background-color var(--animation-speed), border-radius ease-out var(--animation-speed);
+}
+
+
+.active {
+	color: var(--red);
+    background-color: var(--red-background);
+}
+
+
+.action__container {
+	align-self: flex-end;
+	align-items: flex-end;
 }
 
 
@@ -50,8 +77,9 @@ body {
 .board {
 	aspect-ratio: 1 / 1;
 	height: 100%;
+	/* max-width: 100%; */
 
-	padding: min(3.5vw, 3.5vh);
+	padding: min(3.5vw, 3.5vh); /* 1.5rem; */
 
 	grid-area: board;
 
@@ -108,24 +136,28 @@ body {
 
 @media only screen and (max-width: 900px) {
     body {
-		display: flex;
 		flex-direction: column;
 		align-items: center;
     }
 
-	.information__container {
-		width: 100%;
+	.current-player__container,
+	.player__container,
+	.action__container {
+		aspect-ratio: unset;
+
+		align-self: unset;
+		flex-direction: row;
 	}
 
+	.player__container {
+		padding: 0.65rem;
+	}
+
+	.player__container > span {
+		font-size: 1.5rem;
+	}
 
 	.action__container {
-		height: fit-content;
-
-		justify-content: center;
-	}
-
-	.board {
-		width: 100%;
-		height: auto;
+		align-items: center;
 	}
 }

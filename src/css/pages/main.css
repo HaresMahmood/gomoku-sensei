@@ -121,10 +121,10 @@ header {
 
 nav {
     grid-area: nav;
-}
 
-nav > * {
-    margin: calc(var(--spacing) / 2) 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
 }
 
 main {
@@ -171,7 +171,6 @@ iframe {
     }
 
     nav {
-        display: flex;
         flex-direction: row;
         justify-content: space-evenly;
     }

@@ -33,7 +33,7 @@ export default class GameController {
         }
         this.view.toggleProgressBar();
         const nextPlayer = this.player === 1 ? 2 : 1;
-        this.view.changePlayer(this.player, nextPlayer);
+        this.view.changePlayer(nextPlayer);
         this.player = nextPlayer;
         return nextPlayer;
     }

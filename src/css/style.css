@@ -101,6 +101,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 0.65rem;
 
     border: none;
     outline: none;
@@ -114,10 +115,6 @@
     background-color: var(--dark-background);
 
     transition: border-radius ease-out var(--animation-speed);
-  }
-
-  button:not(.menu__button, .icon__button) > *:first-child {
-    padding-right: 0.65rem;
   }
 
   button:disabled,
@@ -150,6 +147,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 0.25rem;
 
     background: none;
     color: var(--black);
@@ -194,32 +192,33 @@
   /* TODO: Change name of component */
   button-label {
     padding: 0.45rem;
+
     display: flex;
     justify-content: center;
+    gap: 0.45rem;
 
-    border-radius: 10px;
+    border-radius: calc(0.45rem + 0.85rem);
 
     color: var(--white);
-    background-color: var(--dark-background);
+    background-color: var(--light-black);
   }
 
   button-label span {
     font-size: 0.85rem;
     font-weight: 600;
   }
-
-  button-label > *:first-child {
-    padding-right: 0.45rem;
-  }
-
-  button-label.red__button {
-    transition: color var(--animation-speed), background-color var(--animation-speed);
-  }
   
 
 
   .row__container {
     display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .center__container {
+    display: flex;
+    flex-direction: column;
     align-items: center;
     gap: 1rem;
   }
