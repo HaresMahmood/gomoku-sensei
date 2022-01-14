@@ -51,11 +51,6 @@ body {
 	font-size: 0.85rem;
 }
 
-/* .player__container > button-label {
-	position: absolute;
-	top: calc(-1 * (0.45rem + 0.85rem) / 2); left: 50%;
-} */
-
 .player__container.active {
 	border-radius: 30px; /* calc(0.65rem + 2rem) */
     transition: color var(--animation-speed), background-color var(--animation-speed), border-radius ease-out var(--animation-speed);
@@ -160,5 +155,16 @@ body {
 
 	.action__container {
 		align-items: center;
+	}
+
+	.board {
+		width: 100%;
+		height: unset;
+	}
+}
+
+@media only screen and (max-width: 420px) {
+    .player__container > .hide__small {
+		display: none;
 	}
 }
