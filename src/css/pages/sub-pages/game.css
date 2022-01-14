@@ -21,12 +21,13 @@ body {
 .current-player__container {
 	width: fit-content;
 
+	flex-wrap: wrap;
 	align-self: flex-start;
 	gap: 2rem;
 }
 
 .player__container {
-	width: 100%;
+	width: fit-content;
 
 	padding: 0.65rem 1.5rem;
 
