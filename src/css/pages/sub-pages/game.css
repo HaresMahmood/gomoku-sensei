@@ -70,14 +70,6 @@ body {
 	align-items: flex-end;
 }
 
-.action__container > button {
-	/* max-height: calc(0.65rem * 2 + 1.15rem); */
-
-	flex-wrap: wrap;
-
-	/* overflow: hidden; */
-}
-
 
 .board__container {
 	width: 100%;
@@ -86,6 +78,8 @@ body {
 	display: grid;
 
 	overflow: hidden;
+
+	border: red 2px solid;
 }
 
 
