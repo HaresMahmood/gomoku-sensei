@@ -8,8 +8,6 @@
 
     aspect-ratio: 36 / 19;
     height: 1.5rem;
-
-    transition: background-color var(--animation-speed);
 }
 
 .pure-material-switch > div {
