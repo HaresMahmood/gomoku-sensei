@@ -2,7 +2,7 @@
 
 @import url("../variables.css");
 
-.pure-material-switch {
+.switch__component {
     z-index: 0;
     position: relative;
 
@@ -10,7 +10,7 @@
     height: 1.5rem;
 }
 
-.pure-material-switch > div {
+.switch__component > div {
     height: 100%;
     width: 100%;
 
@@ -33,7 +33,7 @@
     
 
 /* Input */
-.pure-material-switch > input {
+.switch__component > input {
     z-index: -1;
 
     appearance: none;
@@ -42,7 +42,7 @@
 }
 
 /* Thumb */
-.pure-material-switch span {
+.switch__component span {
     aspect-ratio: 1 / 1;
     height: 75%;
     
@@ -62,17 +62,17 @@ div:active > span {
     aspect-ratio: 1.5 / 1;
 }
 
-.pure-material-switch > input:checked ~ div {
+.switch__component > input:checked ~ div {
     justify-content: flex-end;
 
     background-color: var(--red-background);
 }
 
-.pure-material-switch > input:checked ~ div > span {
+.switch__component > input:checked ~ div > span {
     background-color: var(--red);
 }
 
-.pure-material-switch > input:disabled ~ div {
+.switch__component > input:disabled ~ div {
     opacity: 0.5;
 
     cursor: not-allowed;
