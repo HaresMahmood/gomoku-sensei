@@ -8,53 +8,52 @@
     </head>
 
     <body>
-        <section class="watermark__container left-align__container">
-            <h1 class="watermark__text"> Gomoku </h1>
+        <section class="watermark__container hide__small">
+            <h1> Gomoku </h1>
         </section>
         
         <section class="center__container">
-            <div class="top__container">
-              <div class="input__container">
+            <div class="center__container">
+              <div>
                   <span class="material-icons-round piece__icon black__icon"> circle </span>
-                  <div class="select">
-                      <select id="player-1" class="select-text" required>
+                  <div class="select__component">
+                      <select id="player-1" required>
                           <option disabled value="human" selected> Human </option>
                           <option disabled value="easy"> Easy AI </option>
                           <option disabled value="killer"> Killer AI </option>
                           <option disabled value="dynamic"> Dynamic AI </option>
                       </select>
-                      <div class="select__background"></div>
-                      <label class="select-label"> Player 1 </label>
+                      <div></div>
+                      <label> Player 1 </label>
                   </div>
               </div>
-              <div class="input__container">
+              <div>
                   <span class="material-icons-round piece__icon white__icon"> circle </span>
-                  <div class="select">
-                      <select id="player-2" class="select-text" required>
+                  <div class="select__component">
+                      <select id="player-2" required>
                           <option disabled selected></option>
                           <option disabled value="human"> Human </option>
                           <option value="easy"> Easy AI </option>
                           <option value="killer"> Killer AI </option>
                           <option disabled value="dynamic"> Dynamic AI </option>
                       </select>
-                      <div class="select__background"></div>
-                      <label class="select-label"> Player 2 </label>
+                      <div></div>
+                      <label> Player 2 </label>
                   </div>
               </div>
             </div>
-            <div class="bottom__container">
-              <button id="game-button" class="red__button"> 
+            
+            <button id="game-button" class="red__button"> 
                 <span class="material-icons-round"> play_arrow </span>
                 <span> Start game </span>
               </button>
-            </div>
         </section>
-        <section class="watermark__container right-align__container">
-            <h1 class="watermark__text"> 五目並べ </h1>
+
+        <section class="watermark__container hide__small">
+            <h1> 五目並べ </h1>
         </section>
 
         <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
-        <script src='https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.3/jquery-ui.min.js'></script>
         <script type="module" src="../../dist/scripts/homeScript.js"></script>
     </body>
 </html>

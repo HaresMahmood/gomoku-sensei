@@ -1,15 +1,16 @@
 @import url("../variables.css");
 
-.select {
+.select__component {
+    width: 100%;
+
     position: relative;
-    width: 250px;
     background: none;
     padding: 0.2rem 0.5rem;
 
     transition: border-radius ease-out var(--animation-speed);
 }
 
-.select__background {
+.select__component > div {
     width: 100%;
     height: 100%;
 
@@ -24,7 +25,7 @@
     transition: border-radius ease-out var(--animation-speed), border var(--animation-speed);
 }
   
-.select-text {
+.select__component > select {
     position: relative;
     font-family: inherit;
     background-color: transparent;
@@ -36,22 +37,24 @@
     z-index: 10;
 }
 
-.select-text.error ~ .select__background {
+.select__component > select.error ~ .background {
     border-color: var(--red);
 }
   
 /* Remove focus */
-.select-text:focus {
+.select__component >select:focus {
     outline: none;
 }
   
 /* Use custom arrow */
-.select .select-text {
+.select__component select {
     appearance: none;
     -webkit-appearance:none
 }
   
-.select:after {
+.select__component:after {
+    content: "";
+
     position: absolute;
     top: 18px;
     right: 10px;
@@ -69,7 +72,7 @@
   
   
 /* LABEL ======================================= */
-.select-label {
+.select__component > label {
     color: rgba(0,0,0, 0.26);
     font-size: 0.75rem;
     font-weight: normal;
@@ -86,12 +89,12 @@
 }
   
 /* active state */
-.select-text:focus ~ .select-label, .select-text:valid ~ .select-label {
+.select__component > select:focus ~ label, .select__component > select:valid ~ label {
     color: var(--red);
     top: calc(-1 * (0.2rem + 5px));
     font-size: 0.55rem;
 }
 
-.select-text:focus ~ .select__background { /* , .select-text:valid ~ .select__background */
+.select__component > select:focus ~ div { 
     border-radius: 8px;
 }
