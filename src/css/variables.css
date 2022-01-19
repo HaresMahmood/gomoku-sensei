@@ -2,6 +2,8 @@
     --background: #DBDBD9;
     --dark-background: #6E6E6E;
     --red-background: #DD243540;
+    --inactive: #6B464A;
+    --inactive-background: #6B464A40;
     --faded-background: #6e6e6e40; /* TODO: Use `dark-background` as base. */
     --white: #FEFDF8;
     --black: #2A2E39;
