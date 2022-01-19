@@ -87,6 +87,10 @@
 
     transition: all ease var(--animation-speed);
 }
+
+.select__component > select:disabled {
+    opacity: 0.35;
+}
   
 /* active state */
 .select__component > select:focus ~ label, .select__component > select:valid ~ label {
