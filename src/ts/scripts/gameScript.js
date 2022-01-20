@@ -4,6 +4,10 @@ import Controller from "../controller/gameController.js";
 import AIFactory from "../factories/aiFactory.js";
 
 
+$(document).ready(function() {
+    window.top.postMessage("hello", '*');
+});
+
 $(window).on("message", function(e) {
     const data = JSON.parse(e.originalEvent.data);
 
@@ -17,8 +21,4 @@ $(window).on("message", function(e) {
     //console.log(player1, player2);
 
     const controller = new Controller(game, view, player2);
-});
-
-$(document).on("ready", function() {
-
 });
