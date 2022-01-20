@@ -102,6 +102,7 @@ body {
 }
 
 .cell {
+	aspect-ratio: 1 / 1;
 	height: auto;
 	width: auto;
 	
@@ -118,19 +119,52 @@ body {
 }
 
 .piece {
+	aspect-ratio: 1 / 1;
     width: 80%;
-	height: 80%;
+
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	
     border-radius: 100%;
 
 	cursor: not-allowed;
 }
 
+.piece > div {
+	aspect-ratio: 1 / 1;
+	width: 30%;
+
+	border-radius: 100%;
+
+	display: none;
+}
+
+.piece.last > p {
+	display: none;
+}
+
+.piece.last > div {
+	display: block;
+}
+
+
 .black-piece {
-  background-color: rgba(42, 46, 57, 1);
+	color: var(--white);
+}
+
+.black-piece,
+.white-piece > div {
+	background-color: var(--black)
 }
 
 .white-piece {
-  background-color: rgba(254, 253, 248, 1);
+	color: var(--black);
+}
+
+.white-piece,
+.black-piece > div {
+	background-color: var(--white)
 }
 
 

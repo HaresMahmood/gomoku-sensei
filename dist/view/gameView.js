@@ -46,10 +46,11 @@ export default class GameView {
         //updateProgressBar(0);
         $("header, body").toggleClass("loading");
     }
-    addPiece(index, color) {
+    addPiece(index, color, moveNumber) {
         let box = this.board.find(this.cell).eq(index);
         if (box.find(".piece").length === 0) {
-            let piece = `<div class="piece ${color}-piece"></div>`;
+            let piece = `<div class="piece ${color}-piece last"><p> ${moveNumber} </p> <div></div></div>`;
+            $(".last").removeClass("last");
             box.append(piece);
         }
     }
@@ -62,47 +63,9 @@ export default class GameView {
     getClickedCellCoordinates(cell) {
         return cell.index();
     }
-    setDocumentReadyHandler() {
-        $(document).ready(this.movePlayerElement);
-    }
-    setWindowResizeHandler() {
-        $(window).bind("resize", this.movePlayerElement);
-    }
     setCellClickHandler(handler) {
         $(this.cell).bind("click", function () {
             handler($(this).index());
         });
-    }
-    /*-- Miscellaneous --*/
-    movePlayerElement() {
-        if (parseInt($(window).width()) <= BREAKPOINT) {
-            $("#players-container").detach().prependTo($("main"));
-            if ($("#page-title").length === 0) {
-                $("#menu-button").after((`<h3 id="page-title"> Game </h3>`));
-            }
-        }
-        if (parseInt($(window).width()) > BREAKPOINT) {
-            $("#players-container").detach().insertAfter($("#menu-button"));
-            $("#page-title").remove();
-        }
-    }
-    setNavigationOpenHandler() {
-        $("#menu-button").bind("click", function () {
-            $("nav").addClass("visible"); // Make menu visible.
-            $("body").children().not("nav, modal").addClass("overlay"); // Add blur to background.
-            $("body").addClass("overlay");
-            // Slide back menu on `back` key press.
-            if (window.history && window.history.pushState) {
-                //window.history.pushState('forward', null, './#forward'); // Ensure browser doesn't go back in history.
-                $(window).on('popstate', function () {
-                    // Do opposite of above.
-                    $("nav").removeClass("visible");
-                    $("body").children().not("nav, #settings-page").removeClass("overlay");
-                    $("body").removeClass("overlay");
-                });
-            }
-        });
-    }
-    setNavigationCloseHandler() {
     }
 }

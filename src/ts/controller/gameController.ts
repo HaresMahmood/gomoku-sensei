@@ -10,6 +10,8 @@ export default class GameController {
     private player: number = 1 | 2;
     private ai: AI;
 
+    private moveNumber: number = 1;
+
     constructor(model: Game, view: GameView, player: Player) {
         this.model = model;
         this.view = view;
@@ -41,7 +43,7 @@ export default class GameController {
     addPiece(index: number) {
         let color = this.player === 1 ? "black" : "white";
 
-        this.view.addPiece(index, color);
+        this.view.addPiece(index, color, this.moveNumber);
         this.model.performMove(index, this.player);
 
         if (this.model.isOver()) {
@@ -55,6 +57,8 @@ export default class GameController {
 
         this.view.changePlayer(nextPlayer);
         this.player = nextPlayer;
+
+        this.moveNumber++;
 
         return nextPlayer;
     }

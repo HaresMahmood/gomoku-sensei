@@ -3,6 +3,7 @@ export default class GameController {
     view;
     player = 1 | 2;
     ai;
+    moveNumber = 1;
     constructor(model, view, player) {
         this.model = model;
         this.view = view;
@@ -25,7 +26,7 @@ export default class GameController {
     }
     addPiece(index) {
         let color = this.player === 1 ? "black" : "white";
-        this.view.addPiece(index, color);
+        this.view.addPiece(index, color, this.moveNumber);
         this.model.performMove(index, this.player);
         if (this.model.isOver()) {
             this.view.endGame(color, this.model.isDraw());
@@ -35,6 +36,7 @@ export default class GameController {
         const nextPlayer = this.player === 1 ? 2 : 1;
         this.view.changePlayer(nextPlayer);
         this.player = nextPlayer;
+        this.moveNumber++;
         return nextPlayer;
     }
     aiTurn(player) {
