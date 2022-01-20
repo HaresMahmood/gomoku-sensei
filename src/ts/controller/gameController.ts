@@ -49,7 +49,8 @@ export default class GameController {
 
         if (this.model.isOver()) {
             this.view.endGame(color, this.model.isDraw());
-            //return;
+            this.restart();
+            return;
         }
 
         this.view.toggleProgressBar();

@@ -31,7 +31,8 @@ export default class GameController {
         this.model.performMove(index, this.player);
         if (this.model.isOver()) {
             this.view.endGame(color, this.model.isDraw());
-            //return;
+            this.restart();
+            return;
         }
         this.view.toggleProgressBar();
         const nextPlayer = this.player === 1 ? 2 : 1;
