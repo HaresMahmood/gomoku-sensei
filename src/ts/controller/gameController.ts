@@ -23,13 +23,14 @@ export default class GameController {
         //this.model.changePlayerEvent.addListener(player => this.aiTurn(player));
         this.ai.chooseMouseEvent.addListener((index: number) => this.performMove(index));
         this.view.setCellClickHandler((index: number) => this.performMove(index));
+        this.view.setRestartClickHandler(() => this.restart());
 
         this.view.setPlayer(this.ai, 2);
 
         //this.aiTurn(this.currentPlayer);
     }
 
-    async performMove(index) {
+    performMove(index) {
         if (this.model.isCellEmpty(index)) {
             const nextPlayer = this.addPiece(index);
             const that = this;
@@ -61,6 +62,16 @@ export default class GameController {
         this.moveNumber++;
 
         return nextPlayer;
+    }
+
+    restart() {
+        this.player = 1;
+        this.moveNumber = 1;
+
+        this.model.restart();
+        this.view.restart();
+
+        // TODO: Make sure AI can move if it is player 1.
     }
 
     aiTurn(player) {

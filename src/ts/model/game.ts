@@ -80,9 +80,16 @@ export default class Game {
         return this.hasWon(player) || this.isDraw();
     }
 
+    public restart() {
+        for (let i: number = 0; i < this.board.length; i++) {
+            this.board[i] = 0;
+            this.lastMove = -1;
+        }
+    }
+
     // #endregion
 
-    // #region Utilituy
+    // #region Utility
     
     hasWon(player) {
         function countConsecutivePieces(pieces: number[]) {

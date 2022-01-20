@@ -29,7 +29,6 @@ export default class GameView {
                 icon = "school";
                 break;
         }
-        console.log(icon);
         $(".player_container p").eq(number - 1).text(name);
         $(".player_container .player-icon").eq(number - 1).text(icon);
     }
@@ -54,10 +53,13 @@ export default class GameView {
             box.append(piece);
         }
     }
+    restart() {
+        $(".piece").remove();
+    }
     endGame(color, isDraw) {
         const winText = isDraw ? `Draw!` : `${color} wins!`;
         window.alert(winText);
-        location.reload();
+        // location.reload();
     }
     /*-- Events */
     getClickedCellCoordinates(cell) {
@@ -66,6 +68,11 @@ export default class GameView {
     setCellClickHandler(handler) {
         $(this.cell).bind("click", function () {
             handler($(this).index());
+        });
+    }
+    setRestartClickHandler(handler) {
+        $("#restart-button").bind("mouseup", function () {
+            handler();
         });
     }
 }

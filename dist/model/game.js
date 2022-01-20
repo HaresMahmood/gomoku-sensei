@@ -55,8 +55,14 @@ export default class Game {
         const player = this.board[this.lastMove]; // TODO: Think of better way of doing this.
         return this.hasWon(player) || this.isDraw();
     }
+    restart() {
+        for (let i = 0; i < this.board.length; i++) {
+            this.board[i] = 0;
+            this.lastMove = -1;
+        }
+    }
     // #endregion
-    // #region Utilituy
+    // #region Utility
     hasWon(player) {
         function countConsecutivePieces(pieces) {
             let counter = 0;
