@@ -8,24 +8,26 @@ export default class GameController {
     private view: GameView;
     
     private player: number = 1 | 2;
-    private ai: AI;
+    private player1: Player;
+    private player2: Player;
 
     private moveNumber: number = 1;
 
-    constructor(model: Game, view: GameView, player: Player) {
+    constructor(model: Game, view: GameView, player1: Player, player2: Player) {
         this.model = model;
         this.view = view;
 
         this.player = 1;
 
-        this.ai = player as AI;
+        this.player1 = player1;
+        this.player2 = player2;
 
-        //this.model.changePlayerEvent.addListener(player => this.aiTurn(player));
-        this.ai.chooseMouseEvent.addListener((index: number) => this.performMove(index));
         this.view.setCellClickHandler((index: number) => this.performMove(index));
         this.view.setRestartClickHandler(() => this.restart());
 
-        this.view.setPlayer(this.ai, 2);
+
+        this.view.setPlayer(this.player1);
+        this.view.setPlayer(this.player2);
 
         //this.aiTurn(this.currentPlayer);
     }
@@ -36,8 +38,8 @@ export default class GameController {
             const that = this;
 
             window.setTimeout(function() {
-                that.aiTurn(nextPlayer);
-            }, 150);
+                that.nextPlayer(nextPlayer);
+            }, 150); // Set timeout to update UI.
         }
     }
 
@@ -74,12 +76,16 @@ export default class GameController {
         this.model.restart();
         this.view.restart();
 
-        // TODO: Make sure AI can move if it is player 1.
+        this.nextPlayer(this.player);
     }
 
-    aiTurn(player) {
-        if (this.ai.player === player) {
-            this.ai.chooseMove(this.model.clone());
+    // TODO: Come up with better name.
+    nextPlayer(player) {
+        if (this.player1.player === player) {
+            this.performMove(this.player1.chooseMove(this.model.clone()));
+        }
+        else if (this.player2.player === player) {
+            this.performMove(this.player2.chooseMove(this.model.clone()))
         }
     }
 }

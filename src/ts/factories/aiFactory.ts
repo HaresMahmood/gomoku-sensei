@@ -10,7 +10,7 @@ export default class AIFactory implements Factory {
         //return input.replace(" ", "");
 
         if (input === "Human") {
-            return new Human();
+            return new Human(player);
         }
         else if (input === "Easy AI") {
             return new RandomAI(player);

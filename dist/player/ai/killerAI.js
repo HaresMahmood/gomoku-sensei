@@ -28,7 +28,7 @@ export default class KillerAI extends AbstractAI {
         console.log(counter);
         console.log(root);
         console.log(winnerNode);
-        this.executeMove(winnerNode.state.game.lastMove);
+        return winnerNode.state.game.lastMove;
     }
     select(node) {
         while (!node.isLeaf()) { // && !node.state.game.isOver()

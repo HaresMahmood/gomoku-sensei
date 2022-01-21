@@ -3,7 +3,7 @@ import AbstractAI from "./ai.js";
 import Node from "./tree/node.js";
 
 export default class KillerAI extends AbstractAI {
-    public chooseMove(game: Game) {
+    public chooseMove(game: Game): number {
         const interval: number = 3000
         const root: Node = new Node();
         const startTime = Date.now();
@@ -39,7 +39,7 @@ export default class KillerAI extends AbstractAI {
         console.log(root);
         console.log(winnerNode);
 
-        this.executeMove(winnerNode.state.game.lastMove);
+        return winnerNode.state.game.lastMove;
     }
 
     private select(node: Node) {

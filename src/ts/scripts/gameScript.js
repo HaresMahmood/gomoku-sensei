@@ -20,5 +20,5 @@ $(window).on("message", function(e) {
 
     //console.log(player1, player2);
 
-    const controller = new Controller(game, view, player2);
+    const controller = new Controller(game, view, player1, player2);
 });

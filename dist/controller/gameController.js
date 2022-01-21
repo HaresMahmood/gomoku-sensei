@@ -2,18 +2,19 @@ export default class GameController {
     model;
     view;
     player = 1 | 2;
-    ai;
+    player1;
+    player2;
     moveNumber = 1;
-    constructor(model, view, player) {
+    constructor(model, view, player1, player2) {
         this.model = model;
         this.view = view;
         this.player = 1;
-        this.ai = player;
-        //this.model.changePlayerEvent.addListener(player => this.aiTurn(player));
-        this.ai.chooseMouseEvent.addListener((index) => this.performMove(index));
+        this.player1 = player1;
+        this.player2 = player2;
         this.view.setCellClickHandler((index) => this.performMove(index));
         this.view.setRestartClickHandler(() => this.restart());
-        this.view.setPlayer(this.ai, 2);
+        this.view.setPlayer(this.player1);
+        this.view.setPlayer(this.player2);
         //this.aiTurn(this.currentPlayer);
     }
     performMove(index) {
@@ -21,8 +22,8 @@ export default class GameController {
             const nextPlayer = this.addPiece(index);
             const that = this;
             window.setTimeout(function () {
-                that.aiTurn(nextPlayer);
-            }, 150);
+                that.nextPlayer(nextPlayer);
+            }, 150); // Set timeout to update UI.
         }
     }
     addPiece(index) {
@@ -47,11 +48,15 @@ export default class GameController {
         this.view.changePlayer(this.player);
         this.model.restart();
         this.view.restart();
-        // TODO: Make sure AI can move if it is player 1.
+        this.nextPlayer(this.player);
     }
-    aiTurn(player) {
-        if (this.ai.player === player) {
-            this.ai.chooseMove(this.model.clone());
+    // TODO: Come up with better name.
+    nextPlayer(player) {
+        if (this.player1.player === player) {
+            this.performMove(this.player1.chooseMove(this.model.clone()));
+        }
+        else if (this.player2.player === player) {
+            this.performMove(this.player2.chooseMove(this.model.clone()));
         }
     }
 }

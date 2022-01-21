@@ -1,15 +1,21 @@
 import Event from "../../utility/event.js";
-export default class AbstractAI {
-    _player;
+import Player from "../player.js";
+export default class AbstractAI extends Player {
+    // #region Initialization
     _chooseMoveEvent;
-    constructor(playerNumber) {
-        this._player = playerNumber;
+    constructor(player) {
+        super(player);
+        this._name = ["AI", "smart_toy"];
         this._chooseMoveEvent = new Event();
     }
-    get player() {
-        return this._player;
+    // #endregion
+    // #region Accessors 
+    get name() {
+        return ["AI", "smart_toy"];
     }
-    get chooseMouseEvent() {
+    // #endregion
+    // #region Miscellaneous
+    get chooseMoveEvent() {
         return this._chooseMoveEvent;
     }
     executeMove(move) {
