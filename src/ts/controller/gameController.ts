@@ -69,6 +69,8 @@ export default class GameController {
         this.player = 1;
         this.moveNumber = 1;
 
+        this.view.changePlayer(this.player);
+
         this.model.restart();
         this.view.restart();
 

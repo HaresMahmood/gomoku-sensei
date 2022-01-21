@@ -44,6 +44,7 @@ export default class GameController {
     restart() {
         this.player = 1;
         this.moveNumber = 1;
+        this.view.changePlayer(this.player);
         this.model.restart();
         this.view.restart();
         // TODO: Make sure AI can move if it is player 1.
