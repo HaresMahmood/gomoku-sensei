@@ -15,7 +15,10 @@ export default class GameController {
         this.view.setRestartClickHandler(() => this.restart());
         this.view.setPlayer(this.player1);
         this.view.setPlayer(this.player2);
-        //this.aiTurn(this.currentPlayer);
+        const that = this;
+        window.setTimeout(function () {
+            that.nextPlayer(that.player);
+        }, 10); // Set timeout to update UI.
     }
     performMove(index) {
         if (this.model.isCellEmpty(index)) {
@@ -48,7 +51,10 @@ export default class GameController {
         this.view.changePlayer(this.player);
         this.model.restart();
         this.view.restart();
-        this.nextPlayer(this.player);
+        const that = this;
+        window.setTimeout(function () {
+            that.nextPlayer(that.player);
+        }, 10); // Set timeout to update UI.
     }
     // TODO: Come up with better name.
     nextPlayer(player) {

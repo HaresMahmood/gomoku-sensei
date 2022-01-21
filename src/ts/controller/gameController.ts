@@ -25,11 +25,14 @@ export default class GameController {
         this.view.setCellClickHandler((index: number) => this.performMove(index));
         this.view.setRestartClickHandler(() => this.restart());
 
-
         this.view.setPlayer(this.player1);
         this.view.setPlayer(this.player2);
 
-        //this.aiTurn(this.currentPlayer);
+        const that = this;
+
+        window.setTimeout(function() {
+            that.nextPlayer(that.player);
+        }, 10); // Set timeout to update UI.
     }
 
     performMove(index) {
@@ -76,7 +79,11 @@ export default class GameController {
         this.model.restart();
         this.view.restart();
 
-        this.nextPlayer(this.player);
+        const that = this;
+
+        window.setTimeout(function() {
+            that.nextPlayer(that.player);
+        }, 10); // Set timeout to update UI.
     }
 
     // TODO: Come up with better name.

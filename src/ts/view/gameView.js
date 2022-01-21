@@ -17,8 +17,8 @@ export default class GameView {
     }
 
     setPlayer(player) {
-        $(".player_container p").eq(player.player - 1).text(player.name[0]);
-        $(".player_container .player-icon").eq(player.player - 1).text(player.name[1]);
+        $(".player__container p").eq(player.player - 1).text(player.name[0]);
+        $(".player__container .player-icon").eq(player.player - 1).text(player.name[1]);
     }
 
     changePlayer(currentPlayer) {
