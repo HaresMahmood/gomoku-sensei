@@ -37,12 +37,12 @@
     z-index: 10;
 }
 
-.select__component > select.error ~ .background {
+.select__component > select.error ~ div {
     border-color: var(--red);
 }
   
 /* Remove focus */
-.select__component >select:focus {
+.select__component > select:focus {
     outline: none;
 }
   
