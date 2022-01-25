@@ -1,30 +1,49 @@
 # Gomoku Sensei AI
 #### Designing a dynamic game-playing AI.
 
-[![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/HaresMahmood/gomoku-sensei)
-![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/HaresMahmood/gomoku-sensei)
+<details>
+    <summary> Table of Contents </summary>
+    <ol> 
+        <li> <a href="#overview"> Overview </a> </li>
+            <ol>
+                <li> <a href="#aims--objectives"> Aims & objectives </a> </li>
+            </ol>
+        <li> <a href="#installation"> Installation </a> </li>
+        <li> <a href="#resources"> Resources </a> </li>
+        <li> <a href="#acknoledgements"> Acknowledgements </a> </li>
+            <ol>
+                <li> <a href="#frameworks--technologies"> Frameworks & technologies </a> </li>
+            </ol>
+    </ol>
+</details>
 
-![Screenshot](./res/screenshot.svg)
+![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/HaresMahmood/gomoku-sensei)
+[![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/HaresMahmood/gomoku-sensei)
+[![Notion](https://img.shields.io/badge/Notion-%23000000.svg?style=for-the-badge&logo=notion&logoColor=white)]()
+
+![Screenshot](./res/screenshot.png)
 
 ## Overview
 This project was developed as a fourth-year dissertation project for the University of Strathclyde.
 
-## Aims & objectives
-The main objective os this project was to adapt an existing game-playing search algorithm (MCTS, Minimax, etc...), in order to develop an AI opponent that is both fun and engaging, yet challenging to play against. The AI will dynamically scale its difficulty according to its opponent's skill level.
+### Aims & objectives
+The main objective os this project was to adapt an existing game-playing search algorithm ([MCTS](https://en.wikipedia.org/wiki/Monte_Carlo_tree_search), [Minimax](https://en.wikipedia.org/wiki/Minimax), etc...), in order to develop an AI opponent that is both fun and engaging, yet challenging to play against. The AI dynamically scales its difficulty according to its opponent's skill level.
 
-Another major component of the project was is the design and implementaiton of a fluid, easy-to-use user interface (UI). The UI is the medium through which users will interact with the game during the evalutation-phase, which means it is vital for the game's UI to be simple and easy, yet at the same time fun to use.
-
-To achieve this goal, a number of task must be completed:
-
-| Objective | Description |
-| --- | --- |
-| Game choice | Choose a 2-player, fully observable game to develop the AI for. |
-| Implementation  | Design and implement a playable version of the game. |
-| Killer AI  | Design and implement a well-performing AI using a tree search algorithm. |
-| Dynamic AI  | Modify the ‣ to scale its difficulty dynamically according to its opponent's perceived skill level. |
-| Evaluation  | Carry out a series of user-based trials to evaluate how well the ‣ scales its difficulty, as well as how engaging it is to play against. |
+Another major component the project was is the design and implementaiton of a fluid, easy-to-use user interface (UI). The UI is the medium through which users will interact with the game during the evalutation-phase, which means it is vital for the game's UI to be simple and easy, yet at the same time fun to use.
 
 ## Installation
-In order to run the game, download or clone the project repository and open the `index.html` file in the root of the project in your browser of choice.
+Please refer to [instructions on setting up a local test server](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/set_up_a_local_testing_server) if you wish to host and run the project locally. Alternatively, visit the [web application](https://haresmahmood.github.io/gomoku-sensei/) hosted on GitHub Pages to run the software on any modern browser.
+
+## Resources
+For additional details, as well as the development process for this project, visit this [Notion Workspace](). The paper written as part of this project can be read [here](https://drive.google.com/file/d/1mnz7TNERF8jVEQjdcrgVpBM5L8kvzhrm/view?usp=sharing). The UI was designed in Figma; an interactive prorotype can be found on [this page](https://www.figma.com/proto/uhH23aRZvGQsOViY0bnnVP/Gomoku?node-id=64%3A19).
 
 ## Acknowledgements
+I want to thank [Dr. John Levine](https://www.strath.ac.uk/staff/levinejohndr/) for supervising, and providing his invaluable support and guidance troughout this project.
+
+### Frameworks & technologies
+* [Material Design 3](https://m3.material.io/)
+* [TypeScript](https://www.typescriptlang.org/)
+* [JQuery](https://jquery.com/)
+* [PWA technology](https://web.dev/progressive-web-apps/)
+* [GitHub Pages](https://pages.github.com/)
+* [Jest](https://jestjs.io/)
