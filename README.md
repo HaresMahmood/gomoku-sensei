@@ -19,12 +19,12 @@
 
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/HaresMahmood/gomoku-sensei)
 [![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/HaresMahmood/gomoku-sensei)
-[![Notion](https://img.shields.io/badge/Notion-%23000000.svg?style=for-the-badge&logo=notion&logoColor=white)]()
+[![Notion](https://img.shields.io/badge/Notion-%23000000.svg?style=for-the-badge&logo=notion&logoColor=white)](https://opposite-brain-cb0.notion.site/CS408-1e5c4e3c9b0d4291b6a968855d9270e9)
 
 ![Screenshot](./res/screenshot.png)
 
 ## Overview
-This project was developed as a fourth-year dissertation project for the University of Strathclyde.
+This software was developed as a fourth-year dissertation project for the University of Strathclyde.
 
 ### Aims & objectives
 The main objective os this project was to adapt an existing game-playing search algorithm ([MCTS](https://en.wikipedia.org/wiki/Monte_Carlo_tree_search), [Minimax](https://en.wikipedia.org/wiki/Minimax), etc...), in order to develop an AI opponent that is both fun and engaging, yet challenging to play against. The AI dynamically scales its difficulty according to its opponent's skill level.
@@ -35,7 +35,7 @@ Another major component the project was is the design and implementaiton of a fl
 Please refer to [instructions on setting up a local test server](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/set_up_a_local_testing_server) if you wish to host and run the project locally. Alternatively, visit the [web application](https://haresmahmood.github.io/gomoku-sensei/) hosted on GitHub Pages to run the software on any modern browser.
 
 ## Resources
-For additional details, as well as the development process for this project, visit this [Notion Workspace](). The paper written as part of this project can be read [here](https://drive.google.com/file/d/1mnz7TNERF8jVEQjdcrgVpBM5L8kvzhrm/view?usp=sharing). The UI was designed in Figma; an interactive prorotype can be found on [this page](https://www.figma.com/proto/uhH23aRZvGQsOViY0bnnVP/Gomoku?node-id=64%3A19).
+For additional details, as well as the development process for this project, visit this [Notion Workspace](https://opposite-brain-cb0.notion.site/CS408-1e5c4e3c9b0d4291b6a968855d9270e9). The paper written as part of this project can be read [here](https://drive.google.com/file/d/1mnz7TNERF8jVEQjdcrgVpBM5L8kvzhrm/view?usp=sharing). The UI was designed in Figma; an interactive prorotype can be found on [this page](https://www.figma.com/proto/uhH23aRZvGQsOViY0bnnVP/Gomoku?node-id=64%3A19).
 
 ## Acknowledgements
 I want to thank [Dr. John Levine](https://www.strath.ac.uk/staff/levinejohndr/) for supervising, and providing his invaluable support and guidance troughout this project.
