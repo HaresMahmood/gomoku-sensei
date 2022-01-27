@@ -1,6 +1,7 @@
 import Human from "../player/human.js";
 import RandomAI from "../player/ai/randomAI.js";
 import KillerAI from "../player/ai/killerAI.js";
+import DynamicAI from "../player/ai/dynamicAI.js";
 export default class AIFactory {
     // TODO: Change this method to return a `Player`-class instead.
     createItem(input, player) {
@@ -13,6 +14,9 @@ export default class AIFactory {
         }
         else if (input === "Killer AI") {
             return new KillerAI(player);
+        }
+        else if (input === "Dynamic AI") {
+            return new DynamicAI(player);
         }
     }
 }
