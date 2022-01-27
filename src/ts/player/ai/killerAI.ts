@@ -1,27 +1,29 @@
 import Game from "../../model/game.js";
 import AbstractAI from "./ai.js";
 import AbstractNode from "./tree/node.js";
+import StaticNode from "./tree/staticNode.js";
 
 export default class KillerAI extends AbstractAI {
-    private root: AbstractNode;
+    private node: AbstractNode;
 
-    constructor(player: number, root: AbstractNode) {
+    constructor(player: number, node: AbstractNode) {
         super(player);
 
-        this.root = root;
+        this.node = node;
     }
 
     public chooseMove(game: Game): number {
         const interval: number = 3000
         const startTime = Date.now();
+        const root = new StaticNode();
         let counter: number = 0;
-        
-        this.root.state.game = game;
-        this.root.state.playerNumber = this._player;
-        this.root.expand();
+
+        root.state.game = game;
+        root.state.playerNumber = this._player;
+        root.expand();
 
         while((Date.now() - startTime) < interval) {
-            let current = this.select(this.root); // Selection.
+            let current = this.select(root); // Selection.
             let result;
 
             if (current.state.game.isOver()) {
@@ -40,16 +42,16 @@ export default class KillerAI extends AbstractAI {
             counter++;
         }
 
-        const winnerNode = this.root.getMostVisitedChild();
+        const winnerNode = root.getMostVisitedChild();
 
         console.log(counter);
-        console.log(this.root);
-        console.log(this.root);
+        console.log(root);
+        console.log(root);
 
         return winnerNode.state.game.lastMove;
     }
 
-    private select(node: AbstractNode) {
+    private select(node: StaticNode) {
         while (!node.isLeaf()) { // && !node.state.game.isOver()
             node = node.select(this._player); // UCT.
         }
@@ -57,7 +59,7 @@ export default class KillerAI extends AbstractAI {
         return node;
     }
 
-    private backpropogate(node: AbstractNode, result) {
+    private backpropogate(node: StaticNode, result) {
         let utility = -1;
 
         if (result === this._player) {

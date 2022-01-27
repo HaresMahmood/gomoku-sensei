@@ -21,7 +21,7 @@ export default class AIFactory implements Factory {
             return new RandomAI(player);
         }
         else if (input === "Killer AI") {
-            return new KillerAI(player, new StaticNode());
+            return new KillerAI(player, new DynamicNode());
         }
         else if (input === "Dynamic AI") {
             return new KillerAI(player, new DynamicNode());
