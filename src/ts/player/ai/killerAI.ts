@@ -13,8 +13,8 @@ export default class KillerAI extends AbstractAI {
     }
 
     public chooseMove(game: Game): number {
-        const interval: number = 3000
-        const startTime = Date.now();
+        const interval: number = 20000;
+        // const startTime = Date.now();
         const root = new StaticNode();
         let counter: number = 0;
 
@@ -22,7 +22,7 @@ export default class KillerAI extends AbstractAI {
         root.state.playerNumber = this._player;
         root.expand();
 
-        while((Date.now() - startTime) < interval) {
+        while(counter != interval) {
             let current = this.select(root); // Selection.
             let result;
 
@@ -44,8 +44,7 @@ export default class KillerAI extends AbstractAI {
 
         const winnerNode = root.getMostVisitedChild();
 
-        console.log(counter);
-        console.log(root);
+        // console.log(counter);
         console.log(root);
 
         return winnerNode.state.game.lastMove;
