@@ -1,272 +1,233 @@
 @import url("https://fonts.googleapis.com/icon?family=Material+Icons+Round");
-@import url("https://fonts.googleapis.com/css2?family=Spartan:wght@500;600;800&amp;display=swap");
-
+@import url("https://fonts.googleapis.com/css2?family=Spartan:wght@500;600;800&display=swap");
 @import url("https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css");
-
 @import url("./variables.css");
-  
-  * {
+
+* {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+
     font-family: "Spartan";
 
-    -moz-box-sizing: border-box; 
-    -webkit-box-sizing: border-box; 
-    box-sizing: border-box;
-  }
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
 
-
-  
-  h1 {
+h1 {
     margin: 0;
     padding: 0;
-
     font-weight: 800;
-
     color: var(--black);
-  }
+}
 
-  h2 {
+h2 {
     margin: 0;
-
     font-weight: 600;
-
     color: var(--black);
-  }
-  
-  h3 {
+}
+
+h3 {
     margin: 0;
-
     font-weight: 600;
-
     color: var(--black);
-  }
+}
 
-  h6 {
+h6 {
     padding: 0;
     margin: 0;
-
     font-size: 0.65rem;
     font-weight: 500;
     letter-spacing: 0.075rem;
     text-transform: uppercase;
-
     color: var(--black);
-  }
+}
 
-  p {
+p {
     margin: 0;
-
     font-weight: 500;
-  }
+}
 
+.selectable__text {
+    -webkit-user-select: unset;
+    -moz-user-select: unset;
+    -ms-user-select: unset;
+    user-select: unset;
+}
 
-
-  .full-width__container {
+.full-width__container {
     width: 100%;
-  }
+}
 
-
-
-  .icon,
-  .material-icons-round {
+.icon,
+.material-icons-round {
     font-size: 1rem;
-
-    -webkit-user-select: none;      
+    -webkit-user-select: none;
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-  }
+}
 
-  .piece__icon {
+.piece__icon {
     font-size: 1.45rem;
-  }
+}
 
-  .black__icon {
+.black__icon {
     color: var(--black);
-  }
+}
 
-  .white__icon {
+.white__icon {
     color: var(--white);
-  }
+}
 
-
-
-  button {
+button {
     height: fit-content;
-
     padding: 0.65rem;
-
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 0.65rem;
-
     border: none;
     outline: none;
     cursor: pointer;
-
     border-radius: calc(0.75rem + 0.65rem);
-
     font-size: 0.75rem;
-
     color: var(--white);
     background-color: var(--dark-background);
-
     transition: border-radius ease-out var(--animation-speed);
-  }
+}
 
-  button:disabled,
-  button[disabled] {
+button:disabled,
+button[disabled] {
     opacity: 0.35;
     /* cursor: not-allowed; TODO: Make sure cursor is set to `not-allowed`. */
     pointer-events: none;
-  }
+}
 
-  button.full-width__container {
+button.full-width__container {
     justify-content: flex-start;
-  }
+}
 
-  .menu__button,
-  .fab__button {
+.menu__button,
+.fab__button {
     border-radius: 15px;
-  }
+}
 
-  .red__button {
+.red__button {
     color: var(--red);
     background-color: var(--red-background);
-
     transition: border-radius ease-out var(--animation-speed);
-  }
+}
 
-  .menu__button {
+.menu__button {
     width: 3.5rem;
     height: 3.5rem;
-
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 0.25rem;
-
     background: none;
     color: var(--black);
-
     font-size: 0.7rem;
-
     transition: background-color var(--animation-speed), border-radius ease-out var(--animation-speed);
-  }
+}
 
-  .menu__button > span {
+.menu__button>span {
     width: 2.5rem;
-
     margin-bottom: 0.25rem;
     padding: 0.2rem;
-
     font-size: 1.15rem;
-
     background-color: none;
-    
     border-radius: 100px;
-
     transition: width 0.35s ease-out, background-color 0.35s;
-  }
+}
 
-  .menu__button.red__button > span {
+.menu__button.red__button>span {
     width: 3rem;
-    
     color: var(--red);
     background-color: var(--red-background);
-
     transition: width 0.35s ease-out, background-color 0.35s;
-  }
+}
 
-  .fab__button {
+.fab__button {
     width: fit-content;
     padding: 1.25rem;
-
     transition: border-radius ease-out var(--animation-speed);
-  }
+}
 
 
-  /* TODO: Change name of component */
-  button-label {
+/* TODO: Change name of component */
+
+button-label {
     padding: 0.45rem;
-
     display: flex;
     justify-content: center;
     gap: 0.45rem;
-
     border-radius: calc(0.45rem + 0.85rem);
-
     color: var(--white);
     background-color: var(--light-black);
-  }
+}
 
-  button-label span {
+button-label span {
     font-size: 0.85rem;
     font-weight: 600;
-  }
-  
+}
 
-
-  .row__container {
+.row__container {
     display: flex;
     align-items: center;
     gap: 1rem;
-  }
+}
 
-  .center__container {
+.center__container {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1rem;
-  }
+}
 
-  .grid__container {
+.grid__container {
     display: grid;
     grid-template-columns: auto auto;
     grid-gap: 0.35rem;
-  }
+}
 
-
-  header {
+header {
     width: 100%;
 }
 
-  header > h3 {
-      text-transform: capitalize;
-  }
+header>h3 {
+    text-transform: capitalize;
+}
 
-  header > span {
+header>span {
     font-size: 1.5rem !important;
-
     cursor: pointer;
-  }
+}
 
-  
-  main {
+main {
     height: 100%;
-    
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
-
     border: 2px solid var(--light-black);
     border-radius: 17.5px;
-  }
+}
 
 
-  /*=== Animations ===*/
+/*=== Animations ===*/
 
-  button:active {
-      border-radius: 8px;
-  }
+button:active {
+    border-radius: 8px;
+}
 
-  .menu__button:hover {
+.menu__button:hover {
     background-color: var(--faded-background);
-  }
-
+}
 
 
 /*=== Breakpoints ===*/
-
