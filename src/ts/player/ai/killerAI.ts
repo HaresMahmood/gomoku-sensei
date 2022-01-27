@@ -1,20 +1,27 @@
 import Game from "../../model/game.js";
 import AbstractAI from "./ai.js";
-import Node from "./tree/node.js";
+import AbstractNode from "./tree/node.js";
 
 export default class KillerAI extends AbstractAI {
+    private root: AbstractNode;
+
+    constructor(player: number, root: AbstractNode) {
+        super(player);
+
+        this.root = root;
+    }
+
     public chooseMove(game: Game): number {
         const interval: number = 3000
-        const root: Node = new Node();
         const startTime = Date.now();
         let counter: number = 0;
         
-        root.state.game = game;
-        root.state.playerNumber = this._player;
-        root.expand();
+        this.root.state.game = game;
+        this.root.state.playerNumber = this._player;
+        this.root.expand();
 
         while((Date.now() - startTime) < interval) {
-            let current = this.select(root); // Selection.
+            let current = this.select(this.root); // Selection.
             let result;
 
             if (current.state.game.isOver()) {
@@ -33,16 +40,16 @@ export default class KillerAI extends AbstractAI {
             counter++;
         }
 
-        const winnerNode = root.getMostVisitedChild();
+        const winnerNode = this.root.getMostVisitedChild();
 
         console.log(counter);
-        console.log(root);
-        console.log(winnerNode);
+        console.log(this.root);
+        console.log(this.root);
 
         return winnerNode.state.game.lastMove;
     }
 
-    private select(node: Node) {
+    private select(node: AbstractNode) {
         while (!node.isLeaf()) { // && !node.state.game.isOver()
             node = node.select(this._player); // UCT.
         }
@@ -50,7 +57,7 @@ export default class KillerAI extends AbstractAI {
         return node;
     }
 
-    private backpropogate(node: Node, result) {
+    private backpropogate(node: AbstractNode, result) {
         let utility = -1;
 
         if (result === this._player) {

@@ -1,15 +1,14 @@
 import AbstractAI from "./ai.js";
-import Node from "./tree/node.js";
+import DynamicNode from "./tree/dynamicNode.js";
 export default class DynamicAI extends AbstractAI {
     chooseMove(game) {
-        const interval = 3000;
-        const root = new Node();
-        const startTime = Date.now();
+        const interval = 1;
+        const root = new DynamicNode();
         let counter = 0;
         root.state.game = game;
         root.state.playerNumber = this._player;
         root.expand();
-        while ((Date.now() - startTime) < interval) {
+        while (counter != interval) {
             let current = this.select(root); // Selection.
             let result;
             if (current.state.game.isOver()) {
@@ -44,6 +43,8 @@ export default class DynamicAI extends AbstractAI {
         else if (result === -1) {
             utility = 0;
         }
+        // utility = utility * (node as DynamicNode).depth;
+        console.log(utility, node.depth);
         while (node !== null) {
             node.updateStats(utility);
             node = node.parent;

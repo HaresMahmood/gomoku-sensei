@@ -1,19 +1,24 @@
 import Game from "../../model/game.js";
 import AbstractAI from "./ai.js";
-import Node from "./tree/node.js";
+import AbstractNode from "./tree/dynamicNode.js";
 
-export default class DynamicAI extends AbstractAI {
+export default class MonteCarloAI extends AbstractAI {
+    // #region Initialization
+
+    protected node: AbstractNode;
+
+    // #endregion
+
     public chooseMove(game: Game): number {
-        const interval: number = 3000
-        const root: Node = new Node();
-        const startTime = Date.now();
+        const interval: number = 1
+        const root: AbstractNode = new AbstractNode();
         let counter: number = 0;
         
         root.state.game = game;
         root.state.playerNumber = this._player;
         root.expand();
 
-        while((Date.now() - startTime) < interval) {
+        while (counter != interval) {
             let current = this.select(root); // Selection.
             let result;
 
@@ -42,7 +47,7 @@ export default class DynamicAI extends AbstractAI {
         return winnerNode.state.game.lastMove;
     }
 
-    private select(node: Node) {
+    private select(node: AbstractNode) {
         while (!node.isLeaf()) { // && !node.state.game.isOver()
             node = node.select(this._player); // UCT.
         }
@@ -50,7 +55,7 @@ export default class DynamicAI extends AbstractAI {
         return node;
     }
 
-    private backpropogate(node: Node, result) {
+    private backpropogate(node: AbstractNode, result) {
         let utility = -1;
 
         if (result === this._player) {

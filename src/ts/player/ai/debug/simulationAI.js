@@ -1,5 +1,5 @@
 import Event from "../../../utility/event.js";
-import Node from "../tree/node.js";
+import StaticNode from "../tree/staticNode.js";
 
 export default class SimulationAI {
     constructor(playerNumber) {
@@ -8,7 +8,7 @@ export default class SimulationAI {
     }
 
     chooseMove(game, iterations = 1000) {
-        const root = new Node();
+        const root = new StaticNode();
         let counter = 0;
         
         root.state.game = game;

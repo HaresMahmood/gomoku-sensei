@@ -1,12 +1,12 @@
 import Event from "../../../utility/event.js";
-import Node from "../tree/node.js";
+import StaticNode from "../tree/staticNode.js";
 export default class SimulationAI {
     constructor(playerNumber) {
         this.playerNumber = playerNumber;
         this.chooseMoveEvent = new Event();
     }
     chooseMove(game, iterations = 1000) {
-        const root = new Node();
+        const root = new StaticNode();
         let counter = 0;
         root.state.game = game;
         root.state.playerNumber = this.playerNumber;

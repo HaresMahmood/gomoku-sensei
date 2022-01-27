@@ -1,16 +1,19 @@
 import AbstractAI from "./ai.js";
-import Node from "./tree/node.js";
 export default class KillerAI extends AbstractAI {
+    root;
+    constructor(player, root) {
+        super(player);
+        this.root = root;
+    }
     chooseMove(game) {
         const interval = 3000;
-        const root = new Node();
         const startTime = Date.now();
         let counter = 0;
-        root.state.game = game;
-        root.state.playerNumber = this._player;
-        root.expand();
+        this.root.state.game = game;
+        this.root.state.playerNumber = this._player;
+        this.root.expand();
         while ((Date.now() - startTime) < interval) {
-            let current = this.select(root); // Selection.
+            let current = this.select(this.root); // Selection.
             let result;
             if (current.state.game.isOver()) {
                 result = current.state.game.getWinner();
@@ -24,10 +27,10 @@ export default class KillerAI extends AbstractAI {
             this.backpropogate(current, result); // Backpropogation.
             counter++;
         }
-        const winnerNode = root.getMostVisitedChild();
+        const winnerNode = this.root.getMostVisitedChild();
         console.log(counter);
-        console.log(root);
-        console.log(winnerNode);
+        console.log(this.root);
+        console.log(this.root);
         return winnerNode.state.game.lastMove;
     }
     select(node) {

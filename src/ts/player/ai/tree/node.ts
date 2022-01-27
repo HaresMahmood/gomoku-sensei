@@ -1,15 +1,25 @@
 import State from "./state.js";
 
-export default class Node {
+interface Node {
+    rollout(): number;
+}
+
+export default abstract class AbstractNode implements Node {
+    // #region Initialization 
+
     private _state: State;
-    private _parent: Node;
-    private children: Node[];
+    private _parent: AbstractNode;
+    private _children: AbstractNode[];
 
     constructor(state = new State(), parent = null, children = []) {
         this._state = state;
         this._parent = parent;
-        this.children = children;
+        this._children = children;
     }
+
+    // #endregion
+
+    // #region Accessors
 
     public get state() {
         return this._state;
@@ -19,39 +29,30 @@ export default class Node {
         return this._parent;
     }
 
-    /*
-    selectAction() {
-        const visited = [];
-        let current = this;
-        while (!current.isLeaf() && !current.state.game.isOver()) {
-            current = current.select();
-            visited.push(current);
-        }
-        let utility;
-        if (current.state.game.isOver()) {
-            utility = current.state.game.getUtility(current.state.playerNumber);
-        }
-        else {
-            current.expand();
-            const newNode = current.select();
-            utility = newNode.rollout();
-        }
-        for (const node of visited) {
-            node.updateStats(utility);
-        }
-        console.log(utility);
-        this.updateStats(utility);
+    protected get children() {
+        return this._children;
     }
-    */
 
-    select(playerNumber) {
-        let selected = this.children[0];
+    // #endregion
+
+    // #region Abstract
+
+    public abstract rollout(): number;
+
+    public abstract expand(): AbstractNode;
+
+    // #endregion
+    
+    // #region Miscellaneous
+
+    public select(playerNumber: number): AbstractNode {
+        let selected = this._children[0];
         const isAIPlayer = selected._state.playerNumber !== playerNumber;
         let bestValue = isAIPlayer ? -Infinity : Infinity;
 
-        for (const child of this.children) {
+        for (const child of this._children) {
             const exploitation = (child._state.wins / child._state.visits) || 0; // Change `NaN` to 0 (0 wins / 0 visits).
-            let exploration = 2 * Math.sqrt(Math.log(this._state.visits) / child._state.visits); 
+            let exploration = 1.41 * Math.sqrt(Math.log(this._state.visits) / child._state.visits); 
             exploration = isNaN(exploration) ? Infinity : exploration; // Change `NaN` to `Infinity` (log(0 parent visits)).
             
             const uctValue = isAIPlayer ? exploitation + exploration 
@@ -73,79 +74,26 @@ export default class Node {
         return selected;
     }
 
-    expand() {
-        const moves = this._state.getMoves();
+    // #endregion
 
-        for (const move of moves) {
-            this.children.push(new Node(move, this));
-        }
+    // #region Utlity
 
-        return this.children[0]; // || this;
-    }
-
-    rollout() {
-        const clone = this._state.clone();
-        
-        //console.log("");
-        //console.log(clone.game.toMatrix());
-
-        if (clone.game.isOver()) {
-            const result = clone.game.getWinner();
-
-            //console.log(true);
-            //console.log(clone.game.toMatrix(), result);
-    
-            return result;
-        }
-
-        while (true) {
-            clone.makeRandomMove();
-
-            //console.log(clone.game.toMatrix());
-
-            if (clone.game.isOver()) {
-                const result = clone.game.getWinner();
-
-                //console.log(clone.game.toMatrix(), result);
-        
-                return result;
-            }
-
-            clone.togglePlayer();
-        }
-    }
-
-    /*
-        const original = this.state.game.clone();
-        const originalPlayer = this.state.playerNumber;
-        while (!this.state.game.isOver(this.state.playerNumber)) {
-            console.log(this.state.game.toMatrix());
-            this.state.makeRandomMove();
-            this.state.togglePlayer();
-        }
-        const result = this.state.game.getWinner();
-        //console.log(this.state.game.toMatrix(), result);
-        this.state.game = original;
-        this.state.playerNumber = originalPlayer;
-        return result;
-    */
-
-    /* Helper methods */
-
-    updateStats(utility) {
+    public updateStats(utility: number): void {
         this._state.visits++;
         this._state.wins += utility;
     }
 
-    isLeaf() {
-        return this.children.length === 0;
+    public isLeaf(): boolean {
+        return this._children.length === 0;
     }
     
-    getMostVisitedChild() {
-        let child = this.children.reduce((x, y) => {
+    public getMostVisitedChild(): AbstractNode {
+        let child = this._children.reduce((x, y) => {
             return (x._state.wins / x._state.visits || 0) > (y._state.wins / y._state.visits || 0) ? x : y;
         });
     
         return child;
     }
+
+    // #endregion
 }
