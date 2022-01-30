@@ -4,13 +4,13 @@ import AbstractNode from "./tree/node.js";
 import StaticNode from "./tree/staticNode.js";
 
 export default class KillerAI extends AbstractAI {
-    private node: AbstractNode;
+    // private node: AbstractNode;
 
-    constructor(player: number, node: AbstractNode) {
-        super(player);
+    // constructor(player: number, node: AbstractNode) {
+    //     super(player);
 
-        this.node = node;
-    }
+    //     this.node = node;
+    // }
 
     public chooseMove(game: Game): number {
         const interval: number = 20000;

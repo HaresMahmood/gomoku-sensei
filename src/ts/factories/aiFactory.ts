@@ -5,6 +5,7 @@ import Human from "../player/human.js";
 
 import RandomAI from "../player/ai/randomAI.js";
 import KillerAI from "../player/ai/killerAI.js";
+import DynamicAI from "../player/ai/dynamicAI.js";
 
 import StaticNode from "../player/ai/tree/staticNode.js";
 import DynamicNode from "../player/ai/tree/dynamicNode.js";
@@ -21,10 +22,10 @@ export default class AIFactory implements Factory {
             return new RandomAI(player);
         }
         else if (input === "Killer AI") {
-            return new KillerAI(player, new DynamicNode());
+            return new KillerAI(player);
         }
         else if (input === "Dynamic AI") {
-            return new KillerAI(player, new DynamicNode());
+            return new DynamicAI(player);
         }
     }
 }

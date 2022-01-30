@@ -1,8 +1,14 @@
 import AbstractAI from "./ai.js";
 import DynamicNode from "./tree/dynamicNode.js";
 export default class DynamicAI extends AbstractAI {
+    // private node: AbstractNode;
+    // constructor(player: number, node: AbstractNode) {
+    //     super(player);
+    //     this.node = node;
+    // }
     chooseMove(game) {
-        const interval = 1;
+        const interval = 3;
+        // const startTime = Date.now();
         const root = new DynamicNode();
         let counter = 0;
         root.state.game = game;
@@ -24,9 +30,8 @@ export default class DynamicAI extends AbstractAI {
             counter++;
         }
         const winnerNode = root.getMostVisitedChild();
-        console.log(counter);
+        // console.log(counter);
         console.log(root);
-        console.log(winnerNode);
         return winnerNode.state.game.lastMove;
     }
     select(node) {
@@ -43,8 +48,8 @@ export default class DynamicAI extends AbstractAI {
         else if (result === -1) {
             utility = 0;
         }
-        // utility = utility * (node as DynamicNode).depth;
-        console.log(utility, node.depth);
+        utility = utility * node.depth;
+        console.log(utility);
         while (node !== null) {
             node.updateStats(utility);
             node = node.parent;
