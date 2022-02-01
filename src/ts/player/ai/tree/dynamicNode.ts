@@ -120,6 +120,17 @@ export default class DynamicNode {
     public isLeaf(): boolean {
         return this._children.length === 0;
     }
+
+    public getWinRate(): number {
+        let wins = 0;
+        let losses = 0;
+
+        for (const child of this._children) {
+            wins += child._state.wins > 0 ? 1 : 0; 
+        }
+
+        return wins / this._children.length * 100;
+    }
     
     public getMostVisitedChild(): DynamicNode {
         let child = this._children.reduce((x, y) => {

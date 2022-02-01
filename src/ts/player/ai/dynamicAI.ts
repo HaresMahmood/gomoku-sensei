@@ -13,7 +13,7 @@ export default class DynamicAI extends AbstractAI {
     // }
 
     public chooseMove(game: Game): number {
-        const interval: number = 3;
+        const interval: number = 20000;
         // const startTime = Date.now();
         const root = new DynamicNode();
         let counter: number = 0;
@@ -22,7 +22,7 @@ export default class DynamicAI extends AbstractAI {
         root.state.playerNumber = this._player;
         root.expand();
 
-        while(counter != interval) {
+        while (counter != interval) {
             let current = this.select(root); // Selection.
             let result;
 
@@ -42,10 +42,9 @@ export default class DynamicAI extends AbstractAI {
             counter++;
         }
 
-        const winnerNode = root.getMostVisitedChild();
+        console.log(root, root.getWinRate());
 
-        // console.log(counter);
-        console.log(root);
+        const winnerNode = root.getMostVisitedChild();
 
         return winnerNode.state.game.lastMove;
     }
@@ -68,9 +67,9 @@ export default class DynamicAI extends AbstractAI {
             utility = 0;
         }
 
-        utility = utility * node.depth;
+        // utility = utility * node.depth;
 
-        console.log(utility);
+        // console.log(utility);
 
         while (node !== null) {
             node.updateStats(utility);
