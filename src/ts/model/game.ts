@@ -1,6 +1,6 @@
-const ROWS = 3;
+const ROWS = 5;
 const COLUMNS = ROWS;
-const N = 3;
+const N = 4;
 
 export default class Game {
     // #region Initialization
@@ -184,6 +184,10 @@ export default class Game {
         }
 
         return matrix;
+    }
+
+    public toString() {
+        return this.toMatrix(this.board, ROWS);
     }
 
     // #endregion

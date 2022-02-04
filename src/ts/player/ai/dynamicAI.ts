@@ -42,6 +42,7 @@ export default class DynamicAI extends AbstractAI {
             counter++;
         }
 
+        console.log(root.sortByDepth());
         console.log(root, root.getWinRate());
 
         const winnerNode = root.getMostVisitedChild();
@@ -67,9 +68,7 @@ export default class DynamicAI extends AbstractAI {
             utility = 0;
         }
 
-        // utility = utility * node.depth;
-
-        // console.log(utility);
+        // console.log(node.depth);
 
         while (node !== null) {
             node.updateStats(utility);

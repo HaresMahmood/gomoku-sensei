@@ -1,4 +1,3 @@
-import AbstractNode from "./node.js";
 import State from "./state.js";
 
 export default class DynamicNode {
@@ -49,29 +48,23 @@ export default class DynamicNode {
 
     public rollout() {
         const clone = this.state.clone();
-
-        this.depth = 0;
-
-        if (clone.game.isOver()) {
-            const result = clone.game.getWinner();
-    
-            return result;
-        }
+        let depth = 0;
 
         while (true) {
-            clone.makeRandomMove();
-
-            this.depth++;
-
-            // console.log(this.depth);
-
             if (clone.game.isOver()) {
                 const result = clone.game.getWinner();
+
+                this.depth += depth;
+
+                // console.log(clone.game.toString(), result);
         
                 return result;
             }
 
             clone.togglePlayer();
+            clone.makeRandomMove();
+
+            depth++;
         }
     }
 
@@ -121,9 +114,22 @@ export default class DynamicNode {
         return this._children.length === 0;
     }
 
+    public sortByDepth(): DynamicNode[] {
+        const copy = this._children.slice();
+
+        const mostVisisted = copy.sort((x, y) => 
+            (x._state.wins / x._state.visits || 0) - (y._state.wins / y._state.visits || 0)
+        );
+
+        const highestDepth = mostVisisted.sort((x, y) =>
+            x.depth - y.depth
+        );
+
+        return mostVisisted;
+    }
+
     public getWinRate(): number {
         let wins = 0;
-        let losses = 0;
 
         for (const child of this._children) {
             wins += child._state.wins > 0 ? 1 : 0; 

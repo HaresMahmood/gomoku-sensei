@@ -29,6 +29,7 @@ export default class DynamicAI extends AbstractAI {
             this.backpropogate(current, result); // Backpropogation.
             counter++;
         }
+        console.log(root.sortByDepth());
         console.log(root, root.getWinRate());
         const winnerNode = root.getMostVisitedChild();
         return winnerNode.state.game.lastMove;
@@ -47,8 +48,7 @@ export default class DynamicAI extends AbstractAI {
         else if (result === -1) {
             utility = 0;
         }
-        // utility = utility * node.depth;
-        // console.log(utility);
+        // console.log(node.depth);
         while (node !== null) {
             node.updateStats(utility);
             node = node.parent;
