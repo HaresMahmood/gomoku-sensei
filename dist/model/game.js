@@ -121,8 +121,71 @@ export default class Game {
         }
         return false;
     }
+    getHeuristicEvaluation(player) {
+        const matrix = this.toMatrix(this.board, ROWS);
+        function countConsecutivePieces(pieces) {
+            // TODO: Start at `2`, move up to `N`.
+            const win = new RegExp(`${player}`.repeat(N), "g");
+            if (win.test(pieces)) {
+                return Infinity;
+            }
+            const openFour = new RegExp("0" + `${player}`.repeat(N - 1) + "0", "g");
+            if (openFour.test(pieces)) {
+                return 9999999;
+            }
+            const openThree = new RegExp("0" + `${player}`.repeat(N - 2) + "0", "g");
+            if (openThree.test(pieces)) {
+                return 50;
+            }
+            // const openTwo = new RegExp("0" + `${player}`.repeat(N - 3) + "0", "g");
+            return 0;
+        }
+        function checkHorizontal(row) {
+            return countConsecutivePieces(matrix[row].join(""));
+        }
+        function checkVertical(column) {
+            return countConsecutivePieces(matrix.map(row => row[column]).join(""));
+        }
+        function checkPrimaryDiagonal(row, column) {
+            let pieces = [];
+            for (let i = -(N - 1); i < N; i++) {
+                if (matrix[row - i] !== undefined && matrix[column - i] !== undefined) {
+                    pieces.push(matrix[row - i][column - i]);
+                }
+            }
+            return countConsecutivePieces(pieces.join(""));
+        }
+        function checkSecondaryDiagonal(row, column) {
+            let pieces = [];
+            for (let i = -(N - 1); i < N; i++) {
+                if (matrix[row - i] !== undefined && matrix[column + i] !== undefined) {
+                    pieces.push(matrix[row - i][column + i]);
+                }
+            }
+            return countConsecutivePieces(pieces.join(""));
+        }
+        let score = 0;
+        for (let i = 0; i < ROWS; i++) {
+            score += checkHorizontal(i);
+            score += checkVertical(i);
+            // TODO: Calculate diagonal scores.
+        }
+        // if (checkHorizontal(Math.floor(this.lastMove / ROWS))) {
+        //     return 1;
+        // }
+        // else if (checkVertical(this.lastMove % ROWS)) {
+        //     return 1;
+        // }
+        // else if (checkPrimaryDiagonal(Math.floor(this.lastMove / ROWS), this.lastMove % ROWS)) {
+        //     return 1;
+        // }
+        // else if (checkSecondaryDiagonal(Math.floor(this.lastMove / ROWS), this.lastMove % ROWS)) {
+        //     return 1;
+        // }
+        return score;
+    }
     getWinner() {
-        const player = this.board[this.lastMove]; // TODO: Fix this - `player` should be passed in as a parameter.
+        const player = this.board[this.lastMove]; // FIXME: `player` should be passed in as a parameter.
         let winner = this.hasWon(player) ? player : -1;
         return winner;
     }

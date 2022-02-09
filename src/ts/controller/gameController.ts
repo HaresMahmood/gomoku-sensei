@@ -51,6 +51,8 @@ export default class GameController {
 
         this.view.addPiece(index, color, this.moveNumber);
         this.model.performMove(index, this.player);
+        
+        console.log(this.model.getHeuristicEvaluation(this.player));
 
         if (this.model.isOver()) {
             this.view.endGame(color, this.model.isDraw());
