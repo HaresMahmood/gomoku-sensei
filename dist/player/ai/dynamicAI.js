@@ -7,14 +7,14 @@ export default class DynamicAI extends AbstractAI {
     //     this.node = node;
     // }
     chooseMove(game) {
-        const interval = 20000;
+        const iterations = 2;
         // const startTime = Date.now();
         const root = new DynamicNode();
         let counter = 0;
         root.state.game = game;
         root.state.playerNumber = this._player;
         root.expand();
-        while (counter != interval) {
+        while (counter != iterations) {
             let current = this.select(root); // Selection.
             let result;
             if (current.state.game.isOver()) {

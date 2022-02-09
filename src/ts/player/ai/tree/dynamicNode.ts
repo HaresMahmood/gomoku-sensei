@@ -8,12 +8,14 @@ export default class DynamicNode {
     private _children: DynamicNode[];
 
     public depth: number;
+    public gameLength: number;
 
-    constructor(state = new State(), parent = null, children = []) {
+    constructor(state = new State(), parent = null, depth = 0, children = []) {
         this._state = state;
         this._parent = parent;
         this._children = children;
-        this.depth = 0;
+        this.depth = depth;
+        this.gameLength = 0;
     }
 
     // #endregion
@@ -40,32 +42,45 @@ export default class DynamicNode {
         const moves = this.state.getMoves();
 
         for (const move of moves) {
-            this.children.push(new DynamicNode(move, this));
+            this.children.push(new DynamicNode(move, this, this.depth + 1));
         }
 
         return this.children[0];
     }
 
     public rollout() {
-        const clone = this.state.clone();
-        let depth = 0;
+        let length = 0;
 
-        while (true) {
-            if (clone.game.isOver()) {
-                const result = clone.game.getWinner();
+        const mainClone = this.state.clone();
+        const iterations = 3;
+        const results = [];
 
-                this.depth += depth;
+        for (let i: number = 0; i < iterations; i++) {
+            const clone = mainClone;
 
-                // console.log(clone.game.toString(), result);
-        
-                return result;
+            while (true) {
+                if (clone.game.isOver()) {
+                    const result = clone.game.getWinner();
+
+                    this.gameLength += length;
+
+                    console.log(clone.game.toString(), result);
+            
+                    results.push(result);
+                }
+
+                clone.togglePlayer();
+                clone.makeRandomMove();
+
+                length++;
             }
-
-            clone.togglePlayer();
-            clone.makeRandomMove();
-
-            depth++;
         }
+
+        const result = this.mode(results);
+
+        console.log(results, result);
+
+        return result;
     }
 
     // #endregion
@@ -118,11 +133,7 @@ export default class DynamicNode {
         const copy = this._children.slice();
 
         const mostVisisted = copy.sort((x, y) => 
-            (x._state.wins / x._state.visits || 0) - (y._state.wins / y._state.visits || 0)
-        );
-
-        const highestDepth = mostVisisted.sort((x, y) =>
-            x.depth - y.depth
+            (x._state.wins / x._state.visits || 0) - (y._state.wins / y._state.visits || 0) || x.depth - y.depth
         );
 
         return mostVisisted;
@@ -145,6 +156,24 @@ export default class DynamicNode {
     
         return child;
     }
+
+    private mode(arr) {
+        const counts = {};
+        let maxCount = 0;
+        let maxKey;
+        // Count how many times each object (or really its string representation)
+        // appears, and keep track of the highest count we've seen.
+        for (let i = 0; i < arr.length; i++) {
+          const key = arr[i];
+          const count = (counts[key] = (counts[key] || 0) + 1);
+          if (count > maxCount) {
+            maxCount = count;
+            maxKey = key;
+          }
+        }
+        // Return (one of) the highest keys we've seen, or undefined.
+        return maxKey;
+      }
 
     // #endregion
 }
