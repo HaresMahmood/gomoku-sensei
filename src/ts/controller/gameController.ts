@@ -48,11 +48,12 @@ export default class GameController {
 
     addPiece(index: number) {
         let color = this.player === 1 ? "black" : "white";
+        const nextPlayer = this.player === 1 ? 2 : 1;
 
         this.view.addPiece(index, color, this.moveNumber);
         this.model.performMove(index, this.player);
         
-        console.log(this.model.getHeuristicEvaluation(this.player));
+        console.log(this.model.getHeuristicEvaluation(this.player) - this.model.getHeuristicEvaluation(nextPlayer));
 
         if (this.model.isOver()) {
             this.view.endGame(color, this.model.isDraw());
@@ -62,7 +63,7 @@ export default class GameController {
 
         this.view.toggleProgressBar();
 
-        const nextPlayer = this.player === 1 ? 2 : 1;
+        // const nextPlayer = this.player === 1 ? 2 : 1;
 
         this.view.changePlayer(nextPlayer);
         this.player = nextPlayer;

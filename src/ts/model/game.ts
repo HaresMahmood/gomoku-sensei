@@ -199,7 +199,7 @@ export default class Game {
             const closedThree = new RegExp("0" + `${player}`.repeat(N - 2) + "|" + `${player}`.repeat(N - 1) + "0", "g");
 
             if (closedThree.test(pieces)) {
-                return 99999; // TODO: Pretty much a random value.
+                return 30; // TODO: Pretty much a random value.
             }
 
             const openTwo = new RegExp("0" + `${player}`.repeat(N - 3) + "0", "g");
