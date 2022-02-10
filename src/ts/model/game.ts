@@ -167,7 +167,8 @@ export default class Game {
 
     public getHeuristicEvaluation(player: number) {
         const matrix: number[][] = this.toMatrix(this.board, ROWS);
-        
+        const diagMatrix = this.toMatrix(this.board, ROWS);
+
         function countConsecutivePieces(pieces: string) {
             // TODO: Start at `2`, move up to `N`.
             const win = new RegExp(`${player}`.repeat(N), "g");
@@ -202,50 +203,67 @@ export default class Game {
             return countConsecutivePieces(matrix.map(row => row[column]).join(""));
         }
 
-        function checkPrimaryDiagonal(row: number, column: number) {
-            let pieces = [];
+        function checkPrimaryDiagonalTop(row: number) {
+            let pieces = "";
 
-            for (let i = -(N - 1); i < N; i++) {
-                if (matrix[row - i] !== undefined && matrix[column - i] !== undefined) {
-                    pieces.push(matrix[row - i][column - i]);
+            for (let i = 0; i < ROWS; i++) {
+                if (matrix[i + row] !== undefined) {
+                    pieces += matrix[i][i + row];
                 }
             }
 
-            return countConsecutivePieces(pieces.join(""))
+            return countConsecutivePieces(pieces);
         }
 
-        function checkSecondaryDiagonal(row: number, column: number) {
-            let pieces = [];
+        function checkPrimaryDiagonalBottom(row: number) {
+            let pieces = "";
 
-            for (let i = -(N - 1); i < N; i++) {
-                if (matrix[row - i] !== undefined && matrix[column + i] !== undefined) {
-                    pieces.push(matrix[row - i][column + i]);
+            for (let i = 0; i < ROWS; i++) {
+                if (matrix[i + row] !== undefined) {
+                    pieces += matrix[i + row][i];
                 }
             }
 
-            return countConsecutivePieces(pieces.join(""))
+            return countConsecutivePieces(pieces);
         }
 
-        let score = 0;
+        function checkSecondDiagonalBottom(row: number) {
+            let pieces = "";
+
+            for (let i = 0; i < ROWS; i++) {
+                if (matrix[i + row] !== undefined) {
+                    pieces += matrix[i + row][(ROWS - 1) - i];
+                }
+            }
+
+            return countConsecutivePieces(pieces);
+        }
+
+        function checkSecondDiagonalTop(row: number) {
+            let pieces = "";
+
+            for (let i = 0; i < ROWS; i++) {
+                if (matrix[i - row] !== undefined) {
+                    pieces += matrix[i - row][(ROWS - 1) - i];
+                }
+            }
+
+            return countConsecutivePieces(pieces);
+        }
+
+        let score: number = 0;
 
         for (let i: number = 0; i < ROWS; i++) {
-            score += checkHorizontal(i);
-            score += checkVertical(i);
-            // TODO: Calculate diagonal scores.
+            score = score
+            + checkHorizontal(i)
+            + checkVertical(i);
+            + checkPrimaryDiagonalTop(i);
+            + checkPrimaryDiagonalBottom(i);
+            + checkSecondDiagonalTop(i);
+            + checkSecondDiagonalBottom(i);
         }
-        
-        // if (checkHorizontal(Math.floor(this.lastMove / ROWS))) {
-        //     return 1;
-        // }
-        // else if (checkVertical(this.lastMove % ROWS)) {
-        //     return 1;
-        // }
-        // else if (checkPrimaryDiagonal(Math.floor(this.lastMove / ROWS), this.lastMove % ROWS)) {
-        //     return 1;
-        // }
-        // else if (checkSecondaryDiagonal(Math.floor(this.lastMove / ROWS), this.lastMove % ROWS)) {
-        //     return 1;
-        // }
+
+        console.log(checkSecondDiagonalBottom(0));
         
         return score;
     }
