@@ -1,6 +1,6 @@
-const ROWS = 5;
+const ROWS = 7;
 const COLUMNS = ROWS;
-const N = 4;
+const N = 5;
 export default class Game {
     // #region Initialization
     board;
@@ -123,9 +123,9 @@ export default class Game {
     }
     getHeuristicEvaluation(player) {
         const matrix = this.toMatrix(this.board, ROWS);
-        const diagMatrix = this.toMatrix(this.board, ROWS);
+        // const diagMatrix = this.toMatrix(this.board, ROWS);
         function countConsecutivePieces(pieces) {
-            // TODO: Start at `2`, move up to `N`.
+            // TODO: Clean this up.
             const win = new RegExp(`${player}`.repeat(N), "g");
             if (win.test(pieces)) {
                 return Infinity;
@@ -134,11 +134,26 @@ export default class Game {
             if (openFour.test(pieces)) {
                 return 9999999;
             }
+            const closedFour = new RegExp("0" + `${player}`.repeat(N - 1) + "|" + `${player}`.repeat(N - 1) + "0", "g");
+            if (closedFour.test(pieces)) {
+                return 999999; // TODO: Pretty much a random value.
+            }
             const openThree = new RegExp("0" + `${player}`.repeat(N - 2) + "0", "g");
             if (openThree.test(pieces)) {
                 return 50;
             }
-            // const openTwo = new RegExp("0" + `${player}`.repeat(N - 3) + "0", "g");
+            const closedThree = new RegExp("0" + `${player}`.repeat(N - 2) + "|" + `${player}`.repeat(N - 1) + "0", "g");
+            if (closedThree.test(pieces)) {
+                return 99999; // TODO: Pretty much a random value.
+            }
+            const openTwo = new RegExp("0" + `${player}`.repeat(N - 3) + "0", "g");
+            if (openTwo.test(pieces)) {
+                return 500;
+            }
+            const closedTwo = new RegExp("0" + `${player}`.repeat(N - 2) + "|" + `${player}`.repeat(N - 3) + "0", "g");
+            if (closedTwo.test(pieces)) {
+                return 15; // TODO: Pretty much a random value.
+            }
             return 0;
         }
         function checkHorizontal(row) {
@@ -152,15 +167,26 @@ export default class Game {
             for (let i = 0; i < ROWS; i++) {
                 if (matrix[i + row] !== undefined) {
                     pieces += matrix[i][i + row];
+                    // diagMatrix[i][i + row] = "d";
                 }
             }
             return countConsecutivePieces(pieces);
         }
         function checkPrimaryDiagonalBottom(row) {
             let pieces = "";
-            for (let i = 0; i < ROWS; i++) {
+            for (let i = 1; i < ROWS; i++) {
                 if (matrix[i + row] !== undefined) {
                     pieces += matrix[i + row][i];
+                }
+            }
+            return countConsecutivePieces(pieces);
+        }
+        function checkSecondDiagonalTop(row) {
+            let pieces = "";
+            for (let i = 0; i < ROWS; i++) {
+                if (matrix[i - row] !== undefined) {
+                    pieces += matrix[i - row][(ROWS - 1) - i];
+                    // diagMatrix[i - row][(ROWS - 1) - i] = "d";
                 }
             }
             return countConsecutivePieces(pieces);
@@ -174,26 +200,18 @@ export default class Game {
             }
             return countConsecutivePieces(pieces);
         }
-        function checkSecondDiagonalTop(row) {
-            let pieces = "";
-            for (let i = 0; i < ROWS; i++) {
-                if (matrix[i - row] !== undefined) {
-                    pieces += matrix[i - row][(ROWS - 1) - i];
-                }
-            }
-            return countConsecutivePieces(pieces);
-        }
         let score = 0;
         for (let i = 0; i < ROWS; i++) {
-            score = score
-                + checkHorizontal(i)
-                + checkVertical(i);
-            +checkPrimaryDiagonalTop(i);
-            +checkPrimaryDiagonalBottom(i);
-            +checkSecondDiagonalTop(i);
-            +checkSecondDiagonalBottom(i);
+            score += checkHorizontal(i);
+            score += checkVertical(i);
+            score += checkPrimaryDiagonalBottom(i);
+            score += checkSecondDiagonalBottom(i);
+            if (i != 0) {
+                score += checkPrimaryDiagonalTop(i);
+                score += checkSecondDiagonalTop(i);
+            }
         }
-        console.log(checkSecondDiagonalBottom(0));
+        // console.log(diagMatrix);
         return score;
     }
     getWinner() {
