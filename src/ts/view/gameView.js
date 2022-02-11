@@ -5,10 +5,10 @@ export default class GameView {
         this.board = $(".board");
         this.cell = ".cell";
 
+        this.sound = new Audio("../../res/audio/token.mp3");
+
         this.populateBoard(rows, columns)
-
         this.setStorageChangeEventHandler(this.updateSettings);
-
         this.updateSettings(
             JSON.parse(localStorage.getItem(0)), 
             JSON.parse(localStorage.getItem(1)), 
@@ -54,11 +54,16 @@ export default class GameView {
             // Settings.
             const showMoveNumbers = JSON.parse(localStorage.getItem(1)) ? "" : "no-numbers";
             const highlightMove = JSON.parse(localStorage.getItem(2)) ? "" : "no-highlight";
+            const soundEffects = JSON.parse(localStorage.getItem(3));
             
             let piece = `<div class="piece ${color}-piece last ${showMoveNumbers} ${highlightMove}"><p> ${moveNumber} </p> <div></div></div>`;
 
             $(".last").removeClass("last");
             box.append(piece);
+
+            if (soundEffects) {
+                this.sound.cloneNode().play(); // Ensures previously playing sound is interrupted, if need be.
+            }
         }
     }
 
