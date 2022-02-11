@@ -4,6 +4,8 @@ export default class GameView {
         this.board = $(".board");
         this.cell = ".cell";
         this.populateBoard(rows, columns);
+        this.setStorageChangeEventHandler(this.updateSettings);
+        this.updateSettings(JSON.parse(localStorage.getItem(0)), JSON.parse(localStorage.getItem(1)), JSON.parse(localStorage.getItem(2)), JSON.parse(localStorage.getItem(3)), JSON.parse(localStorage.getItem(4)));
     }
     populateBoard(rows, columns) {
         document.documentElement.style.setProperty("--columns", columns);
@@ -31,7 +33,9 @@ export default class GameView {
     addPiece(index, color, moveNumber) {
         let box = this.board.find(this.cell).eq(index);
         if (box.find(".piece").length === 0) {
-            let piece = `<div class="piece ${color}-piece last"><p> ${moveNumber} </p> <div></div></div>`;
+            const showMoveNumbers = JSON.parse(localStorage.getItem(1)) ? "" : "no-numbers";
+            const highlightMove = JSON.parse(localStorage.getItem(2)) ? "" : "no-highlight";
+            let piece = `<div class="piece ${color}-piece last ${showMoveNumbers} ${highlightMove}"><p> ${moveNumber} </p> <div></div></div>`;
             $(".last").removeClass("last");
             box.append(piece);
         }
@@ -43,6 +47,11 @@ export default class GameView {
         const winText = isDraw ? `Draw!` : `${color} wins!`;
         window.alert(winText);
         // location.reload();
+    }
+    updateSettings(showCoordinates, showMoveNumbers, highlightMove, soundEffects, devMode) {
+        console.log(showMoveNumbers, highlightMove);
+        $(".piece").toggleClass("no-numbers", !showMoveNumbers);
+        $(".piece").toggleClass("no-highlight", !highlightMove);
     }
     /*-- Events */
     getClickedCellCoordinates(cell) {
@@ -56,6 +65,11 @@ export default class GameView {
     setRestartClickHandler(handler) {
         $("#restart-button").bind("mouseup", function () {
             handler();
+        });
+    }
+    setStorageChangeEventHandler(handler) {
+        window.addEventListener("storage", () => {
+            handler(JSON.parse(localStorage.getItem(0)), JSON.parse(localStorage.getItem(1)), JSON.parse(localStorage.getItem(2)), JSON.parse(localStorage.getItem(3)), JSON.parse(localStorage.getItem(4)));
         });
     }
 }

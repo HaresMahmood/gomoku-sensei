@@ -140,7 +140,12 @@ body {
 	display: none;
 }
 
-.piece.last > p {
+.piece.no-highlight > div {
+	display: none !important;
+}
+
+.piece.last > p,
+.piece.no-numbers > p {
 	display: none;
 }
 

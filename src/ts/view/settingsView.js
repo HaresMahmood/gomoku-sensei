@@ -5,21 +5,16 @@ export default class SettingsView {
     }
 
     initializeSwitches() {
-        $("input[type=checkbox]").each(function () {
-            // TODO: Introduce variable.
-            if (localStorage.getItem($(this).attr('name')) === "true") {
-                $(this).prop("checked", true);
-            }
-            else {
-                $(this).prop("checked", false);
-            }
+        $("input[type=checkbox]").each(function(index) {
+            $(this).prop("checked", JSON.parse(localStorage.getItem(index)));
         });
     }
 
+    // TODO: Save switches `onChange`.
     setSaveButtonHandler() {
         $("#save-button").on("click", function() {
-            $("input[type=checkbox]").each(function () {
-                localStorage.setItem($(this).attr("name"), `${$(this).is(":checked")}`); 
+            $("input[type=checkbox]").each(function(index) {
+                localStorage.setItem(index, `${$(this).is(":checked")}`); 
             });
         });
     }
