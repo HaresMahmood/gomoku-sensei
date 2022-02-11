@@ -22,3 +22,16 @@ main {
     
     border: none;
 }
+
+/* TODO: Make dynamic: `a:has(> img)`. */
+.information__container:nth-child(4) {
+    flex-direction: column;
+}
+
+
+.description__container {
+    margin-left: calc((1rem + max(5vh, 5vw)) * 2);
+
+    font-size: var(--size-300);
+    opacity: 0.75;
+}

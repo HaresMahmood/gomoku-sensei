@@ -33,6 +33,7 @@ export default class GameView {
     addPiece(index, color, moveNumber) {
         let box = this.board.find(this.cell).eq(index);
         if (box.find(".piece").length === 0) {
+            // Settings.
             const showMoveNumbers = JSON.parse(localStorage.getItem(1)) ? "" : "no-numbers";
             const highlightMove = JSON.parse(localStorage.getItem(2)) ? "" : "no-highlight";
             let piece = `<div class="piece ${color}-piece last ${showMoveNumbers} ${highlightMove}"><p> ${moveNumber} </p> <div></div></div>`;
