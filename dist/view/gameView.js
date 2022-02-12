@@ -3,7 +3,8 @@ export default class GameView {
     constructor(rows, columns) {
         this.board = $(".board");
         this.cell = ".cell";
-        this.sound = new Audio("../../res/audio/token.mp3");
+        this.tokenSound = new Audio("../../res/audio/token.mp3");
+        this.gongSound = new Audio("../../res/audio/gong.mp3");
         this.populateBoard(rows, columns);
         this.setStorageChangeEventHandler(this.updateSettings);
         this.updateSettings(JSON.parse(localStorage.getItem(0)), JSON.parse(localStorage.getItem(1)), JSON.parse(localStorage.getItem(2)), JSON.parse(localStorage.getItem(3)), JSON.parse(localStorage.getItem(4)));
@@ -42,7 +43,7 @@ export default class GameView {
             $(".last").removeClass("last");
             box.append(piece);
             if (soundEffects) {
-                this.sound.cloneNode().play(); // Ensures previously playing sound is interrupted, if need be.
+                this.tokenSound.cloneNode().play(); // Ensures previously playing sound is interrupted, if need be.
             }
         }
     }
@@ -51,8 +52,11 @@ export default class GameView {
     }
     endGame(color, isDraw) {
         const winText = isDraw ? `Draw!` : `${color} wins!`;
-        window.alert(winText);
-        // location.reload();
+        const soundEffects = JSON.parse(localStorage.getItem(3));
+        if (soundEffects) {
+            this.gongSound.cloneNode().play();
+        }
+        window.alert(winText); // TODO: Introduce custom modal?
     }
     updateSettings(showCoordinates, showMoveNumbers, highlightMove, soundEffects, devMode) {
         console.log(showMoveNumbers, highlightMove);

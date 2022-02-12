@@ -5,7 +5,8 @@ export default class GameView {
         this.board = $(".board");
         this.cell = ".cell";
 
-        this.sound = new Audio("../../res/audio/token.mp3");
+        this.tokenSound = new Audio("../../res/audio/token.mp3");
+        this.gongSound = new Audio("../../res/audio/gong.mp3");
 
         this.populateBoard(rows, columns)
         this.setStorageChangeEventHandler(this.updateSettings);
@@ -62,7 +63,7 @@ export default class GameView {
             box.append(piece);
 
             if (soundEffects) {
-                this.sound.cloneNode().play(); // Ensures previously playing sound is interrupted, if need be.
+                this.tokenSound.cloneNode().play(); // Ensures previously playing sound is interrupted, if need be.
             }
         }
     }
@@ -73,9 +74,13 @@ export default class GameView {
 
     endGame(color, isDraw) {
         const winText = isDraw ? `Draw!` : `${color} wins!`;
+        const soundEffects = JSON.parse(localStorage.getItem(3));
 
-        window.alert(winText);
-        // location.reload();
+        if (soundEffects) {
+            this.gongSound.cloneNode().play();
+        }
+
+        window.alert(winText); // TODO: Introduce custom modal?
     }
 
 
