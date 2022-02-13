@@ -63,7 +63,12 @@ export default class Game {
     }
     // #endregion
     // #region Utility
-    // https://stackoverflow.com/questions/64755169/check-for-a-row-of-4-diagonally-vertically-and-horizontally-using-javascript
+    /**
+     *
+     * @param player The last player.
+     * @returns Whether the given `player` has won.
+     * @see https://stackoverflow.com/questions/64755169/check-for-a-row-of-4-diagonally-vertically-and-horizontally-using-javascript
+     */
     hasWon(player) {
         const boardString = this.toDelimitedString(this.board);
         const win = new RegExp(`([${player}])(\\1{${N - 1}}|(${".".repeat(ROWS)}\\1){${N - 1}}|(${".".repeat(ROWS + 1)}\\1){${N - 1}}|((?=.{0,${ROWS - 1}}#)${".".repeat(ROWS - 1)}\\1){${N - 1}})`);
