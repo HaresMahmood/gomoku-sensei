@@ -1,6 +1,6 @@
-const ROWS = 7;
+const ROWS = 5;
 const COLUMNS = ROWS;
-const N = 5;
+const N = 4;
 export default class Game {
     // #region Initialization
     board;
@@ -71,101 +71,40 @@ export default class Game {
      */
     hasWon(player) {
         const boardString = this.toDelimitedString(this.board);
-        const win = new RegExp(`([${player}])(\\1{${N - 1}}|(${".".repeat(ROWS)}\\1){${N - 1}}|(${".".repeat(ROWS + 1)}\\1){${N - 1}}|((?=.{0,${ROWS - 1}}#)${".".repeat(ROWS - 1)}\\1){${N - 1}})`);
+        const win = new RegExp(`(${player})(\\1{${N - 1}}|(${".".repeat(ROWS)}\\1){${N - 1}}|(${".".repeat(ROWS + 1)}\\1){${N - 1}}|((?=.{0,${ROWS - 1}}#)${".".repeat(ROWS - 1)}\\1){${N - 1}})`);
         return win.test(boardString);
     }
     getHeuristicEvaluation(player) {
-        const matrix = this.toMatrix(this.board, ROWS);
-        // const diagMatrix = this.toMatrix(this.board, ROWS);
-        function countConsecutivePieces(pieces) {
-            // TODO: Clean this up.
-            const win = new RegExp(`${player}`.repeat(N), "g");
-            if (win.test(pieces)) {
-                return Infinity;
-            }
-            const openFour = new RegExp("0" + `${player}`.repeat(N - 1) + "0", "g");
-            if (openFour.test(pieces)) {
-                return 9999999;
-            }
-            const closedFour = new RegExp("0" + `${player}`.repeat(N - 1) + "|" + `${player}`.repeat(N - 1) + "0", "g");
-            if (closedFour.test(pieces)) {
-                return 999999; // TODO: Pretty much a random value.
-            }
-            const openThree = new RegExp("0" + `${player}`.repeat(N - 2) + "0", "g");
-            if (openThree.test(pieces)) {
-                return 50;
-            }
-            const closedThree = new RegExp("0" + `${player}`.repeat(N - 2) + "|" + `${player}`.repeat(N - 1) + "0", "g");
-            if (closedThree.test(pieces)) {
-                return 30; // TODO: Pretty much a random value.
-            }
-            const openTwo = new RegExp("0" + `${player}`.repeat(N - 3) + "0", "g");
-            if (openTwo.test(pieces)) {
-                return 500;
-            }
-            const closedTwo = new RegExp("0" + `${player}`.repeat(N - 2) + "|" + `${player}`.repeat(N - 3) + "0", "g");
-            if (closedTwo.test(pieces)) {
-                return 15; // TODO: Pretty much a random value.
-            }
-            return 0;
+        const boardString = this.toDelimitedString(this.board);
+        const won = this.hasWon(player);
+        const nextPlayer = player === 1 ? 2 : 1;
+        function score(currentPlayer, nMin2Open, nMin1Half, nMin1Open) {
+            const threat = (index) => {
+                return `(${currentPlayer})(\\1{${index - 1}}|(${".".repeat(ROWS)}\\1){${index - 1}}|(${".".repeat(ROWS + 1)}\\1){${index - 1}}|((?=.{0,${ROWS - 1}}#)${".".repeat(ROWS - 1)}\\1){${index - 1}})`;
+            };
+            const open = (index) => {
+                const match = new RegExp(`0${threat(index)}(?=0)`, "g");
+                // console.log(`0${threat(index)}(?=0)`);
+                // console.log(boardString.match(match));
+                return (boardString.match(match) || []).length;
+            };
+            const half = (index) => {
+                const upperBlock = new RegExp(`(?<!0)${threat(index)}(?=0)`, "g");
+                const lowerBlock = new RegExp(`0${threat(index)}(?!0)`);
+                return (boardString.match(upperBlock) || []).length + (boardString.match(lowerBlock) || []).length;
+            };
+            // for (let i: number = 1; i <= N - 3; i++) {
+            //     return ((2 * i - 1) - half(i) + (2 * i * open(i)))
+            //     + 2 * (N - 2) // TODO: Not sure about this one.
+            //     - half(N - 2)
+            //     + nMin2Open * open(N - 2)
+            //     + nMin1Half * half(N - 1)
+            //     + nMin1Open * open(N - 1)
+            //     + (won ? 1000000 : 0);
+            // }
+            return open(3);
         }
-        function checkHorizontal(row) {
-            return countConsecutivePieces(matrix[row].join(""));
-        }
-        function checkVertical(column) {
-            return countConsecutivePieces(matrix.map(row => row[column]).join(""));
-        }
-        function checkPrimaryDiagonalTop(row) {
-            let pieces = "";
-            for (let i = 0; i < ROWS; i++) {
-                if (matrix[i + row] !== undefined) {
-                    pieces += matrix[i][i + row];
-                    // diagMatrix[i][i + row] = "d";
-                }
-            }
-            return countConsecutivePieces(pieces);
-        }
-        function checkPrimaryDiagonalBottom(row) {
-            let pieces = "";
-            for (let i = 1; i < ROWS; i++) {
-                if (matrix[i + row] !== undefined) {
-                    pieces += matrix[i + row][i];
-                }
-            }
-            return countConsecutivePieces(pieces);
-        }
-        function checkSecondDiagonalTop(row) {
-            let pieces = "";
-            for (let i = 0; i < ROWS; i++) {
-                if (matrix[i - row] !== undefined) {
-                    pieces += matrix[i - row][(ROWS - 1) - i];
-                    // diagMatrix[i - row][(ROWS - 1) - i] = "d";
-                }
-            }
-            return countConsecutivePieces(pieces);
-        }
-        function checkSecondDiagonalBottom(row) {
-            let pieces = "";
-            for (let i = 0; i < ROWS; i++) {
-                if (matrix[i + row] !== undefined) {
-                    pieces += matrix[i + row][(ROWS - 1) - i];
-                }
-            }
-            return countConsecutivePieces(pieces);
-        }
-        let score = 0;
-        for (let i = 0; i < ROWS; i++) {
-            score += checkHorizontal(i);
-            score += checkVertical(i);
-            score += checkPrimaryDiagonalBottom(i);
-            score += checkSecondDiagonalBottom(i);
-            if (i != 0) {
-                score += checkPrimaryDiagonalTop(i);
-                score += checkSecondDiagonalTop(i);
-            }
-        }
-        console.log(this.toDelimitedString(this.board));
-        return score;
+        return score(player, 100, 80, 250); // - score(nextPlayer, 1300, 2000, 5020)
     }
     getWinner() {
         const player = this.board[this.lastMove]; // FIXME: `player` should be passed in as a parameter.
