@@ -63,63 +63,11 @@ export default class Game {
     }
     // #endregion
     // #region Utility
+    // https://stackoverflow.com/questions/64755169/check-for-a-row-of-4-diagonally-vertically-and-horizontally-using-javascript
     hasWon(player) {
-        function countConsecutivePieces(pieces) {
-            let counter = 0;
-            let last = null;
-            for (let i = 0; i < pieces.length; i++) {
-                if (pieces[i] === player) {
-                    if (pieces[i] !== last) {
-                        counter = 0;
-                    }
-                    counter++;
-                }
-                last = pieces[i];
-            }
-            return counter >= N;
-        }
-        function checkHorizontal(board, row) {
-            return countConsecutivePieces(board[row]);
-        }
-        function checkVertical(board, column) {
-            return countConsecutivePieces(board.map(row => row[column]));
-        }
-        function checkPrimaryDiagonal(board, row, column) {
-            let pieces = [];
-            for (let i = -(N - 1); i < N; i++) {
-                if (board[row - i] !== undefined && board[column - i] !== undefined) {
-                    pieces.push(board[row - i][column - i]);
-                }
-            }
-            return countConsecutivePieces(pieces);
-        }
-        function checkSecondaryDiagonal(board, row, column) {
-            let pieces = [];
-            for (let i = -(N - 1); i < N; i++) {
-                if (board[row - i] !== undefined && board[column + i] !== undefined) {
-                    pieces.push(board[row - i][column + i]);
-                }
-            }
-            return countConsecutivePieces(pieces);
-        }
-        // If the player has not placed enough pieces to win the game, ...
-        if (this.board.filter((p) => (p === player)).length < N) {
-            return false; // ... Return `false` by default.
-        }
-        const matrix = this.toMatrix(this.board, ROWS);
-        if (checkHorizontal(matrix, Math.floor(this.lastMove / ROWS))) {
-            return true;
-        }
-        else if (checkVertical(matrix, this.lastMove % ROWS)) {
-            return true;
-        }
-        else if (checkPrimaryDiagonal(matrix, Math.floor(this.lastMove / ROWS), this.lastMove % ROWS)) {
-            return true;
-        }
-        else if (checkSecondaryDiagonal(matrix, Math.floor(this.lastMove / ROWS), this.lastMove % ROWS)) {
-            return true;
-        }
-        return false;
+        const boardString = this.toDelimitedString(this.board);
+        const win = new RegExp(`([${player}])(\\1{${N - 1}}|(${".".repeat(ROWS)}\\1){${N - 1}}|(${".".repeat(ROWS + 1)}\\1){${N - 1}}|((?=.{0,${ROWS - 1}}#)${".".repeat(ROWS - 1)}\\1){${N - 1}})`);
+        return win.test(boardString);
     }
     getHeuristicEvaluation(player) {
         const matrix = this.toMatrix(this.board, ROWS);
@@ -211,7 +159,7 @@ export default class Game {
                 score += checkSecondDiagonalTop(i);
             }
         }
-        // console.log(diagMatrix);
+        console.log(this.toDelimitedString(this.board));
         return score;
     }
     getWinner() {
@@ -228,6 +176,10 @@ export default class Game {
             matrix.push(array.slice(i, i + length));
         }
         return matrix;
+    }
+    toDelimitedString(array) {
+        const delimit = new RegExp(`(.{${ROWS}})`, "g");
+        return array.join("").replace(delimit, "$1#").slice(0, -1);
     }
     toString() {
         return this.toMatrix(this.board, ROWS);

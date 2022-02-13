@@ -91,78 +91,12 @@ export default class Game {
 
     // #region Utility
     
+    // https://stackoverflow.com/questions/64755169/check-for-a-row-of-4-diagonally-vertically-and-horizontally-using-javascript
     hasWon(player) {
-        function countConsecutivePieces(pieces: number[]) {
-            let counter = 0;
-            let last = null;
+        const boardString: string = this.toDelimitedString(this.board);
+        const win = new RegExp(`([${player}])(\\1{${N - 1}}|(${".".repeat(ROWS)}\\1){${N - 1}}|(${".".repeat(ROWS + 1)}\\1){${N - 1}}|((?=.{0,${ROWS - 1}}#)${".".repeat(ROWS - 1)}\\1){${N - 1}})`);
 
-            for (let i = 0; i < pieces.length; i++) {
-                if (pieces[i] === player) {
-                    if (pieces[i] !== last) {
-                        counter = 0;
-                    }
-                    counter++;
-                }
-
-                last = pieces[i]
-            }
-
-            return counter >= N;
-        }
-
-        function checkHorizontal(board: number[][], row: number) {
-            return countConsecutivePieces(board[row]);
-        }
-
-        function checkVertical(board: number[][], column: number) {
-            return countConsecutivePieces(board.map(row => row[column]));
-        }
-
-        function checkPrimaryDiagonal(board: number[][], row: number, column: number) {
-            let pieces = [];
-
-            for (let i = -(N - 1); i < N; i++) {
-                if (board[row - i] !== undefined && board[column - i] !== undefined) {
-                    pieces.push(board[row - i][column - i]);
-                }
-            }
-
-            return countConsecutivePieces(pieces)
-        }
-
-        function checkSecondaryDiagonal(board: number[][], row: number, column: number) {
-            let pieces = [];
-
-            for (let i = -(N - 1); i < N; i++) {
-                if (board[row - i] !== undefined && board[column + i] !== undefined) {
-                    pieces.push(board[row - i][column + i]);
-                }
-            }
-
-            return countConsecutivePieces(pieces)
-        }
-
-        // If the player has not placed enough pieces to win the game, ...
-        if (this.board.filter((p) => (p === player)).length < N) {
-            return false; // ... Return `false` by default.
-        }
-        
-        const matrix: number[][] = this.toMatrix(this.board, ROWS);
-        
-        if (checkHorizontal(matrix, Math.floor(this.lastMove / ROWS))) {
-            return true;
-        }
-        else if (checkVertical(matrix, this.lastMove % ROWS)) {
-            return true;
-        }
-        else if (checkPrimaryDiagonal(matrix, Math.floor(this.lastMove / ROWS), this.lastMove % ROWS)) {
-            return true;
-        }
-        else if (checkSecondaryDiagonal(matrix, Math.floor(this.lastMove / ROWS), this.lastMove % ROWS)) {
-            return true;
-        }
-        
-        return false;
+        return win.test(boardString);
     }
 
     public getHeuristicEvaluation(player: number) {
@@ -289,7 +223,7 @@ export default class Game {
             }
         }
 
-        // console.log(diagMatrix);
+        console.log(this.toDelimitedString(this.board));
         
         return score;
     }
@@ -313,6 +247,12 @@ export default class Game {
         }
 
         return matrix;
+    }
+
+    private toDelimitedString(array): string {
+        const delimit = new RegExp(`(.{${ROWS}})`, "g");
+
+        return array.join("").replace(delimit,"$1#").slice(0, -1);
     }
 
     public toString() {
