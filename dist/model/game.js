@@ -64,6 +64,7 @@ export default class Game {
     // #endregion
     // #region Utility
     /**
+     * Check if `player` has won the game.
      *
      * @param player The last player.
      * @returns Whether the given `player` has won.
@@ -74,6 +75,13 @@ export default class Game {
         const win = new RegExp(`(${player})(\\1{${N - 1}}|(${".".repeat(ROWS)}\\1){${N - 1}}|(${".".repeat(ROWS + 1)}\\1){${N - 1}}|((?=.{0,${ROWS - 1}}#)${".".repeat(ROWS - 1)}\\1){${N - 1}})`);
         return win.test(boardString);
     }
+    /**
+     * Calcuates a heurstic evaluation of `player`s performance.
+     *
+     * @param player The current player.
+     * @returns `player`s score relative to that of its opponent.
+     * @see http://www.cari-info.org/Actes-2018/p276-286.pdf
+     */
     getHeuristicEvaluation(player) {
         const matrix = this.toMatrix(this.board, ROWS);
         const nextPlayer = player === 1 ? 2 : 1;

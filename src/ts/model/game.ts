@@ -92,6 +92,7 @@ export default class Game {
     // #region Utility
     
     /**
+     * Check if `player` has won the game.
      * 
      * @param player The last player.
      * @returns Whether the given `player` has won.
@@ -104,6 +105,13 @@ export default class Game {
         return win.test(boardString);
     }
 
+    /**
+     * Calcuates a heurstic evaluation of `player`s performance.
+     * 
+     * @param player The current player.
+     * @returns `player`s score relative to that of its opponent.
+     * @see http://www.cari-info.org/Actes-2018/p276-286.pdf
+     */
     public getHeuristicEvaluation(player: number) {
         const matrix: number[][] = this.toMatrix(this.board, ROWS);
         const nextPlayer = player === 1 ? 2 : 1;
