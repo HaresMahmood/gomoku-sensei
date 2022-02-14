@@ -105,29 +105,119 @@ export default class Game {
     }
 
     public getHeuristicEvaluation(player: number) {
-        const boardString: string = this.toDelimitedString(this.board);
-        const won = this.hasWon(player);
+        const matrix: number[][] = this.toMatrix(this.board, ROWS);
+        const diagMatrix = this.toMatrix(this.board, ROWS);
         const nextPlayer = player === 1 ? 2 : 1;
+        const won = this.hasWon(player);
 
         function score(currentPlayer, nMin2Open, nMin1Half, nMin1Open) {
-            const threat = (index: number) => {
-                return `(${currentPlayer})(\\1{${index - 1}}|(${".".repeat(ROWS)}\\1){${index - 1}}|(${".".repeat(ROWS + 1)}\\1){${index - 1}}|((?=.{0,${ROWS - 1}}#)${".".repeat(ROWS - 1)}\\1){${index - 1}})`;
-            };
+            let openCount = 0;
+            let halfOpenCount = 0;
 
-            const open = (index) => {
-                const match = new RegExp(`0${threat(index)}(?=0)`, "g");
+            const value = (index: number) => {
+                function countConsecutivePieces(pieces: string) {
+                    const playerPieces: string = `(${player})(\\1{${index - 1}})`;
 
-                // console.log(`0${threat(index)}(?=0)`);
-                // console.log(boardString.match(match));
+                    const lowerBlock = new RegExp(`0${playerPieces}(?!0)`, "g"); // Illustration: `[OXXXX-]`.
+                    const upperBlock = new RegExp(`(?<!0)${playerPieces}(?=0)`, "g"); // Illustration: `[-XXXXO]`.
+                    const open = new RegExp(`0${playerPieces}(?=0)`, "g"); // Illustration: `[OXXXXO]`.
+        
+                    const openCount = (pieces.match(open) || []).length;
+                    const halfOpenCount = (pieces.match(lowerBlock) || []).length + (pieces.match(upperBlock) || []).length;
 
-                return (boardString.match(match) || []).length;
-            }
+                    return [openCount, halfOpenCount];
+                }
+        
+                function checkHorizontal(row: number) {
+                    const [horiOpenCount, horiHalfOpenCount] = countConsecutivePieces(matrix[row].join(""));
+                    
+                    openCount += horiOpenCount;
+                    halfOpenCount += horiHalfOpenCount;
+                }
+        
+                function checkVertical(column: number) {
+                    const [vertOpenCount, vertHalfOpenCount] = countConsecutivePieces(matrix.map(row => row[column]).join(""));
+                    
+                    openCount += vertOpenCount;
+                    halfOpenCount += vertHalfOpenCount;
+                }
+        
+                function checkPrimaryDiagonalTop(row: number) {
+                    let pieces = "";
+        
+                    for (let i = 0; i < ROWS; i++) {
+                        if (matrix[i + row] !== undefined) {
+                            pieces += matrix[i][i + row];
+                            // diagMatrix[i][i + row] = "d";
+                        }
+                    }
+        
+                    const [diagOpenCount, diagHalfOpenCount] = countConsecutivePieces(pieces);
+                    
+                    openCount += diagOpenCount;
+                    halfOpenCount += diagHalfOpenCount;
+                }
+        
+                function checkPrimaryDiagonalBottom(row: number) {
+                    let pieces = "";
+        
+                    for (let i = 1; i < ROWS; i++) {
+                        if (matrix[i + row] !== undefined) {
+                            pieces += matrix[i + row][i];
+                        }
+                    }
+        
+                    const [diagOpenCount, diagHalfOpenCount] = countConsecutivePieces(pieces);
+                    
+                    openCount += diagOpenCount;
+                    halfOpenCount += diagHalfOpenCount;
+                }
+        
+                function checkSecondDiagonalTop(row: number) {
+                    let pieces = "";
+        
+                    for (let i = 0; i < ROWS; i++) {
+                        if (matrix[i - row] !== undefined) {
+                            pieces += matrix[i - row][(ROWS - 1) - i];
+                            diagMatrix[i - row][(ROWS - 1) - i] = "d";
+                        }
+                    }
+        
+                    const [diagOpenCount, diagHalfOpenCount] = countConsecutivePieces(pieces);
+                    
+                    openCount += diagOpenCount;
+                    halfOpenCount += diagHalfOpenCount;
+                }
+        
+                function checkSecondDiagonalBottom(row: number) {
+                    let pieces = "";
+        
+                    for (let i = 0; i < ROWS; i++) {
+                        if (matrix[i + row] !== undefined) {
+                            pieces += matrix[i + row][(ROWS - 1) - i];
+                        }
+                    }
 
-            const half = (index) => {
-                const upperBlock = new RegExp(`(?<!0)${threat(index)}(?=0)`, "g");
-                const lowerBlock = new RegExp(`0${threat(index)}(?!0)`);
+                    const [diagOpenCount, diagHalfOpenCount] = countConsecutivePieces(pieces);
+                    
+                    openCount += diagOpenCount;
+                    halfOpenCount += diagHalfOpenCount;
+                }
+        
+                for (let i: number = 0; i < ROWS; i++) {
+                    checkHorizontal(i);
+                    checkVertical(i);  
 
-                return (boardString.match(upperBlock) || []).length + (boardString.match(lowerBlock) || []).length;
+                    checkPrimaryDiagonalTop(i);
+                    checkSecondDiagonalTop(i);
+        
+                    if (i != 0) {
+                        checkPrimaryDiagonalBottom(i);
+                        checkSecondDiagonalBottom(i);
+                    }
+                }
+                
+                return [openCount, halfOpenCount];
             }
 
             // for (let i: number = 1; i <= N - 3; i++) {
@@ -140,104 +230,10 @@ export default class Game {
             //     + (won ? 1000000 : 0);
             // }
 
-            return open(3);
+            return value(3);
         }
 
         return score(player, 100, 80, 250); // - score(nextPlayer, 1300, 2000, 5020)
-    }
-
-    public getHeuristicEvaluation2(player: number) {
-        const matrix: number[][] = this.toMatrix(this.board, ROWS);
-
-        function countConsecutivePieces(pieces: string, index: number, isHalfOpen: boolean) {
-            const playerPieces: string = `(${player})(\\1{${index - 1}}`;
-            let match = `0${playerPieces}`;
-            let count = 0;
-            
-            if (isHalfOpen) {
-                const lowerBlock = new RegExp(match, "g"); // Create additional lower block `RegEx`.
-
-                match += "(?!0)"; // Add upper block to `RegEx`.
-                count += (pieces.match(lowerBlock) || []).length;
-            }
-
-            const regex = new RegExp(match, "g");
-
-            count += (pieces.match(regex) || []).length;
-            
-            return count;
-        }
-
-        function checkHorizontal(row: number, index: number, isHalfOpen: boolean) {
-            return countConsecutivePieces(matrix[row].join(""), index, isHalfOpen);
-        }
-
-        function checkVertical(column: number, index: number, isHalfOpen: boolean) {
-            return countConsecutivePieces(matrix.map(row => row[column]).join(""), index, isHalfOpen);
-        }
-
-        function checkPrimaryDiagonalTop(row: number, index: number, isHalfOpen: boolean) {
-            let pieces = "";
-
-            for (let i = 0; i < ROWS; i++) {
-                if (matrix[i + row] !== undefined) {
-                    pieces += matrix[i][i + row];
-                    // diagMatrix[i][i + row] = "d";
-                }
-            }
-
-            return countConsecutivePieces(pieces, index, isHalfOpen);
-        }
-
-        function checkPrimaryDiagonalBottom(row: number, index: number, isHalfOpen: boolean) {
-            let pieces = "";
-
-            for (let i = 1; i < ROWS; i++) {
-                if (matrix[i + row] !== undefined) {
-                    pieces += matrix[i + row][i];
-                }
-            }
-
-            return countConsecutivePieces(pieces, index, isHalfOpen);
-        }
-
-        function checkSecondDiagonalTop(row: number, index: number, isHalfOpen: boolean) {
-            let pieces = "";
-
-            for (let i = 0; i < ROWS; i++) {
-                if (matrix[i - row] !== undefined) {
-                    pieces += matrix[i - row][(ROWS - 1) - i];
-                }
-            }
-
-            return countConsecutivePieces(pieces, index, isHalfOpen);
-        }
-
-        function checkSecondDiagonalBottom(row: number, index: number, isHalfOpen: boolean) {
-            let pieces = "";
-
-            for (let i = 0; i < ROWS; i++) {
-                if (matrix[i + row] !== undefined) {
-                    pieces += matrix[i + row][(ROWS - 1) - i];
-                }
-            }
-
-            return countConsecutivePieces(pieces, index, isHalfOpen);
-        }
-
-        let score: number = 0;
-
-        for (let i: number = 0; i < ROWS; i++) {
-            score += checkHorizontal(i)
-            score += checkVertical(i);  
-            score += checkPrimaryDiagonalBottom(i);
-            score += checkSecondDiagonalBottom(i);
-
-            if (i != 0) {
-                score += checkPrimaryDiagonalTop(i);
-                score += checkSecondDiagonalTop(i);
-            }
-        }
     }
 
     getWinner() {
