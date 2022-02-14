@@ -1,6 +1,6 @@
-const ROWS = 5;
+const ROWS = 7;
 const COLUMNS = ROWS;
-const N = 4;
+const N = 5;
 export default class Game {
     // #region Initialization
     board;
@@ -76,18 +76,17 @@ export default class Game {
     }
     getHeuristicEvaluation(player) {
         const matrix = this.toMatrix(this.board, ROWS);
-        const diagMatrix = this.toMatrix(this.board, ROWS);
         const nextPlayer = player === 1 ? 2 : 1;
-        const won = this.hasWon(player);
-        function score(currentPlayer, nMin2Open, nMin1Half, nMin1Open) {
-            let openCount = 0;
-            let halfOpenCount = 0;
+        let score = (currentPlayer, nMin2Open, nMin1Half, nMin1Open) => {
             const value = (index) => {
+                let openCount = 0;
+                let halfOpenCount = 0;
                 function countConsecutivePieces(pieces) {
-                    const playerPieces = `(${player})(\\1{${index - 1}})`;
-                    const lowerBlock = new RegExp(`0${playerPieces}(?!0)`, "g"); // Illustration: `[OXXXX-]`.
-                    const upperBlock = new RegExp(`(?<!0)${playerPieces}(?=0)`, "g"); // Illustration: `[-XXXXO]`.
-                    const open = new RegExp(`0${playerPieces}(?=0)`, "g"); // Illustration: `[OXXXXO]`.
+                    const playerPieces = `(${currentPlayer})(\\1{${index - 1}})`;
+                    // TODO: Repeat `0`, `N` - `index` time (Check if this is right).
+                    const lowerBlock = new RegExp(`(?<=${"0".repeat(N - index)})${playerPieces}(?!0|${currentPlayer})`, "g"); // Illustration: `[OXXXX-]`.
+                    const upperBlock = new RegExp(`(?<!0|${currentPlayer})${playerPieces}(?=${"0".repeat(N - index)})`, "g"); // Illustration: `[-XXXXO]`.
+                    const open = new RegExp(`(?<=0)${playerPieces}(?=0)`, "g"); // Illustration: `[OXXXXO]`.
                     const openCount = (pieces.match(open) || []).length;
                     const halfOpenCount = (pieces.match(lowerBlock) || []).length + (pieces.match(upperBlock) || []).length;
                     return [openCount, halfOpenCount];
@@ -107,7 +106,6 @@ export default class Game {
                     for (let i = 0; i < ROWS; i++) {
                         if (matrix[i + row] !== undefined) {
                             pieces += matrix[i][i + row];
-                            // diagMatrix[i][i + row] = "d";
                         }
                     }
                     const [diagOpenCount, diagHalfOpenCount] = countConsecutivePieces(pieces);
@@ -130,7 +128,6 @@ export default class Game {
                     for (let i = 0; i < ROWS; i++) {
                         if (matrix[i - row] !== undefined) {
                             pieces += matrix[i - row][(ROWS - 1) - i];
-                            diagMatrix[i - row][(ROWS - 1) - i] = "d";
                         }
                     }
                     const [diagOpenCount, diagHalfOpenCount] = countConsecutivePieces(pieces);
@@ -160,18 +157,24 @@ export default class Game {
                 }
                 return [openCount, halfOpenCount];
             };
-            // for (let i: number = 1; i <= N - 3; i++) {
-            //     return ((2 * i - 1) - half(i) + (2 * i * open(i)))
-            //     + 2 * (N - 2) // TODO: Not sure about this one.
-            //     - half(N - 2)
-            //     + nMin2Open * open(N - 2)
-            //     + nMin1Half * half(N - 1)
-            //     + nMin1Open * open(N - 1)
-            //     + (won ? 1000000 : 0);
-            // }
-            return value(3);
-        }
-        return score(player, 100, 80, 250); // - score(nextPlayer, 1300, 2000, 5020)
+            const NMin2 = value(N - 2);
+            const NMin1 = value(N - 1);
+            let totalScore = 0;
+            for (let i = 1; i <= N - 3; i++) {
+                const I = value(i);
+                totalScore = totalScore
+                    + ((2 * i - 1) - I[1] + (2 * i * I[0]))
+                    + 2 * (N - 2) // TODO: Not sure about this one.
+                    - NMin2[1]
+                    + nMin2Open * NMin2[0]
+                    + nMin1Half * NMin1[1]
+                    + nMin1Open * NMin1[0]
+                    + (this.hasWon(currentPlayer) ? 1000000 : 0);
+            }
+            return totalScore;
+        };
+        // TODO: Optimize player's values.
+        return score(player, 100, 80, 250) - score(nextPlayer, 1300, 2000, 5020);
     }
     getWinner() {
         const player = this.board[this.lastMove]; // FIXME: `player` should be passed in as a parameter.

@@ -34,7 +34,7 @@ export default class GameController {
         const nextPlayer = this.player === 1 ? 2 : 1;
         this.view.addPiece(index, color, this.moveNumber);
         this.model.performMove(index, this.player);
-        console.log(this.model.getHeuristicEvaluation(this.player));
+        console.log(this.model.getHeuristicEvaluation(this.player) + "\n");
         if (this.model.isOver()) {
             this.view.endGame(color, this.model.isDraw());
             this.restart();
