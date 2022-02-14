@@ -106,6 +106,76 @@ export default class Game {
         }
         return score(player, 100, 80, 250); // - score(nextPlayer, 1300, 2000, 5020)
     }
+    getHeuristicEvaluation2(player) {
+        const matrix = this.toMatrix(this.board, ROWS);
+        function countConsecutivePieces(pieces, index, isHalfOpen) {
+            const playerPieces = `(${player})(\\1{${index - 1}}`;
+            let match = `0${playerPieces}`;
+            let count = 0;
+            if (isHalfOpen) {
+                const lowerBlock = new RegExp(match, "g"); // Create additional lower block `RegEx`.
+                match += "(?!0)"; // Add upper block to `RegEx`.
+                count += (pieces.match(lowerBlock) || []).length;
+            }
+            const regex = new RegExp(match, "g");
+            count += (pieces.match(regex) || []).length;
+            return count;
+        }
+        function checkHorizontal(row, index, isHalfOpen) {
+            return countConsecutivePieces(matrix[row].join(""), index, isHalfOpen);
+        }
+        function checkVertical(column, index, isHalfOpen) {
+            return countConsecutivePieces(matrix.map(row => row[column]).join(""), index, isHalfOpen);
+        }
+        function checkPrimaryDiagonalTop(row, index, isHalfOpen) {
+            let pieces = "";
+            for (let i = 0; i < ROWS; i++) {
+                if (matrix[i + row] !== undefined) {
+                    pieces += matrix[i][i + row];
+                    // diagMatrix[i][i + row] = "d";
+                }
+            }
+            return countConsecutivePieces(pieces, index, isHalfOpen);
+        }
+        function checkPrimaryDiagonalBottom(row, index, isHalfOpen) {
+            let pieces = "";
+            for (let i = 1; i < ROWS; i++) {
+                if (matrix[i + row] !== undefined) {
+                    pieces += matrix[i + row][i];
+                }
+            }
+            return countConsecutivePieces(pieces, index, isHalfOpen);
+        }
+        function checkSecondDiagonalTop(row, index, isHalfOpen) {
+            let pieces = "";
+            for (let i = 0; i < ROWS; i++) {
+                if (matrix[i - row] !== undefined) {
+                    pieces += matrix[i - row][(ROWS - 1) - i];
+                }
+            }
+            return countConsecutivePieces(pieces, index, isHalfOpen);
+        }
+        function checkSecondDiagonalBottom(row, index, isHalfOpen) {
+            let pieces = "";
+            for (let i = 0; i < ROWS; i++) {
+                if (matrix[i + row] !== undefined) {
+                    pieces += matrix[i + row][(ROWS - 1) - i];
+                }
+            }
+            return countConsecutivePieces(pieces, index, isHalfOpen);
+        }
+        let score = 0;
+        for (let i = 0; i < ROWS; i++) {
+            score += checkHorizontal(i);
+            score += checkVertical(i);
+            score += checkPrimaryDiagonalBottom(i);
+            score += checkSecondDiagonalBottom(i);
+            if (i != 0) {
+                score += checkPrimaryDiagonalTop(i);
+                score += checkSecondDiagonalTop(i);
+            }
+        }
+    }
     getWinner() {
         const player = this.board[this.lastMove]; // FIXME: `player` should be passed in as a parameter.
         let winner = this.hasWon(player) ? player : -1;
