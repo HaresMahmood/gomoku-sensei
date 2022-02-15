@@ -7,7 +7,7 @@ export default class KillerAI extends AbstractAI {
     //     this.node = node;
     // }
     chooseMove(game) {
-        const interval = 20000;
+        const interval = 22500;
         // const startTime = Date.now();
         const root = new StaticNode();
         let counter = 0;

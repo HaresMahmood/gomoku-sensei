@@ -13,16 +13,19 @@ export default class DynamicAI extends AbstractAI {
     // }
 
     public chooseMove(game: Game): number {
-        const iterations: number = 20000;
-        // const startTime = Date.now();
+        const mistake = this.mistakeProbability(game);
+        const iterations: number = 22500 * (1 - mistake + 0.175);
+        const random = Math.random();
+
         const root = new DynamicNode();
-        let counter: number = 0;
+
+        console.log(random, mistake, iterations);
 
         root.state.game = game;
         root.state.playerNumber = this._player;
         root.expand();
 
-        while (counter != iterations) {
+        for (let i: number = 0; i <= iterations; i++) {
             // Teytaud and Teytaud policy (Decisive and Anti-Decisive moves)
             let current = this.select(root); // Selection.
             let result;
@@ -39,8 +42,6 @@ export default class DynamicAI extends AbstractAI {
             }
 
             this.backpropogate(current, result); // Backpropogation.
-
-            counter++;
         }
 
         console.log(root);
@@ -48,19 +49,19 @@ export default class DynamicAI extends AbstractAI {
 
         const sortedChildren = root.sortChildren();
         let winnerNode = sortedChildren[0];
-        const random = Math.random(); const mistake = this.mistakeProbability(game);
 
-        if (random < mistake) {
+        if (random < (mistake - 0.2)) {
             winnerNode = sortedChildren[1]; // Play sub-optimal move if probability of mistake is high enough.
         }
 
-        console.log(random, mistake);
+        
 
         return winnerNode.state.game.lastMove;
     }
 
     private mistakeProbability(game: Game) {
-        const max = 10000 * (game.n - 3);
+        const max = 1000 * (game.n - 3);
+        const min = -8320 * (game.n - 3);
         const value = game.getHeuristicEvaluation(this._player);
 
         /**
@@ -80,7 +81,9 @@ export default class DynamicAI extends AbstractAI {
             return newMin + (val - minVal) * (newMax - newMin) / (maxVal - minVal);
         };
 
-        return normalize(value,-max, max, 0, 1)  - 0.225; // Pretty much a random value.
+        console.log(value);
+
+        return normalize(value, min, max, 0, 1);
     }
 
     private select(node: DynamicNode) {

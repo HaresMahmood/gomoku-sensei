@@ -13,7 +13,7 @@ export default class KillerAI extends AbstractAI {
     // }
 
     public chooseMove(game: Game): number {
-        const interval: number = 20000;
+        const interval: number = 22500;
         // const startTime = Date.now();
         const root = new StaticNode();
         let counter: number = 0;

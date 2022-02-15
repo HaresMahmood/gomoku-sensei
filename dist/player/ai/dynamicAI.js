@@ -7,14 +7,15 @@ export default class DynamicAI extends AbstractAI {
     //     this.node = node;
     // }
     chooseMove(game) {
-        const iterations = 20000;
-        // const startTime = Date.now();
+        const mistake = this.mistakeProbability(game);
+        const iterations = 22500 * (1 - mistake + 0.175);
+        const random = Math.random();
         const root = new DynamicNode();
-        let counter = 0;
+        console.log(random, mistake, iterations);
         root.state.game = game;
         root.state.playerNumber = this._player;
         root.expand();
-        while (counter != iterations) {
+        for (let i = 0; i <= iterations; i++) {
             // Teytaud and Teytaud policy (Decisive and Anti-Decisive moves)
             let current = this.select(root); // Selection.
             let result;
@@ -28,22 +29,19 @@ export default class DynamicAI extends AbstractAI {
                 result = current.rollout(); // Simulation.
             }
             this.backpropogate(current, result); // Backpropogation.
-            counter++;
         }
         console.log(root);
         console.log(root.getMostVisitedChild());
         const sortedChildren = root.sortChildren();
         let winnerNode = sortedChildren[0];
-        const random = Math.random();
-        const mistake = this.mistakeProbability(game);
-        if (random < mistake) {
+        if (random < (mistake - 0.2)) {
             winnerNode = sortedChildren[1]; // Play sub-optimal move if probability of mistake is high enough.
         }
-        console.log(random, mistake);
         return winnerNode.state.game.lastMove;
     }
     mistakeProbability(game) {
-        const max = 10000 * (game.n - 3);
+        const max = 1000 * (game.n - 3);
+        const min = -8320 * (game.n - 3);
         const value = game.getHeuristicEvaluation(this._player);
         /**
          * Normalizes a value from one range (current) to another (new).
@@ -61,7 +59,8 @@ export default class DynamicAI extends AbstractAI {
         const normalize = (val, minVal, maxVal, newMin, newMax) => {
             return newMin + (val - minVal) * (newMax - newMin) / (maxVal - minVal);
         };
-        return normalize(value, -max, max, 0, 1) - 0.225; // Pretty much a random value.
+        console.log(value);
+        return normalize(value, min, max, 0, 1);
     }
     select(node) {
         while (!node.isLeaf()) { // && !node.state.game.isOver()
