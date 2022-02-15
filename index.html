@@ -45,7 +45,8 @@
             <iframe id="page-frame" class="loaded" src="./src/html/home.html" frameborder="0" scrolling="no"> </iframe>
         </main>
 
-        <modal> 
+        <!-- TODO: In-line style is bad - but without this, hidden `div`s flash on screen on-load. -->
+        <modal style="opacity: 0;"> 
             <header>
                 <h3 id="modal-text"> Rules </h3>
                 <span id="close-button" class="material-icons-round"> close </span>
