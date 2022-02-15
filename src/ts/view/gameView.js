@@ -35,6 +35,8 @@ export default class GameView {
     }
 
     setPlayer(player) {
+        document.title = "Game";
+
         $(".player__container p").eq(player.player - 1).text(player.name[0]);
         $(".player__container .player-icon").eq(player.player - 1).text(player.name[1]);
     }
@@ -65,10 +67,14 @@ export default class GameView {
             const highlightMove = JSON.parse(localStorage.getItem(2)) ? "" : "no-highlight";
             const soundEffects = JSON.parse(localStorage.getItem(3));
             
-            let piece = `<div class="piece ${color}-piece last ${showMoveNumbers} ${highlightMove}"><p> ${moveNumber} </p> <div></div></div>`;
+            let piece = `<div class="piece ${color}-piece new last ${showMoveNumbers} ${highlightMove}"><p> ${moveNumber} </p> <div></div></div>`;
 
             $(".last").removeClass("last");
             box.append(piece);
+
+            window.setTimeout(function() {
+                $(".new").removeClass("new");
+            }, 1);
 
             if (soundEffects) {
                 this.tokenSound.cloneNode().play(); // Ensures previously playing sound is interrupted, if need be.
@@ -80,6 +86,21 @@ export default class GameView {
         $(".piece").remove();
         $(".board").removeClass("inactive");
         $(".player__container").removeClass("lost");
+
+        // TOOD: Add animation.
+        // const pieces = $(".piece").length;
+        // const animationDelay = 50;
+        
+        // $(".piece").each(function(i) {
+        //     $(this).delay(i * animationDelay).fadeOut(125, function() {
+        //         $(this).remove();
+        //     });
+        // });
+
+        // window.setTimeout(function() {
+        //     $(".board").removeClass("inactive");
+        //     $(".player__container").removeClass("lost");
+        // }, pieces * animationDelay);
     }
 
     endGame(winner, isDraw) {

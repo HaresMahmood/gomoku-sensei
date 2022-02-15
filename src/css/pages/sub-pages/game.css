@@ -158,20 +158,34 @@ modal.visible ~ .overlay__container {
 
 	cursor: pointer;
 
-	transition: var(--animation-speed);
+	transition: var(--animation-speed); /* TODO: What does this do? */
 }
 
 .piece {
 	aspect-ratio: 1 / 1;
     width: 80%;
 
+	transform: scale(1);
+
 	display: flex;
 	justify-content: center;
 	align-items: center;
+
+	opacity: 1;
 	
     border-radius: 100%;
 
 	cursor: not-allowed;
+
+	transition: opacity var(--animation-speed), transform var(--animation-speed);
+}
+
+.piece.new {
+	transform: scale(0.5);
+
+	opacity: 0;	
+
+	transition: opacity var(--animation-speed), transform var(--animation-speed);
 }
 
 .piece > div {
