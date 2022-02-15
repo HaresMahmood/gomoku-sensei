@@ -4,7 +4,6 @@ export default class GameController {
     player = 1 | 2;
     player1;
     player2;
-    moveNumber = 1;
     constructor(model, view, player1, player2) {
         this.model = model;
         this.view = view;
@@ -32,9 +31,10 @@ export default class GameController {
     addPiece(index) {
         let color = this.player === 1 ? "black" : "white";
         const nextPlayer = this.player === 1 ? 2 : 1;
-        this.view.addPiece(index, color, this.moveNumber);
+        this.view.addPiece(index, color, this.model.moveNumber);
         this.model.performMove(index, this.player);
-        console.log(this.model.getHeuristicEvaluation(this.player) + "\n");
+        if (this.player === 1)
+            console.log(this.model.getHeuristicEvaluation(this.player) + "\n");
         if (this.model.isOver()) {
             this.view.endGame(color, this.model.isDraw());
             this.restart();
@@ -44,12 +44,10 @@ export default class GameController {
         // const nextPlayer = this.player === 1 ? 2 : 1;
         this.view.changePlayer(nextPlayer);
         this.player = nextPlayer;
-        this.moveNumber++;
         return nextPlayer;
     }
     restart() {
         this.player = 1;
-        this.moveNumber = 1;
         this.view.changePlayer(this.player);
         this.model.restart();
         this.view.restart();

@@ -1,13 +1,18 @@
-const ROWS = 7;
+const ROWS = 8;
 const COLUMNS = ROWS;
 const N = 5;
 export default class Game {
     // #region Initialization
     board;
-    lastMove;
-    constructor(state = new Array(ROWS * COLUMNS).fill(0), lastMove = -1) {
+    lastMove; // TODO: Make private.
+    _moveNumber;
+    get moveNumber() {
+        return this._moveNumber;
+    }
+    constructor(state = new Array(ROWS * COLUMNS).fill(0), lastMove = -1, moveNumber = 1) {
         this.board = state;
         this.lastMove = lastMove;
+        this._moveNumber = moveNumber;
     }
     // #endregion
     // #region Accessors
@@ -17,10 +22,13 @@ export default class Game {
     get columns() {
         return COLUMNS;
     }
+    get n() {
+        return N;
+    }
     // #endregion
     // #region Miscellaneous
     clone() {
-        return new Game(this.board.slice(), this.lastMove);
+        return new Game(this.board.slice(), this.lastMove, this._moveNumber);
     }
     isCellEmpty(index) {
         return this.board[index] === 0;
@@ -28,6 +36,7 @@ export default class Game {
     performMove(index, player, notifyObservers = false) {
         this.board[index] = player;
         this.lastMove = index;
+        this._moveNumber++;
         if (notifyObservers) {
         }
     }
@@ -46,7 +55,7 @@ export default class Game {
             let copy = this.board.slice();
             if (copy[i] === 0) {
                 copy[i] = player;
-                successors.push(new Game(copy, i));
+                successors.push(new Game(copy, i, this._moveNumber + 1));
             }
         }
         return successors;
@@ -60,6 +69,7 @@ export default class Game {
             this.board[i] = 0;
             this.lastMove = -1;
         }
+        this._moveNumber = 1;
     }
     // #endregion
     // #region Utility
@@ -76,7 +86,7 @@ export default class Game {
         return win.test(boardString);
     }
     /**
-     * Calcuates a heurstic evaluation of `player`s performance.
+     * Calculates a heurstic evaluation of `player`s performance.
      *
      * @param player The current player.
      * @returns `player`s score relative to that of its opponent.

@@ -4,14 +4,10 @@ export default class DynamicNode {
     _state;
     _parent;
     _children;
-    depth;
-    gameLength;
-    constructor(state = new State(), parent = null, depth = 0, children = []) {
+    constructor(state = new State(), parent = null, children = []) {
         this._state = state;
         this._parent = parent;
         this._children = children;
-        this.depth = depth;
-        this.gameLength = 0;
     }
     // #endregion
     // #region Accessors
@@ -29,32 +25,24 @@ export default class DynamicNode {
     expand() {
         const moves = this.state.getMoves();
         for (const move of moves) {
-            this.children.push(new DynamicNode(move, this, this.depth + 1));
+            this.children.push(new DynamicNode(move, this));
         }
         return this.children[0];
     }
     rollout() {
-        let length = 0;
-        const mainClone = this.state.clone();
-        const iterations = 3;
-        const results = [];
-        for (let i = 0; i < iterations; i++) {
-            const clone = mainClone;
-            while (true) {
-                if (clone.game.isOver()) {
-                    const result = clone.game.getWinner();
-                    this.gameLength += length;
-                    console.log(clone.game.toString(), result);
-                    results.push(result);
-                }
-                clone.togglePlayer();
-                clone.makeRandomMove();
-                length++;
-            }
+        const clone = this.state.clone();
+        if (clone.game.isOver()) {
+            const result = clone.game.getWinner();
+            return result;
         }
-        const result = this.mode(results);
-        console.log(results, result);
-        return result;
+        while (true) {
+            if (clone.game.isOver()) {
+                const result = clone.game.getWinner();
+                return result;
+            }
+            clone.togglePlayer();
+            clone.makeRandomMove();
+        }
     }
     // #endregion
     // #region Miscellaneous
@@ -89,9 +77,9 @@ export default class DynamicNode {
     isLeaf() {
         return this._children.length === 0;
     }
-    sortByDepth() {
+    sortChildren() {
         const copy = this._children.slice();
-        const mostVisisted = copy.sort((x, y) => (x._state.wins / x._state.visits || 0) - (y._state.wins / y._state.visits || 0) || x.depth - y.depth);
+        const mostVisisted = copy.sort((x, y) => (y._state.wins / y._state.visits || 0) - (x._state.wins / x._state.visits || 0));
         return mostVisisted;
     }
     getWinRate() {

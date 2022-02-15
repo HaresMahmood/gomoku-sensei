@@ -13,7 +13,7 @@ export default class DynamicAI extends AbstractAI {
     // }
 
     public chooseMove(game: Game): number {
-        const iterations: number = 2;
+        const iterations: number = 20000;
         // const startTime = Date.now();
         const root = new DynamicNode();
         let counter: number = 0;
@@ -23,6 +23,7 @@ export default class DynamicAI extends AbstractAI {
         root.expand();
 
         while (counter != iterations) {
+            // Teytaud and Teytaud policy (Decisive and Anti-Decisive moves)
             let current = this.select(root); // Selection.
             let result;
 
@@ -42,12 +43,44 @@ export default class DynamicAI extends AbstractAI {
             counter++;
         }
 
-        console.log(root.sortByDepth());
-        console.log(root, root.getWinRate());
+        console.log(root);
+        console.log(root.getMostVisitedChild());
 
-        const winnerNode = root.getMostVisitedChild();
+        const sortedChildren = root.sortChildren();
+        let winnerNode = sortedChildren[0];
+        const random = Math.random(); const mistake = this.mistakeProbability(game);
+
+        if (random < mistake) {
+            winnerNode = sortedChildren[1]; // Play sub-optimal move if probability of mistake is high enough.
+        }
+
+        console.log(random, mistake);
 
         return winnerNode.state.game.lastMove;
+    }
+
+    private mistakeProbability(game: Game) {
+        const max = 10000 * (game.n - 3);
+        const value = game.getHeuristicEvaluation(this._player);
+
+        /**
+         * Normalizes a value from one range (current) to another (new).
+         *
+         * @param val    //the current value (part of the current range).
+         * @param minVal //the min value of the current value range.
+         * @param maxVal //the max value of the current value range.
+         * @param newMin //the min value of the new value range.
+         * @param newMax //the max value of the new value range.
+         *
+         * @returns the normalized value.
+         * 
+         * @see https://stackoverflow.com/questions/39776819/function-to-normalize-any-number-from-0-1
+         */
+        const normalize = (val, minVal, maxVal, newMin, newMax) => {
+            return newMin + (val - minVal) * (newMax - newMin) / (maxVal - minVal);
+        };
+
+        return normalize(value,-max, max, 0, 1)  - 0.225; // Pretty much a random value.
     }
 
     private select(node: DynamicNode) {

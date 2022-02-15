@@ -7,15 +7,10 @@ export default class DynamicNode {
     private _parent: DynamicNode;
     private _children: DynamicNode[];
 
-    public depth: number;
-    public gameLength: number;
-
-    constructor(state = new State(), parent = null, depth = 0, children = []) {
+    constructor(state = new State(), parent = null, children = []) {
         this._state = state;
         this._parent = parent;
         this._children = children;
-        this.depth = depth;
-        this.gameLength = 0;
     }
 
     // #endregion
@@ -42,45 +37,32 @@ export default class DynamicNode {
         const moves = this.state.getMoves();
 
         for (const move of moves) {
-            this.children.push(new DynamicNode(move, this, this.depth + 1));
+            this.children.push(new DynamicNode(move, this));
         }
 
         return this.children[0];
     }
 
     public rollout() {
-        let length = 0;
+        const clone = this.state.clone();
 
-        const mainClone = this.state.clone();
-        const iterations = 3;
-        const results = [];
-
-        for (let i: number = 0; i < iterations; i++) {
-            const clone = mainClone;
-
-            while (true) {
-                if (clone.game.isOver()) {
-                    const result = clone.game.getWinner();
-
-                    this.gameLength += length;
-
-                    console.log(clone.game.toString(), result);
-            
-                    results.push(result);
-                }
-
-                clone.togglePlayer();
-                clone.makeRandomMove();
-
-                length++;
-            }
+        if (clone.game.isOver()) {
+            const result = clone.game.getWinner();
+    
+            return result;
         }
 
-        const result = this.mode(results);
+        while (true) {
+            if (clone.game.isOver()) {
+                const result = clone.game.getWinner();
+        
+                return result;
+            }
 
-        console.log(results, result);
+            clone.togglePlayer();
 
-        return result;
+            clone.makeRandomMove();
+        }
     }
 
     // #endregion
@@ -129,11 +111,11 @@ export default class DynamicNode {
         return this._children.length === 0;
     }
 
-    public sortByDepth(): DynamicNode[] {
+    public sortChildren(): DynamicNode[] {
         const copy = this._children.slice();
 
         const mostVisisted = copy.sort((x, y) => 
-            (x._state.wins / x._state.visits || 0) - (y._state.wins / y._state.visits || 0) || x.depth - y.depth
+            (y._state.wins / y._state.visits || 0) - (x._state.wins / x._state.visits || 0)
         );
 
         return mostVisisted;

@@ -11,8 +11,6 @@ export default class GameController {
     private player1: Player;
     private player2: Player;
 
-    private moveNumber: number = 1;
-
     constructor(model: Game, view: GameView, player1: Player, player2: Player) {
         this.model = model;
         this.view = view;
@@ -50,10 +48,11 @@ export default class GameController {
         let color = this.player === 1 ? "black" : "white";
         const nextPlayer = this.player === 1 ? 2 : 1;
 
-        this.view.addPiece(index, color, this.moveNumber);
+        this.view.addPiece(index, color, this.model.moveNumber);
         this.model.performMove(index, this.player);
         
-        console.log(this.model.getHeuristicEvaluation(this.player) + "\n");
+        if (this.player === 1)
+            console.log(this.model.getHeuristicEvaluation(this.player) + "\n");
 
         if (this.model.isOver()) {
             this.view.endGame(color, this.model.isDraw());
@@ -68,14 +67,11 @@ export default class GameController {
         this.view.changePlayer(nextPlayer);
         this.player = nextPlayer;
 
-        this.moveNumber++;
-
         return nextPlayer;
     }
 
     restart() {
         this.player = 1;
-        this.moveNumber = 1;
 
         this.view.changePlayer(this.player);
 
