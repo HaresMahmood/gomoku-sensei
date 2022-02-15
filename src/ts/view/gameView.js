@@ -1,12 +1,20 @@
+import Event from "../utility/event.js";
+
 const BREAKPOINT = 650;
 
 export default class GameView {
     constructor(rows, columns) {
+        this.restartEvent = new Event();
+
         this.board = $(".board");
         this.cell = ".cell";
 
         this.tokenSound = new Audio("../../res/audio/token.mp3");
         this.gongSound = new Audio("../../res/audio/gong.mp3");
+
+        this.setRestartClickHandler(this.restart, this.restartEvent);
+        this.setModalCloseHandler();
+        this.setOverlayClickHandler();
 
         this.populateBoard(rows, columns)
         this.setStorageChangeEventHandler(this.updateSettings);
@@ -70,24 +78,31 @@ export default class GameView {
 
     restart() {
         $(".piece").remove();
+        $(".board").removeClass("inactive");
+        $(".player__container").removeClass("lost");
     }
 
-    endGame(color, isDraw) {
-        const winText = isDraw ? `Draw!` : `${color} wins!`;
+    endGame(winner, isDraw) {
+        const winText = isDraw ? `Draw!` : `Player ${winner.player} wins!`;
         const soundEffects = JSON.parse(localStorage.getItem(3));
+        const otherPlayer = winner.player === 1 ? 2 : 1;
 
         if (soundEffects) {
             this.gongSound.cloneNode().play();
         }
 
-        window.alert(winText); // TODO: Introduce custom modal?
+        
+        $(".player__container").eq(otherPlayer - 1).addClass("lost");
+        $("#modal-icon").text(winner.name[1]);
+        $("#modal-header").text(winText);
+
+        $("modal").addClass("visible");
+        $(".board").addClass("inactive");
     }
 
 
 
     updateSettings(showCoordinates, showMoveNumbers, highlightMove, soundEffects, devMode) {
-        console.log(showMoveNumbers, highlightMove);
-        
         $(".piece").toggleClass("no-numbers", !showMoveNumbers);
         $(".piece").toggleClass("no-highlight", !highlightMove);
     }
@@ -104,9 +119,10 @@ export default class GameView {
         });
     }
 
-    setRestartClickHandler(handler) {
-        $("#restart-button").bind("mouseup", function() {
+    setRestartClickHandler(handler, event) {
+        $(".restart-button").bind("mouseup", function() {
             handler();
+            event.trigger();
         });
     }
 
@@ -118,6 +134,18 @@ export default class GameView {
                 JSON.parse(localStorage.getItem(2)), 
                 JSON.parse(localStorage.getItem(3)), 
                 JSON.parse(localStorage.getItem(4)));
+        });
+    }
+
+    setModalCloseHandler() {
+        $(`.close-button`).bind("mouseup", function() {
+            $("modal").removeClass("visible");
+        });
+    }
+
+    setOverlayClickHandler() {
+        $(`#overlay`).bind("mouseup", function() {
+            $("modal").removeClass("visible");
         });
     }
 }

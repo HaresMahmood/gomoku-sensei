@@ -21,6 +21,41 @@ body {
 	gap: max(3.5vw, 3.5vh);
 }
 
+modal {
+	height: fit-content;
+	width: fit-content;
+
+	gap: 1.5rem;
+
+	text-align: center;
+
+	box-shadow: 1px 9px 28px -6px rgba(0,0,0,0.5);
+	-webkit-box-shadow: 1px 9px 28px -6px rgba(0,0,0,0.5);
+	-moz-box-shadow: 1px 9px 28px -6px rgba(0,0,0,0.5);
+} 
+
+model > p {
+	overflow: hidden;
+	display: -webkit-box;
+    -webkit-line-clamp: 3; /* number of lines to show */
+    line-clamp: 3; 
+    -webkit-box-orient: vertical;
+}
+
+modal > span {
+	font-size: var(--size-700) !important;
+}
+
+modal > .row__container {
+	width: 100%;
+
+	flex-wrap: wrap;
+	justify-content: flex-end;
+}
+
+modal.visible ~ .overlay__container {
+	background: none;
+}
 
 .current-player__container {
 	/* flex-wrap: wrap; */
@@ -39,8 +74,9 @@ body {
 
 	color: var(--white);
 	background-color: var(--dark-background);
+	opacity: 1;
 
-	transition: color var(--animation-speed), background-color var(--animation-speed), border-radius ease-out var(--animation-speed);
+	transition: color var(--animation-speed), opacity var(--animation-speed), background-color var(--animation-speed), border-radius ease-out var(--animation-speed);
 }
 
 .player__container > span {
@@ -53,7 +89,11 @@ body {
 
 .player__container.active {
 	border-radius: 30px; /* calc(0.65rem + 2rem) */
-    transition: color var(--animation-speed), background-color var(--animation-speed), border-radius ease-out var(--animation-speed);
+    transition: color var(--animation-speed), opacity var(--animation-speed), background-color var(--animation-speed), border-radius ease-out var(--animation-speed);
+}
+
+.player__container.lost {
+	opacity: 0.7;
 }
 
 
@@ -76,8 +116,6 @@ body {
 	display: grid;
 
 	overflow: hidden;
-
-	/* border: red 2px solid; */
 }
 
 
@@ -99,6 +137,11 @@ body {
 
 	border: 2px solid rgba(42, 46, 57, 1);
   	border-radius: 1vh;
+}
+
+.board.inactive {
+	opacity: 0.7;
+	pointer-events: none;
 }
 
 .cell {

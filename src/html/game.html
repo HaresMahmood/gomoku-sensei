@@ -36,15 +36,32 @@
                 <span> Hint </span>
             </button>
 
-            <button id="restart-button" class="fab__button red__button">
+            <button class="restart-button fab__button red__button">
                 <span class="material-icons-round"> replay </span>
                 <span> Restart </span>
             </button>
         </section>
 
+        <modal> 
+            <span id="modal-icon" class="player-icon material-icons-round"> smart_toy </span>
+            <h3 id="modal-header"> Player won! </h3>
+            <p> Lorem laboris esse nisi ut nostrud id <br> quis nulla magna laborum ad sit. </p>
+        
+            <div class="row__container">
+                <button class="close-button">
+                    <span class="material-icons-round"> manage_search </span>
+                    <span> Inspect board </span>
+                </button>
+                <button class="restart-button close-button red__button">
+                    <span class="material-icons-round"> replay </span>
+                    <span> Restart </span>
+                </button>
+            </div>
+        </modal>
+
+        <div id="overlay" class="overlay__container"></div>
         
         <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
-
         <script type="module" src="../../dist/scripts/gameScript.js"></script>
     </body>
 </html>

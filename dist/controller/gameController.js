@@ -11,7 +11,7 @@ export default class GameController {
         this.player1 = player1;
         this.player2 = player2;
         this.view.setCellClickHandler((index) => this.performMove(index));
-        this.view.setRestartClickHandler(() => this.restart());
+        this.view.restartEvent.addListener(() => this.restart());
         this.view.setPlayer(this.player1);
         this.view.setPlayer(this.player2);
         const that = this;
@@ -36,8 +36,7 @@ export default class GameController {
         if (this.player === 1)
             console.log(this.model.getHeuristicEvaluation(this.player) + "\n");
         if (this.model.isOver()) {
-            this.view.endGame(color, this.model.isDraw());
-            this.restart();
+            this.view.endGame(this.player === 1 ? this.player1 : this.player2, this.model.isDraw());
             return;
         }
         this.view.toggleProgressBar();
