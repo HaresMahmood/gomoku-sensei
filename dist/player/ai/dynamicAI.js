@@ -34,33 +34,10 @@ export default class DynamicAI extends AbstractAI {
         console.log(root.getMostVisitedChild());
         const sortedChildren = root.sortChildren();
         let winnerNode = sortedChildren[0];
-        if (random < (mistake - 0.2)) {
+        if (random < (mistake)) {
             winnerNode = sortedChildren[1]; // Play sub-optimal move if probability of mistake is high enough.
         }
         return winnerNode.state.game.lastMove;
-    }
-    mistakeProbability(game) {
-        const max = 1000 * (game.n - 3);
-        const min = -8320 * (game.n - 3);
-        const value = game.getHeuristicEvaluation(this._player);
-        /**
-         * Normalizes a value from one range (current) to another (new).
-         *
-         * @param val    //the current value (part of the current range).
-         * @param minVal //the min value of the current value range.
-         * @param maxVal //the max value of the current value range.
-         * @param newMin //the min value of the new value range.
-         * @param newMax //the max value of the new value range.
-         *
-         * @returns the normalized value.
-         *
-         * @see https://stackoverflow.com/questions/39776819/function-to-normalize-any-number-from-0-1
-         */
-        const normalize = (val, minVal, maxVal, newMin, newMax) => {
-            return newMin + (val - minVal) * (newMax - newMin) / (maxVal - minVal);
-        };
-        console.log(value);
-        return normalize(value, min, max, 0, 1);
     }
     select(node) {
         while (!node.isLeaf()) { // && !node.state.game.isOver()
@@ -76,10 +53,40 @@ export default class DynamicAI extends AbstractAI {
         else if (result === -1) {
             utility = 0;
         }
-        // console.log(node.depth);
         while (node !== null) {
             node.updateStats(utility);
             node = node.parent;
         }
+    }
+    // #region Utility
+    mistakeProbability(game) {
+        const max = 430 * (game.n - 3);
+        const min = 5020 * (game.n - 3);
+        const value = game.getHeuristicEvaluation(this._player);
+        let normalizedValue = 0;
+        if (value > 0) { // If the AI is ahead of its opponent, ...
+            normalizedValue = 0.175 + value / max;
+        }
+        else {
+            normalizedValue = 0.175 + Math.sqrt(-1 * value / min);
+        }
+        console.log(value, normalizedValue);
+        return normalizedValue;
+    }
+    /**
+     * Normalizes a value from one range (current) to another (new).
+     *
+     * @param val    //the current value (part of the current range).
+     * @param minVal //the min value of the current value range.
+     * @param maxVal //the max value of the current value range.
+     * @param newMin //the min value of the new value range.
+     * @param newMax //the max value of the new value range.
+     *
+     * @returns the normalized value.
+     *
+     * @see https://stackoverflow.com/questions/39776819/function-to-normalize-any-number-from-0-1
+     */
+    normalize(val, minVal, maxVal, newMin, newMax) {
+        return newMin + (val - minVal) * (newMax - newMin) / (maxVal - minVal);
     }
 }
