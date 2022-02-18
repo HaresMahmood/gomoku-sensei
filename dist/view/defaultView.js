@@ -40,7 +40,7 @@ export default class DefaultView {
         $(button).addClass("red__button");
     }
     openModal(page) {
-        $("#modal-frame").attr("src", `./src/html/${page}.html`);
+        $("#modal-frame")[0].contentWindow.location.replace(`./src/html/${page}.html`);
         $("#modal-text").html(page); // TODO: Rename to `modal-header`.
         setTimeout(function () {
             $("modal").addClass("visible");
@@ -71,6 +71,7 @@ export default class DefaultView {
     setWindowBackHandler() {
         window.onpopstate = function () {
             alert("clicked back button");
+            $("modal").removeClass("visible");
         };
         history.pushState({}, '');
     }

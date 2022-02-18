@@ -55,7 +55,7 @@ export default class DefaultView {
 
 
     openModal(page) {
-        $("#modal-frame").attr("src", `./src/html/${page}.html`);
+        $("#modal-frame")[0].contentWindow.location.replace(`./src/html/${page}.html`);
         $("#modal-text").html(page); // TODO: Rename to `modal-header`.
 
         setTimeout(function() {
@@ -93,7 +93,10 @@ export default class DefaultView {
     setWindowBackHandler() {
         window.onpopstate = function() {
             alert("clicked back button");
-        }; history.pushState({}, '');
+
+            $("modal").removeClass("visible");
+        }; 
+        history.pushState({}, '');
     }
 
     setWindowMessageHandler(event, state, handler) {
