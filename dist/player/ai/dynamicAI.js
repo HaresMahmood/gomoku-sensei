@@ -8,7 +8,7 @@ export default class DynamicAI extends AbstractAI {
     // }
     chooseMove(game) {
         const mistake = this.mistakeProbability(game);
-        const iterations = 22500 * (1 - mistake + 0.175);
+        const iterations = 22500 * (1 - mistake + 0.25); // TODO: Optimize parameter
         const random = Math.random();
         const root = new DynamicNode();
         console.log(random, mistake, iterations);
@@ -30,11 +30,11 @@ export default class DynamicAI extends AbstractAI {
             }
             this.backpropogate(current, result); // Backpropogation.
         }
-        console.log(root);
-        console.log(root.getMostVisitedChild());
+        // console.log(root);
+        // console.log(root.getMostVisitedChild());
         const sortedChildren = root.sortChildren();
         let winnerNode = sortedChildren[0];
-        if (random < (mistake)) {
+        if (random < (mistake - 0.115)) { // TODO: Optimize parameter
             winnerNode = sortedChildren[1]; // Play sub-optimal move if probability of mistake is high enough.
         }
         return winnerNode.state.game.lastMove;
@@ -60,17 +60,17 @@ export default class DynamicAI extends AbstractAI {
     }
     // #region Utility
     mistakeProbability(game) {
-        const max = 430 * (game.n - 3);
-        const min = 5020 * (game.n - 3);
+        const max = 520 * (game.n - 3);
+        const min = -5020 * (game.n - 3);
         const value = game.getHeuristicEvaluation(this._player);
-        let normalizedValue = 0;
-        if (value > 0) { // If the AI is ahead of its opponent, ...
-            normalizedValue = 0.175 + value / max;
-        }
-        else {
-            normalizedValue = 0.175 + Math.sqrt(-1 * value / min);
-        }
-        console.log(value, normalizedValue);
+        let normalizedValue = this.normalize(value, min, max, 0, 1);
+        // if (value > 0) { // If the AI is ahead of its opponent, ...
+        //     normalizedValue = 0.175 + value / max;
+        // }
+        // else {
+        //     normalizedValue = 0.175 + Math.sqrt(-1 * value / min);
+        // }
+        console.log(value);
         return normalizedValue;
     }
     /**

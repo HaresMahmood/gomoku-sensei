@@ -14,7 +14,7 @@ export default class DynamicAI extends AbstractAI {
 
     public chooseMove(game: Game): number {
         const mistake = this.mistakeProbability(game);
-        const iterations: number = 22500 * (1 - mistake + 0.175);
+        const iterations: number = 22500 * (1 - mistake + 0.25); // TODO: Optimize parameter
         const random = Math.random();
 
         const root = new DynamicNode();
@@ -44,13 +44,13 @@ export default class DynamicAI extends AbstractAI {
             this.backpropogate(current, result); // Backpropogation.
         }
 
-        console.log(root);
-        console.log(root.getMostVisitedChild());
+        // console.log(root);
+        // console.log(root.getMostVisitedChild());
 
         const sortedChildren = root.sortChildren();
         let winnerNode = sortedChildren[0];
 
-        if (random < (mistake)) {
+        if (random < (mistake - 0.115)) { // TODO: Optimize parameter
             winnerNode = sortedChildren[1]; // Play sub-optimal move if probability of mistake is high enough.
         }
 
@@ -84,19 +84,19 @@ export default class DynamicAI extends AbstractAI {
     // #region Utility
 
     private mistakeProbability(game: Game) {
-        const max: number = 430 * (game.n - 3);
-        const min: number = 5020 * (game.n - 3);
+        const max: number = 520 * (game.n - 3);
+        const min: number = -5020 * (game.n - 3);
         const value: number = game.getHeuristicEvaluation(this._player);
-        let normalizedValue = 0;
+        let normalizedValue = this.normalize(value, min, max, 0, 1);
 
-        if (value > 0) { // If the AI is ahead of its opponent, ...
-            normalizedValue = 0.175 + value / max;
-        }
-        else {
-            normalizedValue = 0.175 + Math.sqrt(-1 * value / min);
-        }
+        // if (value > 0) { // If the AI is ahead of its opponent, ...
+        //     normalizedValue = 0.175 + value / max;
+        // }
+        // else {
+        //     normalizedValue = 0.175 + Math.sqrt(-1 * value / min);
+        // }
 
-        console.log(value, normalizedValue);
+        console.log(value);
 
         return normalizedValue;
     }
