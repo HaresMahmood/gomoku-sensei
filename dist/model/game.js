@@ -6,24 +6,37 @@ export default class Game {
   board;
   lastMove; // TODO: Make private.
   _moveNumber;
-  get moveNumber() { return this._moveNumber; }
-  constructor(state = new Array(ROWS * COLUMNS).fill(0), lastMove = -1,
-              moveNumber = 1) {
+  get moveNumber() {
+    return this._moveNumber;
+  }
+  constructor(
+    state = new Array(ROWS * COLUMNS).fill(0),
+    lastMove = -1,
+    moveNumber = 1
+  ) {
     this.board = state;
     this.lastMove = lastMove;
     this._moveNumber = moveNumber;
   }
   // #endregion
   // #region Accessors
-  get rows() { return ROWS; }
-  get columns() { return COLUMNS; }
-  get n() { return N; }
+  get rows() {
+    return ROWS;
+  }
+  get columns() {
+    return COLUMNS;
+  }
+  get n() {
+    return N;
+  }
   // #endregion
   // #region Miscellaneous
   clone() {
     return new Game(this.board.slice(), this.lastMove, this._moveNumber);
   }
-  isCellEmpty(index) { return this.board[index] === 0; }
+  isCellEmpty(index) {
+    return this.board[index] === 0;
+  }
   performMove(index, player, notifyObservers = false) {
     this.board[index] = player;
     this.lastMove = index;
@@ -33,7 +46,7 @@ export default class Game {
   }
   getEmptyCells() {
     const cells = [];
-    for (let i = 0; i < (ROWS * COLUMNS); i++) {
+    for (let i = 0; i < ROWS * COLUMNS; i++) {
       if (this.board[i] === 0) {
         cells.push(i);
       }
@@ -42,7 +55,7 @@ export default class Game {
   }
   getSuccessors(player) {
     let successors = [];
-    for (let i = 0; i < (ROWS * COLUMNS); i++) {
+    for (let i = 0; i < ROWS * COLUMNS; i++) {
       let copy = this.board.slice();
       if (copy[i] === 0) {
         copy[i] = player;
@@ -52,8 +65,7 @@ export default class Game {
     return successors;
   }
   isOver() {
-    const player =
-        this.board[this.lastMove]; // TODO: Think of better way of doing this.
+    const player = this.board[this.lastMove]; // TODO: Think of better way of doing this.
     return this.hasWon(player) || this.isDraw();
   }
   restart() {
@@ -75,10 +87,13 @@ export default class Game {
    */
   hasWon(player) {
     const boardString = this.toDelimitedString(this.board);
-    const win =
-        new RegExp(`(${player})(\\1{${N - 1}}|(${".".repeat(ROWS)}\\1){${
-            N - 1}}|(${".".repeat(ROWS + 1)}\\1){${N - 1}}|((?=.{0,${
-            ROWS - 1}}#)${".".repeat(ROWS - 1)}\\1){${N - 1}})`);
+    const win = new RegExp(
+      `(${player})(\\1{${N - 1}}|(${".".repeat(ROWS)}\\1){${
+        N - 1
+      }}|(${".".repeat(ROWS + 1)}\\1){${N - 1}}|((?=.{0,${
+        ROWS - 1
+      }}#)${".".repeat(ROWS - 1)}\\1){${N - 1}})`
+    );
     return win.test(boardString);
   }
   /**
@@ -98,30 +113,36 @@ export default class Game {
         function countConsecutivePieces(pieces) {
           const playerPieces = `(${currentPlayer})(\\1{${index - 1}})`;
           // TODO: Repeat `0`, `N` - `index` time (Check if this is right).
-          const lowerBlock =
-              new RegExp(`(?<=${"0".repeat(N - index)})${playerPieces}(?!0|${
-                             currentPlayer})`,
-                         "g"); // Illustration: `[OXXXX-]`.
-          const upperBlock =
-              new RegExp(`(?<!0|${currentPlayer})${playerPieces}(?=${
-                         "0".repeat(N - index)})`,
-                         "g"); // Illustration: `[-XXXXO]`.
-          const open = new RegExp(`(?<=0)${playerPieces}(?=0)`,
-                                  "g"); // Illustration: `[OXXXXO]`.
+          const lowerBlock = new RegExp(
+            `(?<=${"0".repeat(
+              N - index
+            )})${playerPieces}(?!0|${currentPlayer})`,
+            "g"
+          ); // Illustration: `[OXXXX-]`.
+          const upperBlock = new RegExp(
+            `(?<!0|${currentPlayer})${playerPieces}(?=${"0".repeat(
+              N - index
+            )})`,
+            "g"
+          ); // Illustration: `[-XXXXO]`.
+          const open = new RegExp(`(?<=0)${playerPieces}(?=0)`, "g"); // Illustration: `[OXXXXO]`.
           const openCount = (pieces.match(open) || []).length;
-          const halfOpenCount = (pieces.match(lowerBlock) || []).length +
-                                (pieces.match(upperBlock) || []).length;
-          return [ openCount, halfOpenCount ];
+          const halfOpenCount =
+            (pieces.match(lowerBlock) || []).length +
+            (pieces.match(upperBlock) || []).length;
+          return [openCount, halfOpenCount];
         }
         function checkHorizontal(row) {
-          const [horiOpenCount, horiHalfOpenCount] =
-              countConsecutivePieces(matrix[row].join(""));
+          const [horiOpenCount, horiHalfOpenCount] = countConsecutivePieces(
+            matrix[row].join("")
+          );
           openCount += horiOpenCount;
           halfOpenCount += horiHalfOpenCount;
         }
         function checkVertical(column) {
-          const [vertOpenCount, vertHalfOpenCount] =
-              countConsecutivePieces(matrix.map(row => row[column]).join(""));
+          const [vertOpenCount, vertHalfOpenCount] = countConsecutivePieces(
+            matrix.map((row) => row[column]).join("")
+          );
           openCount += vertOpenCount;
           halfOpenCount += vertHalfOpenCount;
         }
@@ -133,7 +154,7 @@ export default class Game {
             }
           }
           const [diagOpenCount, diagHalfOpenCount] =
-              countConsecutivePieces(pieces);
+            countConsecutivePieces(pieces);
           openCount += diagOpenCount;
           halfOpenCount += diagHalfOpenCount;
         }
@@ -145,7 +166,7 @@ export default class Game {
             }
           }
           const [diagOpenCount, diagHalfOpenCount] =
-              countConsecutivePieces(pieces);
+            countConsecutivePieces(pieces);
           openCount += diagOpenCount;
           halfOpenCount += diagHalfOpenCount;
         }
@@ -153,11 +174,11 @@ export default class Game {
           let pieces = "";
           for (let i = 0; i < ROWS; i++) {
             if (matrix[i - row] !== undefined) {
-              pieces += matrix[i - row][(ROWS - 1) - i];
+              pieces += matrix[i - row][ROWS - 1 - i];
             }
           }
           const [diagOpenCount, diagHalfOpenCount] =
-              countConsecutivePieces(pieces);
+            countConsecutivePieces(pieces);
           openCount += diagOpenCount;
           halfOpenCount += diagHalfOpenCount;
         }
@@ -165,11 +186,11 @@ export default class Game {
           let pieces = "";
           for (let i = 0; i < ROWS; i++) {
             if (matrix[i + row] !== undefined) {
-              pieces += matrix[i + row][(ROWS - 1) - i];
+              pieces += matrix[i + row][ROWS - 1 - i];
             }
           }
           const [diagOpenCount, diagHalfOpenCount] =
-              countConsecutivePieces(pieces);
+            countConsecutivePieces(pieces);
           openCount += diagOpenCount;
           halfOpenCount += diagHalfOpenCount;
         }
@@ -183,18 +204,22 @@ export default class Game {
             checkSecondDiagonalBottom(i);
           }
         }
-        return [ openCount, halfOpenCount ];
+        return [openCount, halfOpenCount];
       };
       const NMin2 = value(N - 2);
       const NMin1 = value(N - 1);
       let totalScore = 0;
       for (let i = 1; i <= N - 3; i++) {
         const I = value(i);
-        totalScore = totalScore + ((2 * i - 1) - I[1] + (2 * i * I[0])) +
-                     2 * (N - 2) // TODO: Not sure about this one.
-                     - NMin2[1] + nMin2Open * NMin2[0] + nMin1Half * NMin1[1] +
-                     nMin1Open * NMin1[0] +
-                     (this.hasWon(currentPlayer) ? 1000000 : 0);
+        totalScore =
+          totalScore +
+          (2 * i - 1 - I[1] + 2 * i * I[0]) +
+          2 * (N - 2) - // TODO: Not sure about this one.
+          NMin2[1] +
+          nMin2Open * NMin2[0] +
+          nMin1Half * NMin1[1] +
+          nMin1Open * NMin1[0] +
+          (this.hasWon(currentPlayer) ? 1000000 : 0);
       }
       return totalScore;
     };
@@ -203,11 +228,13 @@ export default class Game {
   }
   getWinner() {
     const player = this.board[this.lastMove]; // FIXME: `player` should be
-                                              // passed in as a parameter.
+    // passed in as a parameter.
     let winner = this.hasWon(player) ? player : -1;
     return winner;
   }
-  isDraw() { return !this.board.includes(0); }
+  isDraw() {
+    return !this.board.includes(0);
+  }
   toMatrix(array, length) {
     const matrix = [];
     for (let i = 0; i < array.length; i += length) {
@@ -219,5 +246,7 @@ export default class Game {
     const delimit = new RegExp(`(.{${ROWS}})`, "g");
     return array.join("").replace(delimit, "$1#").slice(0, -1);
   }
-  toString() { return this.toMatrix(this.board, ROWS); }
+  toString() {
+    return this.toMatrix(this.board, ROWS);
+  }
 }

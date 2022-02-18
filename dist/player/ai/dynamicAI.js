@@ -31,7 +31,8 @@ export default class DynamicAI extends AbstractAI {
     return root.getMostVisitedChild().state.game.lastMove;
   }
   select(node) {
-    while (!node.isLeaf()) {            // && !node.state.game.isOver()
+    while (!node.isLeaf()) {
+      // && !node.state.game.isOver()
       node = node.select(this._player); // UCT.
     }
     return node;
@@ -78,6 +79,6 @@ export default class DynamicAI extends AbstractAI {
    *     https://stackoverflow.com/questions/39776819/function-to-normalize-any-number-from-0-1
    */
   normalize(val, minVal, maxVal, newMin, newMax) {
-    return newMin + (val - minVal) * (newMax - newMin) / (maxVal - minVal);
+    return newMin + ((val - minVal) * (newMax - newMin)) / (maxVal - minVal);
   }
 }

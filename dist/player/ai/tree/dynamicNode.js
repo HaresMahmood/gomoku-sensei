@@ -11,9 +11,15 @@ export default class DynamicNode {
   }
   // #endregion
   // #region Accessors
-  get state() { return this._state; }
-  get parent() { return this._parent; }
-  get children() { return this._children; }
+  get state() {
+    return this._state;
+  }
+  get parent() {
+    return this._parent;
+  }
+  get children() {
+    return this._children;
+  }
   // #endregion
   // #region Miscellaneous
   /**
@@ -31,22 +37,22 @@ export default class DynamicNode {
     const isAIPlayer = selected._state.playerNumber !== playerNumber;
     let bestValue = isAIPlayer ? -Infinity : Infinity;
     for (const child of this._children) {
-      const exploitation = (child._state.wins / child._state.visits) ||
-                           0; // Change `NaN` to 0 (0 wins / 0 visits).
-      let exploration = Math.sqrt(2) * Math.sqrt(Math.log(this._state.visits) /
-                                                 child._state.visits);
-      exploration = isNaN(exploration)
-                        ? Infinity
-                        : exploration; // Change `NaN` to `Infinity` (log(0
-                                       // parent visits)).
-      const fairness = (child._state.gameLength / child._state.visits) || 0;
-      const uctValue = (isAIPlayer ? exploitation + exploration
-                                   : exploitation - exploration) +
-                       fairness;
+      const exploitation = child._state.wins / child._state.visits || 0; // Change `NaN` to 0 (0 wins / 0 visits).
+      let exploration =
+        Math.sqrt(2) *
+        Math.sqrt(Math.log(this._state.visits) / child._state.visits);
+      exploration = isNaN(exploration) ? Infinity : exploration; // Change `NaN` to `Infinity` (log(0
+      // parent visits)).
+      const fairness = child._state.gameLength / child._state.visits || 0;
+      const uctValue =
+        (isAIPlayer ? exploitation + exploration : exploitation - exploration) +
+        fairness;
       // console.log(isAIPlayer, exploitation, exploration, fairness, uctValue);
       // console.log("");
-      if ((isAIPlayer && uctValue > bestValue) ||
-          (!isAIPlayer && uctValue < bestValue)) {
+      if (
+        (isAIPlayer && uctValue > bestValue) ||
+        (!isAIPlayer && uctValue < bestValue)
+      ) {
         selected = child;
         bestValue = uctValue;
       }
@@ -66,7 +72,7 @@ export default class DynamicNode {
       if (clone.game.isOver()) {
         const result = clone.game.getWinner();
         const gameLength = clone.game.moveNumber;
-        return [ result, gameLength ];
+        return [result, gameLength];
       }
       clone.togglePlayer();
       clone.makeRandomMove();
@@ -79,12 +85,16 @@ export default class DynamicNode {
     this._state.wins += utility;
     this._state.gameLength += gameLength;
   }
-  isLeaf() { return this._children.length === 0; }
+  isLeaf() {
+    return this._children.length === 0;
+  }
   sortChildren() {
     const copy = this._children.slice();
-    const mostVisisted =
-        copy.sort((x, y) => (y._state.wins / y._state.visits || 0) -
-                            (x._state.wins / x._state.visits || 0));
+    const mostVisisted = copy.sort(
+      (x, y) =>
+        (y._state.wins / y._state.visits || 0) -
+        (x._state.wins / x._state.visits || 0)
+    );
     return mostVisisted;
   }
   getWinRate() {
@@ -92,7 +102,7 @@ export default class DynamicNode {
     for (const child of this._children) {
       wins += child._state.wins > 0 ? 1 : 0;
     }
-    return wins / this._children.length * 100;
+    return (wins / this._children.length) * 100;
   }
   getMostVisitedChild() {
     let child = this._children.reduce((x, y) => {
