@@ -18,6 +18,7 @@ export default class DefaultView {
         this.setModalCloseHandler();
         this.setOverlayClickHandler();
         //this.setModalResizeHandler(this.resizeModal);
+        this.setWindowBackHandler();
         this.setWindowMessageHandler(this.messageEvent, this.gamePage, this.changeNavigationButtons);
     }
     /*=== Miscellaneous ===*/
@@ -25,7 +26,8 @@ export default class DefaultView {
         if (this.currentState !== page) {
             $("#page-frame").removeClass("loaded");
             setTimeout(function () {
-                $("#page-frame").attr("src", `./src/html/${pageName}.html`);
+                //$("#page-frame").attr("src", `./src/html/${pageName}.html`)
+                $('#page-frame')[0].contentWindow.location.replace(`./src/html/${pageName}.html`);
                 setTimeout(function () {
                     $("#page-frame").addClass("loaded");
                 }, 50);
@@ -89,6 +91,12 @@ export default class DefaultView {
         $(window).on("resize", function () {
             handler("#modal-frame");
         });
+    }
+    setWindowBackHandler() {
+        window.onpopstate = function () {
+            alert("clicked back button");
+        };
+        history.pushState({}, '');
     }
     setWindowMessageHandler(event, state, handler) {
         $(window).on("message", function (e) {
