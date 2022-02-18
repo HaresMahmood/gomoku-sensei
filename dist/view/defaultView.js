@@ -17,7 +17,6 @@ export default class DefaultView {
         this.setModalButtonHandler("settings", this.openModal);
         this.setModalCloseHandler();
         this.setOverlayClickHandler();
-        //this.setModalResizeHandler(this.resizeModal);
         this.setWindowBackHandler();
         this.setWindowMessageHandler(this.messageEvent, this.gamePage, this.changeNavigationButtons);
     }
@@ -47,21 +46,6 @@ export default class DefaultView {
             $("modal").addClass("visible");
         }, 50);
     }
-    resizeModal(iframe) {
-        var rem = function rem() {
-            var html = document.getElementsByTagName('html')[0];
-            return function () {
-                return parseInt(window.getComputedStyle(html)['fontSize']);
-            };
-        }();
-        if (!window.matchMedia("(max-width: 600px)").matches) {
-            const height = $(iframe).contents().find("body > section").length * (rem() * 1.5);
-            $(iframe).css("height", $(iframe).contents().height());
-        }
-        else {
-            $(iframe).css("height", "");
-        }
-    }
     /*=== Events ===*/
     setNavigationButtonHandler(button, state, handler) {
         $(`#${button}-button`).bind("mouseup", function () {
@@ -82,14 +66,6 @@ export default class DefaultView {
     setOverlayClickHandler() {
         $(`#overlay`).bind("mouseup", function () {
             $("modal").removeClass("visible");
-        });
-    }
-    setModalResizeHandler(handler) {
-        $("#modal-frame").on("load", function () {
-            handler(this);
-        });
-        $(window).on("resize", function () {
-            handler("#modal-frame");
         });
     }
     setWindowBackHandler() {
