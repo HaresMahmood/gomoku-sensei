@@ -99,7 +99,7 @@ export default class DynamicAI extends AbstractAI {
      * @param newMax //the max value of the new value range.
      *
      * @returns the normalized value.
-     * 
+     *
      * @see https://stackoverflow.com/questions/39776819/function-to-normalize-any-number-from-0-1
      */
     private normalize(val, minVal, maxVal, newMin, newMax) {

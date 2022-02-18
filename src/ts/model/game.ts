@@ -53,7 +53,7 @@ export default class Game {
         this._moveNumber++;
 
         if (notifyObservers) {
-            
+
         }
     }
 
@@ -96,17 +96,17 @@ export default class Game {
             this.board[i] = 0;
             this.lastMove = -1;
         }
-        
+
         this._moveNumber = 1;
     }
 
     // #endregion
 
     // #region Utility
-    
+
     /**
      * Check if `player` has won the game.
-     * 
+     *
      * @param player The last player.
      * @returns Whether the given `player` has won.
      * @see https://stackoverflow.com/questions/64755169/check-for-a-row-of-4-diagonally-vertically-and-horizontally-using-javascript
@@ -120,7 +120,7 @@ export default class Game {
 
     /**
      * Calculates a heurstic evaluation of `player`s performance.
-     * 
+     *
      * @param player The current player.
      * @returns `player`s score relative to that of its opponent.
      * @see http://www.cari-info.org/Actes-2018/p276-286.pdf
@@ -133,7 +133,7 @@ export default class Game {
             const value = (index: number) => {
                 let openCount = 0;
                 let halfOpenCount = 0;
-                
+
                 function countConsecutivePieces(pieces: string) {
                     const playerPieces: string = `(${currentPlayer})(\\1{${index - 1}})`;
 
@@ -147,69 +147,69 @@ export default class Game {
 
                     return [openCount, halfOpenCount];
                 }
-        
+
                 function checkHorizontal(row: number) {
                     const [horiOpenCount, horiHalfOpenCount] = countConsecutivePieces(matrix[row].join(""));
-                    
+
                     openCount += horiOpenCount;
                     halfOpenCount += horiHalfOpenCount;
                 }
-        
+
                 function checkVertical(column: number) {
                     const [vertOpenCount, vertHalfOpenCount] = countConsecutivePieces(matrix.map(row => row[column]).join(""));
-                    
+
                     openCount += vertOpenCount;
                     halfOpenCount += vertHalfOpenCount;
                 }
-        
+
                 function checkPrimaryDiagonalTop(row: number) {
                     let pieces = "";
-        
+
                     for (let i = 0; i < ROWS; i++) {
                         if (matrix[i + row] !== undefined) {
                             pieces += matrix[i][i + row];
                         }
                     }
-        
+
                     const [diagOpenCount, diagHalfOpenCount] = countConsecutivePieces(pieces);
-                    
+
                     openCount += diagOpenCount;
                     halfOpenCount += diagHalfOpenCount;
                 }
-        
+
                 function checkPrimaryDiagonalBottom(row: number) {
                     let pieces = "";
-        
+
                     for (let i = 1; i < ROWS; i++) {
                         if (matrix[i + row] !== undefined) {
                             pieces += matrix[i + row][i];
                         }
                     }
-        
+
                     const [diagOpenCount, diagHalfOpenCount] = countConsecutivePieces(pieces);
-                    
+
                     openCount += diagOpenCount;
                     halfOpenCount += diagHalfOpenCount;
                 }
-        
+
                 function checkSecondDiagonalTop(row: number) {
                     let pieces = "";
-        
+
                     for (let i = 0; i < ROWS; i++) {
                         if (matrix[i - row] !== undefined) {
                             pieces += matrix[i - row][(ROWS - 1) - i];
                         }
                     }
-        
+
                     const [diagOpenCount, diagHalfOpenCount] = countConsecutivePieces(pieces);
-                    
+
                     openCount += diagOpenCount;
                     halfOpenCount += diagHalfOpenCount;
                 }
-        
+
                 function checkSecondDiagonalBottom(row: number) {
                     let pieces = "";
-        
+
                     for (let i = 0; i < ROWS; i++) {
                         if (matrix[i + row] !== undefined) {
                             pieces += matrix[i + row][(ROWS - 1) - i];
@@ -217,24 +217,24 @@ export default class Game {
                     }
 
                     const [diagOpenCount, diagHalfOpenCount] = countConsecutivePieces(pieces);
-                    
+
                     openCount += diagOpenCount;
                     halfOpenCount += diagHalfOpenCount;
                 }
-        
+
                 for (let i: number = 0; i < ROWS; i++) {
                     checkHorizontal(i);
-                    checkVertical(i);  
+                    checkVertical(i);
 
                     checkPrimaryDiagonalTop(i);
                     checkSecondDiagonalTop(i);
-        
+
                     if (i != 0) {
                         checkPrimaryDiagonalBottom(i);
                         checkSecondDiagonalBottom(i);
                     }
                 }
-                
+
                 return [openCount, halfOpenCount];
             }
 
@@ -273,8 +273,8 @@ export default class Game {
     }
 
     private toMatrix(array, length: number) {
-        const matrix = []; 
-      
+        const matrix = [];
+
         for (let i = 0 ; i < array.length; i += length) {
             matrix.push(array.slice(i, i + length));
         }

@@ -8,8 +8,8 @@ export default class State {
     private _wins: number;
     private _visits: number;
 
-    private _gameLength: number; // Specifically for Dynamic AI. 
-    
+    private _gameLength: number; // Specifically for Dynamic AI.
+
     constructor(game = null, playerNumber = 1, wins = 0, visits = 0, gameLength = 0) {
         this._game = game;
         this._playerNumber = playerNumber;
