@@ -1,17 +1,27 @@
 import Game from "../../../model/game.js";
 
 export default class State {
+    // #region Initialization
+
     private _game: Game;
     private _playerNumber: number;
     private _wins: number;
     private _visits: number;
+
+    private _gameLength: number; // Specifically for Dynamic AI. 
     
-    constructor(game = null, playerNumber = 1, wins = 0, visits = 0) {
+    constructor(game = null, playerNumber = 1, wins = 0, visits = 0, gameLength = 0) {
         this._game = game;
         this._playerNumber = playerNumber;
         this._wins = wins;
         this._visits = visits;
+
+        this._gameLength = gameLength;
     }
+
+    // #endregion
+
+    // #region Properties
 
     public get game() {
         return this._game;
@@ -29,6 +39,10 @@ export default class State {
         return this._visits;
     }
 
+    public get gameLength() {
+        return this._gameLength;
+    }
+
     public set game(value: Game) {
         this._game = value;
     }
@@ -44,6 +58,12 @@ export default class State {
     public set visits(value: number) {
         this._visits = value;
     }
+
+    public set gameLength(value: number) {
+        this._gameLength = value;
+    }
+
+    // #endregion
 
     clone() {
         return new State(this._game.clone(), this._playerNumber, this._wins, this._visits);

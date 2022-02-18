@@ -7,16 +7,13 @@ export default class DynamicAI extends AbstractAI {
     //     this.node = node;
     // }
     chooseMove(game) {
-        const mistake = this.mistakeProbability(game);
-        const iterations = 22500 * (1 - mistake + 0.25); // TODO: Optimize parameter
-        const random = Math.random();
+        const iterations = 22000;
         const root = new DynamicNode();
-        console.log(random, mistake, iterations);
         root.state.game = game;
         root.state.playerNumber = this._player;
         root.expand();
         for (let i = 0; i <= iterations; i++) {
-            // Teytaud and Teytaud policy (Decisive and Anti-Decisive moves)
+            // Teytaud and Teytaud policy (Decisive and Anti-Decisive moves) here.
             let current = this.select(root); // Selection.
             let result;
             if (current.state.game.isOver()) {
@@ -30,14 +27,9 @@ export default class DynamicAI extends AbstractAI {
             }
             this.backpropogate(current, result); // Backpropogation.
         }
-        // console.log(root);
-        // console.log(root.getMostVisitedChild());
-        const sortedChildren = root.sortChildren();
-        let winnerNode = sortedChildren[0];
-        if (random < (mistake - 0.115)) { // TODO: Optimize parameter
-            winnerNode = sortedChildren[1]; // Play sub-optimal move if probability of mistake is high enough.
-        }
-        return winnerNode.state.game.lastMove;
+        console.log(root);
+        console.log(root.getMostVisitedChild());
+        return root.getMostVisitedChild().state.game.lastMove;
     }
     select(node) {
         while (!node.isLeaf()) { // && !node.state.game.isOver()
@@ -47,14 +39,14 @@ export default class DynamicAI extends AbstractAI {
     }
     backpropogate(node, result) {
         let utility = -1;
-        if (result === this._player) {
+        if (result[0] === this._player) {
             utility = 1;
         }
-        else if (result === -1) {
+        else if (result[0] === -1) {
             utility = 0;
         }
         while (node !== null) {
-            node.updateStats(utility);
+            node.updateStats(utility, result[1]);
             node = node.parent;
         }
     }
