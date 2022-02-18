@@ -63,7 +63,7 @@ export default class DefaultView {
         }, 50);
     }
 
-    /*=== Events ===*/
+    // #region Events
 
     setNavigationButtonHandler(button, state, handler) {
         $(`#${button}-button`).bind("mouseup", function() {
@@ -104,4 +104,6 @@ export default class DefaultView {
             event.trigger(e.originalEvent.data); // Pass player information to `defaultScript`.
         });
     }
+
+    // #endregion
 }

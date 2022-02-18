@@ -31,16 +31,11 @@ body,
 }
 
 
-
 .information__container {
     width: 100%;
 
-    justify-content: space-between;
-}
-
-.information__container {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
 }
 
@@ -50,10 +45,13 @@ body,
     justify-content: flex-start;
 }
 
+/* Specifically for `Rules`-page. */
+.information__container > div > div {
+    margin-left: calc(1rem + max(5vh, 5vw));
 
-.information__container > div:not(:first-child) {
-    flex-direction: column;
-    align-items: flex-start;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 

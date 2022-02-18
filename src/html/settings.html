@@ -3,78 +3,77 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="../css/pages/sub-pages/settings.css">
+        <!-- <link rel="stylesheet" href="../css/pages/modal.css">
+        <link rel="stylesheet" href="../css/components/switch-component.css"> -->
+        <link rel="stylesheet" href="../css/pages/sub-pages/settings.css"> 
     </head>
     <body>
-        <main>
-            <section class="information__container">
-                <div class="row__container">
-                    <span class="material-icons-round"> location_on </span>
-                    <p> Show coordinates </p>
+        <section class="information__container">
+            <span class="material-icons-round"> location_on </span>
+            <div class="center__container">
+                <p> Show coordinates </p> 
+                <p class="description__text"> Assigns coordinates to each axis of the board. </p>
+            </div>
+            <label class="switch__component">
+                <input disabled name="coordinates" type="checkbox">
+                <div>
+                    <span class="handle"></span>
                 </div>
-                <label class="switch__component">
-                    <input disabled name="coordinates" type="checkbox">
-                    <div>
-                        <span class="handle"></span>
-                    </div>
-                </label>
-            </section>
-            <section class="information__container">
-                <div class="row__container">
-                    <span class="material-icons-round"> tag </span>
-                    <p> Show move numbers on each piece </p>
+            </label>
+        </section>
+        <section class="information__container">
+            <span class="material-icons-round"> tag </span>
+            <div class="center__container">
+                <p> Show move numbers on each piece </p>
+                <p class="description__text"> Displays the turn every move was placed at. </p>
+            </div>
+            <label class="switch__component">
+                <input name="numbers" checked type="checkbox">
+                <div>
+                    <span class="handle"></span>
                 </div>
-                <label class="switch__component">
-                    <input name="numbers" checked type="checkbox">
-                    <div>
-                        <span class="handle"></span>
-                    </div>
-                </label>
-            </section>
-            <section class="information__container">
-                <div class="row__container">
-                    <span class="material-icons-round"> highlight </span>
-                    <p> Highlight last move </p>
+            </label>
+        </section>
+        <section class="information__container">
+            <span class="material-icons-round"> highlight </span>
+            <div class="center__container">
+                <p> Highlight last move </p>
+                <p class="description__text"> Displays a dot <b> · </b> on the last-placed piece. </p>
+            </div>
+            <label class="switch__component">
+                <input name="highlight" type="checkbox">
+                <div>
+                    <span class="handle"></span>
                 </div>
-                <label class="switch__component">
-                    <input name="highlight" type="checkbox">
-                    <div>
-                        <span class="handle"></span>
-                    </div>
-                </label>
-            </section>
-            <section class="information__container">
-                <div class="row__container">
-                    <div class="row__container">
-                        <span class="material-icons-round"> volume_up </span>
-                        <p> Sound-effects </p>
-                    </div>
-                    <label class="switch__component">
-                        <input name="volume" type="checkbox">
-                        <div>
-                            <span class="handle"></span>
-                        </div>
-                    </label>
+            </label>
+        </section>
+        <section class="information__container">
+            <span class="material-icons-round"> volume_up </span>
+            <div class="center__container">
+                <p> Sound-effects </p>
+                <p class="description__text"> Audio obtained from <a href="https://www.zapsplat.com" target="_blank"> zapsplat.com </a> </p>
+            </div>
+            <label class="switch__component">
+                <input name="volume" type="checkbox">
+                <div>
+                    <span class="handle"></span>
                 </div>
-                <div class="description__container">
-                    <p> Audio obtained from <a href="https://www.zapsplat.com" target="_blank"> zapsplat.com </a> </p>
-                </div>
+            </label>
             </section>  
-            <section class="information__container">
-                <div class="row__container">
-                    <span class="material-icons-round"> bug_report </span>
-                    <p> Developer mode </p>
+        <section class="information__container">
+            
+            <span class="material-icons-round"> bug_report </span>
+            <div class="center__container">
+                <p> Developer mode </p>
+                <p class="description__text"> Displays extra information next to the board, intended for developers </p>
+            </div>
+            <label class="switch__component">
+                <input checked name="dev" type="checkbox">
+                <div>
+                    <span class="handle"></span>
                 </div>
-                <label class="switch__component">
-                    <input checked name="dev" type="checkbox">
-                    <div>
-                        <span class="handle"></span>
-                    </div>
-                </label>
-            </section>  
-        </main>
-        
-        <button id="save-button" class="red__button"> Save </button>
+            </label>
+            </section>
 
         <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
         <script type="module" src="../../dist/scripts/settingsScript.js"></script>

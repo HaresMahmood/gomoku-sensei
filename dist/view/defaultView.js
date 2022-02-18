@@ -46,7 +46,7 @@ export default class DefaultView {
             $("modal").addClass("visible");
         }, 50);
     }
-    /*=== Events ===*/
+    // #region Events
     setNavigationButtonHandler(button, state, handler) {
         $(`#${button}-button`).bind("mouseup", function () {
             state.navigateTo();

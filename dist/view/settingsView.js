@@ -10,10 +10,9 @@ export default class SettingsView {
     }
     // TODO: Save switches `onChange`.
     setSaveButtonHandler() {
-        $("#save-button").on("click", function () {
-            $("input[type=checkbox]").each(function (index) {
-                localStorage.setItem(index, `${$(this).is(":checked")}`);
-            });
+        $("input[type=checkbox]").change(function () {
+            localStorage.setItem($("input[type=checkbox]").index(this), `${this.checked}`);
+            console.log($("input[type=checkbox]").index(this), localStorage.getItem($("input[type=checkbox]").index(this)));
         });
     }
 }
