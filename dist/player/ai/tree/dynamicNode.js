@@ -22,6 +22,37 @@ export default class DynamicNode {
     }
     // #endregion
     // #region Miscellaneous
+    /**
+     * Selection-phase of the Monte Carlo Tree Search algorithm.
+     * Utilises the UCT (Upper Confidence Bound 1 applied to
+     * trees) formula.
+     *
+     * @param playerNumber the AI's player number - Either 1 or 2.
+     * @returns The child with the best UCT-score.
+     * @see [Informaion on the UCT-formula](https://en.wikipedia.org/wiki/Monte_Carlo_tree_search#Exploration_and_exploitation)
+     */
+    select(playerNumber) {
+        let selected = this._children[0];
+        const isAIPlayer = selected._state.playerNumber !== playerNumber;
+        let bestValue = isAIPlayer ? -Infinity : Infinity;
+        for (const child of this._children) {
+            const exploitation = (child._state.wins / child._state.visits) || 0; // Change `NaN` to 0 (0 wins / 0 visits).
+            let exploration = Math.sqrt(2) * Math.sqrt(Math.log(this._state.visits) / child._state.visits);
+            exploration = isNaN(exploration) ? Infinity : exploration; // Change `NaN` to `Infinity` (log(0 parent visits)).
+            const fairness = (child._state.gameLength / child._state.visits) || 0;
+            const uctValue = (isAIPlayer ? exploitation + exploration
+                : exploitation - exploration)
+                + fairness;
+            // console.log(isAIPlayer, exploitation, exploration, fairness, uctValue);
+            // console.log("");
+            if ((isAIPlayer && uctValue > bestValue)
+                || (!isAIPlayer && uctValue < bestValue)) {
+                selected = child;
+                bestValue = uctValue;
+            }
+        }
+        return selected;
+    }
     expand() {
         const moves = this.state.getMoves();
         for (const move of moves) {
@@ -31,48 +62,22 @@ export default class DynamicNode {
     }
     rollout() {
         const clone = this.state.clone();
-        if (clone.game.isOver()) {
-            const result = clone.game.getWinner();
-            return result;
-        }
         while (true) {
             if (clone.game.isOver()) {
                 const result = clone.game.getWinner();
-                return result;
+                const gameLength = clone.game.moveNumber;
+                return [result, gameLength];
             }
             clone.togglePlayer();
             clone.makeRandomMove();
         }
     }
     // #endregion
-    // #region Miscellaneous
-    select(playerNumber) {
-        let selected = this._children[0];
-        const isAIPlayer = selected._state.playerNumber !== playerNumber;
-        let bestValue = isAIPlayer ? -Infinity : Infinity;
-        for (const child of this._children) {
-            const exploitation = (child._state.wins / child._state.visits) || 0; // Change `NaN` to 0 (0 wins / 0 visits).
-            let exploration = 1.41 * Math.sqrt(Math.log(this._state.visits) / child._state.visits);
-            exploration = isNaN(exploration) ? Infinity : exploration; // Change `NaN` to `Infinity` (log(0 parent visits)).
-            const uctValue = isAIPlayer ? exploitation + exploration
-                : exploitation - exploration;
-            //console.log(child, uctValue, bestValue);
-            //console.log(exploitation, exploration);
-            if ((isAIPlayer && uctValue > bestValue)
-                || (!isAIPlayer && uctValue < bestValue)) {
-                selected = child;
-                bestValue = uctValue;
-            }
-        }
-        //console.log(currentPlayerNumber, bestValue, this.children.indexOf(selected));
-        //console.log(" ");
-        return selected;
-    }
-    // #endregion
     // #region Utlity
-    updateStats(utility) {
+    updateStats(utility, gameLength) {
         this._state.visits++;
         this._state.wins += utility;
+        this._state.gameLength += gameLength;
     }
     isLeaf() {
         return this._children.length === 0;
@@ -91,25 +96,10 @@ export default class DynamicNode {
     }
     getMostVisitedChild() {
         let child = this._children.reduce((x, y) => {
-            return (x._state.wins / x._state.visits || 0) > (y._state.wins / y._state.visits || 0) ? x : y;
+            return (x._state.visits || 0)
+                > (y._state.visits || 0)
+                ? x : y;
         });
         return child;
-    }
-    mode(arr) {
-        const counts = {};
-        let maxCount = 0;
-        let maxKey;
-        // Count how many times each object (or really its string representation)
-        // appears, and keep track of the highest count we've seen.
-        for (let i = 0; i < arr.length; i++) {
-            const key = arr[i];
-            const count = (counts[key] = (counts[key] || 0) + 1);
-            if (count > maxCount) {
-                maxCount = count;
-                maxKey = key;
-            }
-        }
-        // Return (one of) the highest keys we've seen, or undefined.
-        return maxKey;
     }
 }
