@@ -53,7 +53,7 @@ export default class GameController {
         const that = this;
         window.setTimeout(function () {
             that.nextPlayer(that.player);
-        }, 10); // Set timeout to update UI.
+        }, 150); // Set timeout to update UI.
     }
     // TODO: Come up with better name.
     nextPlayer(player) {

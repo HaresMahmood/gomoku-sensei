@@ -49,14 +49,15 @@ export default class DynamicNode {
 
         for (const child of this._children) {
             const exploitation = (child._state.wins / child._state.visits) || 0; // Change `NaN` to 0 (0 wins / 0 visits).
-            let exploration = Math.sqrt(2) * Math.sqrt(Math.log(this._state.visits) / child._state.visits); 
-            exploration = isNaN(exploration) ? Infinity : exploration; // Change `NaN` to `Infinity` (log(0 parent visits)).
-            const fairness = (child._state.gameLength / child._state.visits) || 0;
+            const exploration = Math.sqrt(2) * Math.sqrt(Math.log(this._state.visits) / child._state.visits) || Infinity;  // Change `NaN` to `Infinity` (log(0 parent visits)).
             const terminality = child._state.isTerminal ? 1000 : 0; // TODO: `1000` is pretty much a random value.
+                                                                    // TODO: Add to KillerAI as well.
+
+            const fairness = (child._state.gameLength / child._state.visits) || 0;
 
             const uctValue = (isAIPlayer 
-                             ? exploitation + exploration + fairness + terminality
-                             : exploitation - exploration - fairness - terminality);
+                             ? exploitation + exploration + terminality + fairness
+                             : exploitation - exploration - terminality);
 
             // console.log(isAIPlayer, exploitation, exploration, fairness, uctValue);
             // console.log("");
@@ -101,6 +102,7 @@ export default class DynamicNode {
 
     // #region Utlity
 
+    // TODO: Rename to `backpropogate`.
     public updateStats(utility: number, gameLength: number): void {
         this._state.visits++;
         this._state.wins += utility;

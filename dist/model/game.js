@@ -1,6 +1,6 @@
-const ROWS = 5;
+const ROWS = 7;
 const COLUMNS = ROWS;
-const N = 4;
+const N = 5;
 export default class Game {
     // #region Initialization
     board;
