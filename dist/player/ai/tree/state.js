@@ -4,13 +4,16 @@ export default class State {
     _playerNumber;
     _wins;
     _visits;
-    _gameLength; // Specifically for Dynamic AI. 
-    constructor(game = null, playerNumber = 1, wins = 0, visits = 0, gameLength = 0) {
+    // Specifically for Dynamic AI. 
+    _gameLength;
+    _isTerminal;
+    constructor(game = null, playerNumber = 1, wins = 0, visits = 0, gameLength = 0, isTerminal = false) {
         this._game = game;
         this._playerNumber = playerNumber;
         this._wins = wins;
         this._visits = visits;
         this._gameLength = gameLength;
+        this._isTerminal = isTerminal;
     }
     // #endregion
     // #region Properties
@@ -29,6 +32,9 @@ export default class State {
     get gameLength() {
         return this._gameLength;
     }
+    get isTerminal() {
+        return this._isTerminal;
+    }
     set game(value) {
         this._game = value;
     }
@@ -43,6 +49,9 @@ export default class State {
     }
     set gameLength(value) {
         this._gameLength = value;
+    }
+    set isTerminal(value) {
+        this._isTerminal = value;
     }
     // #endregion
     clone() {

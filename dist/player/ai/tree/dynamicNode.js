@@ -40,9 +40,10 @@ export default class DynamicNode {
             let exploration = Math.sqrt(2) * Math.sqrt(Math.log(this._state.visits) / child._state.visits);
             exploration = isNaN(exploration) ? Infinity : exploration; // Change `NaN` to `Infinity` (log(0 parent visits)).
             const fairness = (child._state.gameLength / child._state.visits) || 0;
-            const uctValue = (isAIPlayer ? exploitation + exploration
-                : exploitation - exploration)
-                + fairness;
+            const terminality = child._state.isTerminal ? 1000 : 0; // TODO: `1000` is pretty much a random value.
+            const uctValue = (isAIPlayer
+                ? exploitation + exploration + fairness + terminality
+                : exploitation - exploration - fairness - terminality);
             // console.log(isAIPlayer, exploitation, exploration, fairness, uctValue);
             // console.log("");
             if ((isAIPlayer && uctValue > bestValue)

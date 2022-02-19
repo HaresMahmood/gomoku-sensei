@@ -13,10 +13,10 @@ export default class DynamicAI extends AbstractAI {
         root.state.playerNumber = this._player;
         root.expand();
         for (let i = 0; i <= iterations; i++) {
-            // Teytaud and Teytaud policy (Decisive and Anti-Decisive moves) here.
             let current = this.select(root); // Selection.
             let result;
             if (current.state.game.isOver()) {
+                current.state.isTerminal = true;
                 result = current.state.game.getWinner();
             }
             else {
