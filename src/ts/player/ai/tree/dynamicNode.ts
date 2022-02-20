@@ -50,17 +50,13 @@ export default class DynamicNode {
         for (const child of this._children) {
             const exploitation = (child._state.wins / child._state.visits) || 0; // Change `NaN` to 0 (0 wins / 0 visits).
             const exploration = Math.sqrt(2) * Math.sqrt(Math.log(this._state.visits) / child._state.visits) || Infinity;  // Change `NaN` to `Infinity` (log(0 parent visits)).
-            const terminality = child._state.isTerminal ? 1000 : 0; // TODO: `1000` is pretty much a random value.
+            const terminality = child._state.isTerminal ? Infinity : 0; // TODO: `1000` is pretty much a random value.
                                                                     // TODO: Add to KillerAI as well.
-
             const fairness = (child._state.gameLength / child._state.visits) || 0;
 
             const uctValue = (isAIPlayer 
                              ? exploitation + exploration + terminality + fairness
-                             : exploitation - exploration - terminality);
-
-            // console.log(isAIPlayer, exploitation, exploration, fairness, uctValue);
-            // console.log("");
+                             : exploitation - exploration);
 
             if ((isAIPlayer && uctValue > bestValue)
             || (!isAIPlayer && uctValue < bestValue)) {
@@ -82,10 +78,19 @@ export default class DynamicNode {
         return this.children[0];
     }
 
-    public rollout(): [number, number] {
+    public rollout() {
         const clone = this.state.clone();
 
+        if (clone.game.isOver()) {
+            const result = clone.game.getWinner();
+                const gameLength = clone.game.moveNumber;
+        
+                return [result, gameLength];
+        }
+
         while (true) {
+            clone.makeRandomMove();
+
             if (clone.game.isOver()) {
                 const result = clone.game.getWinner();
                 const gameLength = clone.game.moveNumber;
@@ -94,7 +99,6 @@ export default class DynamicNode {
             }
 
             clone.togglePlayer();
-            clone.makeRandomMove();
         }
     }
 
@@ -112,31 +116,21 @@ export default class DynamicNode {
     public isLeaf(): boolean {
         return this._children.length === 0;
     }
-
-    public sortChildren(): DynamicNode[] {
-        const copy = this._children.slice();
-
-        const mostVisisted = copy.sort((x, y) => 
-            (y._state.wins / y._state.visits || 0) - (x._state.wins / x._state.visits || 0)
-        );
-
-        return mostVisisted;
-    }
-
-    public getWinRate(): number {
-        let wins = 0;
-
-        for (const child of this._children) {
-            wins += child._state.wins > 0 ? 1 : 0; 
-        }
-
-        return wins / this._children.length * 100;
-    }
     
+    // public getMostVisitedChild(): DynamicNode {
+    //     let child = this._children.reduce((x, y) => {
+    //         return (x._state.visits || 0) 
+    //              > (y._state.visits || 0) 
+    //              ? x : y;
+    //     });
+    
+    //     return child;
+    // }
+
     public getMostVisitedChild(): DynamicNode {
         let child = this._children.reduce((x, y) => {
-            return (x._state.visits || 0) 
-                 > (y._state.visits || 0) 
+            return ((x._state.wins / x._state.visits || 0) + (x._state.gameLength / x._state.visits || 0)) 
+                 > ((y._state.wins / y._state.visits || 0)  + (y._state.gameLength / y._state.visits || 0))
                  ? x : y;
         });
     

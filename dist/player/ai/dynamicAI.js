@@ -17,7 +17,7 @@ export default class DynamicAI extends AbstractAI {
             let result;
             if (current.state.game.isOver()) {
                 current.state.isTerminal = true;
-                result = current.state.game.getWinner();
+                result = [current.state.game.getWinner(), current.state.game.moveNumber];
             }
             else {
                 if (current.state.visits > 0) {
