@@ -97,6 +97,10 @@ iframe {
         justify-content: space-evenly;
     }
 
+    nav > .menu__button {
+        width: 100%;
+    }
+
 
     modal {
         width: 100vw;
@@ -109,13 +113,3 @@ iframe {
         height: 100%;
     }
 }
-
-
-/*=== Animations ===*/
-
-/* .overlay__container:hover {
-    background: linear-gradient(
-        rgba(0, 0, 0, 0.75), 
-        rgba(0, 0, 0, 0.75)
-      );;
-} */
