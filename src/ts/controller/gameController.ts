@@ -4,6 +4,7 @@ import AI from "../player/ai/ai.js";
 import Player from "../player/player.js";
 
 export default class GameController {
+    // #region Initialization
     private model: Game;
     private view: GameView;
     
@@ -27,12 +28,18 @@ export default class GameController {
         this.view.setPlayer(this.player1);
         this.view.setPlayer(this.player2);
 
+        this.view.restart(this.player1 instanceof AI);
+
         const that = this;
 
         window.setTimeout(function() {
             that.nextPlayer(that.player);
         }, 10); // Set timeout to update UI.
     }
+
+    // #endregion
+
+    // #region Miscellaneous
 
     performMove(index) {
         if (this.model.isCellEmpty(index)) {
@@ -57,11 +64,9 @@ export default class GameController {
             return;
         }
 
-        this.view.toggleProgressBar();
-
-        // const nextPlayer = this.player === 1 ? 2 : 1;
-
         this.view.changePlayer(nextPlayer);
+        this.view.disableUserInterface((nextPlayer === 1 ? this.player1 : this.player2) instanceof AI);
+
         this.player = nextPlayer;
 
         return nextPlayer;
@@ -73,7 +78,7 @@ export default class GameController {
         this.view.changePlayer(this.player);
 
         this.model.restart();
-        this.view.restart();
+        this.view.restart(this.player1 instanceof AI);
 
         const that = this;
 
@@ -91,4 +96,6 @@ export default class GameController {
             this.performMove(this.player2.chooseMove(this.model.clone()))
         }
     }
+
+    // #endregion
 }

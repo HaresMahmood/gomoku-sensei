@@ -1,19 +1,21 @@
 import Event from "../utility/event.js";
-const BREAKPOINT = 650;
 export default class GameView {
+    // #region Initialization
     constructor(rows, columns) {
         this.restartEvent = new Event();
         this.board = $(".board");
         this.cell = ".cell";
         this.tokenSound = new Audio("../../res/audio/token.mp3");
         this.gongSound = new Audio("../../res/audio/gong.mp3");
-        this.setRestartClickHandler(this.restart, this.restartEvent);
+        this.setRestartClickHandler(this.restartEvent);
         this.setModalCloseHandler();
         this.setOverlayClickHandler();
         this.populateBoard(rows, columns);
         this.setStorageChangeEventHandler(this.updateSettings);
         this.updateSettings(JSON.parse(localStorage.getItem(0)), JSON.parse(localStorage.getItem(1)), JSON.parse(localStorage.getItem(2)), JSON.parse(localStorage.getItem(3)), JSON.parse(localStorage.getItem(4)));
     }
+    // #endregion
+    // #region Miscellaneous
     populateBoard(rows, columns) {
         document.documentElement.style.setProperty("--columns", columns);
         for (let i = 0; i < (rows * columns); i++) {
@@ -34,10 +36,6 @@ export default class GameView {
             value: percentage
         });
     }
-    toggleProgressBar() {
-        //updateProgressBar(0);
-        $("header, body").toggleClass("loading");
-    }
     addPiece(index, color, moveNumber) {
         let box = this.board.find(this.cell).eq(index);
         if (box.find(".piece").length === 0) {
@@ -48,6 +46,7 @@ export default class GameView {
             let piece = `<div class="piece ${color}-piece new last ${showMoveNumbers} ${highlightMove}"><p> ${moveNumber} </p> <div></div></div>`;
             $(".last").removeClass("last");
             box.append(piece);
+            // Set timeout to update UI.
             window.setTimeout(function () {
                 $(".new").removeClass("new");
             }, 1);
@@ -56,10 +55,11 @@ export default class GameView {
             }
         }
     }
-    restart() {
+    restart(isDisabled) {
         $(".piece").remove();
         $(".board").removeClass("inactive");
         $(".player__container").removeClass("lost");
+        this.disableUserInterface(isDisabled);
         // TOOD: Add animation.
         // const pieces = $(".piece").length;
         // const animationDelay = 50;
@@ -85,23 +85,30 @@ export default class GameView {
         $("#modal-header").text(winText);
         $("modal").addClass("visible");
         $(".board").addClass("inactive");
+        $(".board").addClass("disabled");
+    }
+    disableUserInterface(isDisabled) {
+        $(".board").toggleClass("disabled", isDisabled);
     }
     updateSettings(showCoordinates, showMoveNumbers, highlightMove, soundEffects, devMode) {
         $(".piece").toggleClass("no-numbers", !showMoveNumbers);
         $(".piece").toggleClass("no-highlight", !highlightMove);
     }
-    /*-- Events */
+    // #endregion
+    // #region Utility
     getClickedCellCoordinates(cell) {
         return cell.index();
     }
+    // #endregion
+    // #region Events
     setCellClickHandler(handler) {
         $(this.cell).bind("click", function () {
             handler($(this).index());
         });
     }
-    setRestartClickHandler(handler, event) {
+    setRestartClickHandler(event) {
         $(".restart-button").bind("mouseup", function () {
-            handler();
+            // handler();
             event.trigger();
         });
     }
