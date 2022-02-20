@@ -2,7 +2,7 @@
     "theme_color": "#CE2633",
     "background_color": "#DBDBD9",
     "display": "standalone",
-    "scope": "/index.html",
+    "scope": "/",
     "start_url": "/",
     "name": "Gomoku Sensei",
     "short_name": "Gomoku",
