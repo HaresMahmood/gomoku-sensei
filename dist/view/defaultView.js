@@ -29,7 +29,7 @@ export default class DefaultView {
                 $('#page-frame')[0].contentWindow.location.replace(`./src/html/${pageName}.html`);
                 setTimeout(function () {
                     $("#page-frame").addClass("loaded");
-                }, 50);
+                }, 100);
             }, 400);
             $("#header-text").html(pageName);
             this.currentState = page;
@@ -44,7 +44,7 @@ export default class DefaultView {
         $("#modal-text").html(page); // TODO: Rename to `modal-header`.
         setTimeout(function () {
             $("modal").addClass("visible");
-        }, 50);
+        }, 100);
     }
     // #region Events
     setNavigationButtonHandler(button, state, handler) {

@@ -39,7 +39,7 @@ export default class DefaultView {
                 
                 setTimeout(function() {
                     $("#page-frame").addClass("loaded");
-                }, 50);
+                }, 100);
             }, 400);
 
             $("#header-text").html(pageName);
@@ -60,7 +60,7 @@ export default class DefaultView {
 
         setTimeout(function() {
             $("modal").addClass("visible");
-        }, 50);
+        }, 100);
     }
 
     // #region Events
