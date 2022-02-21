@@ -23,7 +23,8 @@ export default class GameView {
             JSON.parse(localStorage.getItem(1)), 
             JSON.parse(localStorage.getItem(2)), 
             JSON.parse(localStorage.getItem(3)), 
-            JSON.parse(localStorage.getItem(4)));
+            JSON.parse(localStorage.getItem(4))
+        );
     }
 
     // #endregion
@@ -39,10 +40,10 @@ export default class GameView {
     }
 
     setPlayer(player) {
-        document.title = "Game";
-
         $(".player__container p").eq(player.player - 1).text(player.name[0]);
         $(".player__container .player-icon").eq(player.player - 1).text(player.name[1]);
+
+        // window.parent.document.title = `${player.name[0]}`;
     }
 
     changePlayer(currentPlayer) {
@@ -88,6 +89,8 @@ export default class GameView {
 
         this.disableUserInterface(isDisabled)
 
+        window.parent.document.title = "Game";
+
         // TOOD: Add animation.
         // const pieces = $(".piece").length;
         // const animationDelay = 50;
@@ -120,6 +123,8 @@ export default class GameView {
         $("modal").addClass("visible");
         $(".board").addClass("inactive");
         $(".board").addClass("disabled");
+
+        window.parent.document.title = winText;
     }
 
     disableUserInterface(isDisabled) {

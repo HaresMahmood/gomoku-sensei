@@ -23,9 +23,9 @@ export default class GameView {
         }
     }
     setPlayer(player) {
-        document.title = "Game";
         $(".player__container p").eq(player.player - 1).text(player.name[0]);
         $(".player__container .player-icon").eq(player.player - 1).text(player.name[1]);
+        // window.parent.document.title = `${player.name[0]}`;
     }
     changePlayer(currentPlayer) {
         $(".active").removeClass("active");
@@ -60,6 +60,7 @@ export default class GameView {
         $(".board").removeClass("inactive");
         $(".player__container").removeClass("lost");
         this.disableUserInterface(isDisabled);
+        window.parent.document.title = "Game";
         // TOOD: Add animation.
         // const pieces = $(".piece").length;
         // const animationDelay = 50;
@@ -86,6 +87,7 @@ export default class GameView {
         $("modal").addClass("visible");
         $(".board").addClass("inactive");
         $(".board").addClass("disabled");
+        window.parent.document.title = winText;
     }
     disableUserInterface(isDisabled) {
         $(".board").toggleClass("disabled", isDisabled);

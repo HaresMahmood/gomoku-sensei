@@ -36,13 +36,15 @@ export default class DefaultView {
             setTimeout(function() {
                 //$("#page-frame").attr("src", `./src/html/${pageName}.html`)
                 $('#page-frame')[0].contentWindow.location.replace(`./src/html/${pageName}.html`);
-                
+
                 setTimeout(function() {
                     $("#page-frame").addClass("loaded");
                 }, 100);
             }, 400);
 
             $("#header-text").html(pageName);
+
+            document.title = this.capitalize(pageName);
             this.currentState = page;
         }
     }
@@ -62,6 +64,14 @@ export default class DefaultView {
             $("modal").addClass("visible");
         }, 100);
     }
+
+    // #region Utility 
+
+    capitalize(string) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    }
+
+    // #endregion
 
     // #region Events
 
