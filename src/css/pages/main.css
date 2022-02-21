@@ -49,6 +49,10 @@ nav {
     gap: 0.5rem;
 }
 
+nav > .menu__button:last-child {
+    margin-top: auto;
+}
+
 main {
     grid-area: main;
 }
@@ -101,8 +105,7 @@ iframe {
         width: 100%;
     }
 
-
-    modal {
+    modal:not(#pop-up) {
         width: 100vw;
         height: 100vh;
 
@@ -111,5 +114,9 @@ iframe {
 
     modal iframe {
         height: 100%;
+    }
+
+    #pop-up {
+        max-width: 85%;
     }
 }

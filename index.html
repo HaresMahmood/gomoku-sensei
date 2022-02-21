@@ -50,6 +50,11 @@
                 <span class="material-icons-round"> settings </span>
                 Settings
             </button> 
+
+            <button id="about-button" class="menu__button">
+                <span class="material-icons-round"> help </span>
+                About
+            </button> 
         </nav>
 
         <main>
@@ -60,10 +65,32 @@
         <modal style="opacity: 0;"> 
             <header>
                 <h3 id="modal-text"> Rules </h3>
-                <span id="close-button" class="material-icons-round"> close </span>
+                <span class="close-button material-icons-round"> close </span>
             </header>
 
             <iframe id="modal-frame" src="./src/html/rules.html" frameborder="0" scrolling="no"> </iframe> 
+        </modal>
+
+        <modal id="pop-up" style="opacity: 0;">
+            <!-- <span id="modal-icon" class="player-icon material-icons-round"> waving_hand </span> -->
+            <img id="modal-icon" src="./res/icons/favicon.png" />
+            <h3 id="modal-header"> Welcome to Gomoku Sensei </h3>
+            <p> This app was developed as part of a research project for the University of Strathclyde. If you wish to participate in the corresponding study, please visit the Google Form linked below. </p>
+        
+            <div class="row__container">
+                <button onclick="location.href='https://github.com/HaresMahmood/gomoku-sensei', '_blank';">
+                    <span class="material-icons-round"> code </span>
+                    <span> GitHub </span>
+                </button> </a>
+                <button onclick="location.href='https://forms.gle/eawUsLhRCkBiZdvP7', '_blank';">
+                    <span class="material-icons-round"> feed </span>
+                    <span> Participate </span>
+                </button> </a>
+                <button class="close-button red__button">
+                    <span class="material-icons-round"> east </span>
+                    <span> Don't participate </span>
+                </button>
+            </div>
         </modal>
         
         <div id="overlay" class="overlay__container"></div>

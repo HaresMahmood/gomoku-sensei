@@ -43,7 +43,7 @@
         </section>
 
         <!-- TODO: In-line style is bad - but without this, hidden `div`s flash on screen on-load. -->
-        <modal style="opacity: 0;">
+        <modal id="pop-up" style="opacity: 0;">
             <span id="modal-icon" class="player-icon material-icons-round"> smart_toy </span>
             <h3 id="modal-header"> Player won! </h3>
             <!-- <p> Lorem laboris esse nisi ut nostrud id <br> quis nulla magna laborum ad sit. </p> -->
@@ -59,9 +59,9 @@
                 </button>
             </div>
         </modal>
-
-        <div id="overlay" class="overlay__container"></div>
         
+        <div id="overlay" class="overlay__container"></div>
+
         <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
         <script type="module" src="../../dist/scripts/gameScript.js"></script>
     </body>

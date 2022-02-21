@@ -21,46 +21,14 @@ body {
 	gap: max(3.5vw, 3.5vh);
 }
 
-modal {
-	height: intrinsic;
-	height: -moz-fit-content;
-	height: -webkit-fit-content;
-	height: fit-content;
-	width: intrinsic;
-	width: -moz-fit-content;
-	width: -webkit-fit-content;
-	width: fit-content;
-
-	gap: 1.5rem;
-
-	text-align: center;
-
+#pop-up {
 	box-shadow: 1px 9px 28px -6px rgba(0,0,0,0.5);
 	-webkit-box-shadow: 1px 9px 28px -6px rgba(0,0,0,0.5);
 	-moz-box-shadow: 1px 9px 28px -6px rgba(0,0,0,0.5);
 } 
 
-model > p {
-	overflow: hidden;
-	display: -webkit-box;
-    -webkit-line-clamp: 3; /* number of lines to show */
-    line-clamp: 3; 
-    -webkit-box-orient: vertical;
-}
-
-modal > span {
-	font-size: var(--size-700) !important;
-}
-
-modal > .row__container {
-	width: 100%;
-
-	flex-wrap: wrap;
-	justify-content: flex-end;
-}
-
-modal.visible ~ .overlay__container {
-	background: none;
+#pop-up.visible ~ .overlay__container {
+	opacity: 0;
 }
 
 .current-player__container {

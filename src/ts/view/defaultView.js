@@ -20,11 +20,14 @@ export default class DefaultView {
 
         this.setModalButtonHandler("rules", this.openModal);
         this.setModalButtonHandler("settings", this.openModal);
+        this.setPopUpButtonHandler();
         this.setModalCloseHandler();
         this.setOverlayClickHandler();
 
         this.setWindowBackHandler();
         this.setWindowMessageHandler(this.messageEvent, this.gamePage, this.changeNavigationButtons);
+    
+        this.firstTimeLoad();
     }
 
     /*=== Miscellaneous ===*/
@@ -61,8 +64,16 @@ export default class DefaultView {
         $("#modal-text").html(page); // TODO: Rename to `modal-header`.
 
         setTimeout(function() {
-            $("modal").addClass("visible");
+            $("modal").not("#pop-up").addClass("visible");
         }, 100);
+    }
+
+    firstTimeLoad() {
+        if (localStorage.getItem("load") === null || !JSON.parse(localStorage.getItem("load"))) {
+            console.log("Welcome");
+            $("#pop-up").addClass("visible");
+            localStorage.setItem("load", "true");
+        }
     }
 
     // #region Utility 
@@ -88,14 +99,20 @@ export default class DefaultView {
         });
     }
 
+    setPopUpButtonHandler() {
+        $("#about-button").bind("mouseup", function() {
+            $("#pop-up").addClass("visible");
+        });
+    }
+
     setModalCloseHandler() {
-        $(`#close-button`).bind("mouseup", function() {
+        $(".close-button").bind("mouseup", function() {
             $("modal").removeClass("visible");
         });
     }
 
     setOverlayClickHandler() {
-        $(`#overlay`).bind("mouseup", function() {
+        $("#overlay").bind("mouseup", function() {
             $("modal").removeClass("visible");
         });
     }

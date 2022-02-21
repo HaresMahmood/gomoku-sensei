@@ -112,6 +112,10 @@ button.full-width__container {
     justify-content: flex-start;
 }
 
+button > span:nth-child(2) {
+    margin-top: 2px;
+}
+
 .menu__button,
 .fab__button {
     border-radius: 15px;
@@ -297,6 +301,48 @@ modal.visible ~ .overlay__container {
 modal header {
     display: flex;
     justify-content: space-between;
+}
+
+
+#pop-up {
+	height: intrinsic;
+	height: -moz-fit-content;
+	height: -webkit-fit-content;
+	height: fit-content;
+	width: intrinsic;
+	width: -moz-fit-content;
+	width: -webkit-fit-content;
+	width: fit-content;
+
+    max-width: 550px;
+
+	gap: 1.5rem;
+
+	text-align: center;
+
+	box-shadow: 1px 9px 28px -6px rgba(0,0,0,0.5);
+	-webkit-box-shadow: 1px 9px 28px -6px rgba(0,0,0,0.5);
+	-moz-box-shadow: 1px 9px 28px -6px rgba(0,0,0,0.5);
+} 
+
+#pop-up > span {
+	font-size: var(--size-700) !important;
+}
+
+#pop-up > img {
+    aspect-ratio: 1/1;
+    width: 3.5rem;
+}
+
+#pop-up > p {
+	text-align: left;
+}
+
+#pop-up > .row__container {
+	width: 100%;
+
+	flex-wrap: wrap;
+	justify-content: flex-end;
 }
 
 
