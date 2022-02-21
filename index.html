@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" >
     <head>
-        <title> Home </title>
+        <title> Gomoku Sensei </title>
 
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -13,6 +13,7 @@
         <meta name="msapplication-navbutton-color" content="#CE2633">
         <meta name="apple-mobile-web-app-status-bar-style" content="white-translucent">
         <meta name="msapplication-starturl" content="/">
+        <meta name="description" content="Gomoku Sensei is a research project aiming to develop a novel, Monte Carlo Tree Search AI.">
 
         <link rel="icon" type="image/png" sizes="192x192" href="./res/icons/favicon.png">
         <link rel="apple-touch-icon" type="image/png" sizes="192x192" href="./res/icons/maskable/maskable_icon_x192.png">
@@ -58,7 +59,7 @@
         </nav>
 
         <main>
-            <iframe id="page-frame" class="loaded" src="./src/html/home.html" frameborder="0" scrolling="no"> </iframe>
+            <iframe id="page-frame" class="loaded" src="./src/html/home.html" title="Main page content" frameborder="0" scrolling="no"> </iframe>
         </main>
 
         <!-- TODO: In-line style is bad - but without this, hidden `div`s flash on screen on-load. -->
@@ -68,12 +69,12 @@
                 <span class="close-button material-icons-round"> close </span>
             </header>
 
-            <iframe id="modal-frame" src="./src/html/rules.html" frameborder="0" scrolling="no"> </iframe> 
+            <iframe id="modal-frame" src="./src/html/rules.html" title="Modal page content" frameborder="0" scrolling="no"> </iframe> 
         </modal>
 
         <modal id="pop-up" style="opacity: 0;">
             <!-- <span id="modal-icon" class="player-icon material-icons-round"> waving_hand </span> -->
-            <img id="modal-icon" src="./res/icons/favicon.png" />
+            <img id="modal-icon" src="./res/icons/favicon.png" alt="App logo"/>
             <h3 id="modal-header"> Welcome to Gomoku Sensei </h3>
             <p> This app was developed as part of a research project for the University of Strathclyde. If you wish to participate in the corresponding study, please visit the Google Form linked below. </p>
         
