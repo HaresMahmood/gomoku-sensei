@@ -51,8 +51,12 @@ export default class DefaultView {
     }
     firstTimeLoad() {
         if (localStorage.getItem("load") === null || !JSON.parse(localStorage.getItem("load"))) {
-            console.log("Welcome");
             $("#pop-up").addClass("visible");
+            localStorage.setItem(0, "false");
+            localStorage.setItem(1, "true");
+            localStorage.setItem(2, "true");
+            localStorage.setItem(3, "true");
+            localStorage.setItem(0, "false");
             localStorage.setItem("load", "true");
         }
     }

@@ -33,13 +33,15 @@ export default class SettingsView {
         $("#install-button").bind("mouseup", function() {
             console.log("install");
 
-            if (deferredPrompt !== null) {
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                if (outcome === 'accepted') {
-                    deferredPrompt = null;
-                }
-            }
+            // if (deferredPrompt !== null) {
+            //     deferredPrompt.prompt();
+            //     console.log(deferredPrompt);
+
+            //     const { outcome } = await deferredPrompt.userChoice;
+            //     if (outcome === 'accepted') {
+            //         deferredPrompt = null;
+            //     }
+            // }
         });
     }
 
