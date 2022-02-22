@@ -16,3 +16,7 @@
     font-size: var(--size-300);
     opacity: 0.75;
 }
+
+#install-container {
+    display: none;
+}

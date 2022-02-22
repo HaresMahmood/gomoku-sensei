@@ -3,10 +3,10 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- <link rel="stylesheet" href="../css/pages/modal.css">
-        <link rel="stylesheet" href="../css/components/switch-component.css"> -->
+        
         <link rel="stylesheet" href="../css/pages/sub-pages/settings.css"> 
     </head>
+
     <body>
         <section class="information__container">
             <span class="material-icons-round"> location_on </span>
@@ -25,7 +25,7 @@
             <span class="material-icons-round"> tag </span>
             <div class="center__container">
                 <p> Show move numbers on each piece </p>
-                <p class="description__text"> Displays the turn every move was placed at. </p>
+                <p class="description__text"> Displays the turn every move was placed at </p>
             </div>
             <label class="switch__component">
                 <input name="numbers" checked type="checkbox">
@@ -38,7 +38,7 @@
             <span class="material-icons-round"> highlight </span>
             <div class="center__container">
                 <p> Highlight last move </p>
-                <p class="description__text"> Displays a dot <b> · </b> on the last-placed piece. </p>
+                <p class="description__text"> Displays a dot <b> · </b> on the last-placed piece </p>
             </div>
             <label class="switch__component">
                 <input name="highlight" type="checkbox">
@@ -59,9 +59,8 @@
                     <span class="handle"></span>
                 </div>
             </label>
-            </section>  
-        <section class="information__container">
-            
+        </section>  
+        <section class="information__container">       
             <span class="material-icons-round"> bug_report </span>
             <div class="center__container">
                 <p> Developer mode </p>
@@ -73,7 +72,17 @@
                     <span class="handle"></span>
                 </div>
             </label>
-            </section>
+        </section>
+        <section id="install-container" class="information__container">       
+            <span class="material-icons-round"> get_app </span>
+            <div class="center__container">
+                <p> Install web app </p>
+                <p class="description__text"> Install the web app as a PWA </p>
+            </div>
+            <button id="install-button" class="red__button">
+                Install
+            </button>
+        </section>
 
         <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
         <script type="module" src="../../dist/scripts/settingsScript.js"></script>

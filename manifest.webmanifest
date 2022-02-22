@@ -7,7 +7,7 @@
     "name": "Gomoku Sensei",
     "short_name": "Gomoku",
     "description": "Gomoku Sensei is a research project aiming to develop a novel, Monte Carlo Tree Search AI.",
-    "orientation": "any",
+    "orientation": "portrait",
     "icons": [  
         {
             "src": "res/icons/maskable/maskable_icon_x48.png",
