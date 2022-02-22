@@ -18,10 +18,12 @@
     </ol>
 </details>
 
-[![PWA Shields](https://www.pwa-shields.com/1.0.0/series/classic/solid/purple.svg)](https://haresmahmood.github.io/gomoku-sensei/)
 ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/HaresMahmood/gomoku-sensei)
+![License Shield](https://img.shields.io/github/license/HaresMahmood/gomoku-sensei)
+[![PWA Shields](https://www.pwa-shields.com/1.0.0/series/dark/green.svg)](https://haresmahmood.github.io/gomoku-sensei/)
+[![Figma](https://badgen.net/badge/icon/Figma%20Prototype/orange?icon=https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg&label)](https://www.figma.com/proto/uhH23aRZvGQsOViY0bnnVP/Gomoku?node-id=64%3A19)
+[![Notion](https://badgen.net/badge/icon/Notion%20Workspace/black?icon=https://cdn.worldvectorlogo.com/logos/notion-logo-1.svg&label)](https://opposite-brain-cb0.notion.site/CS408-1e5c4e3c9b0d4291b6a968855d9270e9)
 [![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/HaresMahmood/gomoku-sensei)
-[![Notion](https://img.shields.io/badge/Notion-%23000000.svg?style=for-the-badge&logo=notion&logoColor=white)](https://opposite-brain-cb0.notion.site/CS408-1e5c4e3c9b0d4291b6a968855d9270e9)
 
 ![Screenshot](./res/screenshot.png)
 
