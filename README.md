@@ -61,7 +61,7 @@ The rules of the game are simple: two players take turns placing black and white
     └── ts                       · Logic and back-end of the software.
         ├── controller              · Controllers connecting models and views, MVC design pattern.
         ├── factory                 · Classes following the factory method design pattern.
-        ├── model                   · Part of the MVC. In practice, defines games as an [MDPs](https://en.wikipedia.org/wiki/Markov_decision_process) for use by AI.
+        ├── model                   · Part of the MVC. In practice, defines games as a Markov decision process.
         ├── player                  · Defines a hierarchy of player-classes, including various AI players.
         ├── script                  · Files referenced directly by HTML pages. Instantiate MVC classes.
         ├── utility                 · Common utility classes used extensively in other parts of the system.
