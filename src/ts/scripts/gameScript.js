@@ -5,7 +5,7 @@ import AIFactory from "../factories/aiFactory.js";
 
 
 $(document).ready(function() {
-    window.top.postMessage("hello", '*');
+    window.parent.postMessage("hello", '*');
 });
 
 $(window).on("message", function(e) {

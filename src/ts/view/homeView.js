@@ -16,7 +16,7 @@ export default class HomeView {
                     "player2": $("#player-2 :selected").text().trim()
                 };
 
-                window.top.postMessage(JSON.stringify(data), "*")
+                window.parent.postMessage(JSON.stringify(data), "*")
             }
             else {
                 $("select:invalid").addClass("error");
