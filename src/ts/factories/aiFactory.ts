@@ -11,20 +11,19 @@ import StaticNode from "../player/ai/tree/staticNode.js";
 import DynamicNode from "../player/ai/tree/dynamicNode.js";
 
 export default class AIFactory implements Factory {
-    // TODO: Change this method to return a `Player`-class instead.
     createItem(input: String, player: number): Player {
         //return input.replace(" ", "");
 
         if (input === "Human") {
             return new Human(player);
         }
-        else if (input === "Easy AI") {
+        else if (input === "First AI Player") {
             return new RandomAI(player);
         }
-        else if (input === "Killer AI") {
+        else if (input === "Second AI Player") {
             return new KillerAI(player);
         }
-        else if (input === "Dynamic AI") {
+        else if (input === "Third AI Player") {
             return new DynamicAI(player);
         }
     }

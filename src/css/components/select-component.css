@@ -90,6 +90,7 @@
 
 .select__component > select:disabled {
     opacity: 0.35;
+    pointer-events: none;
 }
   
 /* active state */
