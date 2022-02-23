@@ -44,15 +44,15 @@ export default class GameView {
             const highlightMove = JSON.parse(localStorage.getItem(2)) ? "" : "no-highlight";
             const soundEffects = JSON.parse(localStorage.getItem(3));
             let piece = `<div class="piece ${color}-piece new last ${showMoveNumbers} ${highlightMove}"><p> ${moveNumber} </p> <div></div></div>`;
+            if (soundEffects) {
+                this.tokenSound.cloneNode().play(); // Ensures previously playing sound is interrupted, if need be.
+            }
             $(".last").removeClass("last");
             box.append(piece);
             // Set timeout to update UI.
             window.setTimeout(function () {
                 $(".new").removeClass("new");
             }, 1);
-            if (soundEffects) {
-                this.tokenSound.cloneNode().play(); // Ensures previously playing sound is interrupted, if need be.
-            }
         }
     }
     restart(isDisabled) {

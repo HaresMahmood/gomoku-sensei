@@ -68,6 +68,10 @@ export default class GameView {
             
             let piece = `<div class="piece ${color}-piece new last ${showMoveNumbers} ${highlightMove}"><p> ${moveNumber} </p> <div></div></div>`;
 
+            if (soundEffects) {
+                this.tokenSound.cloneNode().play(); // Ensures previously playing sound is interrupted, if need be.
+            }
+
             $(".last").removeClass("last");
             box.append(piece);
 
@@ -75,10 +79,6 @@ export default class GameView {
             window.setTimeout(function() {
                 $(".new").removeClass("new");
             }, 1);
-
-            if (soundEffects) {
-                this.tokenSound.cloneNode().play(); // Ensures previously playing sound is interrupted, if need be.
-            }
         }
     }
 
