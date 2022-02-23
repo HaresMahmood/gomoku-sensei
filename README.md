@@ -18,8 +18,10 @@
                 <li> <a href="#aims--objectives"> Aims & objectives </a> </li>
                 <li> <a href="#gomoku"> Gomoku </a> </li>
             </ol>
-        <li> <a href="#installation"> Installation </a> </li>
+        <li> <a href="#development"> Development </a> </li>
             <ol>
+                <li> <a href="#codebase-structure"> Codebase structure </a> </li>
+                <li> <a href="#installation"> Installation </a> </li>
                 <li> <a href="#compilation"> Compilation </a> </li>
             </ol>
         <li> <a href="#resources"> Resources </a> </li>
@@ -45,7 +47,28 @@ In order to test the AI, a game with perfect information had to be chosen. _Gomo
 
 The rules of the game are simple: two players take turns placing black and white tokens on a board whilst trying to chain these pieces five in a row, either horizontally, vertically or diagonally. Gomoku can be classified as an [_m, n, k_-game](https://en.wikipedia.org/wiki/M,n,k-game). During the process of development, it was found that "pure" Monte Carlo Tree Search performs poorly on a traditional 15 by 15 _Gomoku_-board. Instead, a 7 by 7 board was used for the purposes of this experiment.
 
-## Installation
+## Development
+
+### Codebase structure
+
+```
+.
+├── dist                      · JavaScript compiled from TypeScript. Mirrors \src\ts\.
+├── res                       · Resources, such as images and icons.
+└── src                       · The website's source code.
+    ├── css                      · Styling for all HTML pages, organized from high- to low-level.
+    ├── html                     · All HTML pages, both high- and low-level.
+    └── ts                       · Logic and back-end of the software.
+        ├── controller              · Controllers connecting models and views, MVC design pattern.
+        ├── factory                 · Classes following the factory method design pattern.
+        ├── model                   · Part of the MVC. In practice, defines games as an [MDPs](https://en.wikipedia.org/wiki/Markov_decision_process) for use by AI.
+        ├── player                  · Defines a hierarchy of player-classes, including various AI players.
+        ├── script                  · Files referenced directly by HTML pages. Instantiate MVC classes.
+        ├── utility                 · Common utility classes used extensively in other parts of the system.
+        └── view                    · Part of the MVC. Utilises JQuery to manipulate the DOM.
+```
+
+### Installation
 Please refer to [instructions on setting up a local test server](https://developer.mozilla.org/en-US/docs/Learn/Common_questions/set_up_a_local_testing_server) if you wish to host and run the project locally. Alternatively, visit the [web application](https://haresmahmood.github.io/gomoku-sensei/) hosted on GitHub Pages to run the software on any modern browser, as well as to install it as a [Progressive Web App](https://web.dev/progressive-web-apps/) (PWA).
 
 ### Compilation
