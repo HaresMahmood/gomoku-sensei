@@ -1,6 +1,11 @@
+/* #region Imports */
+
 @import url("../style.css");
+@import url("./multilayer.css");
 
+/* #endregion */
 
+/* #region Components */ 
 
 body {
     height: 100vh;
@@ -21,17 +26,6 @@ body {
     
     background-color: var(--background);
 }
-
-modal iframe {
-    height: 100%;
-
-    padding: 1.5rem;
-
-    border: 2px solid var(--light-black);
-    border-radius: 17.5px;
-}
-
-
 
 whitespace {
     grid-area: whitespace;
@@ -57,6 +51,14 @@ main {
     grid-area: main;
 }
 
+iframe {
+    height: 100%;
+    width: 100%;
+}
+
+/* 
+    Put element in initial state, to be animated in. 
+*/
 main > iframe {
     scale: 0.95;
 
@@ -64,6 +66,17 @@ main > iframe {
 
     transition: opacity 0.35s, scale 0.35s ease;
 }
+
+modal iframe {
+    padding: 1.5rem;
+
+    border: 2px solid var(--light-black);
+    border-radius: 17.5px;
+}
+
+/* #endregion */
+
+/* #region Animations */
 
 main > iframe.loaded {
     scale: 1;
@@ -73,15 +86,9 @@ main > iframe.loaded {
     transition: opacity 0.35s, scale 0.35s ease;
 }
 
+/* #endregion */
 
-
-iframe {
-    height: 100%;
-    width: 100%;
-}
-
-
-/*=== Breakpoints ===*/
+/* #region Breakpoints */
 
 @media only screen and (max-width: 600px) {
     body {
@@ -120,3 +127,5 @@ iframe {
         max-width: 85%;
     }
 }
+
+/* #endregion */
