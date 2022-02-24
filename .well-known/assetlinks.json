@@ -1,6 +1,0 @@
-[{
-        "relation": ["delegate_permission/common.handle_all_urls"],
-        "target" : { "namespace": "android_app", "package_name": "io.haresmahmood.gomoku",
-                     "sha256_cert_fingerprints": ["82:A9:02:58:C1:5D:A1:4A:69:AA:B2:5E:A6:22:E4:A3:C5:11:7D:00:EE:09:84:03:43:F9:40:68:6F:72:F4:3B"] }
-      }
-]
