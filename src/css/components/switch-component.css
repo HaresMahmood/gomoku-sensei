@@ -73,7 +73,7 @@ div:active > span {
 }
 
 .switch__component > input:disabled ~ div {
-    opacity: 0.35;
+    opacity: 0.45;
 
     cursor: not-allowed;
     pointer-events: none;

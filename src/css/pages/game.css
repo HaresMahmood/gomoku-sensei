@@ -1,19 +1,23 @@
 @import url("./subpage.css");
+@import url("./multilayer.css");
 
+/* #region Variables */
 
-
+/*
+	`columns`-value dynamically set by `gameView.js`.
+*/
 :root {
 	--columns: 9;
 }
 
+/* #endregion */
 
+/*#region Components */
 
 body {
 	display: flex;
-	/* flex-direction: row-reverse; */
 	justify-content: space-between;
 	align-items: center;
-	/* flex-wrap: wrap; */
 
 	overflow: hidden;
 
@@ -29,6 +33,10 @@ body {
 #pop-up.visible ~ .overlay__container {
 	opacity: 0;
 }
+
+/* #endregion */
+
+/* #region Flex */
 
 .current-player__container {
 	/* flex-wrap: wrap; */
@@ -95,7 +103,8 @@ body {
 
 .board {
 	aspect-ratio: 1 / 1;
-	width: 100%;
+	width: -webkit-fill-available;
+	width: -moz-available;
 	max-height: 100%;
 
  	margin: auto;
@@ -135,7 +144,7 @@ body {
 	cursor: pointer;
 
 	transition: var(--animation-speed); /* TODO: What does this do? */
-}
+} 
 
 .piece {
 	aspect-ratio: 1 / 1;
@@ -205,12 +214,17 @@ body {
 	background-color: var(--white)
 }
 
+/* #endregion */
 
-/*=== Animations ===*/
+/* #region Animations */
 
 .cell:empty:hover {
 	background-color: var(--faded-background);
 }
+
+/* #endregion */
+
+/* #region Breakpoints */
 
 @media only screen and (max-width: 1157px) {
 
@@ -249,3 +263,5 @@ body {
 		display: none;
 	}
 }
+
+/* #endregion */

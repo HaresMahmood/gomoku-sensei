@@ -1,5 +1,5 @@
 :root {
-    /* #region colours */
+    /* #region Colours */
 
     --background: #DBDBD9;
     --dark-background: #6E6E6E;
@@ -10,6 +10,7 @@
     --white: #FEFDF8;
     --black: #2A2E39;
     --red: #DD2436;
+    --blue: #26579f;
     --light-black: #2A2E3940;
 
     /* #endregion */

@@ -60,7 +60,15 @@ h6 {
 p {
     margin: 0;
     font-weight: 500;
-    color: var(--black);
+}
+
+a {
+    font-weight: 600;
+    color: var(--blue);
+}
+
+a:visited {
+    color: var(--inactive);
 }
 
 .description__text {
@@ -116,7 +124,7 @@ button {
 
 button:disabled,
 button[disabled] {
-    opacity: 0.35;
+    opacity: 0.45;
     /* cursor: not-allowed; TODO: Make sure cursor is set to `not-allowed`. */
     pointer-events: none;
 }
