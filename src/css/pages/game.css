@@ -1,5 +1,9 @@
+/* #region Imports */
+
 @import url("./subpage.css");
 @import url("./multilayer.css");
+
+/* #endregion */
 
 /* #region Variables */
 
@@ -39,7 +43,6 @@ body {
 /* #region Flex */
 
 .current-player__container {
-	/* flex-wrap: wrap; */
 	align-self: flex-start;
 	gap: 2rem;
 }
@@ -65,24 +68,8 @@ body {
 }
 
 .player__container > p {
-	font-size: 0.85rem;
+    font-size: small;
 }
-
-.player__container.active {
-	border-radius: 30px; /* calc(0.65rem + 2rem) */
-    transition: color var(--animation-speed), opacity var(--animation-speed), background-color var(--animation-speed), border-radius ease-out var(--animation-speed);
-}
-
-.player__container.lost {
-	opacity: 0.7;
-}
-
-
-.active {
-	color: var(--red);
-    background-color: var(--red-background);
-}
-
 
 .action__container {
 	align-self: flex-end;
@@ -99,8 +86,6 @@ body {
 	overflow: hidden;
 }
 
-
-
 .board {
 	aspect-ratio: 1 / 1;
 	width: -webkit-fill-available;
@@ -108,7 +93,7 @@ body {
 	max-height: 100%;
 
  	margin: auto;
-	padding: min(3.5vw, 3.5vh); /* 1.5rem; */
+	padding: min(3.5vw, 3.5vh);
 	box-sizing: border-box;
 
 	display: flex;
@@ -117,7 +102,7 @@ body {
 
 	overflow: hidden;
 
-	border: 2px solid rgba(42, 46, 57, 1);
+	border: 2px solid var(--black);
   	border-radius: 1vh;
 }
 
@@ -139,7 +124,7 @@ body {
   	justify-content: center;
   	align-items: center;
   
- 	border: 1.25px solid rgba(42, 46, 57, 0.5);
+ 	border: 1.25px solid var(--light-black);
 
 	cursor: pointer;
 
@@ -161,14 +146,6 @@ body {
     border-radius: 100%;
 
 	cursor: not-allowed;
-
-	transition: opacity var(--animation-speed), transform var(--animation-speed);
-}
-
-.piece.new {
-	transform: scale(0.5);
-
-	opacity: 0;	
 
 	transition: opacity var(--animation-speed), transform var(--animation-speed);
 }
@@ -195,7 +172,6 @@ body {
 	display: block;
 }
 
-
 .black-piece {
 	color: var(--white);
 }
@@ -218,8 +194,29 @@ body {
 
 /* #region Animations */
 
+.player__container.active {
+	border-radius: 30px;
+	
+	color: var(--red);
+    background-color: var(--red-background);
+
+    transition: color var(--animation-speed), opacity var(--animation-speed), background-color var(--animation-speed), border-radius ease-out var(--animation-speed);
+}
+
+.player__container.lost {
+	opacity: 0.7;
+}
+
 .cell:empty:hover {
 	background-color: var(--faded-background);
+}
+
+.piece.new {
+	transform: scale(0.5);
+
+	opacity: 0;	
+
+	transition: opacity var(--animation-speed), transform var(--animation-speed);
 }
 
 /* #endregion */
