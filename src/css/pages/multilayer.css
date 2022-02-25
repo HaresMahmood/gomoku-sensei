@@ -1,3 +1,5 @@
+/* #region Components */
+
 modal {
     z-index: -1;
 
@@ -116,3 +118,5 @@ modal header {
 	flex-wrap: wrap;
 	justify-content: flex-end;
 }
+
+ /* #endregion */

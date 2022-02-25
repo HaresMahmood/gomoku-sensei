@@ -1,22 +1,34 @@
+/* #region Imports */
+
 @import url("../variables.css");
 
+ /* #endregion */
+
+ /* Components */
+
 .select__component {
+    position: relative;
+
     width: 100%;
 
-    position: relative;
-    background: none;
     padding: 0.2rem 0.5rem;
+
+    background: none;
 
     transition: border-radius ease-out var(--animation-speed);
 }
 
+/*
+    Background.
+*/
 .select__component > div {
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+
     width: 100%;
     height: 100%;
 
     margin: auto;
-    position: absolute;
-    top: 0; left: 0; bottom: 0; right: 0;
 
     background-color: var(--faded-background);
     border-radius: calc(0.75rem + 0.75rem);
@@ -26,52 +38,60 @@
 }
   
 .select__component > select {
-    position: relative;
-    font-family: inherit;
-    background-color: transparent;
-    width: 100%;
-    padding: 0.75rem 0.75rem 0.75rem 0;
-    font-size: 0.85rem;
-    border: none;
-    left: 7.5px;
     z-index: 10;
-}
 
-.select__component > select.error ~ div {
-    border-color: var(--red);
+    position: relative;
+    left: 7.5px;
+    
+    width: 100%;
+
+    padding: 0.75rem 0.75rem 0.75rem 0;
+ 
+    font-family: inherit;
+    font-size: 0.85rem;
+   
+    background-color: transparent;
+    border: none;
 }
   
-/* Remove focus */
+/*
+    Remove focus.
+*/
 .select__component > select:focus {
     outline: none;
 }
   
-/* Use custom arrow */
+/* 
+    Custom arrow.
+*/
 .select__component select {
     appearance: none;
-    -webkit-appearance:none
+    -webkit-appearance: none
 }
   
 .select__component:after {
     content: "";
 
     position: absolute;
-    top: 18px;
-    right: 10px;
-      
-    /* Styling the down arrow */
+    top: 18px; right: 10px;
+
     width: 0;
     height: 0;
+
     padding: 0;
-    content: '';
+
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
+    
     border-top: 6px solid rgba(0, 0, 0, 0.12);
+
     pointer-events: none;
 }
   
   
-/* LABEL ======================================= */
+/*
+    Label.
+*/
 .select__component > label {
     color: rgba(0,0,0, 0.26);
     font-size: 0.75rem;
@@ -89,11 +109,14 @@
 }
 
 .select__component > select:disabled {
-    opacity: 0.35;
+    opacity: 0.45;
     pointer-events: none;
 }
+
+/* #endregion */
   
-/* active state */
+/* #region Animations */
+
 .select__component > select:focus ~ label, .select__component > select:valid ~ label {
     color: var(--red);
     top: calc(-1 * (0.2rem + 5px));
@@ -103,3 +126,9 @@
 .select__component > select:focus ~ div { 
     border-radius: 8px;
 }
+
+.select__component > select.error ~ div {
+    border-color: var(--red);
+}
+
+/* #endregion */
