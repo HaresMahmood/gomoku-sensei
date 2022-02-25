@@ -39,29 +39,29 @@ export default class Game {
 
     // #region Miscellaneous
 
-    clone() {
-        return new Game(this.board.slice(), this.lastMove, this._moveNumber);
-    }
-
-    isCellEmpty(index) {
-        return this.board[index] === 0;
-    }
-
-    public performMove(index: number, player: number, notifyObservers: boolean = false): void {
+    // TODO: `[make]Transition()`.
+    /**
+     * Flips a cell to the provided player's number.
+     * 
+     * @param index 
+     * @param player 
+     */
+    public performMove(index: number, player: number): void {
         this.board[index] = player;
         this.lastMove = index;
         this._moveNumber++;
-
-        if (notifyObservers) {
-            
-        }
     }
 
-    getEmptyCells() {
+    /**
+     * Adds all empty positions on the board to a list.
+     * 
+     * @returns A list of all empty cells.
+     */
+    private getEmptyCells(): number[] {
         const cells = [];
 
         for (let i = 0; i < (ROWS * COLUMNS); i++) {
-            if (this.board[i] === 0) {
+            if (this.isCellEmpty(i)) {
                 cells.push(i);
             }
         }
@@ -91,205 +91,93 @@ export default class Game {
         return this.hasWon(player) || this.isDraw();
     }
 
-    public restart() {
-        for (let i: number = 0; i < this.board.length; i++) {
-            this.board[i] = 0;
-            this.lastMove = -1;
-        }
-        
-        this._moveNumber = 1;
+    // TODO: `getReward()`.
+    getWinner(): number {
+        const player = this.board[this.lastMove]; // FIXME: `player` should be passed in as a parameter.
+        let winner = this.hasWon(player) ? player : -1;
+
+        return winner;
     }
-
-    // #endregion
-
-    // #region Utility
     
+    // TODO: `isTerminal()`.
     /**
-     * Check if `player` has won the game.
+     * Checks if the specified player has won the game.
      * 
      * @param player The last player.
      * @returns Whether the given `player` has won.
-     * @see https://stackoverflow.com/questions/64755169/check-for-a-row-of-4-diagonally-vertically-and-horizontally-using-javascript
+     * @see {@link toDelimitedString} for details on the string format.
+     * @see {@link https://stackoverflow.com/a/64760249/13318731} for the original for the RegEx expression.
      */
-    hasWon(player) {
-        const boardString: string = this.toDelimitedString(this.board);
+    public hasWon(player): boolean {
+        const boardString: string = this.toDelimitedString(this.board, '#', ROWS);
         const win = new RegExp(`(${player})(\\1{${N - 1}}|(${".".repeat(ROWS)}\\1){${N - 1}}|(${".".repeat(ROWS + 1)}\\1){${N - 1}}|((?=.{0,${ROWS - 1}}#)${".".repeat(ROWS - 1)}\\1){${N - 1}})`);
 
         return win.test(boardString);
     }
 
     /**
-     * Calculates a heurstic evaluation of `player`s performance.
-     * 
-     * @param player The current player.
-     * @returns `player`s score relative to that of its opponent.
-     * @see http://www.cari-info.org/Actes-2018/p276-286.pdf
+     * Resets the game to its original state.
      */
-    public getHeuristicEvaluation(player: number) {
-        const matrix: number[][] = this.toMatrix(this.board, ROWS);
-        const nextPlayer = player === 1 ? 2 : 1;
-
-        let score = (currentPlayer, nMin2Open, nMin1Half, nMin1Open) => {
-            const value = (index: number) => {
-                let openCount = 0;
-                let halfOpenCount = 0;
-                
-                function countConsecutivePieces(pieces: string) {
-                    const playerPieces: string = `(${currentPlayer})(\\1{${index - 1}})`;
-
-                    // TODO: Repeat `0`, `N` - `index` time (Check if this is right).
-                    const lowerBlock = new RegExp(`(?<=${"0".repeat(N - index)})${playerPieces}(?!0|${currentPlayer})`, "g"); // Illustration: `[OXXXX-]`.
-                    const upperBlock = new RegExp(`(?<!0|${currentPlayer})${playerPieces}(?=${"0".repeat(N - index)})`, "g"); // Illustration: `[-XXXXO]`.
-                    const open = new RegExp(`(?<=0)${playerPieces}(?=0)`, "g"); // Illustration: `[OXXXXO]`.
-
-                    const openCount = (pieces.match(open) || []).length;
-                    const halfOpenCount = (pieces.match(lowerBlock) || []).length + (pieces.match(upperBlock) || []).length;
-
-                    return [openCount, halfOpenCount];
-                }
-        
-                function checkHorizontal(row: number) {
-                    const [horiOpenCount, horiHalfOpenCount] = countConsecutivePieces(matrix[row].join(""));
-                    
-                    openCount += horiOpenCount;
-                    halfOpenCount += horiHalfOpenCount;
-                }
-        
-                function checkVertical(column: number) {
-                    const [vertOpenCount, vertHalfOpenCount] = countConsecutivePieces(matrix.map(row => row[column]).join(""));
-                    
-                    openCount += vertOpenCount;
-                    halfOpenCount += vertHalfOpenCount;
-                }
-        
-                function checkPrimaryDiagonalTop(row: number) {
-                    let pieces = "";
-        
-                    for (let i = 0; i < ROWS; i++) {
-                        if (matrix[i + row] !== undefined) {
-                            pieces += matrix[i][i + row];
-                        }
-                    }
-        
-                    const [diagOpenCount, diagHalfOpenCount] = countConsecutivePieces(pieces);
-                    
-                    openCount += diagOpenCount;
-                    halfOpenCount += diagHalfOpenCount;
-                }
-        
-                function checkPrimaryDiagonalBottom(row: number) {
-                    let pieces = "";
-        
-                    for (let i = 1; i < ROWS; i++) {
-                        if (matrix[i + row] !== undefined) {
-                            pieces += matrix[i + row][i];
-                        }
-                    }
-        
-                    const [diagOpenCount, diagHalfOpenCount] = countConsecutivePieces(pieces);
-                    
-                    openCount += diagOpenCount;
-                    halfOpenCount += diagHalfOpenCount;
-                }
-        
-                function checkSecondDiagonalTop(row: number) {
-                    let pieces = "";
-        
-                    for (let i = 0; i < ROWS; i++) {
-                        if (matrix[i - row] !== undefined) {
-                            pieces += matrix[i - row][(ROWS - 1) - i];
-                        }
-                    }
-        
-                    const [diagOpenCount, diagHalfOpenCount] = countConsecutivePieces(pieces);
-                    
-                    openCount += diagOpenCount;
-                    halfOpenCount += diagHalfOpenCount;
-                }
-        
-                function checkSecondDiagonalBottom(row: number) {
-                    let pieces = "";
-        
-                    for (let i = 0; i < ROWS; i++) {
-                        if (matrix[i + row] !== undefined) {
-                            pieces += matrix[i + row][(ROWS - 1) - i];
-                        }
-                    }
-
-                    const [diagOpenCount, diagHalfOpenCount] = countConsecutivePieces(pieces);
-                    
-                    openCount += diagOpenCount;
-                    halfOpenCount += diagHalfOpenCount;
-                }
-        
-                for (let i: number = 0; i < ROWS; i++) {
-                    checkHorizontal(i);
-                    checkVertical(i);  
-
-                    checkPrimaryDiagonalTop(i);
-                    checkSecondDiagonalTop(i);
-        
-                    if (i != 0) {
-                        checkPrimaryDiagonalBottom(i);
-                        checkSecondDiagonalBottom(i);
-                    }
-                }
-                
-                return [openCount, halfOpenCount];
-            }
-
-            const NMin2 = value(N - 2);
-            const NMin1 = value(N - 1);
-            let totalScore: number = 0;
-
-            for (let i: number = 1; i <= N - 3; i++) {
-                const I = value(i);
-                totalScore = totalScore
-                + ((2 * i - 1) - I[1] + (2 * i * I[0]))
-                + 2 * (N - 2) // TODO: Not sure about this one.
-                - NMin2[1]
-                + nMin2Open * NMin2[0]
-                + nMin1Half * NMin1[1]
-                + nMin1Open * NMin1[0]
-                + (this.hasWon(currentPlayer) ? 1000000 : 0);
-            }
-
-            return totalScore;
+    public restart() {
+        // Reset whole board.
+        for (let i: number = 0; i < this.board.length; i++) {
+            this.board[i] = 0;
         }
-
-        // TODO: Optimize player's values.
-        return score(player, 100, 80, 250) - score(nextPlayer, 1300, 2000, 5020);
+        
+        this.lastMove = -1;
+        this._moveNumber = 1;
     }
 
-    getWinner() {
-        const player = this.board[this.lastMove]; // FIXME: `player` should be passed in as a parameter.
-        let winner = this.hasWon(player) ? player : -1;
+    // #endregion
 
-        return winner;
+    // #region Utility
+
+    /**
+     * Checks whether the cell at the provided cell is empty.
+     * 
+     * @param index Cell-index.
+     * @returns Whether the cell is empty.
+     */
+    isCellEmpty(index) {
+        return this.board[index] === 0;
     }
 
+    /**
+     * 
+     * 
+     * @returns Whether the game has ended in a draw.
+     */
     isDraw() {
         return !this.board.includes(0);
     }
 
-    private toMatrix(array, length: number) {
-        const matrix = []; 
-      
-        for (let i = 0 ; i < array.length; i += length) {
-            matrix.push(array.slice(i, i + length));
-        }
-
-        return matrix;
+    /**
+     * Clones the state of the game.
+     * 
+     * @returns A deep-clone of the current current state of the game.
+     */
+    private clone() {
+        return new Game(this.board.slice(), this.lastMove, this._moveNumber);
     }
 
-    private toDelimitedString(array): string {
-        const delimit = new RegExp(`(.{${ROWS}})`, "g");
+    /**
+     * Uses RegEx to join together a 1-dimensional array
+     * representing a game board, where after every row
+     * the specified character is inserted. Simplifies performing
+     * additional RegEx on the resulting string.
+     * 
+     * @param list 1-D list of any type, representing a board, to be converted.
+     * @param character Character to delimit final stirng with.
+     * @param interval Number of elements to skip before adding another character.
+     * @returns Delimited string representing a game board.
+     * @example 
+     * // Returns "100#010#100", representing a simple tic-tac-toe board:
+     * toDelimitedString([1, 0, 0, 0, 1, 0, 0, 0, 1], '#', 3);
+     */
+    private toDelimitedString<T>(list: T[], character: string, interval: number): string {
+        const delimit = new RegExp(`(.{${interval}})`, "g");
 
-        return array.join("").replace(delimit,"$1#").slice(0, -1);
-    }
-
-    public toString() {
-        return this.toMatrix(this.board, ROWS);
+        return list.join("").replace(delimit,`$1${character}`).slice(0, -1);
     }
 
     // #endregion
