@@ -2,16 +2,18 @@ const ROWS = 7;
 const COLUMNS = ROWS;
 const N = 5;
 
+/**
+ * MDP representation of the game of Gomoku. The dimensions
+ * of the board, as well as the token chain-length can all be
+ * tweaked, essentially allowing for the representation of
+ * any m, n, k-game.
+ */
 export default class Game {
     // #region Initialization
 
     private board: number[];
     public lastMove: number; // TODO: Make private.
     private _moveNumber: number;
-
-    public get moveNumber() {
-        return this._moveNumber;
-    }
 
     constructor(state = new Array(ROWS * COLUMNS).fill(0), lastMove: number = -1, moveNumber: number = 1) {
         this.board = state;
@@ -23,16 +25,36 @@ export default class Game {
 
     // #region Accessors
 
+    /**
+     * The amount of rows on the game board.
+     */
     public get rows() {
         return ROWS;
     }
 
+    /**
+     * The amount of columns on the game board.
+     * Usually equal to the amount of rows.
+     */
     public get columns() {
         return COLUMNS;
     }
 
+    //TODO: `k`.
+    /**
+     * The amount of tokens to chain together in
+     * order to win.
+     */
     public get n() {
         return N;
+    }
+
+    /**
+     * The amount of moves played so far, i.e. 
+     * the length of the game.
+     */
+    public get moveNumber() {
+        return this._moveNumber;
     }
 
     // #endregion
@@ -42,9 +64,10 @@ export default class Game {
     // TODO: `[make]Transition()`.
     /**
      * Flips a cell to the provided player's number.
+     * Also increases the move counter.
      * 
-     * @param index 
-     * @param player 
+     * @param index Cell on board.
+     * @param player Player's who's turn it currently is.
      */
     public performMove(index: number, player: number): void {
         this.board[index] = player;
