@@ -1,12 +1,13 @@
-import Event from "../utility/event.js";
-
 export default class HomeView {
+    // #region Initialization
+
     constructor() {
-        this.buttonClickEvent = new Event();
-        this.setButtonHandler(this.buttonClickEvent);
+        this.setButtonHandler();
     }
 
-    // #region Event handlers 
+    // #endregion
+
+    // #region Events
 
     setButtonHandler() {
         $("#game-button").bind("mouseup", function() {
@@ -16,6 +17,9 @@ export default class HomeView {
                     "player2": $("#player-2 :selected").text().trim()
                 };
 
+                localStorage.setItem("player1", $("#player-1").val());
+                localStorage.setItem("player2", $("#player-2").val());
+                
                 window.parent.postMessage(JSON.stringify(data), "*")
             }
             else {

@@ -16,16 +16,16 @@ export default class AIFactory implements Factory {
     createItem(input: String, player: number): Player {
         //return input.replace(" ", "");
 
-        if (input === "Human") {
+        if (input === "human") {
             return new Human(player);
         }
-        else if (input === "First AI Player") {
+        else if (input === "easy") {
             return new RandomAI(player);
         }
-        else if (input === "Second AI Player") {
+        else if (input === "killer") {
             return new KillerAI(player);
         }
-        else if (input === "Third AI Player") {
+        else if (input === "dynamic") {
             return new DynamicAI(player);
         }
     }

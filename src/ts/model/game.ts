@@ -197,7 +197,7 @@ export default class Game {
      * 
      * @returns A deep-clone of the current current state of the game.
      */
-    private clone() {
+    public clone() {
         return new Game(this.board.slice(), this.lastMove, this._moveNumber);
     }
 

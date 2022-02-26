@@ -5,59 +5,56 @@ import RulesPage from "./pages/rulesPage.js";
 import SettingsPage from "./pages/settingsPage.js";
 
 export default class DefaultView {
+    // #region Initialization
+
     constructor() {
         this.messageEvent = new Event(); // TODO: More descriptive name `homeMessageEvent`?
 
-        this.homePage = new HomePage(this, true);
-        this.gamePage = new GamePage(this);
-        this.rulesPage = new RulesPage(this);
-        this.settingsPage = new SettingsPage(this);
+        this.currentPage = "home";
 
-        this.currentState = this.homePage;
-
-        this.setNavigationButtonHandler("home", this.homePage, this.changeNavigationButtons);
-        this.setNavigationButtonHandler("game", this.gamePage, this.changeNavigationButtons);
+        this.setNavigationButtonHandler("home", this.currentPage, this.navigateTo, this.changeNavigationButtons);
+        this.setNavigationButtonHandler("game", this.currentPage, this.navigateTo, this.changeNavigationButtons);
 
         this.setModalButtonHandler("rules", this.openModal);
         this.setModalButtonHandler("settings", this.openModal);
         this.setPopUpButtonHandler();
         this.setModalCloseHandler();
         this.setOverlayClickHandler();
-
         this.setWindowBackHandler();
-        this.setWindowMessageHandler(this.messageEvent, this.gamePage, this.changeNavigationButtons);
-    
+        this.setWindowMessageHandler(this.currentPage, this.navigateTo, this.changeNavigationButtons);
+
         this.firstTimeLoad();
     }
 
-    /*=== Miscellaneous ===*/
+    // #endregion
 
-    navigateTo(page, pageName) {
-        if (this.currentState !== page) {
-            $("#page-frame").removeClass("loaded");
+    // #region Miscellaneous
+
+    navigateTo(page, currentPage) {
+        function capitalize(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+    
+        $("#page-frame").removeClass("loaded");
 
             setTimeout(function() {
                 //$("#page-frame").attr("src", `./src/html/${pageName}.html`)
-                $('#page-frame')[0].contentWindow.location.replace(`./src/html/${pageName}.html`);
+                $('#page-frame')[0].contentWindow.location.replace(`./src/html/${page}.html`);
 
                 setTimeout(function() {
                     $("#page-frame").addClass("loaded");
                 }, 100);
             }, 400);
 
-            $("#header-text").html(pageName);
+            $("#header-text").html(page);
 
-            document.title = this.capitalize(pageName);
-            this.currentState = page;
-        }
+            document.title = capitalize(page);
     }
 
     changeNavigationButtons(button) {
         $(".menu__button.red__button").removeClass("red__button");
         $(button).addClass("red__button");
     }
-
-
 
     openModal(page) {
         $("#modal-frame")[0].contentWindow.location.replace(`./src/html/${page}.html`);
@@ -82,20 +79,16 @@ export default class DefaultView {
         }
     }
 
-    // #region Utility 
-
-    capitalize(string) {
-        return string.charAt(0).toUpperCase() + string.slice(1);
-    }
-
     // #endregion
 
     // #region Events
 
-    setNavigationButtonHandler(button, state, handler) {
-        $(`#${button}-button`).bind("mouseup", function() {
-            state.navigateTo();
-            handler(this);
+    setNavigationButtonHandler(page, currentPage, navigationHandler, buttonHandler) {
+        $(`#${page}-button`).bind("mouseup", function() {
+            if (!$(this).hasClass("red__button")) {
+                navigationHandler(page, currentPage);
+                buttonHandler(this);
+            }
         });
     }
 
@@ -125,19 +118,15 @@ export default class DefaultView {
     
     setWindowBackHandler() {
         window.onpopstate = function() {
-            alert("clicked back button");
-
             $("modal").removeClass("visible");
         }; 
         history.pushState({}, '');
     }
 
-    setWindowMessageHandler(event, state, handler) {
-        $(window).on("message", function (e) {
-            state.navigateTo(); // Navigate to `Game`-page.
-            handler($("#game-button")); // Change to navigation-button.
-
-            event.trigger(e.originalEvent.data); // Pass player information to `defaultScript`.
+    setWindowMessageHandler(currentPage, navigationHandler, buttonHandler) {
+        $(window).on("message", function() {
+            navigationHandler("game", currentPage); // Navigate to `Game`-page.
+            buttonHandler($("#game-button")); // Change to navigation-button.
         });
     }
 
