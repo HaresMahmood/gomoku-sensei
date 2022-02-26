@@ -52,24 +52,16 @@ export default class Game {
         this._moveNumber++;
     }
 
+    // TODO: Refactor this function to make it clearner.
     /**
-     * Adds all empty positions on the board to a list.
+     * Checks for all empty positions on the board and 
+     * creates a copy of the current game state with 
+     * a new move added to the copied state.
      * 
-     * @returns A list of all empty cells.
+     * @param player Player who's turn it currently is to play.
+     * @returns All successors from the current game state.
      */
-    private getEmptyCells(): number[] {
-        const cells = [];
-
-        for (let i = 0; i < (ROWS * COLUMNS); i++) {
-            if (this.isCellEmpty(i)) {
-                cells.push(i);
-            }
-        }
-
-        return cells;
-    }
-
-    getSuccessors(player) {
+    public getSuccessors(player): Game[] {
         let successors = [];
 
         for (let i = 0; i < (ROWS * COLUMNS); i++) {
@@ -85,6 +77,11 @@ export default class Game {
         return successors;
     }
 
+    // TODO: `isTerminal()`.
+    /**
+     * 
+     * @returns 
+     */
     isOver() {
         const player = this.board[this.lastMove]; // TODO: Think of better way of doing this.
 
@@ -92,6 +89,10 @@ export default class Game {
     }
 
     // TODO: `getReward()`.
+    /**
+     * 
+     * @returns 
+     */
     getWinner(): number {
         const player = this.board[this.lastMove]; // FIXME: `player` should be passed in as a parameter.
         let winner = this.hasWon(player) ? player : -1;
