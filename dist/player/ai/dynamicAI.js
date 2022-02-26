@@ -50,35 +50,4 @@ export default class DynamicAI extends AbstractAI {
             node = node.parent;
         }
     }
-    // #region Utility
-    mistakeProbability(game) {
-        const max = 520 * (game.n - 3);
-        const min = -5020 * (game.n - 3);
-        const value = game.getHeuristicEvaluation(this._player);
-        let normalizedValue = this.normalize(value, min, max, 0, 1);
-        // if (value > 0) { // If the AI is ahead of its opponent, ...
-        //     normalizedValue = 0.175 + value / max;
-        // }
-        // else {
-        //     normalizedValue = 0.175 + Math.sqrt(-1 * value / min);
-        // }
-        console.log(value);
-        return normalizedValue;
-    }
-    /**
-     * Normalizes a value from one range (current) to another (new).
-     *
-     * @param val    //the current value (part of the current range).
-     * @param minVal //the min value of the current value range.
-     * @param maxVal //the max value of the current value range.
-     * @param newMin //the min value of the new value range.
-     * @param newMax //the max value of the new value range.
-     *
-     * @returns the normalized value.
-     *
-     * @see https://stackoverflow.com/questions/39776819/function-to-normalize-any-number-from-0-1
-     */
-    normalize(val, minVal, maxVal, newMin, newMax) {
-        return newMin + (val - minVal) * (newMax - newMin) / (maxVal - minVal);
-    }
 }

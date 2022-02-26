@@ -75,6 +75,23 @@ export default class Game {
         this._moveNumber++;
     }
 
+    /**
+     * Adds all empty positions on the board to a list.
+     * 
+     * @returns A list of all empty cells.
+     */
+     public getEmptyCells(): number[] {
+        const cells = [];
+
+        for (let i = 0; i < (ROWS * COLUMNS); i++) {
+            if (this.isCellEmpty(i)) {
+                cells.push(i);
+            }
+        }
+
+        return cells;
+    }
+
     // TODO: Refactor this function to make it clearner.
     /**
      * Checks for all empty positions on the board and 
