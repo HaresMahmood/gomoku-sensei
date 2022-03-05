@@ -3,7 +3,7 @@
 @import url("./subpage.css");
 @import url("../components/select-component.css");
 
-/* #endregion */ 
+/* #endregion */
 
 /* #region Components */
 
@@ -31,18 +31,18 @@ section > .center__container {
     min-width: 250px;
 
     flex-grow: 2;
-} 
-  
+}
+
 .watermark__container {
     width: fit-content;
     height: -webkit-fill-available;
     max-height: 17.5vmin;
 
     margin-left: auto;
-    
+
     display: inline;
 }
-  
+
 .watermark__container:first-child {
     margin-left: unset;
     margin-right: auto;

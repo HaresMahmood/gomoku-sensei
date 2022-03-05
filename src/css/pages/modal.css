@@ -31,11 +31,11 @@ body {
     gap: max(5vh, 5vw);
 }
 
-/* 
+/*
     Specifically for `Rules`-page.
 
     Assign styling if an `information__container`
-    contains a `center__container` with a 
+    contains a `center__container` with a
     `row__container`-sibling.
 */
 .information__container > .row__container ~ .center__container {

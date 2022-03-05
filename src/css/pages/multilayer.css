@@ -5,7 +5,7 @@ modal {
 
     width: 95%;
     max-width: 750px;
-    height: 450px; 
+    height: 450px;
 
     padding: 1.5rem;
 
@@ -57,13 +57,13 @@ modal.visible {
 
     -webkit-transition: transform .75s var(--fade-in), opacity .75s var(--fade-in), z-index .75s var(--fade-in);
     transition: transform .75s var(--fade-in), opacity .75s var(--fade-in), z-index .75s var(--fade-in);
-} 
+}
 
 modal.visible ~ .overlay__container {
     display: block;
 
     background: linear-gradient(
-      rgba(0, 0, 0, 0.5), 
+      rgba(0, 0, 0, 0.5),
       rgba(0, 0, 0, 0.5)
     );
 
@@ -97,7 +97,7 @@ modal header {
 	box-shadow: 1px 9px 28px -6px rgba(0,0,0,0.5);
 	-webkit-box-shadow: 1px 9px 28px -6px rgba(0,0,0,0.5);
 	-moz-box-shadow: 1px 9px 28px -6px rgba(0,0,0,0.5);
-} 
+}
 
 #pop-up > span {
 	font-size: var(--size-700) !important;

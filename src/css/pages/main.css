@@ -5,12 +5,12 @@
 
 /* #endregion */
 
-/* #region Components */ 
+/* #region Components */
 
 body {
     height: 100vh;
     width: 100vw;
-    
+
     display: grid;
     grid-template-areas:
     'whitespace header'
@@ -20,7 +20,7 @@ body {
     grid-template-rows: min-content 1fr;
 
     gap: 1rem;
-    
+
     background-color: var(--background);
 }
 
@@ -53,8 +53,8 @@ iframe {
     width: 100%;
 }
 
-/* 
-    Put element in initial state, to be animated in. 
+/*
+    Put element in initial state, to be animated in.
 */
 main > iframe {
     scale: 0.95;

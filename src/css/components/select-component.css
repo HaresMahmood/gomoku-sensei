@@ -36,39 +36,39 @@
 
     transition: border-radius ease-out var(--animation-speed), border var(--animation-speed);
 }
-  
+
 .select__component > select {
     z-index: 10;
 
     position: relative;
     left: 7.5px;
-    
+
     width: 100%;
 
     padding: 0.75rem 0.75rem 0.75rem 0;
- 
+
     font-family: inherit;
     font-size: 0.85rem;
-   
+
     background-color: transparent;
     border: none;
 }
-  
+
 /*
     Remove focus.
 */
 .select__component > select:focus {
     outline: none;
 }
-  
-/* 
+
+/*
     Custom arrow.
 */
 .select__component select {
     appearance: none;
     -webkit-appearance: none
 }
-  
+
 .select__component:after {
     content: "";
 
@@ -82,13 +82,13 @@
 
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;
-    
+
     border-top: 6px solid rgba(0, 0, 0, 0.12);
 
     pointer-events: none;
 }
-  
-  
+
+
 /*
     Label.
 */
@@ -114,7 +114,7 @@
 }
 
 /* #endregion */
-  
+
 /* #region Animations */
 
 .select__component > select:focus ~ label, .select__component > select:valid ~ label {
@@ -123,7 +123,7 @@
     font-size: 0.55rem;
 }
 
-.select__component > select:focus ~ div { 
+.select__component > select:focus ~ div {
     border-radius: 8px;
 }
 

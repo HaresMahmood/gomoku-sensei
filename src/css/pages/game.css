@@ -32,7 +32,7 @@ body {
 	box-shadow: 1px 9px 28px -6px rgba(0,0,0,0.5);
 	-webkit-box-shadow: 1px 9px 28px -6px rgba(0,0,0,0.5);
 	-moz-box-shadow: 1px 9px 28px -6px rgba(0,0,0,0.5);
-} 
+}
 
 #pop-up.visible ~ .overlay__container {
 	opacity: 0;
@@ -118,18 +118,18 @@ body {
 	aspect-ratio: 1 / 1;
 	height: auto;
 	width: auto;
-	
+
 	flex: 1 0 calc(100% / var(--columns));
   	display: flex;
   	justify-content: center;
   	align-items: center;
-  
+
  	border: 1.25px solid var(--light-black);
 
 	cursor: pointer;
 
 	transition: var(--animation-speed); /* TODO: What does this do? */
-} 
+}
 
 .piece {
 	aspect-ratio: 1 / 1;
@@ -142,7 +142,7 @@ body {
 	align-items: center;
 
 	opacity: 1;
-	
+
     border-radius: 100%;
 
 	cursor: not-allowed;
@@ -196,7 +196,7 @@ body {
 
 .player__container.active {
 	border-radius: 30px;
-	
+
 	color: var(--red);
     background-color: var(--red-background);
 
@@ -214,7 +214,7 @@ body {
 .piece.new {
 	transform: scale(0.5);
 
-	opacity: 0;	
+	opacity: 0;
 
 	transition: opacity var(--animation-speed), transform var(--animation-speed);
 }

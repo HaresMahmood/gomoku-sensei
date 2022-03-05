@@ -37,7 +37,7 @@
 
     transition: background-color var(--animation-speed);
 }
-    
+
 
 .switch__component > input {
     z-index: -1;
@@ -47,13 +47,13 @@
     -webkit-appearance: none;
 }
 
-/* 
-    Thumb 
+/*
+    Thumb
 */
 .switch__component span {
     aspect-ratio: 1 / 1;
     height: 75%;
-    
+
     border-radius: 50%;
     background-color: var(--inactive);
 
