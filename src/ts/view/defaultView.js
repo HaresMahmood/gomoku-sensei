@@ -1,11 +1,7 @@
-import Event from "../utility/event.js";
-
 export default class DefaultView {
     // #region Initialization
 
     constructor() {
-        this.messageEvent = new Event(); // TODO: More descriptive name `homeMessageEvent`?
-
         this.currentPage = "home";
 
         this.setNavigationButtonHandler("home", this.currentPage, this.navigateTo, this.changeNavigationButtons);
@@ -17,8 +13,8 @@ export default class DefaultView {
         this.setModalCloseHandler();
         this.setOverlayClickHandler();
         this.setWindowBackHandler();
-        this.setWindowMessageHandler(this.currentPage, this.navigateTo, this.changeNavigationButtons);
-
+        this.setWindowMessageHandler(this.navigateTo, this.changeNavigationButtons);
+ 
         this.firstTimeLoad();
     }
 
@@ -26,7 +22,7 @@ export default class DefaultView {
 
     // #region Miscellaneous
 
-    navigateTo(page, currentPage) {
+    navigateTo(page) {
         function capitalize(string) {
             return string.charAt(0).toUpperCase() + string.slice(1);
         }
@@ -34,7 +30,6 @@ export default class DefaultView {
         $("#page-frame").removeClass("loaded");
 
             setTimeout(function() {
-                //$("#page-frame").attr("src", `./src/html/${pageName}.html`)
                 $('#page-frame')[0].contentWindow.location.replace(`./src/html/${page}.html`);
 
                 setTimeout(function() {
@@ -119,10 +114,10 @@ export default class DefaultView {
         history.pushState({}, '');
     }
 
-    setWindowMessageHandler(currentPage, navigationHandler, buttonHandler) {
+    setWindowMessageHandler(navigationHandler, buttonHandler) {
         $(window).on("message", function() {
-            navigationHandler("game", currentPage); // Navigate to `Game`-page.
-            buttonHandler($("#game-button")); // Change to navigation-button.
+            navigationHandler("game");
+            buttonHandler($("#game-button"));
         });
     }
 
