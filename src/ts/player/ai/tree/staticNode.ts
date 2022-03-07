@@ -47,8 +47,8 @@ export default class StaticNode {
     public rollout() {
         const clone = this.state.clone();
 
-        if (clone.game.isOver()) {
-            const result = clone.game.getWinner();
+        if (clone.mdp.isOver()) {
+            const result = clone.mdp.getWinner();
     
             return result;
         }
@@ -56,8 +56,8 @@ export default class StaticNode {
         while (true) {
             clone.makeRandomMove();
 
-            if (clone.game.isOver()) {
-                const result = clone.game.getWinner();
+            if (clone.mdp.isOver()) {
+                const result = clone.mdp.getWinner();
         
                 return result;
             }

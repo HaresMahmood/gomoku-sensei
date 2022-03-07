@@ -1,9 +1,9 @@
-import Gomoku from "../../../model/game.js";
+import MDP from "../../../model/mdp";
 
 export default class State {
     // #region Initialization
 
-    private _game: Gomoku;
+    private _mdp: MDP;
     private _playerNumber: number;
     private _wins: number;
     private _visits: number;
@@ -12,8 +12,8 @@ export default class State {
     private _gameLength: number;
     private _isTerminal: boolean;
     
-    constructor(game = null, playerNumber = 1, wins = 0, visits = 0, gameLength = 0, isTerminal = false) {
-        this._game = game;
+    constructor(mdp = null, playerNumber = 1, wins = 0, visits = 0, gameLength = 0, isTerminal = false) {
+        this._mdp = mdp;
         this._playerNumber = playerNumber;
         this._wins = wins;
         this._visits = visits;
@@ -26,8 +26,8 @@ export default class State {
 
     // #region Properties
 
-    public get game() {
-        return this._game;
+    public get mdp() {
+        return this._mdp;
     }
 
     public get playerNumber() {
@@ -50,8 +50,8 @@ export default class State {
         return this._isTerminal;
     }
 
-    public set game(value: Gomoku) {
-        this._game = value;
+    public set mdp(value: MDP) {
+        this._mdp = value;
     }
 
     public set playerNumber(value: number) {
@@ -77,7 +77,7 @@ export default class State {
     // #endregion
 
     clone() {
-        return new State(this._game.clone(), this._playerNumber, this._wins, this._visits);
+        return new State(this._mdp.clone(), this._playerNumber, this._wins, this._visits);
     }
 
     getOpponentPlayerNumber() {
@@ -90,7 +90,7 @@ export default class State {
 
     getMoves() {
         let possibleMoves = [];
-        let emptyPositions = this._game.getSuccessors(this._playerNumber);
+        let emptyPositions = this._mdp.getSuccessors(this._playerNumber);
         let opponentPlayerNumber = this.getOpponentPlayerNumber();
 
         for (const position of emptyPositions) {
@@ -103,9 +103,6 @@ export default class State {
     }
 
     makeRandomMove() {
-        const emptyCells = this._game.getEmptyCells();
-        const randomCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
-
-        this._game.makeTransition(randomCell, this._playerNumber);
+        this._mdp.makeRandomTransition(this._playerNumber);
     }
 }

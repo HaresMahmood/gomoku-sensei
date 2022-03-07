@@ -11,7 +11,7 @@ export default class SimulationAI {
         const root = new StaticNode();
         let counter = 0;
         
-        root.state.game = game;
+        root.state.mdp = game;
         root.state.playerNumber = this.playerNumber;
         root.expand();
 
@@ -39,6 +39,6 @@ export default class SimulationAI {
 
         console.log(root);
 
-        this.chooseMoveEvent.trigger(winnerNode.state.game.lastMove);
+        this.chooseMoveEvent.trigger(winnerNode.state.mdp.lastMove);
     }
 }

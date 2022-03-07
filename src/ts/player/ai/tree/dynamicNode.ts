@@ -81,9 +81,9 @@ export default class DynamicNode {
     public rollout() {
         const clone = this.state.clone();
 
-        if (clone.game.isOver()) {
-            const result = clone.game.getWinner();
-                const gameLength = clone.game.moveNumber;
+        if (clone.mdp.isOver()) {
+            const result = clone.mdp.getWinner();
+                const gameLength = clone.mdp.moveNumber;
         
                 return [result, gameLength];
         }
@@ -91,9 +91,9 @@ export default class DynamicNode {
         while (true) {
             clone.makeRandomMove();
 
-            if (clone.game.isOver()) {
-                const result = clone.game.getWinner();
-                const gameLength = clone.game.moveNumber;
+            if (clone.mdp.isOver()) {
+                const result = clone.mdp.getWinner();
+                const gameLength = clone.mdp.moveNumber;
         
                 return [result, gameLength];
             }

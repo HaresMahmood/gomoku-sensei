@@ -111,7 +111,7 @@ export default class Gomoku implements MDP {
      * creates a copy of the current game state with 
      * a new move added to the copied state.
      */
-    public getSuccessors(player): MDP[] {
+    public getSuccessors(player: number): MDP[] {
         let successors = [];
 
         for (let i = 0; i < (ROWS * COLUMNS); i++) {
@@ -150,7 +150,7 @@ export default class Gomoku implements MDP {
      * @see {@link toDelimitedString} for details on the string format.
      * @see {@link https://stackoverflow.com/a/64760249/13318731} for the original for the RegEx expression.
      */
-    public hasWon(player): boolean {
+    public hasWon(player: number): boolean {
         const boardString: string = this.toDelimitedString(this.board, '#', ROWS);
         const win = new RegExp(`(${player})(\\1{${N - 1}}|(${".".repeat(ROWS)}\\1){${N - 1}}|(${".".repeat(ROWS + 1)}\\1){${N - 1}}|((?=.{0,${ROWS - 1}}#)${".".repeat(ROWS - 1)}\\1){${N - 1}})`);
 
