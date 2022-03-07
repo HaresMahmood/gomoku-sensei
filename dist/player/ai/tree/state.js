@@ -1,14 +1,14 @@
 export default class State {
     // #region Initialization
-    _game;
+    _mdp;
     _playerNumber;
     _wins;
     _visits;
     // Specifically for Dynamic AI. 
     _gameLength;
     _isTerminal;
-    constructor(game = null, playerNumber = 1, wins = 0, visits = 0, gameLength = 0, isTerminal = false) {
-        this._game = game;
+    constructor(mdp = null, playerNumber = 1, wins = 0, visits = 0, gameLength = 0, isTerminal = false) {
+        this._mdp = mdp;
         this._playerNumber = playerNumber;
         this._wins = wins;
         this._visits = visits;
@@ -17,8 +17,8 @@ export default class State {
     }
     // #endregion
     // #region Properties
-    get game() {
-        return this._game;
+    get mdp() {
+        return this._mdp;
     }
     get playerNumber() {
         return this._playerNumber;
@@ -35,8 +35,8 @@ export default class State {
     get isTerminal() {
         return this._isTerminal;
     }
-    set game(value) {
-        this._game = value;
+    set mdp(value) {
+        this._mdp = value;
     }
     set playerNumber(value) {
         this._playerNumber = value;
@@ -54,8 +54,9 @@ export default class State {
         this._isTerminal = value;
     }
     // #endregion
+    // #region Miscellaneous
     clone() {
-        return new State(this._game.clone(), this._playerNumber, this._wins, this._visits);
+        return new State(this._mdp.clone(), this._playerNumber, this._wins, this._visits);
     }
     getOpponentPlayerNumber() {
         return this._playerNumber === 1 ? 2 : 1;
@@ -65,7 +66,7 @@ export default class State {
     }
     getMoves() {
         let possibleMoves = [];
-        let emptyPositions = this._game.getSuccessors(this._playerNumber);
+        let emptyPositions = this._mdp.getSuccessors(this._playerNumber);
         let opponentPlayerNumber = this.getOpponentPlayerNumber();
         for (const position of emptyPositions) {
             const child = new State(position, opponentPlayerNumber);
@@ -74,8 +75,6 @@ export default class State {
         return possibleMoves;
     }
     makeRandomMove() {
-        const emptyCells = this._game.getEmptyCells();
-        const randomCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
-        this._game.performMove(randomCell, this._playerNumber);
+        this._mdp.makeRandomTransition(this._playerNumber);
     }
 }

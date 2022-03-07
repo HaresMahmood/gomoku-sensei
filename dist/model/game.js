@@ -1,13 +1,15 @@
+// #region Constants
 const ROWS = 7;
 const COLUMNS = ROWS;
 const N = 5;
+// #endregion
 /**
  * MDP representation of the game of Gomoku. The dimensions
  * of the board, as well as the token chain-length can all be
  * tweaked, essentially allowing for the representation of
  * any m, n, k-game.
  */
-export default class Game {
+export default class Gomoku {
     // #region Initialization
     board;
     lastMove; // TODO: Make private.
@@ -40,77 +42,53 @@ export default class Game {
     get n() {
         return N;
     }
-    /**
-     * The amount of moves played so far, i.e.
-     * the length of the game.
-     */
     get moveNumber() {
         return this._moveNumber;
     }
     // #endregion
     // #region Miscellaneous
-    // TODO: `[make]Transition()`.
     /**
      * Flips a cell to the provided player's number.
      * Also increases the move counter.
-     *
-     * @param index Cell on board.
-     * @param player Player's who's turn it currently is.
      */
-    performMove(index, player) {
-        this.board[index] = player;
-        this.lastMove = index;
+    makeTransition(move, player) {
+        this.board[move] = player;
+        this.lastMove = move;
         this._moveNumber++;
     }
-    /**
-     * Adds all empty positions on the board to a list.
-     *
-     * @returns A list of all empty cells.
-     */
-    getEmptyCells() {
-        const cells = [];
-        for (let i = 0; i < (ROWS * COLUMNS); i++) {
-            if (this.isCellEmpty(i)) {
-                cells.push(i);
+    // Inherited docs.
+    makeRandomTransition(player) {
+        while (true) {
+            const randomCell = Math.floor(Math.random() * this.board.length);
+            // If the randomly chosen cell is empty, ...
+            if (randomCell === 0) {
+                this.makeTransition(randomCell, player);
             }
         }
-        return cells;
     }
-    // TODO: Refactor this function to make it clearner.
     /**
      * Checks for all empty positions on the board and
      * creates a copy of the current game state with
      * a new move added to the copied state.
-     *
-     * @param player Player who's turn it currently is to play.
-     * @returns All successors from the current game state.
      */
     getSuccessors(player) {
         let successors = [];
         for (let i = 0; i < (ROWS * COLUMNS); i++) {
-            let copy = this.board.slice();
-            if (copy[i] === 0) {
-                copy[i] = player;
-                successors.push(new Game(copy, i, this._moveNumber + 1));
+            if (this.board[i] === 0) {
+                const copy = this.clone();
+                copy.makeTransition(i, player);
+                successors.push(copy);
             }
         }
         return successors;
     }
-    // TODO: `isTerminal()`.
-    /**
-     *
-     * @returns
-     */
-    isOver() {
+    // Inherited docs.
+    isTerminal() {
         const player = this.board[this.lastMove]; // TODO: Think of better way of doing this.
         return this.hasWon(player) || this.isDraw();
     }
-    // TODO: `getReward()`.
-    /**
-     *
-     * @returns
-     */
-    getWinner() {
+    // Inherited docs.
+    getUtilityScore() {
         const player = this.board[this.lastMove]; // FIXME: `player` should be passed in as a parameter.
         let winner = this.hasWon(player) ? player : -1;
         return winner;
@@ -159,13 +137,9 @@ export default class Game {
     isDraw() {
         return !this.board.includes(0);
     }
-    /**
-     * Clones the state of the game.
-     *
-     * @returns A deep-clone of the current current state of the game.
-     */
+    // Inherited docs.
     clone() {
-        return new Game(this.board.slice(), this.lastMove, this._moveNumber);
+        return new Gomoku(this.board.slice(), this.lastMove, this._moveNumber);
     }
     /**
      * Uses RegEx to join together a 1-dimensional array

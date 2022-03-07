@@ -1,8 +1,6 @@
 import AbstractNode from "./node.js";
-import State from "./state.js";
 
 export default class StaticNode extends AbstractNode {
-
     // #region Miscellaneous
 
     // Inherited docs.
@@ -37,6 +35,19 @@ export default class StaticNode extends AbstractNode {
 
             clone.togglePlayer();
         }
+    }
+
+    // #endregion
+
+    // #region Utility
+
+    /**
+     * 
+     * @param utility 
+     */
+    public updateStats(utility: number): void {
+        this._state.visits++;
+        this._state.wins += utility;
     }
 
     // #endregion

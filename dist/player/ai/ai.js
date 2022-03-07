@@ -10,14 +10,18 @@ export default class AbstractAI extends Player {
     }
     // #endregion
     // #region Accessors 
+    /**
+     * Properties of the AI, such as its name and
+     * corresponding icon. Used by the view.
+     */
     get name() {
         return ["AI", "smart_toy"];
     }
-    // #endregion
-    // #region Miscellaneous
     get chooseMoveEvent() {
         return this._chooseMoveEvent;
     }
+    // #endregion
+    // #region Miscellaneous
     executeMove(move) {
         this._chooseMoveEvent.trigger(move);
     }

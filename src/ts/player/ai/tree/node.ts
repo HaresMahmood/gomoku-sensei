@@ -7,9 +7,9 @@ interface Node {
 export default abstract class AbstractNode implements Node {
     // #region Initialization 
 
-    private _state: State;
+    protected _state: State;
+    protected _children: AbstractNode[];
     private _parent: AbstractNode;
-    private _children: AbstractNode[];
 
     constructor(state = new State(), parent = null, children = []) {
         this._state = state;
@@ -49,7 +49,7 @@ export default abstract class AbstractNode implements Node {
 
     // #region Abstract
 
-    public abstract rollout(): number;
+    public abstract rollout(): any;
 
     public abstract expand(): AbstractNode;
 
@@ -58,11 +58,16 @@ export default abstract class AbstractNode implements Node {
     // #region Miscellaneous
 
     /**
+     * Selection-phase of the Monte Carlo Tree Search algorithm.
+     * Utilises the UCT (Upper Confidence Bound 1 applied to 
+     * trees) formula.
+     * 
      * Determines the best child to select by assigning each
      * child a UCT-score.
      * 
      * @param player AI's player number.
      * @returns Child with the best UCT-score.
+     * @see [Informaion on the UCT-formula](https://en.wikipedia.org/wiki/Monte_Carlo_tree_search#Exploration_and_exploitation)
      */
     public select(player: number): AbstractNode {
         let selected = this._children[0];
@@ -94,15 +99,6 @@ export default abstract class AbstractNode implements Node {
                                     : exploitation - exploration;
 
         return uctValue;
-    }
-
-    /**
-     * 
-     * @param utility 
-     */
-    public updateStats(utility: number): void {
-        this._state.visits++;
-        this._state.wins += utility;
     }
 
     /**

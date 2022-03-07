@@ -11,14 +11,14 @@ export default class KillerAI extends AbstractAI {
         // const startTime = Date.now();
         const root = new StaticNode();
         let counter = 0;
-        root.state.game = game;
+        root.state.mdp = game;
         root.state.playerNumber = this._player;
         root.expand();
         while (counter != interval) {
             let current = this.select(root); // Selection.
             let result;
-            if (current.state.game.isOver()) {
-                result = current.state.game.getWinner();
+            if (current.state.mdp.isOver()) {
+                result = current.state.mdp.getWinner();
             }
             else {
                 if (current.state.visits > 0) {
@@ -32,7 +32,7 @@ export default class KillerAI extends AbstractAI {
         const winnerNode = root.getMostVisitedChild();
         // console.log(counter);
         console.log(root);
-        return winnerNode.state.game.lastMove;
+        return winnerNode.state.mdp.lastMove;
     }
     select(node) {
         while (!node.isLeaf()) { // && !node.state.game.isOver()

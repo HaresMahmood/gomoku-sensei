@@ -9,15 +9,15 @@ export default class DynamicAI extends AbstractAI {
     chooseMove(game) {
         const iterations = 22000;
         const root = new DynamicNode();
-        root.state.game = game;
+        root.state.mdp = game;
         root.state.playerNumber = this._player;
         root.expand();
         for (let i = 0; i <= iterations; i++) {
             let current = this.select(root); // Selection.
             let result;
-            if (current.state.game.isOver()) {
+            if (current.state.mdp.isOver()) {
                 current.state.isTerminal = true;
-                result = [current.state.game.getWinner(), current.state.game.moveNumber];
+                result = [current.state.mdp.getWinner(), current.state.mdp.moveNumber];
             }
             else {
                 if (current.state.visits > 0) {
@@ -29,7 +29,7 @@ export default class DynamicAI extends AbstractAI {
         }
         console.log(root);
         console.log(root.getMostVisitedChild());
-        return root.getMostVisitedChild().state.game.lastMove;
+        return root.getMostVisitedChild().state.mdp.lastMove;
     }
     select(node) {
         while (!node.isLeaf()) { // && !node.state.game.isOver()

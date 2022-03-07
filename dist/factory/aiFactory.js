@@ -1,3 +1,4 @@
+// #region Imports
 import Human from "../player/human.js";
 import RandomAI from "../player/ai/randomAI.js";
 import KillerAI from "../player/ai/killerAI.js";
