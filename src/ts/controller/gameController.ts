@@ -56,7 +56,7 @@ export default class GameController {
         this.view.addPiece(index, color, this.model.moveNumber);
         this.model.makeTransition(index, this.player);
 
-        if (this.model.isOver()) {
+        if (this.model.isTerminal()) {
             this.view.endGame(this.player === 1 ? this.playerOne : this.playerTwo, this.model.isDraw());
             return;
         }

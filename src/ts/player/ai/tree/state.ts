@@ -76,6 +76,8 @@ export default class State {
 
     // #endregion
 
+    // #region Miscellaneous
+
     clone() {
         return new State(this._mdp.clone(), this._playerNumber, this._wins, this._visits);
     }
@@ -105,4 +107,6 @@ export default class State {
     makeRandomMove() {
         this._mdp.makeRandomTransition(this._playerNumber);
     }
+
+    // #endregion
 }
