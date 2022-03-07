@@ -61,7 +61,6 @@ export default class Game {
 
     // #region Miscellaneous
 
-    // TODO: `[make]Transition()`.
     /**
      * Flips a cell to the provided player's number.
      * Also increases the move counter.
@@ -117,7 +116,6 @@ export default class Game {
         return successors;
     }
 
-    // TODO: `isTerminal()`.
     /**
      * 
      * @returns 
@@ -128,8 +126,8 @@ export default class Game {
         return this.hasWon(player) || this.isDraw();
     }
 
-    // TODO: `getReward()`.
     /**
+     * 
      * 
      * @returns 
      */

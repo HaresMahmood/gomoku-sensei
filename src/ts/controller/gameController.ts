@@ -10,7 +10,8 @@ export default class GameController {
     private model: Game;
     private view: GameView;
     
-    private player: number = 1 | 2; // Either player 1, or player 2.
+    // Gomoku is a 2-player game.
+    private player: number = 1 | 2;
     private playerOne: Player;
     private playerTwo: Player;
 
@@ -83,7 +84,7 @@ export default class GameController {
 
         window.setTimeout(function() {
             that.nextPlayer(that.player);
-        }, 150); // Set timeout to update UI.
+        }, 150);
     }
 
     /**
@@ -92,12 +93,9 @@ export default class GameController {
      * @param player Player who's turn it currently is.
      */
     private nextPlayer(player: number): void {
-        if (this.playerOne.player === player) {
-            this.performMove(this.playerOne.chooseMove(this.model.clone()));
-        }
-        else if (this.playerTwo.player === player) {
-            this.performMove(this.playerTwo.chooseMove(this.model.clone()))
-        }
+        const currentPlayer = this.playerOne.player === player ? this.playerOne : this.playerTwo;
+
+        this.performMove(currentPlayer.chooseMove(this.model.clone()));
     }
 
         /**
@@ -112,7 +110,7 @@ export default class GameController {
     
                 window.setTimeout(function() {
                     that.nextPlayer(nextPlayer);
-                }, 150); // Set timeout to update UI.
+                }, 150);
             }
         }
 
