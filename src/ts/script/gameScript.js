@@ -12,7 +12,5 @@ $(document).ready(function() {
     const player1 = factory.createItem(localStorage.getItem("player1"), 1);
     const player2 = factory.createItem(localStorage.getItem("player2"), 2);
 
-    console.log(player1, player2);
-
     const controller = new Controller(game, view, player1, player2);
 });

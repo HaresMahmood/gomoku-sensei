@@ -1,8 +1,4 @@
 import Event from "../utility/event.js";
-import GamePage from "./pages/gamePage.js";
-import HomePage from "./pages/homePage.js";
-import RulesPage from "./pages/rulesPage.js";
-import SettingsPage from "./pages/settingsPage.js";
 
 export default class DefaultView {
     // #region Initialization

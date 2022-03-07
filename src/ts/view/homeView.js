@@ -1,6 +1,6 @@
 export default class HomeView {
     // #region Initialization
-
+ 
     constructor() {
         this.setButtonHandler();
     }
