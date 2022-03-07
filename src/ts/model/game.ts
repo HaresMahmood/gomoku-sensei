@@ -1,6 +1,10 @@
+// #region Constants
+
 const ROWS = 7;
 const COLUMNS = ROWS;
 const N = 5;
+
+// #endregion
 
 /**
  * MDP representation of the game of Gomoku. The dimensions

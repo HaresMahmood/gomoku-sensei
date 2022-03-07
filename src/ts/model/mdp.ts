@@ -16,22 +16,27 @@ export default interface MDP {
     getSuccessors(player: any): MDP[];
 
     /**
+     * Checks whether the current state is terminal.
      * 
      * @returns 
      */
     isTerminal(): boolean;
 
     /**
+     * Determines the utility score of the game. In many
+     * board-games, this is either:
+     * * `1`: A win for player 1.
+     * * `2`: A win for player 2.
+     * * `-1`: A win for neither; a draw.
      * 
      * @returns 
      */
     getUtilityScore(): number;
 
     /**
-     * Clones the state of the game.
+     * Copies the current state.
      * 
      * @returns A deep-clone of the current current state of the game.
      */
     clone(): MDP;
-
 }
