@@ -12,11 +12,11 @@ const N = 5;
 export default class Gomoku {
     // #region Initialization
     board;
-    lastMove; // TODO: Make private.
+    _lastMove;
     _moveNumber;
     constructor(state = new Array(ROWS * COLUMNS).fill(0), lastMove = -1, moveNumber = 1) {
         this.board = state;
-        this.lastMove = lastMove;
+        this._lastMove = lastMove;
         this._moveNumber = moveNumber;
     }
     // #endregion
@@ -45,6 +45,9 @@ export default class Gomoku {
     get moveNumber() {
         return this._moveNumber;
     }
+    get lastMove() {
+        return this._lastMove;
+    }
     // #endregion
     // #region Miscellaneous
     /**
@@ -53,18 +56,15 @@ export default class Gomoku {
      */
     makeTransition(move, player) {
         this.board[move] = player;
-        this.lastMove = move;
+        this._lastMove = move;
         this._moveNumber++;
     }
     // Inherited docs.
+    // TODO: Make more efficient.
     makeRandomTransition(player) {
-        while (true) {
-            const randomCell = Math.floor(Math.random() * this.board.length);
-            // If the randomly chosen cell is empty, ...
-            if (randomCell === 0) {
-                this.makeTransition(randomCell, player);
-            }
-        }
+        const emptyCells = this.getEmptyCells();
+        const randomCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+        this.makeTransition(randomCell, player);
     }
     /**
      * Checks for all empty positions on the board and
@@ -84,12 +84,12 @@ export default class Gomoku {
     }
     // Inherited docs.
     isTerminal() {
-        const player = this.board[this.lastMove]; // TODO: Think of better way of doing this.
+        const player = this.board[this._lastMove]; // TODO: Think of better way of doing this.
         return this.hasWon(player) || this.isDraw();
     }
     // Inherited docs.
     getUtilityScore() {
-        const player = this.board[this.lastMove]; // FIXME: `player` should be passed in as a parameter.
+        const player = this.board[this._lastMove]; // FIXME: `player` should be passed in as a parameter.
         let winner = this.hasWon(player) ? player : -1;
         return winner;
     }
@@ -115,7 +115,7 @@ export default class Gomoku {
         for (let i = 0; i < this.board.length; i++) {
             this.board[i] = 0;
         }
-        this.lastMove = -1;
+        this._lastMove = -1;
         this._moveNumber = 1;
     }
     // #endregion
@@ -139,7 +139,16 @@ export default class Gomoku {
     }
     // Inherited docs.
     clone() {
-        return new Gomoku(this.board.slice(), this.lastMove, this._moveNumber);
+        return new Gomoku(this.board.slice(), this._lastMove, this._moveNumber);
+    }
+    getEmptyCells() {
+        const cells = [];
+        for (let i = 0; i < (ROWS * COLUMNS); i++) {
+            if (this.board[i] === 0) {
+                cells.push(i);
+            }
+        }
+        return cells;
     }
     /**
      * Uses RegEx to join together a 1-dimensional array

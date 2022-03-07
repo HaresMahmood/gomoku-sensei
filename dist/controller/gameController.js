@@ -64,8 +64,14 @@ export default class GameController {
      * @param player Player who's turn it currently is.
      */
     nextPlayer(player) {
-        const currentPlayer = this.playerOne.player === player ? this.playerOne : this.playerTwo;
-        this.performMove(currentPlayer.chooseMove(this.model.clone()));
+        if (this.playerOne.player === player) {
+            this.performMove(this.playerOne.chooseMove(this.model.clone()));
+        }
+        else if (this.playerTwo.player === player) {
+            this.performMove(this.playerTwo.chooseMove(this.model.clone()));
+        }
+        // const currentPlayer = this.playerOne.player === player ? this.playerOne : this.playerTwo;
+        // this.performMove(currentPlayer.chooseMove(this.model.clone()));
     }
     /**
  * Adds a piece to the board at the provided index.

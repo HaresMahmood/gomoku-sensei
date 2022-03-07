@@ -26,8 +26,8 @@ export default class KillerAI extends AbstractAI {
             let current = this.select(root); // Selection.
             let result;
 
-            if (current.state.mdp.isOver()) {
-                result = current.state.mdp.getWinner();
+            if (current.state.mdp.isTerminal()) {
+                result = current.state.mdp.getUtilityScore();
             }
             else {
                 if (current.state.visits > 0) {
@@ -37,12 +37,12 @@ export default class KillerAI extends AbstractAI {
                 result = current.rollout(); // Simulation.
             }
 
-            this.backpropogate(current, result); // Backpropogation.
+            this.backpropogate(current as StaticNode, result); // Backpropogation.
 
             counter++;
         }
 
-        const winnerNode = root.getMostVisitedChild();
+        const winnerNode = root.getBestChild();
 
         // console.log(counter);
         console.log(root);
@@ -50,7 +50,7 @@ export default class KillerAI extends AbstractAI {
         return winnerNode.state.mdp.lastMove;
     }
 
-    private select(node: StaticNode) {
+    private select(node: AbstractNode) {
         while (!node.isLeaf()) { // && !node.state.game.isOver()
             node = node.select(this._player); // UCT.
         }
@@ -70,7 +70,7 @@ export default class KillerAI extends AbstractAI {
 
         while (node !== null) {
             node.updateStats(utility);
-            node = node.parent;
+            node = node.parent as StaticNode;
         }
     }
 }

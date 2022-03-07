@@ -10,6 +10,8 @@ export default interface MDP {
      */
     moveNumber: number;
 
+    lastMove: number;
+
     // #endregion
 
     /**

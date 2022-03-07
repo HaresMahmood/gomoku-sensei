@@ -24,9 +24,9 @@ export default class DynamicAI extends AbstractAI {
             let current = this.select(root); // Selection.
             let result;
 
-            if (current.state.mdp.isOver()) {
+            if (current.state.mdp.isTerminal()) {
                 current.state.isTerminal = true;
-                result = [current.state.mdp.getWinner(), current.state.mdp.moveNumber];
+                result = [current.state.mdp.getUtilityScore(), current.state.mdp.moveNumber];
             }
             else {
                 if (current.state.visits > 0) {
@@ -36,16 +36,16 @@ export default class DynamicAI extends AbstractAI {
                 result = current.rollout(); // Simulation.
             }
 
-            this.backpropogate(current, result); // Backpropogation.
+            this.backpropogate(current as DynamicNode, result); // Backpropogation.
         }
 
         console.log(root);
-        console.log(root.getMostVisitedChild());
+        console.log(root.getBestChild());
 
-        return root.getMostVisitedChild().state.mdp.lastMove;
+        return root.getBestChild().state.mdp.lastMove;
     }
 
-    private select(node: DynamicNode) {
+    private select(node: AbstractNode) {
         while (!node.isLeaf()) { // && !node.state.game.isOver()
             node = node.select(this._player); // UCT.
         }
@@ -65,7 +65,7 @@ export default class DynamicAI extends AbstractAI {
 
         while (node !== null) {
             node.updateStats(utility, result[1]);
-            node = node.parent;
+            node = node.parent as DynamicNode;
         }
     }
 }

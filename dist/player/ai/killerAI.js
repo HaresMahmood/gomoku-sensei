@@ -17,8 +17,8 @@ export default class KillerAI extends AbstractAI {
         while (counter != interval) {
             let current = this.select(root); // Selection.
             let result;
-            if (current.state.mdp.isOver()) {
-                result = current.state.mdp.getWinner();
+            if (current.state.mdp.isTerminal()) {
+                result = current.state.mdp.getUtilityScore();
             }
             else {
                 if (current.state.visits > 0) {
@@ -29,7 +29,7 @@ export default class KillerAI extends AbstractAI {
             this.backpropogate(current, result); // Backpropogation.
             counter++;
         }
-        const winnerNode = root.getMostVisitedChild();
+        const winnerNode = root.getBestChild();
         // console.log(counter);
         console.log(root);
         return winnerNode.state.mdp.lastMove;

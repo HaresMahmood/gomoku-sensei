@@ -93,9 +93,16 @@ export default class GameController {
      * @param player Player who's turn it currently is.
      */
     private nextPlayer(player: number): void {
-        const currentPlayer = this.playerOne.player === player ? this.playerOne : this.playerTwo;
+        if (this.playerOne.player === player) {
+            this.performMove(this.playerOne.chooseMove(this.model.clone()));
+        }
+        else if (this.playerTwo.player === player) {
+            this.performMove(this.playerTwo.chooseMove(this.model.clone()))
+        }
 
-        this.performMove(currentPlayer.chooseMove(this.model.clone()));
+        // const currentPlayer = this.playerOne.player === player ? this.playerOne : this.playerTwo;
+
+        // this.performMove(currentPlayer.chooseMove(this.model.clone()));
     }
 
         /**

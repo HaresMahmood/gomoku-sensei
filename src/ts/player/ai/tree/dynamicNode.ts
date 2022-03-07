@@ -60,7 +60,7 @@ export default class DynamicNode extends AbstractNode {
     }
 
     // Inherited docs.
-    public getMostVisitedChild(): AbstractNode {
+    public getBestChild(): AbstractNode {
         let child = this._children.reduce((x, y) => {
             return ((x.state.wins / x.state.visits || 0) + (x.state.gameLength / x.state.visits || 0)) 
                  > ((y.state.wins / y.state.visits || 0)  + (y.state.gameLength / y.state.visits || 0))

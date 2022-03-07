@@ -1,11 +1,10 @@
-import Gomoku from "../../model/game";
+import MDP from "../../model/mdp";
 import AbstractAI from "./ai.js";
 
 export default class RandomAI extends AbstractAI {
-    chooseMove(game: Gomoku): number {
-        const moves: Gomoku[] = game.getSuccessors(this._player);
-        const random: Gomoku = moves[Math.floor(Math.random() * moves.length)];
+    chooseMove(game: MDP): number {
+        game.makeRandomTransition(this._player);
 
-        return random.lastMove;
+        return game.lastMove;
     }
 }

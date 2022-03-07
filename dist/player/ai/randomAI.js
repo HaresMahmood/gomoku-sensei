@@ -1,8 +1,7 @@
 import AbstractAI from "./ai.js";
 export default class RandomAI extends AbstractAI {
     chooseMove(game) {
-        const moves = game.getSuccessors(this._player);
-        const random = moves[Math.floor(Math.random() * moves.length)];
-        return random.lastMove;
+        game.makeRandomTransition(this._player);
+        return game.lastMove;
     }
 }

@@ -18,12 +18,12 @@ export default class Gomoku implements MDP {
     // #region Initialization
 
     private board: number[];
-    public lastMove: number; // TODO: Make private.
+    private _lastMove: number;
     private _moveNumber: number;
 
     constructor(state = new Array(ROWS * COLUMNS).fill(0), lastMove: number = -1, moveNumber: number = 1) {
         this.board = state;
-        this.lastMove = lastMove;
+        this._lastMove = lastMove;
         this._moveNumber = moveNumber;
     }
 
@@ -59,6 +59,10 @@ export default class Gomoku implements MDP {
         return this._moveNumber;
     }
 
+    public get lastMove() {
+        return this._lastMove;
+    }
+
     // #endregion
 
     // #region Miscellaneous
@@ -69,20 +73,17 @@ export default class Gomoku implements MDP {
      */
     public makeTransition(move: number, player: number): void {
         this.board[move] = player;
-        this.lastMove = move;
+        this._lastMove = move;
         this._moveNumber++;
     }
 
     // Inherited docs.
+    // TODO: Make more efficient.
     public makeRandomTransition(player: number): void {
-        while (true) {
-            const randomCell = Math.floor(Math.random() * this.board.length);
-        
-            // If the randomly chosen cell is empty, ...
-            if (randomCell === 0) {
-                this.makeTransition(randomCell, player);
-            }
-        }
+        const emptyCells = this.getEmptyCells();
+        const randomCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
+
+        this.makeTransition(randomCell, player);
     }
 
     /**
@@ -107,14 +108,14 @@ export default class Gomoku implements MDP {
 
     // Inherited docs.
     public isTerminal(): boolean {
-        const player = this.board[this.lastMove]; // TODO: Think of better way of doing this.
+        const player = this.board[this._lastMove]; // TODO: Think of better way of doing this.
 
         return this.hasWon(player) || this.isDraw();
     }
 
     // Inherited docs.
     getUtilityScore(): number {
-        const player = this.board[this.lastMove]; // FIXME: `player` should be passed in as a parameter.
+        const player = this.board[this._lastMove]; // FIXME: `player` should be passed in as a parameter.
         let winner = this.hasWon(player) ? player : -1;
 
         return winner;
@@ -145,7 +146,7 @@ export default class Gomoku implements MDP {
             this.board[i] = 0;
         }
         
-        this.lastMove = -1;
+        this._lastMove = -1;
         this._moveNumber = 1;
     }
 
@@ -174,7 +175,19 @@ export default class Gomoku implements MDP {
     
     // Inherited docs.
     public clone(): MDP {
-        return new Gomoku(this.board.slice(), this.lastMove, this._moveNumber);
+        return new Gomoku(this.board.slice(), this._lastMove, this._moveNumber);
+    }
+
+    getEmptyCells() {
+        const cells = [];
+
+        for (let i = 0; i < (ROWS * COLUMNS); i++) {
+            if (this.board[i] === 0) {
+                cells.push(i);
+            }
+        }
+
+        return cells;
     }
 
     /**
