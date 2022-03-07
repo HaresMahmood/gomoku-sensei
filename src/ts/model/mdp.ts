@@ -2,6 +2,16 @@
  * Generic interface representing a Markov Decision Process.
  */
 export default interface MDP {
+    // #region Properties
+
+    /**
+     * The amount of moves played so far, i.e. 
+     * the length of the game.
+     */
+    moveNumber: number;
+
+    // #endregion
+
     /**
      * Transitions from the current state to another.
      * 

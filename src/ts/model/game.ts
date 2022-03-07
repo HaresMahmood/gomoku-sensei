@@ -55,10 +55,6 @@ export default class Gomoku implements MDP {
         return N;
     }
 
-    /**
-     * The amount of moves played so far, i.e. 
-     * the length of the game.
-     */
     public get moveNumber() {
         return this._moveNumber;
     }
@@ -87,23 +83,6 @@ export default class Gomoku implements MDP {
                 this.makeTransition(randomCell, player);
             }
         }
-    }
-
-    /**
-     * Adds all empty positions on the board to a list.
-     * 
-     * @returns A list of all empty cells.
-     */
-     public getEmptyCells(): number[] {
-        const cells = [];
-
-        for (let i = 0; i < (ROWS * COLUMNS); i++) {
-            if (this.isCellEmpty(i)) {
-                cells.push(i);
-            }
-        }
-
-        return cells;
     }
 
     /**
@@ -194,7 +173,7 @@ export default class Gomoku implements MDP {
     }
     
     // Inherited docs.
-    public clone() {
+    public clone(): MDP {
         return new Gomoku(this.board.slice(), this.lastMove, this._moveNumber);
     }
 
