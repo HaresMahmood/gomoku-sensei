@@ -1,3 +1,5 @@
+import MDP from "./mdp.js";
+
 // #region Constants
 
 const ROWS = 7;
@@ -12,7 +14,7 @@ const N = 5;
  * tweaked, essentially allowing for the representation of
  * any m, n, k-game.
  */
-export default class Gomoku {
+export default class Gomoku implements MDP {
     // #region Initialization
 
     private board: number[];
@@ -68,14 +70,23 @@ export default class Gomoku {
     /**
      * Flips a cell to the provided player's number.
      * Also increases the move counter.
-     * 
-     * @param index Cell on board.
-     * @param player Player's who's turn it currently is.
      */
-    public performMove(index: number, player: number): void {
-        this.board[index] = player;
-        this.lastMove = index;
+    public makeTransition(move: number, player: number): void {
+        this.board[move] = player;
+        this.lastMove = move;
         this._moveNumber++;
+    }
+
+    // Inherited docs.
+    public makeRandomTransition(player: number): void {
+        while (true) {
+            const randomCell = Math.floor(Math.random() * this.board.length);
+        
+            // If the randomly chosen cell is empty, ...
+            if (randomCell === 0) {
+                this.makeTransition(randomCell, player);
+            }
+        }
     }
 
     /**

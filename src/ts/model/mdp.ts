@@ -1,11 +1,21 @@
+/**
+ * Generic interface representing a Markov Decision Process.
+ */
 export default interface MDP {
     /**
-     * transitions from one state to another.
+     * Transitions from the current state to another.
      * 
      * @param index Cell on board.
      * @param player Player's who's turn it currently is.
      */
     makeTransition(move: any, player: any): void;
+
+    /**
+     * Transitions from the current state to a random one.
+     * 
+     * @param player Player's who's turn it currently is.
+     */
+    makeRandomTransition(player: any): void;
 
     /**
      * Gets a list of successors from the current states.

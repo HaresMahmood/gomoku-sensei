@@ -54,7 +54,7 @@ export default class GameController {
         const nextPlayer = this.player === 1 ? 2 : 1;
 
         this.view.addPiece(index, color, this.model.moveNumber);
-        this.model.performMove(index, this.player);
+        this.model.makeTransition(index, this.player);
 
         if (this.model.isOver()) {
             this.view.endGame(this.player === 1 ? this.playerOne : this.playerTwo, this.model.isDraw());

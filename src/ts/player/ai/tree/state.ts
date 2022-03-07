@@ -106,6 +106,6 @@ export default class State {
         const emptyCells = this._game.getEmptyCells();
         const randomCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];
 
-        this._game.performMove(randomCell, this._playerNumber);
+        this._game.makeTransition(randomCell, this._playerNumber);
     }
 }
