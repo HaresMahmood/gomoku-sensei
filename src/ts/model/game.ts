@@ -106,16 +106,12 @@ export default class Gomoku implements MDP {
         return cells;
     }
 
-    // TODO: Refactor this function to make it clearner.
     /**
      * Checks for all empty positions on the board and 
      * creates a copy of the current game state with 
      * a new move added to the copied state.
-     * 
-     * @param player Player who's turn it currently is to play.
-     * @returns All successors from the current game state.
      */
-    public getSuccessors(player): Gomoku[] {
+    public getSuccessors(player): MDP[] {
         let successors = [];
 
         for (let i = 0; i < (ROWS * COLUMNS); i++) {
@@ -131,22 +127,15 @@ export default class Gomoku implements MDP {
         return successors;
     }
 
-    /**
-     * 
-     * @returns 
-     */
-    isOver() {
+    // Inherited docs.
+    public isTerminal(): boolean {
         const player = this.board[this.lastMove]; // TODO: Think of better way of doing this.
 
         return this.hasWon(player) || this.isDraw();
     }
 
-    /**
-     * 
-     * 
-     * @returns 
-     */
-    getWinner(): number {
+    // Inherited docs.
+    getUtilityScore(): number {
         const player = this.board[this.lastMove]; // FIXME: `player` should be passed in as a parameter.
         let winner = this.hasWon(player) ? player : -1;
 
@@ -204,12 +193,8 @@ export default class Gomoku implements MDP {
     isDraw() {
         return !this.board.includes(0);
     }
-
-    /**
-     * Clones the state of the game.
-     * 
-     * @returns A deep-clone of the current current state of the game.
-     */
+    
+    // Inherited docs.
     public clone() {
         return new Gomoku(this.board.slice(), this.lastMove, this._moveNumber);
     }

@@ -37,7 +37,7 @@ export default interface MDP {
      * board-games, this is either:
      * * `1`: A win for player 1.
      * * `2`: A win for player 2.
-     * * `-1`: A win for neither; a draw.
+     * * `-1`: A win or loss for neither; a draw.
      * 
      * @returns 
      */
