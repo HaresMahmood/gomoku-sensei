@@ -1,9 +1,9 @@
-import Game from "../../../model/game.js";
+import Gomoku from "../../../model/game.js";
 
 export default class State {
     // #region Initialization
 
-    private _game: Game;
+    private _game: Gomoku;
     private _playerNumber: number;
     private _wins: number;
     private _visits: number;
@@ -50,7 +50,7 @@ export default class State {
         return this._isTerminal;
     }
 
-    public set game(value: Game) {
+    public set game(value: Gomoku) {
         this._game = value;
     }
 

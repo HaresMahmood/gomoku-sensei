@@ -1,4 +1,4 @@
-import Game from "../model/game.js";
+import Gomoku from "../model/game.js";
 import GameView from "../view/gameView.js";
 import AI from "../player/ai/ai.js";
 import Player from "../player/player.js";
@@ -7,7 +7,7 @@ import Player from "../player/player.js";
 export default class GameController {
     // #region Initialization
 
-    private model: Game;
+    private model: Gomoku;
     private view: GameView;
     
     // Gomoku is a 2-player game.
@@ -15,7 +15,7 @@ export default class GameController {
     private playerOne: Player;
     private playerTwo: Player;
 
-    constructor(model: Game, view: GameView, player1: Player, player2: Player) {
+    constructor(model: Gomoku, view: GameView, player1: Player, player2: Player) {
         this.model = model;
         this.view = view;
 

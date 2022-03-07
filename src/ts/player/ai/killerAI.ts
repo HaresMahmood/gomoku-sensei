@@ -1,4 +1,4 @@
-import Game from "../../model/game.js";
+import Gomoku from "../../model/game.js";
 import AbstractAI from "./ai.js";
 import AbstractNode from "./tree/node.js";
 import StaticNode from "./tree/staticNode.js";
@@ -12,7 +12,7 @@ export default class KillerAI extends AbstractAI {
     //     this.node = node;
     // }
 
-    public chooseMove(game: Game): number {
+    public chooseMove(game: Gomoku): number {
         const interval: number = 22500;
         // const startTime = Date.now();
         const root = new StaticNode();

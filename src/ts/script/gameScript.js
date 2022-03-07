@@ -1,11 +1,11 @@
-import Game from "../model/game.js";
+import Gomoku from "../model/game.js";
 import GameView from "../view/gameView.js";
 import Controller from "../controller/gameController.js";
 import AIFactory from "../factory/aiFactory.js";
 
 
 $(document).ready(function() {
-    const game = new Game();
+    const game = new Gomoku();
     const view = new GameView(game.rows, game.columns);
 
     const factory = new AIFactory();

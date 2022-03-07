@@ -1,4 +1,4 @@
-import Game from "../../model/game.js";
+import Gomoku from "../../model/game.js";
 import AbstractAI from "./ai.js";
 import AbstractNode from "./tree/node.js";
 import DynamicNode from "./tree/dynamicNode.js";
@@ -12,7 +12,7 @@ export default class DynamicAI extends AbstractAI {
     //     this.node = node;
     // }
 
-    public chooseMove(game: Game): number {
+    public chooseMove(game: Gomoku): number {
         const iterations: number = 22000;
         const root = new DynamicNode();
 

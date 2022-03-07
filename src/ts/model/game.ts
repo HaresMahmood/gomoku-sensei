@@ -12,7 +12,7 @@ const N = 5;
  * tweaked, essentially allowing for the representation of
  * any m, n, k-game.
  */
-export default class Game {
+export default class Gomoku {
     // #region Initialization
 
     private board: number[];
@@ -104,7 +104,7 @@ export default class Game {
      * @param player Player who's turn it currently is to play.
      * @returns All successors from the current game state.
      */
-    public getSuccessors(player): Game[] {
+    public getSuccessors(player): Gomoku[] {
         let successors = [];
 
         for (let i = 0; i < (ROWS * COLUMNS); i++) {
@@ -113,7 +113,7 @@ export default class Game {
             if (copy[i] === 0) {
                 copy[i] = player;
 
-                successors.push(new Game(copy, i, this._moveNumber + 1));
+                successors.push(new Gomoku(copy, i, this._moveNumber + 1));
             }
         }
 
@@ -200,7 +200,7 @@ export default class Game {
      * @returns A deep-clone of the current current state of the game.
      */
     public clone() {
-        return new Game(this.board.slice(), this.lastMove, this._moveNumber);
+        return new Gomoku(this.board.slice(), this.lastMove, this._moveNumber);
     }
 
     /**
