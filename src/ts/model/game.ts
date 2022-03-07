@@ -115,12 +115,11 @@ export default class Gomoku implements MDP {
         let successors = [];
 
         for (let i = 0; i < (ROWS * COLUMNS); i++) {
-            let copy = this.board.slice();
+            if (this.board[i] === 0) {
+                const copy = this.clone();
+                copy.makeTransition(i, player)
 
-            if (copy[i] === 0) {
-                copy[i] = player;
-
-                successors.push(new Gomoku(copy, i, this._moveNumber + 1));
+                successors.push(copy);
             }
         }
 
