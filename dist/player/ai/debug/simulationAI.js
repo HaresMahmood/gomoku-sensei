@@ -13,7 +13,7 @@ export default class SimulationAI {
         root.expand();
         for (const child of root.children) {
             while (counter < iterations) {
-                const result = child.rollout();
+                const result = child.simulate();
                 let utility = -1;
                 if (result === this.playerNumber) {
                     utility = 1;

@@ -24,7 +24,7 @@ export default class KillerAI extends AbstractAI {
                 if (current.state.visits > 0) {
                     current = current.expand(); // Expansion.
                 }
-                result = current.rollout(); // Simulation.
+                result = current.simulate(); // Simulation.
             }
             this.backpropogate(current, result); // Backpropogation.
             counter++;

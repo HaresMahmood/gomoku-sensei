@@ -24,7 +24,9 @@ export default class DynamicNode extends AbstractNode {
         return uctValue + terminality + fairness;
     }
 
-    public rollout(): any {
+    // Inherited docs.
+    // TODO: make more efficient (no double `isTerminal`-check).
+    public simulate(): [number, number] {
         const clone = this.state.clone();
 
         if (clone.mdp.isTerminal()) {

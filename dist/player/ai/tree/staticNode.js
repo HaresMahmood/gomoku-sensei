@@ -10,7 +10,8 @@ export default class StaticNode extends AbstractNode {
         return this.children[0];
     }
     // Inherited docs.
-    rollout() {
+    // TODO: make more efficient (no double `isTerminal`-check).
+    simulate() {
         const clone = this.state.clone();
         if (clone.mdp.isTerminal()) {
             const result = clone.mdp.getUtilityScore();

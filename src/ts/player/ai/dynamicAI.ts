@@ -33,7 +33,7 @@ export default class DynamicAI extends AbstractAI {
                     current = current.expand(); // Expansion.
                 }
 
-                result = current.rollout(); // Simulation.
+                result = current.simulate(); // Simulation.
             }
 
             this.backpropogate(current as DynamicNode, result); // Backpropogation.

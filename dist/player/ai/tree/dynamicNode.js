@@ -16,7 +16,9 @@ export default class DynamicNode extends AbstractNode {
         const fairness = (this._state.gameLength / this._state.visits) || 0;
         return uctValue + terminality + fairness;
     }
-    rollout() {
+    // Inherited docs.
+    // TODO: make more efficient (no double `isTerminal`-check).
+    simulate() {
         const clone = this.state.clone();
         if (clone.mdp.isTerminal()) {
             const result = clone.mdp.getUtilityScore();

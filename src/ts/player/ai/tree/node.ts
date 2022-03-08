@@ -1,9 +1,14 @@
 import State from "./state.js";
 
 interface Node {
-    rollout(): number;
+    simulate(): number;
 }
 
+/**
+ * Abstract class representing a node in a game tree.
+ * 
+ * @implements Node
+ */
 export default abstract class AbstractNode implements Node {
     // #region Initialization 
 
@@ -11,6 +16,13 @@ export default abstract class AbstractNode implements Node {
     protected _children: AbstractNode[];
     private _parent: AbstractNode;
 
+    /**
+     * Class constructor.
+     * 
+     * @param state 
+     * @param parent 
+     * @param children 
+     */
     constructor(state = new State(), parent = null, children = []) {
         this._state = state;
         this._parent = parent;
@@ -49,8 +61,21 @@ export default abstract class AbstractNode implements Node {
 
     // #region Abstract
 
-    public abstract rollout(): any;
+    /**
+     * Simulation-phase of MCTS.
+     * A game is simulated in memory where the
+     * AI plays against itself and each move is random.
+     */
+    public abstract simulate(): any;
 
+    /**
+     * Expansion-phase of MCTS.
+     * Adds all nodes reachable from the current node
+     * to the list of child-nodes.
+     * 
+     * @returns A random child-node - most likely the 
+     * first.
+     */
     public abstract expand(): AbstractNode;
 
     // #endregion
@@ -58,16 +83,12 @@ export default abstract class AbstractNode implements Node {
     // #region Miscellaneous
 
     /**
-     * Selection-phase of the Monte Carlo Tree Search algorithm.
-     * Utilises the UCT (Upper Confidence Bound 1 applied to 
-     * trees) formula.
-     * 
+     * Selection-phase of MCTS.
      * Determines the best child to select by assigning each
      * child a UCT-score.
      * 
      * @param player AI's player number.
      * @returns Child with the best UCT-score.
-     * @see [Informaion on the UCT-formula](https://en.wikipedia.org/wiki/Monte_Carlo_tree_search#Exploration_and_exploitation)
      */
     public select(player: number): AbstractNode {
         let selected = this._children[0];
@@ -91,6 +112,16 @@ export default abstract class AbstractNode implements Node {
 
     // #region Utlity
 
+    /**
+     * Determines the score of the node based on the Upper
+     * Condidence Bound 1 applied to trees (UCT)-formula.
+     * 
+     * @param parent Parent of the node.
+     * @param isAIPlayer Whether or not the current node 
+     * has the same player number as the AI.
+     * @returns The UCT-score of the node.
+     * @see [Informaion on the UCT-formula](https://en.wikipedia.org/wiki/Monte_Carlo_tree_search#Exploration_and_exploitation)
+     */
     public uctScore(parent: AbstractNode, isAIPlayer: boolean): number {
         const exploitation = (this._state.wins / this._state.visits) || 0; // Change `NaN` to 0 (0 wins / 0 visits).
         const exploration = Math.sqrt(2) * Math.sqrt(Math.log(parent.state.visits) / this._state.visits) || Infinity;  // Change `NaN` to `Infinity` (log(0 parent visits)).
