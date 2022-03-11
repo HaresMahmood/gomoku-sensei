@@ -9,27 +9,32 @@ const N = 5;
 // #endregion
 
 /**
- * MDP representation of the game of Gomoku. The dimensions
+ * MDP representation of the game of _Gomoku_. The dimensions
  * of the board, as well as the token chain-length can all be
  * tweaked, essentially allowing for the representation of
- * any m, n, k-game.
+ * any _m_, _n_, _k_-game.
+ * 
+ * @see {@link MDP} for generic properties of Markov Decision Processes.
+ * @see {@link https://en.wikipedia.org/wiki/Gomoku} for information on this specific game.
+ * @see {@link https://en.wikipedia.org/wiki/M,n,k-game} for the theoratical or mathematical representation of any _m_, _n_, _k_-game.
+ * 
  */
 export default class Gomoku implements MDP {
     // #region Initialization
 
-    private board: number[];
+    private _board: number[];
     private _lastMove: number;
     private _moveNumber: number;
 
     constructor(state = new Array(ROWS * COLUMNS).fill(0), lastMove: number = -1, moveNumber: number = 1) {
-        this.board = state;
+        this._board = state;
         this._lastMove = lastMove;
         this._moveNumber = moveNumber;
     }
 
     // #endregion
 
-    // #region Accessors
+    // #region Properties
 
     /**
      * The amount of rows on the game board.
@@ -55,10 +60,12 @@ export default class Gomoku implements MDP {
         return N;
     }
 
+    // Inherited docs.
     public get moveNumber() {
         return this._moveNumber;
     }
 
+    // Inherited docs.
     public get lastMove() {
         return this._lastMove;
     }
@@ -72,9 +79,9 @@ export default class Gomoku implements MDP {
      * Also increases the move counter.
      */
     public makeTransition(move: number, player: number): void {
-        this.board[move] = player;
-        this._lastMove = move;
-        this._moveNumber++;
+        this._board[move] = player; // Flip given cell to the given player's number.
+        this._lastMove = move; // Update the last move.
+        this._moveNumber++; // Increment the move number.
     }
 
     // Inherited docs.
@@ -95,7 +102,7 @@ export default class Gomoku implements MDP {
         let successors = [];
 
         for (let i = 0; i < (ROWS * COLUMNS); i++) {
-            if (this.board[i] === 0) {
+            if (this._board[i] === 0) {
                 const copy = this.clone();
                 copy.makeTransition(i, player)
 
@@ -108,30 +115,29 @@ export default class Gomoku implements MDP {
 
     // Inherited docs.
     public isTerminal(): boolean {
-        const player = this.board[this._lastMove]; // TODO: Think of better way of doing this.
+        const player = this._board[this._lastMove]; // TODO: Think of better way of doing this.
 
         return this.hasWon(player) || this.isDraw();
     }
 
     // Inherited docs.
     getUtilityScore(): number {
-        const player = this.board[this._lastMove]; // FIXME: `player` should be passed in as a parameter.
+        const player = this._board[this._lastMove]; // FIXME: `player` should be passed in as a parameter.
         let winner = this.hasWon(player) ? player : -1;
 
         return winner;
     }
     
-    // TODO: `isTerminal()`.
     /**
      * Checks if the specified player has won the game.
      * 
      * @param player The last player.
-     * @returns Whether the given `player` has won.
+     * @returns Whether the given player has chained together `N` pieces.
      * @see {@link toDelimitedString} for details on the string format.
      * @see {@link https://stackoverflow.com/a/64760249/13318731} for the original for the RegEx expression.
      */
     public hasWon(player: number): boolean {
-        const boardString: string = this.toDelimitedString(this.board, '#', ROWS);
+        const boardString: string = this.toDelimitedString(this._board, '#', ROWS);
         const win = new RegExp(`(${player})(\\1{${N - 1}}|(${".".repeat(ROWS)}\\1){${N - 1}}|(${".".repeat(ROWS + 1)}\\1){${N - 1}}|((?=.{0,${ROWS - 1}}#)${".".repeat(ROWS - 1)}\\1){${N - 1}})`);
 
         return win.test(boardString);
@@ -142,8 +148,8 @@ export default class Gomoku implements MDP {
      */
     public restart() {
         // Reset whole board.
-        for (let i: number = 0; i < this.board.length; i++) {
-            this.board[i] = 0;
+        for (let i: number = 0; i < this._board.length; i++) {
+            this._board[i] = 0;
         }
         
         this._lastMove = -1;
@@ -161,7 +167,7 @@ export default class Gomoku implements MDP {
      * @returns Whether the cell is empty.
      */
     isCellEmpty(index) {
-        return this.board[index] === 0;
+        return this._board[index] === 0;
     }
 
     /**
@@ -170,19 +176,19 @@ export default class Gomoku implements MDP {
      * @returns Whether the game has ended in a draw.
      */
     isDraw() {
-        return !this.board.includes(0);
+        return !this._board.includes(0);
     }
     
     // Inherited docs.
     public clone(): MDP {
-        return new Gomoku(this.board.slice(), this._lastMove, this._moveNumber);
+        return new Gomoku(this._board.slice(), this._lastMove, this._moveNumber);
     }
 
     getEmptyCells() {
         const cells = [];
 
         for (let i = 0; i < (ROWS * COLUMNS); i++) {
-            if (this.board[i] === 0) {
+            if (this._board[i] === 0) {
                 cells.push(i);
             }
         }

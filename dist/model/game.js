@@ -4,23 +4,28 @@ const COLUMNS = ROWS;
 const N = 5;
 // #endregion
 /**
- * MDP representation of the game of Gomoku. The dimensions
+ * MDP representation of the game of _Gomoku_. The dimensions
  * of the board, as well as the token chain-length can all be
  * tweaked, essentially allowing for the representation of
- * any m, n, k-game.
+ * any _m_, _n_, _k_-game.
+ *
+ * @see {@link MDP} for generic properties of Markov Decision Processes.
+ * @see {@link https://en.wikipedia.org/wiki/Gomoku} for information on this specific game.
+ * @see {@link https://en.wikipedia.org/wiki/M,n,k-game} for the theoratical or mathematical representation of any _m_, _n_, _k_-game.
+ *
  */
 export default class Gomoku {
     // #region Initialization
-    board;
+    _board;
     _lastMove;
     _moveNumber;
     constructor(state = new Array(ROWS * COLUMNS).fill(0), lastMove = -1, moveNumber = 1) {
-        this.board = state;
+        this._board = state;
         this._lastMove = lastMove;
         this._moveNumber = moveNumber;
     }
     // #endregion
-    // #region Accessors
+    // #region Properties
     /**
      * The amount of rows on the game board.
      */
@@ -42,9 +47,11 @@ export default class Gomoku {
     get n() {
         return N;
     }
+    // Inherited docs.
     get moveNumber() {
         return this._moveNumber;
     }
+    // Inherited docs.
     get lastMove() {
         return this._lastMove;
     }
@@ -55,9 +62,9 @@ export default class Gomoku {
      * Also increases the move counter.
      */
     makeTransition(move, player) {
-        this.board[move] = player;
-        this._lastMove = move;
-        this._moveNumber++;
+        this._board[move] = player; // Flip given cell to the given player's number.
+        this._lastMove = move; // Update the last move.
+        this._moveNumber++; // Increment the move number.
     }
     // Inherited docs.
     // TODO: Make more efficient.
@@ -74,7 +81,7 @@ export default class Gomoku {
     getSuccessors(player) {
         let successors = [];
         for (let i = 0; i < (ROWS * COLUMNS); i++) {
-            if (this.board[i] === 0) {
+            if (this._board[i] === 0) {
                 const copy = this.clone();
                 copy.makeTransition(i, player);
                 successors.push(copy);
@@ -84,26 +91,25 @@ export default class Gomoku {
     }
     // Inherited docs.
     isTerminal() {
-        const player = this.board[this._lastMove]; // TODO: Think of better way of doing this.
+        const player = this._board[this._lastMove]; // TODO: Think of better way of doing this.
         return this.hasWon(player) || this.isDraw();
     }
     // Inherited docs.
     getUtilityScore() {
-        const player = this.board[this._lastMove]; // FIXME: `player` should be passed in as a parameter.
+        const player = this._board[this._lastMove]; // FIXME: `player` should be passed in as a parameter.
         let winner = this.hasWon(player) ? player : -1;
         return winner;
     }
-    // TODO: `isTerminal()`.
     /**
      * Checks if the specified player has won the game.
      *
      * @param player The last player.
-     * @returns Whether the given `player` has won.
+     * @returns Whether the given player has chained together `N` pieces.
      * @see {@link toDelimitedString} for details on the string format.
      * @see {@link https://stackoverflow.com/a/64760249/13318731} for the original for the RegEx expression.
      */
     hasWon(player) {
-        const boardString = this.toDelimitedString(this.board, '#', ROWS);
+        const boardString = this.toDelimitedString(this._board, '#', ROWS);
         const win = new RegExp(`(${player})(\\1{${N - 1}}|(${".".repeat(ROWS)}\\1){${N - 1}}|(${".".repeat(ROWS + 1)}\\1){${N - 1}}|((?=.{0,${ROWS - 1}}#)${".".repeat(ROWS - 1)}\\1){${N - 1}})`);
         return win.test(boardString);
     }
@@ -112,8 +118,8 @@ export default class Gomoku {
      */
     restart() {
         // Reset whole board.
-        for (let i = 0; i < this.board.length; i++) {
-            this.board[i] = 0;
+        for (let i = 0; i < this._board.length; i++) {
+            this._board[i] = 0;
         }
         this._lastMove = -1;
         this._moveNumber = 1;
@@ -127,7 +133,7 @@ export default class Gomoku {
      * @returns Whether the cell is empty.
      */
     isCellEmpty(index) {
-        return this.board[index] === 0;
+        return this._board[index] === 0;
     }
     /**
      *
@@ -135,16 +141,16 @@ export default class Gomoku {
      * @returns Whether the game has ended in a draw.
      */
     isDraw() {
-        return !this.board.includes(0);
+        return !this._board.includes(0);
     }
     // Inherited docs.
     clone() {
-        return new Gomoku(this.board.slice(), this._lastMove, this._moveNumber);
+        return new Gomoku(this._board.slice(), this._lastMove, this._moveNumber);
     }
     getEmptyCells() {
         const cells = [];
         for (let i = 0; i < (ROWS * COLUMNS); i++) {
-            if (this.board[i] === 0) {
+            if (this._board[i] === 0) {
                 cells.push(i);
             }
         }

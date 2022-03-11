@@ -10,7 +10,12 @@ export default interface MDP {
      */
     moveNumber: number;
 
+    /**
+     * Coordinates of the last move.
+     */
     lastMove: number;
+
+    // #region Miscellaneous
 
     // #endregion
 
@@ -61,4 +66,6 @@ export default interface MDP {
      * @returns A deep-clone of the current current state of the game.
      */
     clone(): MDP;
+
+    // #endregion
 }
