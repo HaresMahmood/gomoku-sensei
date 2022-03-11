@@ -3,9 +3,9 @@ import Human from "../player/human.js";
 import RandomAI from "../player/ai/randomAI.js";
 import KillerAI from "../player/ai/killerAI.js";
 import DynamicAI from "../player/ai/dynamicAI.js";
-export default class AIFactory {
-    createItem(input, player) {
-        //return input.replace(" ", "");
+export default class DefaultPlayerFactory {
+    // Inherited docs.
+    createPlayer(input, player) {
         if (input === "human") {
             return new Human(player);
         }
