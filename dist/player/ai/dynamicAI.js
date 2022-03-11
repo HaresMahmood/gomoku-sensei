@@ -10,7 +10,7 @@ export default class DynamicAI extends AbstractAI {
         const iterations = 22000;
         const root = new DynamicNode();
         root.state.mdp = game;
-        root.state.playerNumber = this._player;
+        root.state.playerNumber = this._playerNumber;
         root.expand();
         for (let i = 0; i <= iterations; i++) {
             let current = this.select(root); // Selection.
@@ -33,13 +33,13 @@ export default class DynamicAI extends AbstractAI {
     }
     select(node) {
         while (!node.isLeaf()) { // && !node.state.game.isOver()
-            node = node.select(this._player); // UCT.
+            node = node.select(this._playerNumber); // UCT.
         }
         return node;
     }
     backpropogate(node, result) {
         let utility = -1;
-        if (result[0] === this._player) {
+        if (result[0] === this._playerNumber) {
             utility = 1;
         }
         else if (result[0] === -1) {
