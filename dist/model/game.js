@@ -1,7 +1,7 @@
 // #region Constants
 const ROWS = 7;
 const COLUMNS = ROWS;
-const N = 5;
+const K = 5;
 // #endregion
 /**
  * MDP representation of the game of _Gomoku_. The dimensions
@@ -45,7 +45,7 @@ export default class Gomoku {
      * order to win.
      */
     get n() {
-        return N;
+        return K;
     }
     // Inherited docs.
     get moveNumber() {
@@ -110,7 +110,7 @@ export default class Gomoku {
      */
     hasWon(player) {
         const boardString = this.toDelimitedString(this._board, '#', ROWS);
-        const win = new RegExp(`(${player})(\\1{${N - 1}}|(${".".repeat(ROWS)}\\1){${N - 1}}|(${".".repeat(ROWS + 1)}\\1){${N - 1}}|((?=.{0,${ROWS - 1}}#)${".".repeat(ROWS - 1)}\\1){${N - 1}})`);
+        const win = new RegExp(`(${player})(\\1{${K - 1}}|(${".".repeat(ROWS)}\\1){${K - 1}}|(${".".repeat(ROWS + 1)}\\1){${K - 1}}|((?=.{0,${ROWS - 1}}#)${".".repeat(ROWS - 1)}\\1){${K - 1}})`);
         return win.test(boardString);
     }
     /**

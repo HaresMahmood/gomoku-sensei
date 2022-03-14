@@ -4,7 +4,7 @@ import MDP from "./mdp.js";
 
 const ROWS = 7;
 const COLUMNS = ROWS;
-const N = 5;
+const K = 5;
 
 // #endregion
 
@@ -57,7 +57,7 @@ export default class Gomoku implements MDP {
      * order to win.
      */
     public get n() {
-        return N;
+        return K;
     }
 
     // Inherited docs.
@@ -138,7 +138,7 @@ export default class Gomoku implements MDP {
      */
     public hasWon(player: number): boolean {
         const boardString: string = this.toDelimitedString(this._board, '#', ROWS);
-        const win = new RegExp(`(${player})(\\1{${N - 1}}|(${".".repeat(ROWS)}\\1){${N - 1}}|(${".".repeat(ROWS + 1)}\\1){${N - 1}}|((?=.{0,${ROWS - 1}}#)${".".repeat(ROWS - 1)}\\1){${N - 1}})`);
+        const win = new RegExp(`(${player})(\\1{${K - 1}}|(${".".repeat(ROWS)}\\1){${K - 1}}|(${".".repeat(ROWS + 1)}\\1){${K - 1}}|((?=.{0,${ROWS - 1}}#)${".".repeat(ROWS - 1)}\\1){${K - 1}})`);
 
         return win.test(boardString);
     }
