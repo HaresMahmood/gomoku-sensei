@@ -1,18 +1,13 @@
-import Event from "../utility/event.js";
-
 export default class GameView {
     // #region Initialization
 
     constructor(rows, columns) {
-        this.restartEvent = new Event();
-
         this.board = $(".board");
         this.cell = ".cell";
 
         this.tokenSound = new Audio("../../res/audio/token.mp3");
         this.gongSound = new Audio("../../res/audio/gong.mp3");
 
-        this.setRestartClickHandler(this.restartEvent);
         this.setModalCloseHandler();
         this.setOverlayClickHandler();
 
@@ -154,10 +149,9 @@ export default class GameView {
         });
     }
 
-    setRestartClickHandler(event) {
+    setRestartClickHandler(handler) {
         $(".restart-button").bind("mouseup", function() {
-            // handler();
-            event.trigger();
+            handler();
         });
     }
 

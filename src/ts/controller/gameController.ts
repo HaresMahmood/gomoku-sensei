@@ -25,7 +25,8 @@ export default class GameController {
         this.playerTwo = player2;
 
         this.view.setCellClickHandler((index: number) => this.performMove(index));
-        this.view.restartEvent.addListener(() => this.restart());
+        // this.view.restartEvent.addListener(() => this.restart());
+        this.view.setRestartClickHandler(() => this.restart());
 
         this.view.setPlayer(this.playerOne);
         this.view.setPlayer(this.playerTwo);
