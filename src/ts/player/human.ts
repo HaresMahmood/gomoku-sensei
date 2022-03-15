@@ -1,10 +1,10 @@
-import Player from "./player.js";
+import AbstractPlayer from "./abstractPlayer.js";
 import MDP from "../model/mdp.js";
 
 /**
  * Concrete representation of a human player in a game.
  */
-export default class Human extends Player {
+export default class Human extends AbstractPlayer {
     // #region Properties 
 
     // Inherited docs.

@@ -1,4 +1,4 @@
-import Player from "../player.js";
+import AbstractPlayer from "../abstractPlayer.js";
 
 /**
  * Generic representation of an AI agent in a game.
@@ -6,7 +6,7 @@ import Player from "../player.js";
  * This way, a variety of game-playing algorithms can be
  * used.
  */
-export default abstract class AbstractAI extends Player {
+export default abstract class AbstractAI extends AbstractPlayer {
     // #region Properties 
 
     // Inherited docs.
