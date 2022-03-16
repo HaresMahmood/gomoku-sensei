@@ -14,7 +14,9 @@ export default class DynamicNode extends AbstractNode {
         let uctValue = super.uctScore(parent, isAIPlayer);
         const terminality = this._state.isTerminal ? Infinity : 0;
         const fairness = (this._state.gameLength / this._state.visits) || 0;
-        return uctValue + terminality + fairness;
+        uctValue = isAIPlayer ? uctValue + terminality + fairness
+            : uctValue;
+        return uctValue;
     }
     // Inherited docs.
     // TODO: make more efficient (no double `isTerminal`-check).
