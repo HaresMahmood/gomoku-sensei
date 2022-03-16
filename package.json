@@ -11,23 +11,21 @@
     "type": "git",
     "url": "https://github.com/HaresMahmood/gomoku-sensei.git"
   },
-  "files": [
-    "dist/"
-  ],
+  "directories": {
+    "dist": "./dist",
+    "src": "./src",
+    "test": "./tests"
+  },
   "main": "/index.js",
   "browser": "/index.js",
   "scripts": {
-    "test": "jest --forceExit --detectOpenHandles --passWithNoTests",
-    "unit:test": "npm run test unit_test -- --coverage",
-    "unit:test:ci": "npm run unit:test -- --ci && npm run build",
-    "functional:test": "npm run test functional_test --forceExit --detectOpenHandles --passWithNoTests",
-    "build": "tsc",
-    "cleanup": "rm -rf node_modules; rm -rf dist; npm i"
+    "test": "env TS_NODE_COMPILER_OPTIONS='{\"module\": \"commonjs\" }' mocha tests/*.js --recursive"
   },
   "devDependencies": {
-    "@types/jest": "27.4.1",
-    "jest": "27.5.1",
-    "ts-jest": "27.1.3",
-    "typescript": "4.6.2"
+    "@types/mocha": "latest",
+    "assert": "^2.0.0",
+    "mocha": "latest",
+    "ts-node": "^9.1.1",
+    "typescript": "^4.2.4"
   }
 }
