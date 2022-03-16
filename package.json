@@ -1,34 +1,29 @@
 {
-    "name": "gomoku-sensei",
-    "version": "1.0.0",
-    "description": "",
-    "author": "Hares Mahmood",
-    "license": "MIT",
-    "bugs": {
-      "url": "https://github.com/HaresMahmood/gomoku-sensei/issues"
-    },
-    "repository": {
-      "type": "git",
-      "url": "githttps://github.com/HaresMahmood/gomoku-sensei/issues.git"
-    },
-    "files": [
-      "dist/"
-    ],
-    "testGlob": "./dist/test/**/*.spec.js?(x)",
-    "homepage": "https://github.com/wix/typescript-boilerplate#readme",
-    "keywords": [
-      "typescript",
-      "tdd"
-    ],
-    "main": "/index.js",
-    "browser": "/src/index.js",
-    "scripts": {
-        "test": "jest"
-    },
-    "devDependencies": {
-      "@types/jest": "~4.1.2"
-    },
-    "peerDependencies": {
-      "tslib": "~4.6.0-dev.20211223"
-    }
+  "name": "gomoku-sensei",
+  "version": "1.0.0",
+  "description": "",
+  "author": "Hares Mahmood",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/HaresMahmood/gomoku-sensei/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HaresMahmood/gomoku-sensei.git"
+  },
+  "files": [
+    "dist/"
+  ],
+  "main": "/index.js",
+  "browser": "/src/index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@types/jest": "~4.1.2",
+    "jest": "^27.5.1"
+  },
+  "peerDependencies": {
+    "tslib": "~4.6.0-dev.20211223"
   }
+}
