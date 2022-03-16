@@ -36,7 +36,7 @@ export default class DynamicAI extends AbstractAI {
                 result = current.simulate(); // Simulation.
             }
 
-            this.backpropogate(current as DynamicNode, result); // Backpropogation.
+            this.backpropagate(current as DynamicNode, result); // Backpropogation.
         }
 
         console.log(root);
@@ -53,7 +53,7 @@ export default class DynamicAI extends AbstractAI {
         return node;
     }
 
-    private backpropogate(node: DynamicNode, result) {
+    private backpropagate(node: DynamicNode, result) {
         let utility = -1;
 
         if (result[0] === this._playerNumber) {

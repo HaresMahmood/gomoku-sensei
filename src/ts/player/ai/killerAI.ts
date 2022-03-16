@@ -66,7 +66,7 @@ export default class KillerAI extends AbstractAI {
                 result = current.simulate(); // Simulation.
             }
 
-            this.backpropogate(current as StaticNode, result); // Backpropogation.
+            this.backpropagate(current as StaticNode, result); // Backpropogation.
 
             counter++;
         }
@@ -96,13 +96,13 @@ export default class KillerAI extends AbstractAI {
     }
 
     /**
-     * Recursively backpropogates the utility score
+     * Recursively backpropagates the utility score
      * until the root node is reached.
      * 
      * @param node from which the simulation was completed.
      * @param result result from the rollout, the utility value.
      */
-    private backpropogate(node: StaticNode, result) {
+    private backpropagate(node: StaticNode, result) {
         let utility = -1;
 
         if (result === this._playerNumber) {
