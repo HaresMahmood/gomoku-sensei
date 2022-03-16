@@ -11,6 +11,7 @@
     "type": "git",
     "url": "https://github.com/HaresMahmood/gomoku-sensei.git"
   },
+  "type": "module",
   "directories": {
     "dist": "./dist",
     "src": "./src",
