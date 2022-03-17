@@ -1,9 +1,9 @@
 {
   "name": "gomoku-sensei",
   "version": "1.0.0",
-  "description": "",
+  "description": "Gomoku Sensei",
   "author": "Hares Mahmood",
-  "license": "",
+  "homepage": "https://haresmahmood.github.io",
   "bugs": {
     "url": "https://github.com/HaresMahmood/gomoku-sensei/issues"
   },
@@ -25,6 +25,7 @@
     "@types/chai": "^4.1.2",
     "@types/mocha": "^2.2.48",
     "chai": "^4.1.2",
+    "gh-pages": "^3.2.3",
     "mocha": "^2.2.48",
     "ts-node": "^5.0.1",
     "typescript": "^4.6.0-beta"
