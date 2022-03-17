@@ -1,7 +1,7 @@
-import Gomoku from "../src/ts/model/game";
+import Gomoku from "../dist/model/game.js";
 import { expect } from "chai";
 
-let game: Gomoku;
+let game;
 
 describe("Game of Gomoku or Five in a Row, acts as the Model or API for the application", () => {
     before( () => {
