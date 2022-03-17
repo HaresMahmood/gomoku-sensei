@@ -16,7 +16,6 @@ describe("Game of Gomoku or Five in a Row, acts as the Model or API for the appl
         expect(game.moveNumber).to.equal(1);
         expect(game.isTerminal()).to.equal(false);
         expect(cells).to.eql(expected);
-
     });
     it("Should update all relevant internal values when a move is made", () => {
         game.makeTransition(0, 1); // Make a transition to cell `1`, with player 1.
