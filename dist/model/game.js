@@ -129,7 +129,7 @@ export default class Gomoku {
     /**
      * Checks whether the cell at the provided cell is empty.
      *
-     * @param index Cell-index.
+     * @param index Coordinates of the cell.
      * @returns Whether the cell is empty.
      */
     isCellEmpty(index) {
