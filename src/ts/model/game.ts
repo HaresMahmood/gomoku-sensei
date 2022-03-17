@@ -121,7 +121,7 @@ export default class Gomoku implements MDP {
     }
 
     // Inherited docs.
-    getUtilityScore(): number {
+    public getUtilityScore(): number {
         const player = this._board[this._lastMove]; // FIXME: `player` should be passed in as a parameter.
         let winner = this.hasWon(player) ? player : -1;
 
@@ -163,10 +163,10 @@ export default class Gomoku implements MDP {
     /**
      * Checks whether the cell at the provided cell is empty.
      * 
-     * @param index Cell-index.
+     * @param index Coordinates of the cell.
      * @returns Whether the cell is empty.
      */
-    isCellEmpty(index) {
+    public isCellEmpty(index: number) {
         return this._board[index] === 0;
     }
 
@@ -175,7 +175,7 @@ export default class Gomoku implements MDP {
      * 
      * @returns Whether the game has ended in a draw.
      */
-    isDraw() {
+    public isDraw() {
         return !this._board.includes(0);
     }
     
@@ -184,7 +184,7 @@ export default class Gomoku implements MDP {
         return new Gomoku(this._board.slice(), this._lastMove, this._moveNumber);
     }
 
-    getEmptyCells() {
+    public getEmptyCells() {
         const cells = [];
 
         for (let i = 0; i < (ROWS * COLUMNS); i++) {
