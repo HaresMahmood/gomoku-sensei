@@ -1,7 +1,7 @@
 {
     "spec": "./test/*test.ts",
     "ignore": "./node_modules/**",
-    "extension": ["ts"],
+    "extension": ["ts', 'js'"],
     "timeout": 5000,
     "exit": true,
     "require": "ts-node/register/files"

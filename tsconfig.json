@@ -9,5 +9,9 @@
     },
     "include": [
         "./src/"
+    ],
+    "escdlude": [
+        "./node_modules/",
+        "./test/"
     ]
 }

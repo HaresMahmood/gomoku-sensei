@@ -1,4 +1,4 @@
-import MDP from "../model/mdp";
+import MDP from "../model/mdp.js";
 
 export default interface Player {
     // #region Properties
