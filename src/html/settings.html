@@ -4,13 +4,14 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
-        <link rel="stylesheet" href="../css/pages/sub-pages/settings.css"> 
+        <link rel="stylesheet" href="../css/pages/modal.css"> 
+        <link rel="stylesheet" href="../css/components/switch-component.css"> 
     </head>
 
     <body>
-        <section class="information__container">
+        <section class="information__container row__container full-width__container">
             <span class="material-icons-round"> location_on </span>
-            <div class="center__container">
+            <div class="center__container full-width__container">
                 <p> Show coordinates </p> 
                 <p class="description__text"> Assigns coordinates to each axis of the board. </p>
             </div>
@@ -21,9 +22,9 @@
                 </div>
             </label>
         </section>
-        <section class="information__container">
+        <section class="information__container row__container full-width__container">
             <span class="material-icons-round"> tag </span>
-            <div class="center__container">
+            <div class="center__container full-width__container">
                 <p> Show move numbers on each piece </p>
                 <p class="description__text"> Displays the turn every move was placed at </p>
             </div>
@@ -34,9 +35,9 @@
                 </div>
             </label>
         </section>
-        <section class="information__container">
+        <section class="information__container row__container full-width__container">
             <span class="material-icons-round"> highlight </span>
-            <div class="center__container">
+            <div class="center__container full-width__container">
                 <p> Highlight last move </p>
                 <p class="description__text"> Displays a dot <b> · </b> on the last-placed piece </p>
             </div>
@@ -47,9 +48,9 @@
                 </div>
             </label>
         </section>
-        <section class="information__container">
+        <section class="information__container row__container full-width__container">
             <span class="material-icons-round"> volume_up </span>
-            <div class="center__container">
+            <div class="center__container full-width__container">
                 <p> Sound-effects </p>
                 <p class="description__text"> Audio obtained from <a href="https://www.zapsplat.com" target="_blank"> zapsplat.com </a> </p>
             </div>
@@ -60,9 +61,9 @@
                 </div>
             </label>
         </section>  
-        <section class="information__container">       
+        <section class="information__container row__container full-width__container">       
             <span class="material-icons-round"> bug_report </span>
-            <div class="center__container">
+            <div class="center__container full-width__container">
                 <p> Developer mode </p>
                 <p class="description__text"> Displays extra information next to the board, intended for developers </p>
             </div>
@@ -72,16 +73,6 @@
                     <span class="handle"></span>
                 </div>
             </label>
-        </section>
-        <section id="install-container" class="information__container">       
-            <span class="material-icons-round"> get_app </span>
-            <div class="center__container">
-                <p> Install web app </p>
-                <p class="description__text"> Install the web app as a PWA </p>
-            </div>
-            <button id="install-button" class="red__button">
-                Install
-            </button>
         </section>
 
         <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>

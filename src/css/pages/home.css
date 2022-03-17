@@ -1,0 +1,61 @@
+/* #region Imports */
+
+@import url("./subpage.css");
+@import url("../components/select-component.css");
+
+/* #endregion */ 
+
+/* #region Components */
+
+h1 {
+    opacity: 0.06;
+
+    font-size: 17.5vmin;
+}
+
+/* #endregion */
+
+/* #region Flex */
+
+section > .center__container {
+    max-width: 750px; /* Essentially a breakpoint. */
+
+    flex-flow: row wrap;
+}
+
+.center__container {
+    gap: 1.75rem;
+}
+
+.row__container {
+    min-width: 250px;
+
+    flex-grow: 2;
+} 
+  
+.watermark__container {
+    width: fit-content;
+    height: -webkit-fill-available;
+    max-height: 17.5vmin;
+
+    margin-left: auto;
+    
+    display: inline;
+}
+  
+.watermark__container:first-child {
+    margin-left: unset;
+    margin-right: auto;
+}
+
+/* #endregion */
+
+/* #region Breakpoints */
+
+@media only screen and (max-height: 465px) {
+    section.hide__small {
+		display: none;
+	}
+}
+
+/* #endregion */

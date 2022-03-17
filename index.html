@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
     <head>
         <title> Gomoku Sensei </title>
 
@@ -17,14 +17,17 @@
 
         <link rel="icon" type="image/png" sizes="192x192" href="./res/icons/favicon.png">
         <link rel="apple-touch-icon" type="image/png" sizes="192x192" href="./res/icons/maskable/maskable_icon_x192.png">
+        
         <link rel="stylesheet" href="./src/css/pages/main.css">
-        
+
         <link rel="manifest" href="manifest.webmanifest">
-        
-        <script>navigator.serviceWorker.register("sw.js")</script>
+        <script>
+            navigator.serviceWorker.register("sw.js")
+        </script>
     </head>
-    
+
     <body>
+        <!-- Ensure empty space in upper-left. -->
         <whitespace></whitespace>
 
         <header>
@@ -35,70 +38,73 @@
             <button id="home-button" class="menu__button red__button">
                 <span class="material-icons-round"> home </span>
                 Home
-            </button> 
+            </button>
 
             <button disabled id="game-button" class="menu__button">
                 <span class="material-icons-round"> gamepad </span>
                 Game
-            </button> 
+            </button>
 
             <button id="rules-button" class="menu__button">
                 <span class="material-icons-round"> gavel </span>
                 Rules
-            </button> 
+            </button>
 
             <button id="settings-button" class="menu__button">
                 <span class="material-icons-round"> settings </span>
                 Settings
-            </button> 
+            </button>
 
             <button id="about-button" class="menu__button">
                 <span class="material-icons-round"> help </span>
                 About
-            </button> 
+            </button>
         </nav>
 
         <main>
+            <!-- `iframe` changes `src` dynamically. -->
             <iframe id="page-frame" class="loaded" src="./src/html/home.html" title="Main page content" frameborder="0" scrolling="no"> </iframe>
         </main>
 
-        <!-- TODO: In-line style is bad - but without this, hidden `div`s flash on screen on-load. -->
-        <modal style="opacity: 0;"> 
+        <!-- While in-line style is badm without this, hidden elements flash on screen on-load. -->
+        <modal style="opacity: 0;">
             <header>
-                <h3 id="modal-text"> Rules </h3>
+                <h3 id="modal-text"> Rules </h3> <!-- TODO: Change `id` to `modal-header` -->
                 <span class="close-button material-icons-round"> close </span>
             </header>
 
-            <iframe id="modal-frame" src="./src/html/rules.html" title="Modal page content" frameborder="0" scrolling="no"> </iframe> 
+            <iframe id="modal-frame" src="./src/html/rules.html" title="Modal page content" frameborder="0" scrolling="no"> </iframe>
         </modal>
 
         <modal id="pop-up" style="opacity: 0;">
-            <!-- <span id="modal-icon" class="player-icon material-icons-round"> waving_hand </span> -->
-            <img id="modal-icon" src="./res/icons/favicon.png" alt="App logo"/>
+            <img id="modal-icon" src="./res/icons/favicon.png" alt="App logo" />
             <h3 id="modal-header"> Welcome to Gomoku Sensei </h3>
-            <p class="description__text"> This software was developed as part of a research project for the University of Strathclyde. If you wish to participate in the corresponding study, please visit the form linked below. <br>
-            <br> Add this web app to your homescreen by pressing the <span class="material-icons-round"> ios_share </span> button on iOS, or the <i> install </i> button on Chromium-based browsers. For more information, visit <a href="https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Installing" target="_blank"> this page </a>. </p>
-        
+            <p class="description__text"> 
+                This software was developed as part of a research project for the University of Strathclyde. If you wish to participate in the corresponding study, please visit the form linked below. <br>
+                <br> Add this web app to your homescreen by pressing the <span class="material-icons-round"> ios_share </span> button on iOS, or the <i> install </i> button on Chromium-based browsers. For more information, visit <a href="https://developer.mozilla.org/en-US/docs/Web/Progressive_web_apps/Installing"
+                target="_blank">this page</a>. 
+            </p>
+
             <div class="row__container">
-                <button onclick="location.href='https://github.com/HaresMahmood/gomoku-sensei', '_blank';">
+                <button onclick="window.open('https://github.com/HaresMahmood/gomoku-sensei','_blank')">
                     <span class="material-icons-round"> code </span>
                     <span> GitHub </span>
-                </button> </a>
-                <button onclick="location.href='https://forms.gle/eawUsLhRCkBiZdvP7', '_blank';">
+                </button>
+                <button onclick="window.open('https://forms.gle/eawUsLhRCkBiZdvP7','_blank')">
                     <span class="material-icons-round"> feed </span>
                     <span> Participate </span>
-                </button> </a>
+                </button>
                 <button class="close-button red__button">
                     <span class="material-icons-round"> east </span>
                     <span> Continue </span>
                 </button>
             </div>
         </modal>
-        
-        <div id="overlay" class="overlay__container"></div>
 
+        <!-- Sits behind `modal`s to ensure user can't interract with UI when `modal` is active. -->
+        <div id="overlay" class="overlay__container"></div>
     </body>
 
     <script src='https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
-    <script type="module" src="./dist/script/defaultScript.js"></script>
+    <script type="module" src="./dist/scripts/defaultScript.js"></script>
 </html>

@@ -4,7 +4,8 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" href="../css/pages/sub-pages/home.css">
+
+        <link rel="stylesheet" href="../css/pages/home.css">
     </head>
 
     <body>
@@ -12,9 +13,9 @@
             <h1> Gomoku </h1>
         </section>
         
-        <section class="center__container">
-            <div class="center__container">
-              <div>
+        <section class="center__container full-width__container">
+            <div class="center__container full-width__container">
+              <div class="row__container">
                   <span class="material-icons-round piece__icon black__icon"> circle </span>
                   <div class="select__component">
                       <select id="player-1" required>
@@ -27,7 +28,7 @@
                       <label> Player 1 </label>
                   </div>
               </div>
-              <div>
+              <div class="row__container">
                   <span class="material-icons-round piece__icon white__icon"> circle </span>
                   <div class="select__component">
                       <select id="player-2" required>
@@ -46,7 +47,7 @@
             <button id="game-button" class="red__button"> 
                 <span class="material-icons-round"> play_arrow </span>
                 <span> Start game </span>
-              </button>
+            </button>
         </section>
 
         <section class="watermark__container hide__small">

@@ -1,23 +1,30 @@
-/* https://codepen.io/finnhvman/pen/pOeyjE */
+/* #region Imports */
 
 @import url("../variables.css");
 
+/* #endregion */
+
+/* #region Components */
+
 .switch__component {
     z-index: 0;
+
     position: relative;
 
     aspect-ratio: 36 / 19;
+
     height: 1.5rem;
 }
 
 .switch__component > div {
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+
     height: 100%;
     width: 100%;
 
     margin: auto;
     padding: 5px;
-    position: absolute;
-    top: 0; left: 0; bottom: 0; right: 0;
 
     display: flex;
     align-items: center;
@@ -32,7 +39,6 @@
 }
     
 
-/* Input */
 .switch__component > input {
     z-index: -1;
 
@@ -41,7 +47,9 @@
     -webkit-appearance: none;
 }
 
-/* Thumb */
+/* 
+    Thumb 
+*/
 .switch__component span {
     aspect-ratio: 1 / 1;
     height: 75%;
@@ -52,13 +60,15 @@
     transition: background-color var(--animation-speed), aspect-ratio var(--fade-in) 0.35s, height var(--animation-speed);
 }
 
+/* #endregion */
 
+/* #region Animations */
 
-div:hover > span {
+.switch__component > div:hover > span {
     height: 100%;
 }
 
-div:active > span {
+.switch__component > div:active > span {
     aspect-ratio: 1.5 / 1;
 }
 
@@ -73,8 +83,10 @@ div:active > span {
 }
 
 .switch__component > input:disabled ~ div {
-    opacity: 0.35;
+    opacity: 0.45;
 
     cursor: not-allowed;
     pointer-events: none;
 }
+
+/* #endregion */
