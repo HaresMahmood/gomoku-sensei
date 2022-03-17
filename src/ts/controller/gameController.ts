@@ -1,34 +1,37 @@
-import Game from "../model/game.js";
+import Gomoku from "../model/game.js";
 import GameView from "../view/gameView.js";
 import AI from "../player/ai/ai.js";
 import Player from "../player/player.js";
 
+
 export default class GameController {
     // #region Initialization
-    private model: Game;
+
+    private model: Gomoku;
     private view: GameView;
     
+    // Gomoku is a 2-player game.
     private player: number = 1 | 2;
-    private player1: Player;
-    private player2: Player;
+    private playerOne: Player;
+    private playerTwo: Player;
 
-    constructor(model: Game, view: GameView, player1: Player, player2: Player) {
+    constructor(model: Gomoku, view: GameView, player1: Player, player2: Player) {
         this.model = model;
         this.view = view;
 
         this.player = 1;
 
-        this.player1 = player1;
-        this.player2 = player2;
+        this.playerOne = player1;
+        this.playerTwo = player2;
 
         this.view.setCellClickHandler((index: number) => this.performMove(index));
+        // this.view.restartEvent.addListener(() => this.restart());
+        this.view.setRestartClickHandler(() => this.restart());
 
-        this.view.restartEvent.addListener(() => this.restart());
+        this.view.setPlayer(this.playerOne);
+        this.view.setPlayer(this.playerTwo);
 
-        this.view.setPlayer(this.player1);
-        this.view.setPlayer(this.player2);
-
-        this.view.restart(this.player1 instanceof AI);
+        this.view.restart(this.playerOne instanceof AI); 
 
         const that = this;
 
@@ -41,61 +44,83 @@ export default class GameController {
 
     // #region Miscellaneous
 
-    performMove(index) {
-        if (this.model.isCellEmpty(index)) {
-            const nextPlayer = this.addPiece(index);
-            const that = this;
-
-            window.setTimeout(function() {
-                that.nextPlayer(nextPlayer);
-            }, 150); // Set timeout to update UI.
-        }
-    }
-
-    addPiece(index: number) {
+    /**
+     * Adds a piece to the board.
+     * 
+     * @param index Cell of the performed move.
+     * @returns Player's who's turn it is next.
+     */
+    private addPiece(index: number): number {
         let color = this.player === 1 ? "black" : "white";
         const nextPlayer = this.player === 1 ? 2 : 1;
 
         this.view.addPiece(index, color, this.model.moveNumber);
-        this.model.performMove(index, this.player);
+        this.model.makeTransition(index, this.player);
 
-        if (this.model.isOver()) {
-            this.view.endGame(this.player === 1 ? this.player1 : this.player2, this.model.isDraw());
+        if (this.model.isTerminal()) {
+            this.view.endGame(this.player === 1 ? this.playerOne : this.playerTwo, this.model.isDraw());
             return;
         }
 
         this.view.changePlayer(nextPlayer);
-        this.view.disableUserInterface((nextPlayer === 1 ? this.player1 : this.player2) instanceof AI);
+        this.view.disableUserInterface((nextPlayer === 1 ? this.playerOne : this.playerTwo) instanceof AI);
 
         this.player = nextPlayer;
 
         return nextPlayer;
     }
 
-    restart() {
+    /**
+     * Clears all pieces from the board.
+     */
+    private restart(): void {
         this.player = 1;
 
         this.view.changePlayer(this.player);
 
         this.model.restart();
-        this.view.restart(this.player1 instanceof AI);
+        this.view.restart(this.playerOne instanceof AI);
 
         const that = this;
 
         window.setTimeout(function() {
             that.nextPlayer(that.player);
-        }, 150); // Set timeout to update UI.
+        }, 150);
     }
 
-    // TODO: Come up with better name.
-    nextPlayer(player) {
-        if (this.player1.player === player) {
-            this.performMove(this.player1.chooseMove(this.model.clone()));
+    /**
+     * Prompts the next player to make a move.
+     * 
+     * @param player Player who's turn it currently is.
+     */
+    private nextPlayer(player: number): void {
+        if (this.playerOne.player === player) {
+            this.performMove(this.playerOne.chooseMove(this.model.clone()));
         }
-        else if (this.player2.player === player) {
-            this.performMove(this.player2.chooseMove(this.model.clone()))
+        else if (this.playerTwo.player === player) {
+            this.performMove(this.playerTwo.chooseMove(this.model.clone()))
         }
+
+        // const currentPlayer = this.playerOne.player === player ? this.playerOne : this.playerTwo;
+
+        // this.performMove(currentPlayer.chooseMove(this.model.clone()));
     }
+
+        /**
+     * Adds a piece to the board at the provided index.
+     * 
+     * @param index Cell of the performed move.
+     */
+         private performMove(index: number): void {
+            if (this.model.isCellEmpty(index)) {
+                const nextPlayer = this.addPiece(index);
+                const that = this;
+    
+                window.setTimeout(function() {
+                    that.nextPlayer(nextPlayer);
+                }, 150);
+            }
+        }
 
     // #endregion
 }

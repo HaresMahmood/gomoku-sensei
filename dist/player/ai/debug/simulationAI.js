@@ -8,12 +8,12 @@ export default class SimulationAI {
     chooseMove(game, iterations = 1000) {
         const root = new StaticNode();
         let counter = 0;
-        root.state.game = game;
+        root.state.mdp = game;
         root.state.playerNumber = this.playerNumber;
         root.expand();
         for (const child of root.children) {
             while (counter < iterations) {
-                const result = child.rollout();
+                const result = child.simulate();
                 let utility = -1;
                 if (result === this.playerNumber) {
                     utility = 1;
@@ -28,6 +28,6 @@ export default class SimulationAI {
         }
         const winnerNode = root.getMostVisitedChild();
         console.log(root);
-        this.chooseMoveEvent.trigger(winnerNode.state.game.lastMove);
+        this.chooseMoveEvent.trigger(winnerNode.state.mdp.lastMove);
     }
 }

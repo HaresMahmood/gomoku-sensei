@@ -1,19 +1,30 @@
-import Player from "./player.js";
+import AbstractPlayer from "./abstractPlayer.js";
+import MDP from "../model/mdp.js";
 
-export default class Human extends Player {
-    // #region Initialization
+/**
+ * Concrete representation of a human player in a game.
+ */
+export default class Human extends AbstractPlayer {
+    // #region Properties 
 
-    public constructor(player: number) {
-        super(player);
-        
-        this._name = ["Human", "person"];
+    // Inherited docs.
+    public get name(): [string, string] {
+        return ["Human", "person"];
     }
 
     // #endregion
-
     // #region Miscellaneous
 
-    public chooseMove(game: any): number {
+    /**
+     * Abstraction of the move choice process. Since 
+     * the human player's actions are determined by 
+     * themselves and not computed programatically,
+     * this method does nothing.
+     * 
+     * @param mdp MDP-representation of the game being played. 
+     * @returns `-1`, interpreted as a dummy value.
+     */
+    public chooseMove(mdp: MDP): number {
         return -1;
     }
 

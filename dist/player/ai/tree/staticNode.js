@@ -1,27 +1,7 @@
-import State from "./state.js";
-export default class StaticNode {
-    // #region Initialization 
-    _state;
-    _parent;
-    _children;
-    constructor(state = new State(), parent = null, children = []) {
-        this._state = state;
-        this._parent = parent;
-        this._children = children;
-    }
-    // #endregion
-    // #region Accessors
-    get state() {
-        return this._state;
-    }
-    get parent() {
-        return this._parent;
-    }
-    get children() {
-        return this._children;
-    }
-    // #endregion
+import AbstractNode from "./node.js";
+export default class StaticNode extends AbstractNode {
     // #region Miscellaneous
+    // Inherited docs.
     expand() {
         const moves = this.state.getMoves();
         for (const move of moves) {
@@ -29,58 +9,31 @@ export default class StaticNode {
         }
         return this.children[0];
     }
-    rollout() {
+    // Inherited docs.
+    // TODO: make more efficient (no double `isTerminal`-check).
+    simulate() {
         const clone = this.state.clone();
-        if (clone.game.isOver()) {
-            const result = clone.game.getWinner();
+        if (clone.mdp.isTerminal()) {
+            const result = clone.mdp.getUtilityScore();
             return result;
         }
         while (true) {
             clone.makeRandomMove();
-            if (clone.game.isOver()) {
-                const result = clone.game.getWinner();
+            if (clone.mdp.isTerminal()) {
+                const result = clone.mdp.getUtilityScore();
                 return result;
             }
             clone.togglePlayer();
         }
     }
     // #endregion
-    // #region Miscellaneous
-    select(playerNumber) {
-        let selected = this._children[0];
-        const isAIPlayer = selected._state.playerNumber !== playerNumber;
-        let bestValue = isAIPlayer ? -Infinity : Infinity;
-        for (const child of this._children) {
-            const exploitation = (child._state.wins / child._state.visits) || 0; // Change `NaN` to 0 (0 wins / 0 visits).
-            let exploration = 1.41 * Math.sqrt(Math.log(this._state.visits) / child._state.visits);
-            exploration = isNaN(exploration) ? Infinity : exploration; // Change `NaN` to `Infinity` (log(0 parent visits)).
-            const uctValue = isAIPlayer ? exploitation + exploration
-                : exploitation - exploration;
-            //console.log(child, uctValue, bestValue);
-            //console.log(exploitation, exploration);
-            if ((isAIPlayer && uctValue > bestValue)
-                || (!isAIPlayer && uctValue < bestValue)) {
-                selected = child;
-                bestValue = uctValue;
-            }
-        }
-        //console.log(currentPlayerNumber, bestValue, this.children.indexOf(selected));
-        //console.log(" ");
-        return selected;
-    }
-    // #endregion
-    // #region Utlity
+    // #region Utility
+    /**
+     *
+     * @param utility
+     */
     updateStats(utility) {
         this._state.visits++;
         this._state.wins += utility;
-    }
-    isLeaf() {
-        return this._children.length === 0;
-    }
-    getMostVisitedChild() {
-        let child = this._children.reduce((x, y) => {
-            return (x._state.wins / x._state.visits || 0) > (y._state.wins / y._state.visits || 0) ? x : y;
-        });
-        return child;
     }
 }

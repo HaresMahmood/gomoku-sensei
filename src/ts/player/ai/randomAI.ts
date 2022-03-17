@@ -1,11 +1,22 @@
-import Game from "../../model/game";
+import MDP from "../../model/mdp";
 import AbstractAI from "./ai.js";
 
+/**
+ * Concrete representation of a stochastic AI agent.
+ * The AI considers no strategies or tactics and
+ * utilises no tree-searching algorithms; it plays
+ * purely randomly.
+ */
 export default class RandomAI extends AbstractAI {
-    chooseMove(game: Game): number {
-        const moves: Game[] = game.getSuccessors(this._player);
-        const random: Game = moves[Math.floor(Math.random() * moves.length)];
+    /**
+     * Chooses a random position on the board.
+     * 
+     * @param mdp MDP-representation of the game being played. 
+     * @returns Coordinates of a random board position.
+     */
+    chooseMove(mdp: MDP): number {
+        mdp.makeRandomTransition(this._playerNumber);
 
-        return random.lastMove;
+        return mdp.lastMove;
     }
 }
