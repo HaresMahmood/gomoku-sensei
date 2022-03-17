@@ -18,7 +18,7 @@
     "test": "./test"
   },
   "scripts": {
-    "build": "tsc",
+    "deploy": "gh-pages -d build",
     "test": "env TS_NODE_PROJECT=\"./test/tsconfig.testing.json\" mocha --require ts-node/register --watch-extensions ts --recursive ./test/**/*.ts"
   },
   "devDependencies": {
