@@ -48,6 +48,9 @@ export default class DefaultView {
             localStorage.setItem(2, "true");
             localStorage.setItem(3, "true");
             localStorage.setItem(0, "false");
+            // Default players.
+            localStorage.setItem("player1", "human");
+            localStorage.setItem("player2", "dynamic");
             localStorage.setItem("load", "true");
         }
     }

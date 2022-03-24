@@ -1,4 +1,4 @@
-import Gomoku from "../model/game.js";
+import Gomoku from "../model/gomoku.js";
 import GameView from "../view/gameView.js";
 import AI from "../player/ai/ai.js";
 import Player from "../player/player.js";

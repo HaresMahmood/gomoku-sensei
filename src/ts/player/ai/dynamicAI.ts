@@ -1,4 +1,4 @@
-import Gomoku from "../../model/game.js";
+import Gomoku from "../../model/gomoku.js";
 import AbstractAI from "./ai.js";
 import AbstractNode from "./tree/node.js";
 import DynamicNode from "./tree/dynamicNode.js";
