@@ -55,8 +55,8 @@ The fofmat of the game are simple: two players take turns placing black and whit
 .
 ├── dist                      · JavaScript compiled from TypeScript. Mirrors \src\ts\.
 ├── res                       · Resources, such as images and icons.
-├── src                       · The website's source code.
-└── test                      · Mocha Unit tests for JavaScript files in \dist\.
+├── test                      · Mocha Unit tests for JavaScript files in \dist\.
+└── src                       · The website's source code.
     ├── css                      · Styling for all HTML pages, organized from high- to low-level.
     ├── html                     · All HTML pages, both high- and low-level.
     └── ts                       · Logic and back-end of the software.
