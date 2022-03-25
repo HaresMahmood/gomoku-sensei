@@ -1,4 +1,4 @@
-import Gomoku from "../model/game.js";
+import Gomoku from "../model/gomoku.js";
 import GameView from "../view/gameView.js";
 import Controller from "../controller/gameController.js";
 import DefaultPlayerFactory from "../factory/playerFactory.js";
