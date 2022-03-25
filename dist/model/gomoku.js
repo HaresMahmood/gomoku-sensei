@@ -19,8 +19,15 @@ export default class Gomoku {
     _board;
     _lastMove;
     _moveNumber;
-    constructor(state = new Array(ROWS * COLUMNS).fill(0), lastMove = -1, moveNumber = 1) {
-        this._board = state;
+    /**
+     * Class constructor.
+     *
+     * @param board Arrangement of pieces on the board.
+     * @param lastMove Coordinates of the last performed move.
+     * @param moveNumber Amount of turns commenced so far, the game's length.
+     */
+    constructor(board = new Array(ROWS * COLUMNS).fill(0), lastMove = -1, moveNumber = 1) {
+        this._board = board;
         this._lastMove = lastMove;
         this._moveNumber = moveNumber;
     }
@@ -40,20 +47,15 @@ export default class Gomoku {
         return COLUMNS;
     }
     /**
-     * The amount of tokens to chain together in
-     * order to win.
+     * The amount of moves played so far, i.e.
+     * the length of the game.
      */
-    get k() {
-        return K;
-    }
-    /**
- * The amount of moves played so far, i.e.
- * the length of the game.
- */
     get moveNumber() {
         return this._moveNumber;
     }
-    // Inherited docs.
+    /**
+     * Coordinates of the last move.
+     */
     get lastMove() {
         return this._lastMove;
     }
@@ -138,7 +140,7 @@ export default class Gomoku {
         return this._board[index] === 0;
     }
     /**
-     *
+     * Checks whether the game has ended in a draw.
      *
      * @returns Whether the game has ended in a draw.
      */
@@ -149,6 +151,12 @@ export default class Gomoku {
     clone() {
         return new Gomoku(this._board.slice(), this._lastMove, this._moveNumber);
     }
+    /**
+     * Aggregates the coordinates of all empty positions on the
+     * board in a list.
+     *
+     * @returns Coordinates of all emoty positions on the board.
+     */
     getEmptyCells() {
         const cells = [];
         for (let i = 0; i < (ROWS * COLUMNS); i++) {

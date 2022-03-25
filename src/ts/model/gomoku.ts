@@ -26,8 +26,15 @@ export default class Gomoku implements MDP {
     private _lastMove: number;
     private _moveNumber: number;
 
-    constructor(state = new Array(ROWS * COLUMNS).fill(0), lastMove: number = -1, moveNumber: number = 1) {
-        this._board = state;
+    /**
+     * Class constructor.
+     * 
+     * @param board Arrangement of pieces on the board.
+     * @param lastMove Coordinates of the last performed move.
+     * @param moveNumber Amount of turns commenced so far, the game's length.
+     */
+    constructor(board = new Array(ROWS * COLUMNS).fill(0), lastMove: number = -1, moveNumber: number = 1) {
+        this._board = board;
         this._lastMove = lastMove;
         this._moveNumber = moveNumber;
     }
@@ -167,7 +174,7 @@ export default class Gomoku implements MDP {
     }
 
     /**
-     * 
+     * Checks whether the game has ended in a draw.
      * 
      * @returns Whether the game has ended in a draw.
      */
@@ -180,7 +187,12 @@ export default class Gomoku implements MDP {
         return new Gomoku(this._board.slice(), this._lastMove, this._moveNumber);
     }
 
-    
+    /**
+     * Aggregates the coordinates of all empty positions on the
+     * board in a list.
+     * 
+     * @returns Coordinates of all emoty positions on the board.
+     */
     public getEmptyCells() {
         const cells = [];
 

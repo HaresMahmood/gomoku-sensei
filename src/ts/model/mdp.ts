@@ -45,7 +45,7 @@ export default interface MDP {
     /**
      * Checks whether the current state is terminal.
      * 
-     * @returns 
+     * @returns Whether the current state is terminal.
      */
     isTerminal(): boolean;
 
@@ -56,7 +56,7 @@ export default interface MDP {
      * * `2`: A win for player 2.
      * * `-1`: A win or loss for neither; a draw.
      * 
-     * @returns 
+     * @returns The utility score of the game.
      */
     getUtilityScore(): number;
 
