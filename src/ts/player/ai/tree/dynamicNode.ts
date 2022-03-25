@@ -18,10 +18,10 @@ export default class DynamicNode extends AbstractNode {
     // Inherited docs.
     public uctScore(parent: AbstractNode, isAIPlayer: boolean): number {
         let uctValue = super.uctScore(parent, isAIPlayer);
-        const terminality = this._state.isTerminal ? Infinity : 0;
-        const fairness = (this._state.gameLength / this._state.visits) || 0;
+        const prolongation = (this._state.gameLength / this._state.visits) || 0;
+        const termination = this._state.isTerminal ? Infinity : 0;
 
-        uctValue = isAIPlayer ? uctValue + terminality + fairness
+        uctValue = isAIPlayer ? uctValue + termination + prolongation
                               : uctValue;
 
         return uctValue;
