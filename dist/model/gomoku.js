@@ -39,15 +39,17 @@ export default class Gomoku {
     get columns() {
         return COLUMNS;
     }
-    //TODO: `k`.
     /**
      * The amount of tokens to chain together in
      * order to win.
      */
-    get n() {
+    get k() {
         return K;
     }
-    // Inherited docs.
+    /**
+ * The amount of moves played so far, i.e.
+ * the length of the game.
+ */
     get moveNumber() {
         return this._moveNumber;
     }

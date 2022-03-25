@@ -51,21 +51,17 @@ export default class Gomoku implements MDP {
         return COLUMNS;
     }
 
-    //TODO: `k`.
     /**
-     * The amount of tokens to chain together in
-     * order to win.
+     * The amount of moves played so far, i.e. 
+     * the length of the game.
      */
-    public get n() {
-        return K;
-    }
-
-    // Inherited docs.
     public get moveNumber() {
         return this._moveNumber;
     }
 
-    // Inherited docs.
+    /**
+     * Coordinates of the last move.
+     */
     public get lastMove() {
         return this._lastMove;
     }
@@ -166,7 +162,7 @@ export default class Gomoku implements MDP {
      * @param index Coordinates of the cell.
      * @returns Whether the cell is empty.
      */
-    public isCellEmpty(index: number) {
+    public isCellEmpty(index: number): boolean {
         return this._board[index] === 0;
     }
 
@@ -175,7 +171,7 @@ export default class Gomoku implements MDP {
      * 
      * @returns Whether the game has ended in a draw.
      */
-    public isDraw() {
+    public isDraw(): boolean {
         return !this._board.includes(0);
     }
     
@@ -184,6 +180,7 @@ export default class Gomoku implements MDP {
         return new Gomoku(this._board.slice(), this._lastMove, this._moveNumber);
     }
 
+    
     public getEmptyCells() {
         const cells = [];
 
