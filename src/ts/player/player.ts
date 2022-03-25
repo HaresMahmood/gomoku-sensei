@@ -1,5 +1,8 @@
 import MDP from "../model/mdp.js";
 
+/**
+ * Abstraction of a player participating in a game.
+ */
 export default interface Player {
     // #region Properties
 
@@ -12,7 +15,7 @@ export default interface Player {
      * Properties of the player, such as its name and
      * corresponding icon. Used by the View.
      */
-    name: [string, string];
+    information: [string, string];
 
     // #endregion
 

@@ -9,10 +9,10 @@ export default abstract class AbstractPlayer implements Player {
     // #region Initialization
 
     protected _playerNumber: number;
-    protected _name: [string, string];
+    protected _information: [string, string];
 
     /**
-     * Constructor.
+     * Class constructor.
      * 
      * @param playerNumber Number identifying this player, either `1` or `2`.
      */
@@ -30,8 +30,8 @@ export default abstract class AbstractPlayer implements Player {
     }
 
     // Inherited docs.
-    public get name() {
-        return this._name;
+    public get information() {
+        return this._information;
     }
 
     // #endregion

@@ -8,7 +8,7 @@ import AbstractPlayer from "../abstractPlayer.js";
 export default class AbstractAI extends AbstractPlayer {
     // #region Properties 
     // Inherited docs.
-    get name() {
+    get information() {
         return ["AI", "smart_toy"];
     }
 }

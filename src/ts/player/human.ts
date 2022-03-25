@@ -8,7 +8,7 @@ export default class Human extends AbstractPlayer {
     // #region Properties 
 
     // Inherited docs.
-    public get name(): [string, string] {
+    public get information(): [string, string] {
         return ["Human", "person"];
     }
 

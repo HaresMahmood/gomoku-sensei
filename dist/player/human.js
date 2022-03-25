@@ -5,7 +5,7 @@ import AbstractPlayer from "./abstractPlayer.js";
 export default class Human extends AbstractPlayer {
     // #region Properties 
     // Inherited docs.
-    get name() {
+    get information() {
         return ["Human", "person"];
     }
     // #endregion

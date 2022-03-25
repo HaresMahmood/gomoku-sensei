@@ -5,9 +5,9 @@
 export default class AbstractPlayer {
     // #region Initialization
     _playerNumber;
-    _name;
+    _information;
     /**
-     * Constructor.
+     * Class constructor.
      *
      * @param playerNumber Number identifying this player, either `1` or `2`.
      */
@@ -21,7 +21,7 @@ export default class AbstractPlayer {
         return this._playerNumber;
     }
     // Inherited docs.
-    get name() {
-        return this._name;
+    get information() {
+        return this._information;
     }
 }
