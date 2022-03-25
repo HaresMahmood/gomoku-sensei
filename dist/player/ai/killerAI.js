@@ -18,11 +18,6 @@ import StaticNode from "./tree/staticNode.js";
  * @see {@link https://en.wikipedia.org/wiki/Monte_Carlo_tree_search} for more information on the algorithm used.
  */
 export default class KillerAI extends AbstractAI {
-    // private node: AbstractNode;
-    // constructor(player: number, node: AbstractNode) {
-    //     super(player);
-    //     this.node = node;
-    // }
     /**
      * Chooses the move determined by the MCTS algorithm.
      *

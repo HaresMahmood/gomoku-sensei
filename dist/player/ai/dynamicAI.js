@@ -1,11 +1,17 @@
+// #region Imports
 import AbstractAI from "./ai.js";
 import DynamicNode from "./tree/dynamicNode.js";
+// #endregion
+/**
+ *
+ */
 export default class DynamicAI extends AbstractAI {
-    // private node: AbstractNode;
-    // constructor(player: number, node: AbstractNode) {
-    //     super(player);
-    //     this.node = node;
-    // }
+    /**
+     * Chooses the move determined by the MCTS algorithm.
+     *
+     * @param mdp MDP-representation of the game being played.
+     * @returns Coordinates of a chosen board position.
+     */
     chooseMove(game) {
         const iterations = 22000;
         const root = new DynamicNode();
@@ -27,16 +33,24 @@ export default class DynamicAI extends AbstractAI {
             }
             this.backpropagate(current, result); // Backpropogation.
         }
-        console.log(root);
-        console.log(root.getBestChild());
         return root.getBestChild().state.mdp.lastMove;
     }
+    /**
+     *
+     * @param node
+     * @returns
+     */
     select(node) {
         while (!node.isLeaf()) { // && !node.state.game.isOver()
             node = node.select(this._playerNumber); // UCT.
         }
         return node;
     }
+    /**
+     *
+     * @param node
+     * @param result
+     */
     backpropagate(node, result) {
         let utility = -1;
         if (result[0] === this._playerNumber) {

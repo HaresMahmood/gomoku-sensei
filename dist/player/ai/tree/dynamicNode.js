@@ -39,7 +39,11 @@ export default class DynamicNode extends AbstractNode {
     }
     // #endregion
     // #region Utlity
-    // TODO: Rename to `backpropogate`.
+    /**
+     *
+     * @param utility
+     * @param gameLength
+     */
     updateStats(utility, gameLength) {
         this._state.visits++;
         this._state.wins += utility;

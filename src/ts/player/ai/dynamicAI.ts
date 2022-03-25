@@ -1,17 +1,22 @@
+// #region Imports
+
 import Gomoku from "../../model/gomoku.js";
 import AbstractAI from "./ai.js";
 import AbstractNode from "./tree/node.js";
 import DynamicNode from "./tree/dynamicNode.js";
 
+// #endregion
+
+/**
+ * 
+ */
 export default class DynamicAI extends AbstractAI {
-    // private node: AbstractNode;
-
-    // constructor(player: number, node: AbstractNode) {
-    //     super(player);
-
-    //     this.node = node;
-    // }
-
+    /**
+     * Chooses the move determined by the MCTS algorithm.
+     * 
+     * @param mdp MDP-representation of the game being played. 
+     * @returns Coordinates of a chosen board position.
+     */
     public chooseMove(game: Gomoku): number {
         const iterations: number = 22000;
         const root = new DynamicNode();
@@ -39,13 +44,15 @@ export default class DynamicAI extends AbstractAI {
             this.backpropagate(current as DynamicNode, result); // Backpropogation.
         }
 
-        console.log(root);
-        console.log(root.getBestChild());
-
         return root.getBestChild().state.mdp.lastMove;
     }
 
-    private select(node: AbstractNode) {
+    /**
+     * 
+     * @param node 
+     * @returns 
+     */
+    private select(node: AbstractNode): AbstractNode {
         while (!node.isLeaf()) { // && !node.state.game.isOver()
             node = node.select(this._playerNumber); // UCT.
         }
@@ -53,7 +60,12 @@ export default class DynamicAI extends AbstractAI {
         return node;
     }
 
-    private backpropagate(node: DynamicNode, result) {
+    /**
+     * 
+     * @param node 
+     * @param result 
+     */
+    private backpropagate(node: DynamicNode, result): void {
         let utility = -1;
 
         if (result[0] === this._playerNumber) {

@@ -20,9 +20,8 @@ export default class GameView {
         }
     }
     setPlayer(player) {
-        $(".player__container p").eq(player.player - 1).text(player.name[0]);
-        $(".player__container .player-icon").eq(player.player - 1).text(player.name[1]);
-        // window.parent.document.title = `${player.name[0]}`;
+        $(".player__container p").eq(player.player - 1).text(player.information[0]);
+        $(".player__container .player-icon").eq(player.player - 1).text(player.information[1]);
     }
     changePlayer(currentPlayer) {
         $(".active").removeClass("active");
@@ -79,7 +78,7 @@ export default class GameView {
             this.gongSound.cloneNode().play();
         }
         $(".player__container").eq(otherPlayer - 1).addClass("lost");
-        $("#modal-icon").text(winner.name[1]);
+        $("#modal-icon").text(winner.information[1]);
         $("#modal-header").text(winText);
         $("modal").addClass("visible");
         $(".board").addClass("inactive");
