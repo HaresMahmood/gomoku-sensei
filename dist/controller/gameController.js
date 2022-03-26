@@ -1,4 +1,10 @@
 import AI from "../player/ai/ai.js";
+/**
+ * Controller connencting together a view (located in `/view/`) and
+ * a model (`/model/`). Part of the Model-View-Controller design patter.
+ *
+ * @see {@link https://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller} for information on the design pattern.
+ */
 export default class GameController {
     // #region Initialization
     model;
