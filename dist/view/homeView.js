@@ -14,7 +14,12 @@ export default class HomeView {
     // #endregion
     // #region Events
     /**
-     *
+     * Envokes `Start game`-button click-event. This includes:
+     * * Saving values of `select`-components to `localStorage` for
+     * later retrieval.
+     * * Performing basic user validation to
+     * ensure all `select`-components are populated.
+     * * Post message to parent-page to indicate click.
      */
     setButtonHandler() {
         $("#game-button").bind("mouseup", function () {
@@ -29,11 +34,11 @@ export default class HomeView {
             }
             else {
                 $("select:invalid").addClass("error");
-                $(this).stop();
+                $(this).stop(true).css({ marginLeft: "0px" });
                 // Button shake.
                 for (var i = 0; i < 3; i++) {
-                    $(this).animate({ marginLeft: "-= 12px" }, 100)
-                        .animate({ marginLeft: "+= 12px" }, 100);
+                    $(this).animate({ marginLeft: "-=" + "12px" }, 100)
+                        .animate({ marginLeft: "+=" + "12px" }, 100);
                 }
             }
         });
