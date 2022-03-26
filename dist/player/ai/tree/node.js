@@ -32,17 +32,17 @@ export default class AbstractNode {
         return this._state;
     }
     /**
-     * Parent of the node, one up the tree.
-     */
-    get parent() {
-        return this._parent;
-    }
-    /**
      * List of children of the node, one level down
      * the tree.
      */
     get children() {
         return this._children;
+    }
+    /**
+     * Parent of the node, one up the tree.
+     */
+    get parent() {
+        return this._parent;
     }
     // #endregion
     // #region Miscellaneous

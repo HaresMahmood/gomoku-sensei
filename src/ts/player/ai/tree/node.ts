@@ -1,15 +1,11 @@
 import State from "./state.js";
 
-interface Node {
-    simulate(): number;
-}
-
 /**
  * Abstract class representing a node in a game tree.
  * 
  * @implements Node
  */
-export default abstract class AbstractNode implements Node {
+export default abstract class AbstractNode {
     // #region Initialization 
 
     protected _state: State;
@@ -43,18 +39,18 @@ export default abstract class AbstractNode implements Node {
     }
 
     /**
-     * Parent of the node, one up the tree.
-     */
-    public get parent() {
-        return this._parent;
-    }
-
-    /**
      * List of children of the node, one level down 
      * the tree.
      */
     protected get children() {
         return this._children;
+    }
+
+    /**
+     * Parent of the node, one up the tree.
+     */
+    public get parent() {
+        return this._parent;
     }
 
     // #endregion
