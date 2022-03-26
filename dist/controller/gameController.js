@@ -7,12 +7,20 @@ export default class GameController {
     player = 1 | 2;
     playerOne;
     playerTwo;
-    constructor(model, view, player1, player2) {
+    /**
+     * Class constructor.
+     *
+     * @param model The game's Model.
+     * @param view The game's View.
+     * @param playerOne Concretion of the first player.
+     * @param playerTwo Concretion of the second player.
+     */
+    constructor(model, view, playerOne, playerTwo) {
         this.model = model;
         this.view = view;
         this.player = 1;
-        this.playerOne = player1;
-        this.playerTwo = player2;
+        this.playerOne = playerOne;
+        this.playerTwo = playerTwo;
         this.view.setCellClickHandler((index) => this.performMove(index));
         // this.view.restartEvent.addListener(() => this.restart());
         this.view.setRestartClickHandler(() => this.restart());
@@ -29,8 +37,8 @@ export default class GameController {
     /**
      * Adds a piece to the board.
      *
-     * @param index Cell of the performed move.
-     * @returns Player's who's turn it is next.
+     * @param index Coordinates of the performed move.
+     * @returns Player next in line to move.
      */
     addPiece(index) {
         let color = this.player === 1 ? "black" : "white";
@@ -62,7 +70,7 @@ export default class GameController {
     /**
      * Prompts the next player to make a move.
      *
-     * @param player Player who's turn it currently is.
+     * @param player Player next in line to move.
      */
     nextPlayer(player) {
         if (this.playerOne.player === player) {
@@ -71,13 +79,11 @@ export default class GameController {
         else if (this.playerTwo.player === player) {
             this.performMove(this.playerTwo.chooseMove(this.model.clone()));
         }
-        // const currentPlayer = this.playerOne.player === player ? this.playerOne : this.playerTwo;
-        // this.performMove(currentPlayer.chooseMove(this.model.clone()));
     }
     /**
      * Adds a piece to the board at the provided index.
      *
-     * @param index Cell of the performed move.
+     * @param index Coordinates of the performed move.
      */
     performMove(index) {
         if (this.model.isCellEmpty(index)) {

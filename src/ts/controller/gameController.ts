@@ -15,14 +15,22 @@ export default class GameController {
     private playerOne: Player;
     private playerTwo: Player;
 
-    constructor(model: Gomoku, view: GameView, player1: Player, player2: Player) {
+    /**
+     * Class constructor.
+     * 
+     * @param model The game's Model.
+     * @param view The game's View.
+     * @param playerOne Concretion of the first player.
+     * @param playerTwo Concretion of the second player.
+     */
+    constructor(model: Gomoku, view: GameView, playerOne: Player, playerTwo: Player) {
         this.model = model;
         this.view = view;
 
         this.player = 1;
 
-        this.playerOne = player1;
-        this.playerTwo = player2;
+        this.playerOne = playerOne;
+        this.playerTwo = playerTwo;
 
         this.view.setCellClickHandler((index: number) => this.performMove(index));
         // this.view.restartEvent.addListener(() => this.restart());
@@ -47,8 +55,8 @@ export default class GameController {
     /**
      * Adds a piece to the board.
      * 
-     * @param index Cell of the performed move.
-     * @returns Player's who's turn it is next.
+     * @param index Coordinates of the performed move.
+     * @returns Player next in line to move.
      */
     private addPiece(index: number): number {
         let color = this.player === 1 ? "black" : "white";
@@ -91,7 +99,7 @@ export default class GameController {
     /**
      * Prompts the next player to make a move.
      * 
-     * @param player Player who's turn it currently is.
+     * @param player Player next in line to move.
      */
     private nextPlayer(player: number): void {
         if (this.playerOne.player === player) {
@@ -100,16 +108,12 @@ export default class GameController {
         else if (this.playerTwo.player === player) {
             this.performMove(this.playerTwo.chooseMove(this.model.clone()))
         }
-
-        // const currentPlayer = this.playerOne.player === player ? this.playerOne : this.playerTwo;
-
-        // this.performMove(currentPlayer.chooseMove(this.model.clone()));
     }
 
     /**
      * Adds a piece to the board at the provided index.
      * 
-     * @param index Cell of the performed move.
+     * @param index Coordinates of the performed move.
      */
          private performMove(index: number): void {
             if (this.model.isCellEmpty(index)) {
