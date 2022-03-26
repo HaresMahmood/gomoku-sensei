@@ -3,7 +3,7 @@ export default class DynamicNode extends AbstractNode {
     // #region Miscellaneous
     // Inherited docs.
     expand() {
-        const moves = this.state.getMoves();
+        const moves = this.state.getTransitions();
         for (const move of moves) {
             this.children.push(new DynamicNode(move, this));
         }
@@ -28,7 +28,7 @@ export default class DynamicNode extends AbstractNode {
             return [result, gameLength];
         }
         while (true) {
-            clone.makeRandomMove();
+            clone.makeRandomTransition();
             if (clone.mdp.isTerminal()) {
                 const result = clone.mdp.getUtilityScore();
                 const gameLength = clone.mdp.moveNumber;

@@ -5,7 +5,7 @@ export default class StaticNode extends AbstractNode {
 
     // Inherited docs.
     public expand() {
-        const moves = this.state.getMoves();
+        const moves = this.state.getTransitions();
 
         for (const move of moves) {
             this.children.push(new StaticNode(move, this));
@@ -26,7 +26,7 @@ export default class StaticNode extends AbstractNode {
         }
 
         while (true) {
-            clone.makeRandomMove();
+            clone.makeRandomTransition();
 
             if (clone.mdp.isTerminal()) {
                 const result = clone.mdp.getUtilityScore();

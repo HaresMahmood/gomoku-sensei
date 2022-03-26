@@ -1,7 +1,7 @@
 export default class State {
     // #region Initialization
     _mdp;
-    _playerNumber;
+    _player;
     _wins;
     _visits;
     // Specifically for Dynamic AI. 
@@ -10,16 +10,16 @@ export default class State {
     /**
      * Class constructor.
      *
-     * @param mdp
-     * @param playerNumber
-     * @param wins
-     * @param visits
-     * @param gameLength
-     * @param isTerminal
+     * @param mdp MDP-representation of the game being played.
+     * @param player Identifying number of the player the state represents.
+     * @param wins Amount of wins for the mode.
+     * @param visits Amount of visits to the node.
+     * @param gameLength Total length of all games simulated from the node.
+     * @param isTerminal Whether or not the node is terminal, or an end-game position.
      */
-    constructor(mdp = null, playerNumber = 1, wins = 0, visits = 0, gameLength = 0, isTerminal = false) {
+    constructor(mdp = null, player = 1, wins = 0, visits = 0, gameLength = 0, isTerminal = false) {
         this._mdp = mdp;
-        this._playerNumber = playerNumber;
+        this._player = player;
         this._wins = wins;
         this._visits = visits;
         this._gameLength = gameLength;
@@ -27,47 +27,89 @@ export default class State {
     }
     // #endregion
     // #region Properties
+    /**
+     * MDP-representation of the game being played.
+     */
     get mdp() {
         return this._mdp;
     }
-    get playerNumber() {
-        return this._playerNumber;
+    /**
+     * Identifying number of the player.
+     */
+    get player() {
+        return this._player;
     }
+    /**
+     * Amount of wins for the mode.
+     */
     get wins() {
         return this._wins;
     }
+    /**
+     * Amount of visits to the node.
+     */
     get visits() {
         return this._visits;
     }
+    /**
+     * Total length of all games simulated from the node.
+     */
     get gameLength() {
         return this._gameLength;
     }
+    /**
+     * Whether or not the node is terminal, or an end-game position.
+     */
     get isTerminal() {
         return this._isTerminal;
     }
+    /**
+     * MDP-representation of the game being played.
+     */
     set mdp(value) {
         this._mdp = value;
     }
-    set playerNumber(value) {
-        this._playerNumber = value;
+    /**
+     * Identifying number of the player.
+     */
+    set player(value) {
+        this._player = value;
     }
+    /**
+     * Amount of wins for the mode.
+     */
     set wins(value) {
         this._wins = value;
     }
+    /**
+     * Amount of visits to the node.
+     */
     set visits(value) {
         this._visits = value;
     }
+    /**
+     * Total length of all games simulated from the node.
+     */
     set gameLength(value) {
         this._gameLength = value;
     }
+    /**
+     * Whether or not the node is terminal, or an end-game position.
+     */
     set isTerminal(value) {
         this._isTerminal = value;
     }
     // #endregion
     // #region Miscellaneous
-    getMoves() {
+    /**
+     * Aggregates all possible transitions that can be made
+     * from the current board position in a list.
+     *
+     * @returns
+     */
+    getTransitions() {
         let possibleMoves = [];
-        let emptyPositions = this._mdp.getSuccessors(this._playerNumber);
+        let emptyPositions = this._mdp.getSuccessors(this._player);
         let opponentPlayerNumber = this.getOpponentPlayerNumber();
         for (const position of emptyPositions) {
             const child = new State(position, opponentPlayerNumber);
@@ -75,18 +117,34 @@ export default class State {
         }
         return possibleMoves;
     }
-    makeRandomMove() {
-        this._mdp.makeRandomTransition(this._playerNumber);
+    /**
+     * Transitions from the current game state to a random one.
+     */
+    makeRandomTransition() {
+        this._mdp.makeRandomTransition(this._player);
     }
     // #endregion
     // #region Utility 
+    /**
+     * Copies the current state values of the node.
+     *
+     * @returns A copy of the state values.
+     */
     clone() {
-        return new State(this._mdp.clone(), this._playerNumber, this._wins, this._visits);
+        return new State(this._mdp.clone(), this._player, this._wins, this._visits);
     }
+    /**
+     * Identifies the player next in line to move.
+     *
+     * @returns
+     */
     getOpponentPlayerNumber() {
-        return this._playerNumber === 1 ? 2 : 1;
+        return this._player === 1 ? 2 : 1;
     }
+    /**
+     * Changes the player to the one next in line to move.
+     */
     togglePlayer() {
-        this._playerNumber = this.getOpponentPlayerNumber();
+        this._player = this.getOpponentPlayerNumber();
     }
 }

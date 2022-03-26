@@ -34,7 +34,7 @@ export default class KillerAI extends AbstractAI {
 
         // Set `state` information of root node.
         root.state.mdp = mdp;
-        root.state.playerNumber = this._player;
+        root.state.player = this._player;
 
         root.expand(); // Add children to root, so as to not waste a training cycle.
 

@@ -88,7 +88,7 @@ export default abstract class AbstractNode {
      */
     public select(player: number): AbstractNode {
         let selected = this._children[0];
-        const isAIPlayer = selected._state.playerNumber !== player;
+        const isAIPlayer = selected._state.player !== player;
         let bestValue = isAIPlayer ? -Infinity : Infinity;
 
         for (const child of this._children) {

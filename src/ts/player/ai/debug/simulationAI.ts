@@ -3,13 +3,14 @@ import MDP from "../../../model/mdp.js";
 import StaticNode from "../tree/staticNode.js";
 
 export default class SimulationAI extends AbstractAI {
+    // Inherited docs.
     public chooseMove(mdp: MDP): number {
         const iterations = 1000;
         const root = new StaticNode();
         let counter = 0;
         
         root.state.mdp = mdp;
-        root.state.playerNumber = this._player;
+        root.state.player = this._player;
         root.expand();
 
         for (const child of root.children) {

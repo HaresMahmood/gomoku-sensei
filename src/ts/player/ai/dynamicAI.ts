@@ -22,7 +22,7 @@ export default class DynamicAI extends AbstractAI {
         const root = new DynamicNode();
 
         root.state.mdp = game;
-        root.state.playerNumber = this._player;
+        root.state.player = this._player;
         root.expand();
 
         for (let i: number = 0; i <= iterations; i++) {

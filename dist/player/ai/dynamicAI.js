@@ -16,7 +16,7 @@ export default class DynamicAI extends AbstractAI {
         const iterations = 22000;
         const root = new DynamicNode();
         root.state.mdp = game;
-        root.state.playerNumber = this._player;
+        root.state.player = this._player;
         root.expand();
         for (let i = 0; i <= iterations; i++) {
             let current = this.select(root); // Selection.

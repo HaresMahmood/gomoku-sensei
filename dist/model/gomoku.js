@@ -71,7 +71,6 @@ export default class Gomoku {
         this._moveNumber++; // Increment the move number.
     }
     // Inherited docs.
-    // TODO: Make more efficient.
     makeRandomTransition(player) {
         const emptyCells = this.getEmptyCells();
         const randomCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];

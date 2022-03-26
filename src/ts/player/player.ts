@@ -7,7 +7,7 @@ export default interface Player {
     // #region Properties
 
     /**
-     * Player number of the player.
+     * Identifying number of the player.
      */
     player: number;
 

@@ -88,7 +88,6 @@ export default class Gomoku implements MDP {
     }
 
     // Inherited docs.
-    // TODO: Make more efficient.
     public makeRandomTransition(player: number): void {
         const emptyCells = this.getEmptyCells();
         const randomCell = emptyCells[Math.floor(Math.random() * emptyCells.length)];

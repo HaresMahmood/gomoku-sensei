@@ -30,7 +30,7 @@ export default class KillerAI extends AbstractAI {
         let counter = 0;
         // Set `state` information of root node.
         root.state.mdp = mdp;
-        root.state.playerNumber = this._player;
+        root.state.player = this._player;
         root.expand(); // Add children to root, so as to not waste a training cycle.
         while (counter != iterations) {
             let current = this.select(root); // Selection.

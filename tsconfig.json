@@ -10,7 +10,7 @@
     "include": [
         "./src/"
     ],
-    "escdlude": [
+    "exclude": [
         "./node_modules/",
         "./test/"
     ]
