@@ -53,6 +53,10 @@ section > .center__container {
 /* #region Breakpoints */
 
 @media only screen and (max-height: 465px) {
+    body {
+        justify-content: center;
+    }
+    
     section.hide__small {
 		display: none;
 	}

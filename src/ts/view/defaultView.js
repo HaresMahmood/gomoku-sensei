@@ -1,6 +1,9 @@
 export default class DefaultView {
     // #region Initialization
 
+    /**
+     * Class constructor.
+     */
     constructor() {
         this.currentPage = "home";
 
@@ -22,6 +25,10 @@ export default class DefaultView {
 
     // #region Miscellaneous
 
+    /**
+     * 
+     * @param {string} page 
+     */
     navigateTo(page) {
         function capitalize(string) {
             return string.charAt(0).toUpperCase() + string.slice(1);
