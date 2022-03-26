@@ -8,16 +8,16 @@ import Player from "./player.js";
 export default abstract class AbstractPlayer implements Player {
     // #region Initialization
 
-    protected _playerNumber: number;
+    protected _player: number;
     protected _information: [string, string];
 
     /**
      * Class constructor.
      * 
-     * @param playerNumber Number identifying this player, either `1` or `2`.
+     * @param player Number identifying this player, either `1` or `2`.
      */
-    public constructor(playerNumber: number) {
-        this._playerNumber = playerNumber;
+    public constructor(player: number) {
+        this._player = player;
     }
 
     // #endregion
@@ -26,7 +26,7 @@ export default abstract class AbstractPlayer implements Player {
 
     // Inherited docs.
     public get player() {
-        return this._playerNumber;
+        return this._player;
     }
 
     // Inherited docs.

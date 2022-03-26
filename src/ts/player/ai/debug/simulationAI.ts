@@ -1,0 +1,37 @@
+import AbstractAI from "../ai.js";
+import MDP from "../../../model/mdp.js";
+import StaticNode from "../tree/staticNode.js";
+
+export default class SimulationAI extends AbstractAI {
+    public chooseMove(mdp: MDP): number {
+        const iterations = 1000;
+        const root = new StaticNode();
+        let counter = 0;
+        
+        root.state.mdp = mdp;
+        root.state.playerNumber = this._player;
+        root.expand();
+
+        for (const child of root.children) {
+            while (counter < iterations) {
+                const result = child.simulate();
+                let utility = -1;
+
+                if (result === this._player) {
+                    utility = 1;
+                }
+                else if (result === -1) {
+                    utility = 0;
+                }
+
+                (child as StaticNode).updateStats(utility);
+
+                counter++;
+            }
+
+            counter = 0;
+        }
+
+        return root.getBestChild().state.mdp.lastMove;
+    }
+}

@@ -30,7 +30,7 @@ export default class KillerAI extends AbstractAI {
         let counter = 0;
         // Set `state` information of root node.
         root.state.mdp = mdp;
-        root.state.playerNumber = this._playerNumber;
+        root.state.playerNumber = this._player;
         root.expand(); // Add children to root, so as to not waste a training cycle.
         while (counter != iterations) {
             let current = this.select(root); // Selection.
@@ -67,7 +67,7 @@ export default class KillerAI extends AbstractAI {
      */
     select(node) {
         while (!node.isLeaf()) {
-            node = node.select(this._playerNumber); // UCT.
+            node = node.select(this._player); // UCT.
         }
         return node;
     }
@@ -80,7 +80,7 @@ export default class KillerAI extends AbstractAI {
      */
     backpropagate(node, result) {
         let utility = -1;
-        if (result === this._playerNumber) {
+        if (result === this._player) {
             utility = 1;
         }
         else if (result === -1) {

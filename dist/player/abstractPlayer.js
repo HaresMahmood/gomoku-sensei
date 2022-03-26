@@ -4,21 +4,21 @@
  */
 export default class AbstractPlayer {
     // #region Initialization
-    _playerNumber;
+    _player;
     _information;
     /**
      * Class constructor.
      *
-     * @param playerNumber Number identifying this player, either `1` or `2`.
+     * @param player Number identifying this player, either `1` or `2`.
      */
-    constructor(playerNumber) {
-        this._playerNumber = playerNumber;
+    constructor(player) {
+        this._player = player;
     }
     // #endregion
     // #region Properties
     // Inherited docs.
     get player() {
-        return this._playerNumber;
+        return this._player;
     }
     // Inherited docs.
     get information() {

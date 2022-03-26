@@ -75,10 +75,10 @@ export default class GameController {
         // this.performMove(currentPlayer.chooseMove(this.model.clone()));
     }
     /**
- * Adds a piece to the board at the provided index.
- *
- * @param index Cell of the performed move.
- */
+     * Adds a piece to the board at the provided index.
+     *
+     * @param index Cell of the performed move.
+     */
     performMove(index) {
         if (this.model.isCellEmpty(index)) {
             const nextPlayer = this.addPiece(index);

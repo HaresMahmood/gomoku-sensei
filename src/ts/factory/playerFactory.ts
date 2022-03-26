@@ -33,7 +33,7 @@ export default interface PlayerFactory {
 
 export default class DefaultPlayerFactory implements PlayerFactory {
     // Inherited docs.
-    createPlayer(input: String, player: number): Player {
+    public createPlayer(input: String, player: number): Player {
         if (input === "human") {
             return new Human(player);
         }

@@ -106,7 +106,7 @@ export default class GameController {
         // this.performMove(currentPlayer.chooseMove(this.model.clone()));
     }
 
-        /**
+    /**
      * Adds a piece to the board at the provided index.
      * 
      * @param index Cell of the performed move.

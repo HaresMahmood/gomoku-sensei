@@ -42,7 +42,7 @@ export default abstract class AbstractNode {
      * List of children of the node, one level down 
      * the tree.
      */
-    protected get children() {
+    public get children() {
         return this._children;
     }
 

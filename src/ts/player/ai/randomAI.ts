@@ -15,7 +15,7 @@ export default class RandomAI extends AbstractAI {
      * @returns Coordinates of a random board position.
      */
     chooseMove(mdp: MDP): number {
-        mdp.makeRandomTransition(this._playerNumber);
+        mdp.makeRandomTransition(this._player);
 
         return mdp.lastMove;
     }
