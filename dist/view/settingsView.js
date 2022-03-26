@@ -1,7 +1,7 @@
 /**
  * View for the Settings-page.
  *
- * @see `/html/settings.html` for the orresponding HTML-page.
+ * @see `/html/settings.html` for the corresponding HTML-page.
  */
 export default class SettingsView {
     // #region Initialization 

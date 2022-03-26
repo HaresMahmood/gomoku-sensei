@@ -47,9 +47,7 @@
     -webkit-appearance: none;
 }
 
-/* 
-    Thumb 
-*/
+/* Thumb */
 .switch__component span {
     aspect-ratio: 1 / 1;
     height: 75%;

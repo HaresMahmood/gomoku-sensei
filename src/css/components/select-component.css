@@ -4,7 +4,7 @@
 
  /* #endregion */
 
- /* Components */
+ /* #region Components */
 
 .select__component {
     position: relative;
@@ -18,9 +18,7 @@
     transition: border-radius ease-out var(--animation-speed);
 }
 
-/*
-    Background.
-*/
+/* Background. */
 .select__component > div {
     position: absolute;
     top: 0; left: 0; bottom: 0; right: 0;
@@ -54,16 +52,12 @@
     border: none;
 }
   
-/*
-    Remove focus.
-*/
+/* Remove focus. */
 .select__component > select:focus {
     outline: none;
 }
   
-/* 
-    Custom arrow.
-*/
+/* Custom arrow. */
 .select__component select {
     appearance: none;
     -webkit-appearance: none
@@ -73,7 +67,7 @@
     content: "";
 
     position: absolute;
-    top: 18px; right: 10px;
+    top: 20px; right: 10px;
 
     width: 0;
     height: 0;
@@ -87,11 +81,9 @@
 
     pointer-events: none;
 }
+ 
   
-  
-/*
-    Label.
-*/
+/* Label. */
 .select__component > label {
     color: rgba(0,0,0, 0.26);
     font-size: 0.75rem;
@@ -113,6 +105,12 @@
     pointer-events: none;
 }
 
+.select__component > .material-icons-round {
+    display: none;
+
+    opacity: 0;
+}
+
 /* #endregion */
   
 /* #region Animations */
@@ -129,6 +127,18 @@
 
 .select__component > select.error ~ div {
     border-color: var(--red);
+}
+
+.select__component > select.error ~ .material-icons-round {
+    position: absolute;
+    top: 12.5px; right: 25px;
+
+    display: block;
+
+    opacity: 1;
+    color: var(--red);
+
+    transition: opacity ease var(--animation-speed);
 }
 
 /* #endregion */

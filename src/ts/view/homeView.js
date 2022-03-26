@@ -1,6 +1,14 @@
+/**
+ * View for the Home-page.
+ * 
+ * @see `/html/home.html` for the corresponding HTML-page.
+ */
 export default class HomeView {
     // #region Initialization
  
+    /**
+     * Class constructor.
+     */
     constructor() {
         this.setButtonHandler();
     }
@@ -9,6 +17,9 @@ export default class HomeView {
 
     // #region Events
 
+    /**
+     * 
+     */
     setButtonHandler() {
         $("#game-button").bind("mouseup", function() {
             if ($("select:valid").length === 2) {
@@ -25,10 +36,12 @@ export default class HomeView {
             else {
                 $("select:invalid").addClass("error");
 
-                // https://stackoverflow.com/questions/10363671/jquery-bounce-effect-on-click-no-jquery-ui
+                $(this).stop();
+
+                // Button shake.
                 for (var i = 0; i < 3; i++) {
-                    $(this).animate({marginLeft: '-='+ '12px'}, 100)
-                           .animate({marginLeft: '+='+ '12px'}, 100);
+                    $(this).animate({marginLeft: "-= 12px"}, 100)
+                           .animate({marginLeft: "+= 12px"}, 100);
                 }  
             }
         });
