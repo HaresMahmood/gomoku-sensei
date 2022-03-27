@@ -58,6 +58,8 @@ describe("Dynamic Tree Node", () => {
         });
     
         it("Should update internal State statistics correctly", () => {
+            node.state.visits = 0; // Reset visits.
+
             node.updateStats(1, 1);
     
             expect(node.state.visits).to.equal(1);
