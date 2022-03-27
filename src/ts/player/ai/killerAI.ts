@@ -1,13 +1,16 @@
+// #region Imports
+
 import MDP from "../../model/mdp.js";
 import AbstractAI from "./ai.js";
 import AbstractNode from "./tree/node.js";
 import StaticNode from "./tree/staticNode.js";
 
+// #endregion
+
 /**
- * Concrete representation of a Monte Carlo Tree S
- * earch (MCTS) based AI agent. Delegates the 
- * specific implementation of MCTS methods to
- * concrete implementations of {@link AbstractNode}.
+ * Concrete representation of a Monte Carlo Tree Search (MCTS) 
+ * based AI agent. Delegates the specific implementation of 
+ * MCTS methods to concrete implementations of {@link AbstractNode}.
  * 
  * The basic MCTS algorithm consists of 4 phases:
  * * Selection.
@@ -15,8 +18,8 @@ import StaticNode from "./tree/staticNode.js";
  * * Simulation.
  * * Backpropogation.
  * 
- * This process is repeated until a maximum number of 
- * iterations is reached.
+ * This process is repeated until a maximum number of iterations is 
+ * reached.
  * 
  * @see {@link https://en.wikipedia.org/wiki/Monte_Carlo_tree_search} for more information on the algorithm used.
  */
@@ -48,8 +51,8 @@ export default class KillerAI extends AbstractAI {
         root.expand(); // Add children to root, so as to not waste a training cycle.
 
         while (counter != this._iterations) {
-            let current = this.select(root); // Selection.
-            let result;
+            let current: AbstractNode = this.select(root); // Selection.
+            let result: number;
 
             if (current.state.mdp.isTerminal()) {
                 // Since the node is terminal, it cannot 
@@ -99,8 +102,8 @@ export default class KillerAI extends AbstractAI {
      * @param node from which the simulation was completed.
      * @param result result from the rollout, the utility value.
      */
-    private backpropagate(node: StaticNode, result) {
-        let utility = -1;
+    private backpropagate(node: StaticNode, result: number) {
+        let utility: number = -1;
 
         if (result === this._player) {
             utility = 1;

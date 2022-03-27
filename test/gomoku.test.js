@@ -52,7 +52,7 @@ describe("Model - Gomoku", () => {
         expect(copy).to.eql(game);
     });
 
-    it("Should declare the first player as the winner", () => {
+    it("Should end the game and declare the first player as the winner", () => {
         game.makeTransition(1, 1);
         game.makeTransition(2, 1);
         game.makeTransition(3, 1);
@@ -60,6 +60,38 @@ describe("Model - Gomoku", () => {
 
         expect(game.isTerminal()).to.equal(true);
         expect(game.getUtilityScore()).to.equal(1);
+        expect(game.hasWon(1)).to.equal(true);
+    });
+
+    it("Should detect a horizontal win for the first player", () => {
+        game.restart();
+
+        game._board = [0, 1, 0, 1, 0, 0, 0, 2, 0, 2, 0, 2, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 0, 0, 0, 0, 2, 2, 0, 2, 2, 1, 0, 0, 0, 2, 0, 1, 2, 1, 1, 2, 1]; // Horizontal win.
+
+        expect(game.hasWon(1)).to.equal(true);
+    });
+
+    it("Should detect a vertical win for the first player", () => {
+        game.restart();
+
+        game._board = [0, 2, 1, 0, 0, 0, 2, 1, 2, 1, 1, 0, 0, 0, 2, 0, 2, 1, 0, 0, 1, 1, 0, 0, 1, 2, 0, 0, 1, 2, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 2, 2, 0, 2, 2, 0, 0, 0]; // Vertical win.
+
+        expect(game.hasWon(1)).to.equal(true);
+    });
+
+    it("Should detect a major diagonal win for the first player", () => {
+        game.restart();
+
+        game._board = [0, 0, 2, 0, 1, 2, 2, 0, 1, 2, 0, 0, 0, 0, 0, 0, 1, 2, 0, 0, 0, 0, 1, 0, 1, 0, 0, 2, 1, 0, 2, 0, 1, 0, 0, 0, 0, 2, 0, 0, 1, 0, 1, 0, 0, 1, 0, 2, 0]; // Major (\) diagonal win.
+
+        expect(game.hasWon(1)).to.equal(true);
+    });
+
+    it("Should detect a minor diagonal win for the first player", () => {
+        game.restart();
+
+        game._board = [0, 0, 0, 0, 0, 0, 2, 2, 1, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 2, 0, 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 2, 1, 1, 2, 1, 0, 0, 1, 0, 2, 0, 0, 2, 2, 2, 0, 2]; // Minor (/) diagonal win.
+
         expect(game.hasWon(1)).to.equal(true);
     });
 
