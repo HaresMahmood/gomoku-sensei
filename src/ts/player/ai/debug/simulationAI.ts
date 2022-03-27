@@ -2,6 +2,10 @@ import AbstractAI from "../ai.js";
 import MDP from "../../../model/mdp.js";
 import StaticNode from "../tree/staticNode.js";
 
+/**
+ * Concrete implementation of a purely Monte Carlo 
+ * Simulation-based AI agent. Used for debugging.
+ */
 export default class SimulationAI extends AbstractAI {
     // #region Initialization
 
