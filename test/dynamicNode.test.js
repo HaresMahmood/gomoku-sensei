@@ -1,4 +1,4 @@
-import StaticNode from "../dist/player/ai//tree/staticNode.js";
+import DynamicNode from "../dist/player/ai//tree/dynamicNode.js";
 import State from "../dist/player/ai/tree/state.js";
 import Gomoku from "../dist/model/gomoku.js";
 import { expect } from "chai";
@@ -7,11 +7,11 @@ let mdp;
 let state;
 let node;
 
-describe("Static Tree Node", () => {
+describe("Dynamic Tree Node", () => {
     before( () => {
         mdp = new Gomoku();
         state = new State(mdp)
-        node = new StaticNode(state);
+        node = new DynamicNode(state);
     });
 
     describe("Selection and Expansion", () => {
@@ -34,10 +34,17 @@ describe("Static Tree Node", () => {
             }
         });
 
-        it("Should identify the first child as most promising", () => {
+        it("Should identify the second child as most favourable", () => {
             node.expand();
-    
-            expect(node.select(1)).to.eq(node.children[0]);
+
+            // With all other stats being equal, prolongation bias should
+            // pick the node with the higher total game length (the second child here).
+            node._children = [node.children[0], node.children[1]]
+            node.state.visits = 6;
+            node.children[0].updateStats(3, 3);
+            node.children[1].updateStats(3, 4);
+            
+            expect(node.select(1)).to.eq(node.children[1]);
         });
     });
    
@@ -45,25 +52,29 @@ describe("Static Tree Node", () => {
         it("Should complete a simulation without altering the working game copy", () => {
             const utility = node.simulate();
     
-            expect(utility).to.be.oneOf([-1, 1, 2]);
+            expect(utility[0]).to.be.oneOf([-1, 1, 2]);
+            expect(utility[1]).to.be.greaterThan(1);
             expect(node.state.mdp.isTerminal()).to.equal(false);
         });
     
         it("Should update internal State statistics correctly", () => {
-            node.updateStats(1);
+            node.updateStats(1, 1);
     
             expect(node.state.visits).to.equal(1);
             expect(node.state.wins).to.equal(1);
+            expect(node.state.gameLength).to.equal(1);
     
-            node.updateStats(0);
+            node.updateStats(0, 1);
     
             expect(node.state.visits).to.equal(2);
             expect(node.state.wins).to.equal(1);
+            expect(node.state.gameLength).to.equal(2);
     
-            node.updateStats(-1);
+            node.updateStats(-1, 1);
     
             expect(node.state.visits).to.equal(3);
             expect(node.state.wins).to.equal(0);
+            expect(node.state.gameLength).to.equal(3);
         });
     });
 });

@@ -118,7 +118,7 @@ export default abstract class AbstractNode {
      * @returns The UCT-score of the node.
      * @see [Informaion on the UCT-formula](https://en.wikipedia.org/wiki/Monte_Carlo_tree_search#Exploration_and_exploitation)
      */
-    public uctScore(parent: AbstractNode, isAIPlayer: boolean): number {
+    protected uctScore(parent: AbstractNode, isAIPlayer: boolean): number {
         const exploitation = (this._state.wins / this._state.visits) || 0; // Change `NaN` to 0 (0 wins / 0 visits).
         const exploration = Math.sqrt(2) * Math.sqrt(Math.log(parent.state.visits) / this._state.visits) || Infinity;  // Change `NaN` to `Infinity` (log(0 parent visits)).
         
