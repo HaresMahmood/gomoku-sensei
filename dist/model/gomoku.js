@@ -176,7 +176,7 @@ export default class Gomoku {
      * @param interval Number of elements to skip before adding another character.
      * @returns Delimited string representing a game board.
      * @example
-     * // Returns "100#010#100", representing a simple tic-tac-toe board:
+     * // Returns "100#010#001", representing a simple tic-tac-toe board:
      * toDelimitedString([1, 0, 0, 0, 1, 0, 0, 0, 1], '#', 3);
      */
     toDelimitedString(list, character, interval) {

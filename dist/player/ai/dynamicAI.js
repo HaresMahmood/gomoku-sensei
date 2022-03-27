@@ -6,6 +6,12 @@ import DynamicNode from "./tree/dynamicNode.js";
  *
  */
 export default class DynamicAI extends AbstractAI {
+    // #region Initialization
+    constructor(player, iterations = 22000) {
+        super(player, iterations);
+    }
+    // #endregion
+    // #region Miscellaneous
     /**
      * Chooses the move determined by the MCTS algorithm.
      *
@@ -13,12 +19,11 @@ export default class DynamicAI extends AbstractAI {
      * @returns Coordinates of a chosen board position.
      */
     chooseMove(game) {
-        const iterations = 22000;
         const root = new DynamicNode();
         root.state.mdp = game;
         root.state.player = this._player;
         root.expand();
-        for (let i = 0; i <= iterations; i++) {
+        for (let i = 0; i <= this._iterations; i++) {
             let current = this.select(root); // Selection.
             let result;
             if (current.state.mdp.isTerminal()) {

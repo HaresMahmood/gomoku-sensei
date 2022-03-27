@@ -3,9 +3,18 @@ import MDP from "../../../model/mdp.js";
 import StaticNode from "../tree/staticNode.js";
 
 export default class SimulationAI extends AbstractAI {
+    // #region Initialization
+
+    constructor(player: number, iterations: number = 1000) {
+        super(player, iterations);
+    }
+
+    // #endregion
+
+    // #region Miscellaneous
+
     // Inherited docs.
     public chooseMove(mdp: MDP): number {
-        const iterations = 1000;
         const root = new StaticNode();
         let counter = 0;
         
@@ -14,7 +23,7 @@ export default class SimulationAI extends AbstractAI {
         root.expand();
 
         for (const child of root.children) {
-            while (counter < iterations) {
+            while (counter < this._iterations) {
                 const result = child.simulate();
                 let utility = -1;
 
@@ -35,4 +44,6 @@ export default class SimulationAI extends AbstractAI {
 
         return root.getBestChild().state.mdp.lastMove;
     }
+
+    // #endregion
 }

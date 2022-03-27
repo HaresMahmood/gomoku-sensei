@@ -6,6 +6,13 @@ import AbstractPlayer from "../abstractPlayer.js";
  * used.
  */
 export default class AbstractAI extends AbstractPlayer {
+    // #region Initialization
+    _iterations;
+    constructor(player, iterations = 0) {
+        super(player);
+        this._iterations = iterations;
+    }
+    // #endregion
     // #region Properties 
     // Inherited docs.
     get information() {

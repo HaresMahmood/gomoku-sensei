@@ -18,6 +18,12 @@ import StaticNode from "./tree/staticNode.js";
  * @see {@link https://en.wikipedia.org/wiki/Monte_Carlo_tree_search} for more information on the algorithm used.
  */
 export default class KillerAI extends AbstractAI {
+    // #region Initialization
+    constructor(player, iterations = 22500) {
+        super(player, iterations);
+    }
+    // #endregion
+    // #region Miscellaneous
     /**
      * Chooses the move determined by the MCTS algorithm.
      *
@@ -25,14 +31,13 @@ export default class KillerAI extends AbstractAI {
      * @returns Coordinates of a chosen board position.
      */
     chooseMove(mdp) {
-        const iterations = 22500; // TODO: Experiment with iterations.
         const root = new StaticNode(); // Root node (_R_).
         let counter = 0;
         // Set `state` information of root node.
         root.state.mdp = mdp;
         root.state.player = this._player;
         root.expand(); // Add children to root, so as to not waste a training cycle.
-        while (counter != iterations) {
+        while (counter != this._iterations) {
             let current = this.select(root); // Selection.
             let result;
             if (current.state.mdp.isTerminal()) {
@@ -52,9 +57,7 @@ export default class KillerAI extends AbstractAI {
             this.backpropagate(current, result); // Backpropogation.
             counter++;
         }
-        const winnerNode = root.getBestChild();
-        console.log(root);
-        return winnerNode.state.mdp.lastMove;
+        return root.getBestChild().state.mdp.lastMove;
     }
     /**
      * Recursively selects nodes until a leaf node
