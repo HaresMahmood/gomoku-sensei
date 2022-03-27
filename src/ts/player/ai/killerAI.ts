@@ -11,6 +11,7 @@ import StaticNode from "./tree/staticNode.js";
  * Concrete representation of a Monte Carlo Tree Search (MCTS) 
  * based AI agent. Delegates the specific implementation of 
  * MCTS methods to concrete implementations of {@link AbstractNode}.
+ * This class utilizes the {@link StaticNode} concretion.
  * 
  * The basic MCTS algorithm consists of 4 phases:
  * * Selection.
@@ -83,7 +84,7 @@ export default class KillerAI extends AbstractAI {
      * is reached. Selection is based on the chosen 
      * policy, in this case UCT.
      * 
-     * @param node from which to start selection-process.
+     * @param node Node from which to start selection-process.
      * @returns Node with selected by the policy.
      * @see {@link AbstractNode.select} for the selection policy.
      */
@@ -100,9 +101,9 @@ export default class KillerAI extends AbstractAI {
      * until the root node is reached.
      * 
      * @param node from which the simulation was completed.
-     * @param result result from the rollout, the utility value.
+     * @param result result of the rollout, the utility value.
      */
-    private backpropagate(node: StaticNode, result: number) {
+    private backpropagate(node: StaticNode, result: number): void {
         let utility: number = -1;
 
         if (result === this._player) {

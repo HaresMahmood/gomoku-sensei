@@ -1,10 +1,12 @@
+// #region Imports
 import AbstractAI from "./ai.js";
 import StaticNode from "./tree/staticNode.js";
+// #endregion
 /**
- * Concrete representation of a Monte Carlo Tree S
- * earch (MCTS) based AI agent. Delegates the
- * specific implementation of MCTS methods to
- * concrete implementations of {@link AbstractNode}.
+ * Concrete representation of a Monte Carlo Tree Search (MCTS)
+ * based AI agent. Delegates the specific implementation of
+ * MCTS methods to concrete implementations of {@link AbstractNode}.
+ * This class utilizes the {@link StaticNode} concretion.
  *
  * The basic MCTS algorithm consists of 4 phases:
  * * Selection.
@@ -12,8 +14,8 @@ import StaticNode from "./tree/staticNode.js";
  * * Simulation.
  * * Backpropogation.
  *
- * This process is repeated until a maximum number of
- * iterations is reached.
+ * This process is repeated until a maximum number of iterations is
+ * reached.
  *
  * @see {@link https://en.wikipedia.org/wiki/Monte_Carlo_tree_search} for more information on the algorithm used.
  */
@@ -64,7 +66,7 @@ export default class KillerAI extends AbstractAI {
      * is reached. Selection is based on the chosen
      * policy, in this case UCT.
      *
-     * @param node from which to start selection-process.
+     * @param node Node from which to start selection-process.
      * @returns Node with selected by the policy.
      * @see {@link AbstractNode.select} for the selection policy.
      */
@@ -79,7 +81,7 @@ export default class KillerAI extends AbstractAI {
      * until the root node is reached.
      *
      * @param node from which the simulation was completed.
-     * @param result result from the rollout, the utility value.
+     * @param result result of the rollout, the utility value.
      */
     backpropagate(node, result) {
         let utility = -1;

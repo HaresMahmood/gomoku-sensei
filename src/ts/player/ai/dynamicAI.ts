@@ -1,14 +1,19 @@
 // #region Imports
 
-import Gomoku from "../../model/gomoku.js";
 import AbstractAI from "./ai.js";
 import AbstractNode from "./tree/node.js";
 import DynamicNode from "./tree/dynamicNode.js";
+import MDP from "../../model/mdp.js";
 
 // #endregion
 
 /**
+ * Adapted Monte Carlo Tree Search (MCTS) implementation with
+ * _prolongation bias_. Represents a dynamic AI agent.
+ * This class utilizes the {@link DynamicNode} concretion for
+ * specific adapted MCTS-methods.
  * 
+ * @see {@link KillerAI} for a vanilla MCTS implementation.
  */
 export default class DynamicAI extends AbstractAI {
     // #region Initialization
@@ -27,10 +32,10 @@ export default class DynamicAI extends AbstractAI {
      * @param mdp MDP-representation of the game being played. 
      * @returns Coordinates of a chosen board position.
      */
-    public chooseMove(game: Gomoku): number {
+    public chooseMove(mdp: MDP): number {
         const root = new DynamicNode();
 
-        root.state.mdp = game;
+        root.state.mdp = mdp;
         root.state.player = this._player;
         root.expand();
 
@@ -39,6 +44,10 @@ export default class DynamicAI extends AbstractAI {
             let result;
 
             if (current.state.mdp.isTerminal()) {
+                // Since the node is terminal, it cannot 
+                // be expanded. he expansion- and 
+                // simulation-phases are therefore skipped.
+                // Additionally, flip the node's terminality-property.
                 current.state.isTerminal = true;
                 result = [current.state.mdp.getUtilityScore(), current.state.mdp.moveNumber];
             }
@@ -57,9 +66,13 @@ export default class DynamicAI extends AbstractAI {
     }
 
     /**
+     * Recursively selects nodes until a leaf node
+     * is reached. Selection is based on the chosen 
+     * policy, in this case UCT.
      * 
-     * @param node 
-     * @returns 
+     * @param node Node from which to start selection-process.
+     * @returns Node with selected by the policy.
+     * @see {@link DynamicNode.select} for the _prolongation bias_ selection policy.
      */
     private select(node: AbstractNode): AbstractNode {
         while (!node.isLeaf()) { // && !node.state.game.isOver()
@@ -70,11 +83,13 @@ export default class DynamicAI extends AbstractAI {
     }
 
     /**
+     * Recursively backpropagates the utility and game 
+     * length score until the root node is reached.
      * 
-     * @param node 
-     * @param result 
+     * @param node from which the simulation was completed.
+     * @param result tuple of the result (utility value) and game length of the rollout.
      */
-    private backpropagate(node: DynamicNode, result): void {
+    private backpropagate(node: DynamicNode, result: [number, number]): void {
         let utility = -1;
 
         if (result[0] === this._player) {
