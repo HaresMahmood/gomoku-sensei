@@ -46,10 +46,8 @@ describe("Model - Gomoku", () => {
         expect(game.isTerminal()).to.equal(false);
     });
 
-    it("Should return a deep-copy of itself", () => {
-        const copy = game.clone()
-        
-        expect(copy).to.eql(game);
+    it("Should create a deep-copy of itself", () => {
+        expect(game.clone()).to.eql(game);
     });
 
     it("Should end the game and declare the first player as the winner", () => {

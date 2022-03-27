@@ -1,5 +1,12 @@
-import MDP from "../../../model/mdp";
+import MDP from "../../../model/mdp.js";
+import AbstractNode from "./node.js";
 
+/**
+ * Aggregation of {@link AbstractNode}-related properties,
+ * particularly those relating to their state. Contains logic
+ * for changing these properties and provides wrapper-esque
+ * access to the internal {@link MDP}-property methods.#
+ */
 export default class State {
     // #region Initialization
 
