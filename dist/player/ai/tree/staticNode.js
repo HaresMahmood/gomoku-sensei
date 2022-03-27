@@ -1,4 +1,7 @@
 import AbstractNode from "./node.js";
+/**
+ * Concrete implementation of a generic node in a game tree.
+ */
 export default class StaticNode extends AbstractNode {
     // #region Miscellaneous
     // Inherited docs.
@@ -10,7 +13,6 @@ export default class StaticNode extends AbstractNode {
         return this.children[0];
     }
     // Inherited docs.
-    // TODO: make more efficient (no double `isTerminal`-check).
     simulate() {
         const clone = this.state.clone();
         if (clone.mdp.isTerminal()) {
@@ -29,8 +31,10 @@ export default class StaticNode extends AbstractNode {
     // #endregion
     // #region Utility
     /**
+     * Part of the backpropagation-phase of MCTS.
+     * Updates internal {@link State}-values.
      *
-     * @param utility
+     * @param utility Result or winner of the simulation-phase.
      */
     updateStats(utility) {
         this._state.visits++;

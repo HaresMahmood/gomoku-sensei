@@ -1,3 +1,9 @@
+/**
+ * Aggregation of {@link AbstractNode}-related properties,
+ * particularly those relating to their state. Contains logic
+ * for changing these properties and provides wrapper-esque
+ * access to the internal {@link MDP}-property methods.#
+ */
 export default class State {
     // #region Initialization
     _mdp;
