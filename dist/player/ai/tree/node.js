@@ -1,8 +1,6 @@
 import State from "./state.js";
 /**
  * Abstract class representing a node in a game tree.
- *
- * @implements Node
  */
 export default class AbstractNode {
     // #region Initialization 
@@ -100,7 +98,7 @@ export default class AbstractNode {
      * Determines which child is the best.
      * This usually means the _most visisted_ child.
      *
-     * @returns
+     * @returns The _"best"_ child.
      */
     getBestChild() {
         let child = this._children.reduce((x, y) => {

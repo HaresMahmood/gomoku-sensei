@@ -2,6 +2,8 @@ import AbstractNode from "./node.js";
 
 /**
  * Concrete implementation of a generic node in a game tree.
+ * 
+ * @extends AbstractNode
  */
 export default class StaticNode extends AbstractNode {
     // #region Miscellaneous
@@ -45,8 +47,8 @@ export default class StaticNode extends AbstractNode {
     // #region Utility
 
     /**
-     * Part of the backpropagation-phase of MCTS.
-     * Updates internal {@link State}-values.
+     * Part of the Backpropagation-phase of MCTS.
+     * Updates internal {@link State}-properties.
      * 
      * @param utility Result or winner of the simulation-phase.
      */

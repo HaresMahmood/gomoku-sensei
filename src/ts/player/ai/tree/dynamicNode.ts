@@ -1,6 +1,15 @@
 import AbstractNode from "./node.js";
-import State from "./state.js";
 
+/**
+ * Concrete implementation of a _dynamic_ node in a game tree.
+ * Dynamic nodes implement _prolongation bias_, whereby the
+ * total game length is added as a UCT score ({@link uctScore}) 
+ * parameter. This game length value must also be returned during 
+ * Simulation ({@link simulate}) and updated during Backpropagation
+ * ({@link updateStats}).
+ * 
+ * @extends AbstractNode
+ */
 export default class DynamicNode extends AbstractNode {
     // #region Miscellaneous
 
@@ -28,7 +37,6 @@ export default class DynamicNode extends AbstractNode {
     }
 
     // Inherited docs.
-    // TODO: make more efficient (no double `isTerminal`-check).
     public simulate(): [number, number] {
         const clone = this.state.clone();
 
@@ -58,9 +66,11 @@ export default class DynamicNode extends AbstractNode {
     // #region Utlity
 
     /**
+     * Part of the Backpropagation-phase of MCTS.
+     * Updates internal {@link State}-properties.
      * 
-     * @param utility 
-     * @param gameLength
+     * @param utility Result or winner of the Simulation-phase.
+     * @param gameLength Game length up to the end of the simulation.
      */
     public updateStats(utility: number, gameLength: number): void {
         this._state.visits++;
