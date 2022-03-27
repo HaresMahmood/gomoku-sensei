@@ -94,12 +94,12 @@ export default class Gomoku {
     }
     // Inherited docs.
     isTerminal() {
-        const player = this._board[this._lastMove]; // TODO: Think of better way of doing this.
+        const player = this._board[this._lastMove];
         return this.hasWon(player) || this.isDraw();
     }
     // Inherited docs.
     getUtilityScore() {
-        const player = this._board[this._lastMove]; // FIXME: `player` should be passed in as a parameter.
+        const player = this._board[this._lastMove];
         let winner = this.hasWon(player) ? player : -1;
         return winner;
     }

@@ -130,7 +130,7 @@ button {
 button:disabled,
 button[disabled] {
     opacity: 0.5;
-    /* cursor: not-allowed; TODO: Make sure cursor is set to `not-allowed`. */
+    cursor: not-allowed;
     pointer-events: none;
 }
 
@@ -188,8 +188,6 @@ button > span:nth-child(2) {
     transition: border-radius ease-out var(--animation-speed);
 }
 
-
-/* TODO: Change name of component */
 
 button-label {
     padding: 0.45rem;

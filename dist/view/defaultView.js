@@ -42,7 +42,7 @@ export default class DefaultView {
     }
     openModal(page) {
         $("#modal-frame")[0].contentWindow.location.replace(`./src/html/${page}.html`);
-        $("#modal-text").html(page); // TODO: Rename to `modal-header`.
+        $("#model-header").html(page);
         setTimeout(function () {
             $("modal").not("#pop-up").addClass("visible");
         }, 100);

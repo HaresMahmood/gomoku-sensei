@@ -117,14 +117,14 @@ export default class Gomoku implements MDP {
 
     // Inherited docs.
     public isTerminal(): boolean {
-        const player = this._board[this._lastMove]; // TODO: Think of better way of doing this.
+        const player = this._board[this._lastMove];
 
         return this.hasWon(player) || this.isDraw();
     }
 
     // Inherited docs.
     public getUtilityScore(): number {
-        const player = this._board[this._lastMove]; // FIXME: `player` should be passed in as a parameter.
+        const player = this._board[this._lastMove];
         let winner = this.hasWon(player) ? player : -1;
 
         return winner;

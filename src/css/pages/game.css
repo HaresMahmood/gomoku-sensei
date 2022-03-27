@@ -128,7 +128,7 @@ body {
 
 	cursor: pointer;
 
-	transition: var(--animation-speed); /* TODO: What does this do? */
+	transition: var(--animation-speed);
 } 
 
 .piece {
