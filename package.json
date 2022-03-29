@@ -22,9 +22,7 @@
     "test": "mocha --timeout 10000 --recursive ./test/**/*.js"
   },
   "devDependencies": {
-    "chai": "latest",
-    "mocha": "latest",
-    "typedoc": "^0.22.13",
-    "typedoc-plugin-markdown": "^3.11.14"
+    "chai": "^9.2.2",
+    "mocha": "^4.3.4"
   }
 }
