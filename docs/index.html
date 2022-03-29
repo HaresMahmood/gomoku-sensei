@@ -1,0 +1,139 @@
+<!DOCTYPE html><html class="default"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>gomoku-sensei</title><meta name="description" content="Documentation for gomoku-sensei"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script async src="assets/search.js" id="search-script"></script></head><body><script>document.body.classList.add(localStorage.getItem("tsd-theme") || "os")</script><header><div class="tsd-page-toolbar"><div class="container"><div class="table-wrap"><div class="table-cell" id="tsd-search" data-base="."><div class="field"><label for="tsd-search-field" class="tsd-widget search no-caption">Search</label><input type="text" id="tsd-search-field"/></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">gomoku-sensei</a></div><div class="table-cell" id="tsd-widgets"><div id="tsd-filter"><a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a><div class="tsd-filter-group"><div class="tsd-select" id="tsd-filter-visibility"><span class="tsd-select-label">All</span><ul class="tsd-select-list"><li data-value="public">Public</li><li data-value="protected">Public/Protected</li><li data-value="private" class="selected">All</li></ul></div> <input type="checkbox" id="tsd-filter-inherited" checked/><label class="tsd-widget" for="tsd-filter-inherited">Inherited</label><input type="checkbox" id="tsd-filter-externals" checked/><label class="tsd-widget" for="tsd-filter-externals">Externals</label></div></div><a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a></div></div></div></div><div class="tsd-page-title"><div class="container"><h1> gomoku-sensei</h1></div></div></header><div class="container container-main"><div class="row"><div class="col-8 col-content"><div class="tsd-panel tsd-typography">
+<a href="#gomoku-sensei-ai" id="gomoku-sensei-ai" style="color: inherit; text-decoration: none;">
+  <h1>Gomoku Sensei AI</h1>
+</a>
+
+<a href="#designing-a-dynamic-game-playing-ai" id="designing-a-dynamic-game-playing-ai" style="color: inherit; text-decoration: none;">
+  <h4>Designing a dynamic game-playing AI.</h4>
+</a>
+<p><img src="https://img.shields.io/github/languages/code-size/HaresMahmood/gomoku-sensei" alt="GitHub code size in bytes">
+<a href="https://web.dev/progressive-web-apps/"><img src="https://www.pwa-shields.com/1.0.0/series/classic/white/purple.svg" alt="PWA Shields"></a>
+<a href="https://www.figma.com/proto/uhH23aRZvGQsOViY0bnnVP/Gomoku?node-id=64%3A19"><img src="https://badgen.net/badge/icon/Figma%20Prototype/orange?icon=https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg&label" alt="Figma"></a>
+<a href="https://opposite-brain-cb0.notion.site/CS408-1e5c4e3c9b0d4291b6a968855d9270e9"><img src="https://badgen.net/badge/icon/Notion%20Workspace/black?icon=https://cdn.worldvectorlogo.com/logos/notion-logo-1.svg&label" alt="Notion"></a></p>
+<p><img src="./res/screenshot.png" alt="Screenshot"></p>
+<details>
+    <summary> Table of Contents </summary>
+    <ol> 
+        <li> <a href="#overview"> Overview </a> </li>
+            <ol>
+                <li> <a href="#aims--objectives"> Aims & objectives </a> </li>
+                <li> <a href="#gomoku"> Gomoku </a> </li>
+            </ol>
+        <li> <a href="#development"> Development </a> </li>
+            <ol>
+                <li> <a href="#codebase-structure"> Codebase structure </a> </li>
+                <li> <a href="#installation"> Installation </a> </li>
+                <li> <a href="#compilation"> Compilation </a> </li>
+                <li> <a href="#compilation"> Compilation </a> </li>
+                <li> <a href="#unit-testing"> Unit testing </a> </li>
+            </ol>
+        <li> <a href="#resources"> Resources </a> </li>
+        <li> <a href="#acknowledgements"> Acknowledgements </a> </li>
+            <ol>
+                <li> <a href="#frameworks--technologies"> Frameworks & technologies </a> </li>
+            </ol>
+    </ol>
+</details>
+
+
+<a href="#overview" id="overview" style="color: inherit; text-decoration: none;">
+  <h2>Overview</h2>
+</a>
+<p>This software was developed as a fourth-year dissertation project for the University of Strathclyde.</p>
+
+<a href="#abstract" id="abstract" style="color: inherit; text-decoration: none;">
+  <h3>Abstract</h3>
+</a>
+<p>Artificially intelligent (AI) agents in games can be surprisingly unintelligent. Particularly in board games, players are often faced a range of AI opponents represented by convoluted difficulty selectors. Creating custom AI opponents not only results in extra work for the developers, but also impairs the player’s enjoyment of the game. Mismatches in the skill level of players can results in either player growing frustrated or becoming bored. Current <a href="https://en.wikipedia.org/wiki/Dynamic_game_difficulty_balancing">dynamic difficulty adjustment</a> (DDA) techniques rely on game-specific evaluations, restricting their application to the game industry at large. </p>
+<p>This project introduces a new DDA technique, <em>prolongation bias</em>, whereby the <a href="https://en.wikipedia.org/wiki/Monte_Carlo_tree_search">Monte Carlo Tree Search</a> algorithm is adapted to prioritise game elongation. Experiments carried out with a sample size of 81 participants show the AI utilising the prolongation bias technique can dynamically adapt its difficulty to players with a range of skill levels and increase the human player’s enjoyment and satisfaction of matches against computer-controlled opponents.</p>
+
+<a href="#gomoku" id="gomoku" style="color: inherit; text-decoration: none;">
+  <h3>Gomoku</h3>
+</a>
+<p>In order to test the AI, a two-player abstract board game had to be chosen. <em>Gomoku</em>, also known as Five in a Row, was picked as the best candidate out of various board games. Details about this decision can be found <a href="https://opposite-brain-cb0.notion.site/Game-choice-735efe566bef40b08ebfc9a0d75389ff">here</a>.</p>
+<p>The fofmat of the game are simple: two players take turns placing black and white tokens on a board whilst trying to chain these pieces five in a row, either horizontally, vertically or diagonally. Gomoku can be classified as an <a href="https://en.wikipedia.org/wiki/M,n,k-game"><em>m, n, k</em>-game</a>. During the process of development, it was found that &quot;pure&quot; Monte Carlo Tree Search performs poorly on a traditional 15 by 15 Gomoku-board. Instead, a 7 by 7 board was used for the purposes of this research.</p>
+
+<a href="#development" id="development" style="color: inherit; text-decoration: none;">
+  <h2>Development</h2>
+</a>
+
+<a href="#codebase-structure" id="codebase-structure" style="color: inherit; text-decoration: none;">
+  <h3>Codebase structure</h3>
+</a>
+<pre><code><span class="hl-0">.</span><br/><span class="hl-0">├── </span><span class="hl-1">dist</span><span class="hl-0">                      · </span><span class="hl-1">JavaScript</span><span class="hl-0"> </span><span class="hl-1">compiled</span><span class="hl-0"> </span><span class="hl-1">from</span><span class="hl-0"> </span><span class="hl-1">TypeScript</span><span class="hl-0">. </span><span class="hl-1">Mirrors</span><span class="hl-0"> \</span><span class="hl-1">src</span><span class="hl-0">\</span><span class="hl-1">ts</span><span class="hl-0">\.</span><br/><span class="hl-0">├── </span><span class="hl-1">res</span><span class="hl-0">                       · </span><span class="hl-1">Resources</span><span class="hl-0">, </span><span class="hl-1">such</span><span class="hl-0"> </span><span class="hl-2">as</span><span class="hl-0"> </span><span class="hl-3">images</span><span class="hl-0"> </span><span class="hl-3">and</span><span class="hl-0"> </span><span class="hl-3">icons</span><span class="hl-0">.</span><br/><span class="hl-0">├── </span><span class="hl-1">test</span><span class="hl-0">                      · </span><span class="hl-1">Mocha</span><span class="hl-0"> </span><span class="hl-1">Unit</span><span class="hl-0"> </span><span class="hl-1">tests</span><span class="hl-0"> </span><span class="hl-1">for</span><span class="hl-0"> </span><span class="hl-1">JavaScript</span><span class="hl-0"> </span><span class="hl-1">files</span><span class="hl-0"> </span><span class="hl-4">in</span><span class="hl-0"> \</span><span class="hl-1">dist</span><span class="hl-0">\.</span><br/><span class="hl-0">└── </span><span class="hl-1">src</span><span class="hl-0">                       · </span><span class="hl-1">The</span><span class="hl-0"> </span><span class="hl-1">website</span><span class="hl-5">&#39;s source code</span><span class="hl-6">.</span><br/><span class="hl-0">    ├── </span><span class="hl-1">css</span><span class="hl-0">                      · </span><span class="hl-1">Styling</span><span class="hl-0"> </span><span class="hl-1">for</span><span class="hl-0"> </span><span class="hl-1">all</span><span class="hl-0"> </span><span class="hl-7">HTML</span><span class="hl-0"> </span><span class="hl-1">pages</span><span class="hl-0">, </span><span class="hl-1">organized</span><span class="hl-0"> </span><span class="hl-1">from</span><span class="hl-0"> </span><span class="hl-1">high</span><span class="hl-0">- </span><span class="hl-1">to</span><span class="hl-0"> </span><span class="hl-1">low</span><span class="hl-0">-</span><span class="hl-1">level</span><span class="hl-0">.</span><br/><span class="hl-0">    ├── </span><span class="hl-1">html</span><span class="hl-0">                     · </span><span class="hl-1">All</span><span class="hl-0"> </span><span class="hl-7">HTML</span><span class="hl-0"> </span><span class="hl-1">pages</span><span class="hl-0">, </span><span class="hl-1">both</span><span class="hl-0"> </span><span class="hl-1">high</span><span class="hl-0">- </span><span class="hl-1">and</span><span class="hl-0"> </span><span class="hl-1">low</span><span class="hl-0">-</span><span class="hl-1">level</span><span class="hl-0">.</span><br/><span class="hl-0">    └── </span><span class="hl-1">ts</span><span class="hl-0">                       · </span><span class="hl-1">Logic</span><span class="hl-0"> </span><span class="hl-1">and</span><span class="hl-0"> </span><span class="hl-1">back</span><span class="hl-0">-</span><span class="hl-1">end</span><span class="hl-0"> </span><span class="hl-4">of</span><span class="hl-0"> </span><span class="hl-1">the</span><span class="hl-0"> </span><span class="hl-1">software</span><span class="hl-0">.</span><br/><span class="hl-0">        ├── </span><span class="hl-1">controller</span><span class="hl-0">              · </span><span class="hl-1">Controllers</span><span class="hl-0"> </span><span class="hl-1">connecting</span><span class="hl-0"> </span><span class="hl-1">models</span><span class="hl-0"> </span><span class="hl-1">and</span><span class="hl-0"> </span><span class="hl-1">views</span><span class="hl-0">, </span><span class="hl-7">MVC</span><span class="hl-0"> </span><span class="hl-1">design</span><span class="hl-0"> </span><span class="hl-1">pattern</span><span class="hl-0">.</span><br/><span class="hl-0">        ├── </span><span class="hl-1">factory</span><span class="hl-0">                 · </span><span class="hl-1">Classes</span><span class="hl-0"> </span><span class="hl-1">following</span><span class="hl-0"> </span><span class="hl-1">the</span><span class="hl-0"> </span><span class="hl-1">factory</span><span class="hl-0"> </span><span class="hl-1">method</span><span class="hl-0"> </span><span class="hl-1">design</span><span class="hl-0"> </span><span class="hl-1">pattern</span><span class="hl-0">.</span><br/><span class="hl-0">        ├── </span><span class="hl-1">model</span><span class="hl-0">                   · </span><span class="hl-1">Part</span><span class="hl-0"> </span><span class="hl-4">of</span><span class="hl-0"> </span><span class="hl-1">the</span><span class="hl-0"> </span><span class="hl-7">MVC</span><span class="hl-0">. </span><span class="hl-1">In</span><span class="hl-0"> </span><span class="hl-1">practice</span><span class="hl-0">, </span><span class="hl-1">defines</span><span class="hl-0"> </span><span class="hl-1">games</span><span class="hl-0"> </span><span class="hl-2">as</span><span class="hl-0"> </span><span class="hl-3">a</span><span class="hl-0"> </span><span class="hl-3">Markov</span><span class="hl-0"> </span><span class="hl-3">decision</span><span class="hl-0"> </span><span class="hl-3">process</span><span class="hl-0">.</span><br/><span class="hl-0">        ├── </span><span class="hl-1">player</span><span class="hl-0">                  · </span><span class="hl-1">Defines</span><span class="hl-0"> </span><span class="hl-1">a</span><span class="hl-0"> </span><span class="hl-1">hierarchy</span><span class="hl-0"> </span><span class="hl-4">of</span><span class="hl-0"> </span><span class="hl-1">player</span><span class="hl-0">-</span><span class="hl-1">classes</span><span class="hl-0">, </span><span class="hl-1">including</span><span class="hl-0"> </span><span class="hl-1">various</span><span class="hl-0"> </span><span class="hl-7">AI</span><span class="hl-0"> </span><span class="hl-1">players</span><span class="hl-0">.</span><br/><span class="hl-0">        ├── </span><span class="hl-1">script</span><span class="hl-0">                  · </span><span class="hl-1">Files</span><span class="hl-0"> </span><span class="hl-1">referenced</span><span class="hl-0"> </span><span class="hl-1">directly</span><span class="hl-0"> </span><span class="hl-1">by</span><span class="hl-0"> </span><span class="hl-7">HTML</span><span class="hl-0"> </span><span class="hl-1">pages</span><span class="hl-0">. </span><span class="hl-1">Instantiates</span><span class="hl-0"> </span><span class="hl-7">MVC</span><span class="hl-0"> </span><span class="hl-1">classes</span><span class="hl-0">.</span><br/><span class="hl-0">        ├── </span><span class="hl-1">utility</span><span class="hl-0">                 · </span><span class="hl-1">Common</span><span class="hl-0"> </span><span class="hl-1">utility</span><span class="hl-0"> </span><span class="hl-1">classes</span><span class="hl-0"> </span><span class="hl-1">used</span><span class="hl-0"> </span><span class="hl-1">extensively</span><span class="hl-0"> </span><span class="hl-4">in</span><span class="hl-0"> </span><span class="hl-1">other</span><span class="hl-0"> </span><span class="hl-1">parts</span><span class="hl-0"> </span><span class="hl-4">of</span><span class="hl-0"> </span><span class="hl-1">the</span><span class="hl-0"> </span><span class="hl-1">system</span><span class="hl-0">.</span><br/><span class="hl-0">        └── </span><span class="hl-1">view</span><span class="hl-0">                    · </span><span class="hl-1">Part</span><span class="hl-0"> </span><span class="hl-4">of</span><span class="hl-0"> </span><span class="hl-7">MVC</span><span class="hl-0">. </span><span class="hl-1">Utilises</span><span class="hl-0"> </span><span class="hl-1">JQuery</span><span class="hl-0"> </span><span class="hl-1">to</span><span class="hl-0"> </span><span class="hl-1">manipulate</span><span class="hl-0"> </span><span class="hl-1">the</span><span class="hl-0"> </span><span class="hl-7">DOM</span><span class="hl-0">.</span>
+</code></pre>
+
+<a href="#installation" id="installation" style="color: inherit; text-decoration: none;">
+  <h3>Installation</h3>
+</a>
+<p>Please refer to <a href="https://developer.mozilla.org/en-US/docs/Learn/Common_questions/set_up_a_local_testing_server">instructions on setting up a local test server</a> if you wish to host and run the project locally. Alternatively, visit the <a href="https://haresmahmood.github.io/gomoku-sensei/">web application</a> hosted on GitHub Pages to run the software on any modern browser, as well as to install it as a <a href="https://web.dev/progressive-web-apps/">Progressive Web App</a> (PWA).</p>
+
+<a href="#compilation" id="compilation" style="color: inherit; text-decoration: none;">
+  <h3>Compilation</h3>
+</a>
+<p>The code located in the <code>\dist\</code> directory is JavaScript (JS), compiled from TypeScript located in <code>\src/ts\</code>. TypeScript (TS) is a strongly-typed language, also allowing for additional object oriented features to be used on top of what JS already used. If making any changes to the TS code, any changed files must be re-compiled. Please refer to the <a href="https://www.typescriptlang.org/">official TypeScript page</a> for instructions on downloading, running and using TS.</p>
+<p>For this project, <code>v4.6.2</code> of TS was used. To compile modified JS files, run the following command in the root directory of the project:</p>
+<pre><code class="language-console">tsc build
+</code></pre>
+
+<a href="#unit-testing" id="unit-testing" style="color: inherit; text-decoration: none;">
+  <h3>Unit testing</h3>
+</a>
+<p><a href="https://mochajs.org/">Mocha</a> and <a href="https://www.chaijs.com/">Chai</a> for testing, two open-source JS unit testing frameworks. Testing was focused on the Model (i.e., the game) and related classes. To simplify the process, tests were written for and run on compiled JS, as opposed to the source TypeScript files. Unit tests are located in the <code>\test\</code> directory.</p>
+<p><a href="https://nodejs.org/en/">Node.js</a> must be installed before unit tests can be executed (<code>v14.18.1</code> is used in this project). Assuming this is the case, and you&#39;re located in the project&#39;s root folder, the following commands will both install dependencies in the <code>package.json</code> for this project, and run all unit tests:</p>
+<pre><code class="language-console">npm install
+npm test
+</code></pre>
+
+<a href="#resources" id="resources" style="color: inherit; text-decoration: none;">
+  <h2>Resources</h2>
+</a>
+<ul>
+<li>For additional details, as well as the development process for this project, visit this <a href="https://opposite-brain-cb0.notion.site/CS408-1e5c4e3c9b0d4291b6a968855d9270e9">Notion Workspace</a>. The paper written as part of this project can be read <a href="https://s3.us-west-2.amazonaws.com/secure.notion-static.com/61ec2c18-660e-46ec-8590-3e2e8ce3d316/progress_report.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&amp;X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&amp;X-Amz-Credential=AKIAT73L2G45EIPT3X45%2F20220222%2Fus-west-2%2Fs3%2Faws4_request&amp;X-Amz-Date=20220222T001249Z&amp;X-Amz-Expires=86400&amp;X-Amz-Signature=0313cab7c63a706c3e7285a00cef6f1991de20f2b31157649f4a4721556398cd&amp;X-Amz-SignedHeaders=host&amp;response-content-disposition=filename%20%3D%22progress%2520report.pdf%22&amp;x-id=GetObject">here</a>. The UI was designed in Figma; an interactive prorotype can be found at <a href="https://www.figma.com/proto/uhH23aRZvGQsOViY0bnnVP/Gomoku?node-id=64%3A19">this page</a>.</li>
+</ul>
+
+<a href="#acknowledgements" id="acknowledgements" style="color: inherit; text-decoration: none;">
+  <h2>Acknowledgements</h2>
+</a>
+<p>I want to thank <a href="https://www.strath.ac.uk/staff/levinejohndr/">Dr. John Levine</a> for supervising, and providing his invaluable support and guidance troughout this project.</p>
+
+<a href="#frameworks-amp-technologies" id="frameworks-amp-technologies" style="color: inherit; text-decoration: none;">
+  <h3>Frameworks &amp; technologies</h3>
+</a>
+<table>
+<thead>
+<tr>
+<th>Resource</th>
+<th>Usage</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a href="https://m3.material.io/">Material Design 3</a></td>
+<td>Guidelines for the design and creation of the UI.</td>
+</tr>
+<tr>
+<td><a href="https://www.typescriptlang.org/">TypeScript</a></td>
+<td>Back-end of system, particularly the model (the game) and the several AI agents.</td>
+</tr>
+<tr>
+<td><a href="https://jquery.com/">JQuery</a></td>
+<td>UI animations, particularly navigating from page-to-page.</td>
+</tr>
+<tr>
+<td><a href="https://web.dev/progressive-web-apps/">PWA technology</a></td>
+<td>Making the app installable on multiple platforms. The <a href="https://www.pwabuilder.com/">PWA Builder</a> extension for VS Code was used in particular.</td>
+</tr>
+<tr>
+<td><a href="https://pages.github.com/">GitHub Pages</a></td>
+<td>Hosting the web app.</td>
+</tr>
+<tr>
+<td><a href="https://mochajs.org/">Mocha</a> and <a href="https://www.chaijs.com/">Chai</a></td>
+<td>Unit testing.</td>
+</tr>
+<tr>
+<td><a href="https://www.zapsplat.com/">Zapsplat</a></td>
+<td>In-game sound-effects.</td>
+</tr>
+</tbody></table>
+</div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Modules</a></li><li class=" tsd-kind-module"><a href="modules/controller_gameController.html">controller/game<wbr/>Controller</a></li><li class=" tsd-kind-module"><a href="modules/factory_playerFactory.html">factory/player<wbr/>Factory</a></li><li class=" tsd-kind-module"><a href="modules/model_gomoku.html">model/gomoku</a></li><li class=" tsd-kind-module"><a href="modules/model_mdp.html">model/mdp</a></li><li class=" tsd-kind-module"><a href="modules/player_abstractPlayer.html">player/abstract<wbr/>Player</a></li><li class=" tsd-kind-module"><a href="modules/player_ai_ai.html">player/ai/ai</a></li><li class=" tsd-kind-module"><a href="modules/player_ai_debug_simulationAI.html">player/ai/debug/simulationAI</a></li><li class=" tsd-kind-module"><a href="modules/player_ai_dynamicAI.html">player/ai/dynamicAI</a></li><li class=" tsd-kind-module"><a href="modules/player_ai_killerAI.html">player/ai/killerAI</a></li><li class=" tsd-kind-module"><a href="modules/player_ai_randomAI.html">player/ai/randomAI</a></li><li class=" tsd-kind-module"><a href="modules/player_ai_tree_dynamicNode.html">player/ai/tree/dynamic<wbr/>Node</a></li><li class=" tsd-kind-module"><a href="modules/player_ai_tree_node.html">player/ai/tree/node</a></li><li class=" tsd-kind-module"><a href="modules/player_ai_tree_state.html">player/ai/tree/state</a></li><li class=" tsd-kind-module"><a href="modules/player_ai_tree_staticNode.html">player/ai/tree/static<wbr/>Node</a></li><li class=" tsd-kind-module"><a href="modules/player_human.html">player/human</a></li><li class=" tsd-kind-module"><a href="modules/player_player.html">player/player</a></li><li class=" tsd-kind-module"><a href="modules/view_defaultView.html">view/default<wbr/>View</a></li><li class=" tsd-kind-module"><a href="modules/view_gameView.html">view/game<wbr/>View</a></li><li class=" tsd-kind-module"><a href="modules/view_homeView.html">view/home<wbr/>View</a></li><li class=" tsd-kind-module"><a href="modules/view_settingsView.html">view/settings<wbr/>View</a></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-interface"><span class="tsd-kind-icon">Interface</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>
