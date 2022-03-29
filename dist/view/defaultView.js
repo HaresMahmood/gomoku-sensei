@@ -1,3 +1,8 @@
+/**
+ * View for the index-page.
+ *
+ * @see `/index.html` for the corresponding HTML-page.
+ */
 export default class DefaultView {
     // #region Initialization
     /**
@@ -19,8 +24,9 @@ export default class DefaultView {
     // #endregion
     // #region Miscellaneous
     /**
+     * Navigates the user to the requested page.
      *
-     * @param {string} page
+     * @param {string} page Page the user wants to navigate to.
      */
     navigateTo(page) {
         function capitalize(string) {
@@ -36,10 +42,20 @@ export default class DefaultView {
         $("#header-text").html(page);
         document.title = capitalize(page);
     }
+    /**
+     * Adds appropriate styling to the selected navigation button.
+     *
+     * @param {string} button Selected navigation button.
+     */
     changeNavigationButtons(button) {
         $(".menu__button.red__button").removeClass("red__button");
         $(button).addClass("red__button");
     }
+    /**
+     * Navigates the user to the requested `modal`.
+     *
+     * @param {string} page `modal` the user wants to navigate to.
+     */
     openModal(page) {
         $("#modal-frame")[0].contentWindow.location.replace(`./src/html/${page}.html`);
         $("#model-header").html(page);
@@ -47,6 +63,9 @@ export default class DefaultView {
             $("modal").not("#pop-up").addClass("visible");
         }, 100);
     }
+    /**
+     * Sets internal `localStorage`-values on a first-time load.
+     */
     firstTimeLoad() {
         if (localStorage.getItem("load") === null || !JSON.parse(localStorage.getItem("load"))) {
             $("#pop-up").addClass("visible");

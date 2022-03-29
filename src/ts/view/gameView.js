@@ -1,6 +1,17 @@
+/**
+ * View for the Settings-page.
+ * 
+ * @see `/html/game.html` for the corresponding HTML-page.
+ */
 export default class GameView {
     // #region Initialization
 
+    /**
+     * Class constructor.
+     * 
+     * @param {number} rows Width of the board.
+     * @param {number} columns Height of the board.
+     */
     constructor(rows, columns) {
         this.board = $(".board");
         this.cell = ".cell";
@@ -26,6 +37,13 @@ export default class GameView {
 
     // #region Miscellaneous
 
+    /**
+     * Populates the board with cells. The amount of cells
+     * is equal to `rows * columns`.
+     * 
+     * @param {number} rows Width of the board.
+     * @param {number} columns Height of the board.
+     */
     populateBoard(rows, columns) {
         document.documentElement.style.setProperty("--columns", columns);
 
@@ -34,22 +52,34 @@ export default class GameView {
         }
     }
 
+    /**
+     * Sets the UI information for the passed-in player.
+     * 
+     * @param {*} player Relevant player.
+     */
     setPlayer(player) {
         $(".player__container p").eq(player.player - 1).text(player.information[0]);
         $(".player__container .player-icon").eq(player.player - 1).text(player.information[1]);
     }
 
+    /**
+     * Updates the player divisions to match the current
+     * player phase.
+     * 
+     * @param {number} currentPlayer The currently moving player.
+     */
     changePlayer(currentPlayer) {
         $(".active").removeClass("active");
         $(`.player__container:eq(${currentPlayer - 1})`).addClass("active");
     }
 
-    updateProgressBar(percentage) {
-        $(".pure-material-progress-linear").progressbar({
-            value: percentage
-        }); 
-    }
-
+    /**
+     * Adds a token to the board.
+     * 
+     * @param {number} index Coordinates of the chosen move. 
+     * @param {string} color Token color of the player.
+     * @param {number} moveNumber Index of the move, length of the game.
+     */
     addPiece(index, color, moveNumber) {
         let box = this.board.find(this.cell).eq(index);
 
@@ -75,6 +105,12 @@ export default class GameView {
         }
     }
 
+    /**
+     * Clears all pieces from the board and resets the 
+     * current player phase.
+     * 
+     * @param {boolean} isDisabled Whether or not the board should be disabled after being cleared.
+     */
     restart(isDisabled) {
         $(".piece").remove();
         $(".board").removeClass("inactive");
@@ -83,23 +119,15 @@ export default class GameView {
         this.disableUserInterface(isDisabled)
 
         window.parent.document.title = "Game";
-
-        // TOOD: Add animation.
-        // const pieces = $(".piece").length;
-        // const animationDelay = 50;
-        
-        // $(".piece").each(function(i) {
-        //     $(this).delay(i * animationDelay).fadeOut(125, function() {
-        //         $(this).remove();
-        //     });
-        // });
-
-        // window.setTimeout(function() {
-        //     $(".board").removeClass("inactive");
-        //     $(".player__container").removeClass("lost");
-        // }, pieces * animationDelay);
     }
 
+    /**
+     * Ends the game by declaring the winner through a pop-up.
+     * Disabled user input afterwards.
+     * 
+     * @param {*} winner Winning player.
+     * @param {boolean} isDraw Whether or not the game ended in a draw.
+     */
     endGame(winner, isDraw) {
         const winText = isDraw ? `Draw!` : `Player ${winner.player} wins!`;
         const soundEffects = JSON.parse(localStorage.getItem(3));
@@ -120,10 +148,24 @@ export default class GameView {
         window.parent.document.title = winText;
     }
 
+    /**
+     * Toggles UI interactability.
+     * 
+     * @param {boolean} isDisabled Whether or not the UI should be disabled.
+     */
     disableUserInterface(isDisabled) {
         $(".board").toggleClass("disabled", isDisabled);
     }
 
+    /**
+     * Updates UI elements based on `localStorage` settings.
+     * 
+     * @param {boolean} showCoordinates 
+     * @param {boolean} showMoveNumbers 
+     * @param {boolean} highlightMove 
+     * @param {boolean} soundEffects 
+     * @param {boolean} devMode 
+     */
     updateSettings(showCoordinates, showMoveNumbers, highlightMove, soundEffects, devMode) {
         $(".piece").toggleClass("no-numbers", !showMoveNumbers);
         $(".piece").toggleClass("no-highlight", !highlightMove);
@@ -133,6 +175,12 @@ export default class GameView {
 
     // #region Utility
 
+    /**
+     * Determines the coordinates of a cell on the board.
+     * 
+     * @param {*} cell 
+     * @returns The coordinates of the cell.
+     */
     getClickedCellCoordinates(cell) {
         return cell.index();
     }
