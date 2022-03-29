@@ -106,4 +106,5 @@ I want to thank [Dr. John Levine](https://www.strath.ac.uk/staff/levinejohndr/) 
 | [PWA technology](https://web.dev/progressive-web-apps/) | Making the app installable on multiple platforms. The [PWA Builder](https://www.pwabuilder.com/) extension for VS Code was used in particular. |
 | [GitHub Pages](https://pages.github.com/)               | Hosting the web app.                                                                                                                           |
 | [Mocha](https://mochajs.org/) and [Chai](https://www.chaijs.com/) | Unit testing.                                                                                                                                  |
+| [TypeDoc](https://typedoc.org/) | Exporting documentation to HTML.                                                                                                                                  |
 | [Zapsplat](https://www.zapsplat.com/)                   | In-game sound-effects.                                                                                                                          |
