@@ -1,0 +1,30 @@
+{
+  "name": "gomoku-sensei",
+  "version": "1.0.0",
+  "description": "Gomoku Sensei",
+  "author": "Hares Mahmood",
+  "homepage": "https://haresmahmood.github.io",
+  "bugs": {
+    "url": "https://github.com/HaresMahmood/gomoku-sensei/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/HaresMahmood/gomoku-sensei.git"
+  },
+  "type": "module",
+  "directories": {
+    "dist": "./dist",
+    "src": "./src",
+    "test": "./test"
+  },
+  "scripts": {
+    "build": "tsc",
+    "test": "mocha --timeout 10000 --recursive ./test/**/*.js"
+  },
+  "devDependencies": {
+    "chai": "latest",
+    "mocha": "latest",
+    "typedoc": "^0.22.13",
+    "typedoc-plugin-markdown": "^3.11.14"
+  }
+}
